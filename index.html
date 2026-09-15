@@ -15,7 +15,7 @@
 <style>
   :root{
     --bg:#0a0a0a;
-    --card:#131313;
+    --card:#1b1b1b;
     --surface-muted:#262626;
     --line:#262626;
     --line-soft:#1f1f1f;
@@ -362,8 +362,8 @@
     font:inherit;font-size:12px;font-weight:500;line-height:20px;
     color:var(--fg-3);background:transparent;border:0;cursor:pointer;
     transition:background .15s,color .15s;white-space:nowrap;
+    position:relative;z-index:1;
   }
-  .tab{position:relative;z-index:1;background:transparent}
   .tab:hover{color:var(--fg-2)}
   .tab[aria-selected="true"]{background:transparent;color:var(--fg)}
   .tab svg{flex:0 0 auto;transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
@@ -418,13 +418,17 @@
   }
   @keyframes storyin{to{opacity:1;transform:none}}
   .story-ring{
-    width:64px;height:64px;display:grid;place-items:center;
-    transition:transform .22s cubic-bezier(.34,1.4,.64,1),filter .22s;
+    width:66px;height:66px;display:grid;place-items:center;
+    padding:2.5px;border-radius:50%;background:#fafafa;
+    transition:transform .22s cubic-bezier(.34,1.4,.64,1),background .25s;
   }
+  /* the ring never touches the picture: a ring of page colour sits between them */
+  .story-ring > .story-cover{border:2.5px solid var(--bg);background-clip:padding-box}
+  .story.seen .story-ring{background:#2a2a2a}
   .story:hover .story-ring{transform:scale(1.07)}
   .story:active .story-ring{transform:scale(.97)}
-  .story.seen .story-ring{filter:grayscale(.65) brightness(.72)}
-  .story-cover{width:100%;height:100%;display:grid;place-items:center}
+  .story.seen .story-cover img{filter:grayscale(.55) brightness(.72)}
+  .story-cover{width:100%;height:100%;display:grid;place-items:center;border-radius:50%;overflow:hidden;background:#0a0a0a}
   .story-cover img{width:100%;height:100%;display:block}
   .story-label{
     font-size:12px;line-height:15px;color:var(--fg-2);
@@ -552,7 +556,7 @@
   .chip-f{
     flex:0 0 auto;height:38px;padding:0 15px;border-radius:999px;
     border:1px solid #262626;background:transparent;color:var(--fg-2);
-    font:inherit;font-size:13px;line-height:1;cursor:pointer;
+    font:inherit;font-size:13px;font-weight:450;line-height:1;cursor:pointer;
     display:inline-flex;align-items:center;gap:7px;
     transition:background .15s,color .15s,border-color .15s;
   }
@@ -573,8 +577,6 @@
   .chip-f.muted img{filter:grayscale(1)}
   .chip-f.muted:hover{opacity:.82}
   .chip-f:hover{background:#1a1a1a;color:var(--fg)}
-  /* selection must not change a pill's width, so the weight stays put */
-  .chip-f{font-weight:450}
   .chip-f.on{background:#fafafa;border-color:#fafafa;color:#0a0a0a}
 
   .chip-f.wish svg{margin-right:-1px}
@@ -613,6 +615,19 @@
     flex:0 0 auto;display:flex;gap:2px;padding:3px;overflow:visible;
     border-radius:10px;background:#171717;
   }
+  /* not a view you switch to, an offer you take */
+  body:not(.is-pro) .layout-switch{background:transparent;padding:0}
+  .pro-cta{
+    display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;
+    border:0;border-radius:var(--r-ctl);background:#171717;
+    color:var(--fg);font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;
+    transition:background .15s;
+  }
+  .pro-cta svg{color:var(--fg-2);transition:color .15s}
+  .pro-cta:hover{background:#232323}
+  .pro-cta:hover svg{color:var(--fg)}
+  /* on a narrow top bar the label would run into the tabs */
+  @media (max-width:1180px){ .pro-cta span{display:none} .pro-cta{padding:0 11px} }
   .ls-btn{
     width:34px;height:28px;border:0;border-radius:7px;background:transparent;
     color:var(--fg-3);display:grid;place-items:center;cursor:pointer;position:relative;
@@ -652,7 +667,7 @@
   .deck-wrap{display:flex;height:calc(100vh - 64px)}
   .deck-main{flex:1;min-width:0;display:flex;flex-direction:column}
   .deck-side{
-    flex:0 0 284px;border-right:1px solid var(--line-soft);
+    flex:0 0 330px;border-right:1px solid var(--line-soft);
     padding:24px 22px 20px;overflow-y:auto;scrollbar-width:thin;
     display:flex;flex-direction:column;gap:18px;
   }
@@ -691,10 +706,9 @@
 
   .side-brand{display:flex;align-items:center;gap:10px;padding:0 2px}
   .side-brand .bmark{
-    width:34px;height:34px;border-radius:10px;flex:0 0 auto;display:grid;place-items:center;
-    background:linear-gradient(150deg,#3a4cc4,#7b52c9);
-    color:#fff;font-size:12px;font-weight:600;letter-spacing:.02em;
+    width:34px;height:34px;border-radius:10px;flex:0 0 auto;overflow:hidden;display:block;
   }
+  .side-brand .bmark img{width:100%;height:100%;object-fit:cover;display:block}
   .side-brand b{display:block;font-size:17px;font-weight:600;color:var(--fg);line-height:22px;letter-spacing:-.015em}
   .side-brand span{display:block;font-size:12.5px;color:var(--fg-3);line-height:17px}
 
@@ -719,6 +733,8 @@
 
   @media (max-width:1100px){
     .deck-side{display:none}
+    /* during setup the rail carries the whole story, so it stays */
+    body.setup-run .deck-side{display:flex;flex:0 0 300px;padding:20px 20px 18px}
   }
 
   .deck{
@@ -734,7 +750,10 @@
   }
   .col-head{padding:26px 22px 0}
   .col-top{display:flex;align-items:center;gap:10px}
-  .col-head hr{border:0;border-top:1px solid var(--line-soft);margin:16px -22px 0}
+  .col-head hr{border:0;border-top:1px solid var(--line-soft);margin:18px -22px 0}
+  .col-now{min-width:0;display:flex;justify-content:flex-end;overflow:hidden}
+  .col-now .col-live,.col-now .col-off{font-size:12.5px;line-height:18px;flex:0 1 auto;min-width:0}
+  body.setup-run .col-now{display:none}
   .col-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
   .col-fill{flex:1}
   .col-head h2{
@@ -1072,6 +1091,66 @@
   @keyframes dismiss{to{opacity:0;transform:scale(.97);height:0;margin-bottom:-24px}}
 
   /* confirmation toast */
+  /* the agents page: the blobs stand on the page, not in boxes */
+  .agents-page{
+    position:fixed;inset:0;z-index:95;background:var(--bg);
+    overflow-y:auto;padding:0 40px 60px 100px;
+    display:grid;align-content:center;
+  }
+  .agents-page.is-in{opacity:0;transform:translateY(22px)}
+  .agents-page.is-out{animation:apOut .42s cubic-bezier(.32,.72,0,1) forwards}
+  .agents-page:not(.is-in):not(.is-out){animation:apIn .55s cubic-bezier(.32,.72,0,1) both}
+  @keyframes apIn{from{opacity:0;transform:translateY(22px)}}
+  @keyframes apOut{to{opacity:0;transform:translateY(-18px)}}
+  .ap-close{
+    position:fixed;top:20px;right:24px;z-index:2;
+    width:38px;height:38px;border:0;border-radius:11px;background:#171717;
+    color:var(--fg-2);display:grid;place-items:center;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .ap-close:hover{background:#242424;color:var(--fg)}
+  .ap-in{width:min(1060px,100%);min-width:0;margin:0 auto}
+  .agents-page h1{
+    margin:0;font-size:34px;line-height:44px;font-weight:400;letter-spacing:-.015em;color:var(--fg);
+  }
+  .ap-sub{margin:10px 0 0;font-size:17px;line-height:26px;color:var(--fg-2);max-width:70ch}
+  .ap-grid{
+    display:flex;flex-wrap:nowrap;gap:clamp(10px,2.4vw,30px);margin:44px 0 0;
+    min-width:0;scrollbar-width:none;padding-bottom:4px;
+  }
+  .ap-grid::-webkit-scrollbar{display:none}
+  .ap-agent{
+    flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:12px;
+    background:none;border:0;padding:0;cursor:pointer;font:inherit;color:var(--fg-2);
+    opacity:0;transform:translateY(14px);
+    animation:apPop .5s cubic-bezier(.32,.72,0,1) forwards;
+    animation-delay:calc(.05s * var(--i));
+    transition:color .15s;
+  }
+  @keyframes apPop{to{opacity:1;transform:none}}
+  .ap-agent img{
+    width:clamp(50px,7.4vw,74px);height:clamp(50px,7.4vw,74px);display:block;
+    transition:transform .24s cubic-bezier(.34,1.4,.64,1);
+  }
+  .ap-agent:hover{color:var(--fg)}
+  .ap-agent:hover img{transform:translateY(-4px) scale(1.06)}
+  .ap-agent span{font-size:clamp(11.5px,1.4vw,14px);line-height:1.4;white-space:normal;text-align:center;max-width:12ch}
+  .ap-rule{border:0;border-top:1px solid var(--line-soft);margin:46px 0 26px}
+  .ap-foot{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .ap-foot p{margin:0;flex:1;min-width:240px;font-size:14.5px;line-height:22px;color:var(--fg-2)}
+  .ap-cta{
+    display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;
+    border:0;border-radius:12px;background:#222;color:var(--fg);
+    font:inherit;font-size:14px;font-weight:500;cursor:pointer;
+    transition:background .15s;
+  }
+  .ap-cta:hover{background:#2e2e2e}
+  .ap-cta svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
+  .ap-cta:hover svg{transform:translateX(3px)}
+  @media (prefers-reduced-motion:reduce){
+    .agents-page,.ap-agent{animation:none!important;opacity:1;transform:none}
+  }
+
   .toasts{
     position:fixed;top:20px;left:50%;transform:translateX(-50%);
     z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;
@@ -1195,7 +1274,7 @@
 
   .hero-logo{
     position:relative;z-index:2;
-    margin-bottom:30px;
+    margin-bottom:26px;
     opacity:0;transform:translateY(12px) scale(.94);
     animation:logoin .8s cubic-bezier(.22,.8,.3,1) .05s forwards;
   }
@@ -1209,6 +1288,32 @@
     transition:opacity .35s ease;
     display:flex;flex-direction:column;align-items:flex-end;gap:10px;
   }
+
+  /* the dashboard card: part of the sidebar, not a thing on top of it */
+  .dash-card{
+    width:100%;margin-bottom:16px;
+    animation:dashIn .55s cubic-bezier(.32,.72,0,1) both;
+  }
+  @keyframes dashIn{from{opacity:0;transform:translateY(10px)}}
+  .dash-art{
+    height:92px;border-radius:10px;overflow:hidden;
+    border:1px solid var(--line-soft);background:#0d0d0d;
+    -webkit-mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.25));
+    mask-image:linear-gradient(180deg,#000 62%,rgba(0,0,0,.25));
+  }
+  .dash-art img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}
+  .dash-card h4{margin:13px 0 0;font-size:13.5px;line-height:19px;font-weight:500;color:var(--fg)}
+  .dash-card p{margin:5px 0 0;font-size:12.5px;line-height:18px;color:var(--fg-3)}
+  .dash-cta{
+    margin-top:11px;display:inline-flex;align-items:center;gap:6px;
+    height:30px;padding:0 11px;border:1px solid var(--line);border-radius:9px;
+    background:transparent;color:var(--fg-2);
+    font:inherit;font-size:12.5px;font-weight:500;line-height:1;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .dash-cta:hover{background:#1c1c1c;color:var(--fg)}
+  .dash-cta svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
+  .dash-cta:hover svg{transform:translateX(3px)}
 
 
   /* ---------- first-run experience ---------- */
@@ -1228,13 +1333,6 @@
     display:flex;flex-direction:column;align-items:center;
     padding:0 24px;
   }
-  .hero-logo{
-    margin-bottom:26px;
-    opacity:0;transform:translateY(12px) scale(.94);
-    animation:logoin .8s cubic-bezier(.22,.8,.3,1) .05s forwards;
-  }
-  @keyframes logoin{to{opacity:1;transform:none}}
-
   /* ---- the stage: a small live mock of the product ---- */
   .stage-wrap{position:relative;width:440px;height:296px;margin-bottom:30px}
   .stage{
@@ -1884,23 +1982,24 @@
     position:fixed;inset:0;z-index:120;overflow:hidden;background:#000;
     display:grid;place-items:center;padding:24px;
   }
+
   .start-in{
     position:relative;z-index:2;width:min(768px,100%);
     display:flex;flex-direction:column;align-items:flex-start;
   }
-  .start-mark{width:78px;height:78px;margin:0 0 26px;display:block;
+  .start-mark{width:48px;height:53px;margin:0 0 28px;display:block;
     opacity:0;transform:translateY(12px) scale(.94);
     animation:logoin .8s cubic-bezier(.22,.8,.3,1) .05s forwards}
   @keyframes logoin{to{opacity:1;transform:none}}
-  .start h1{margin:0 0 64px;font-size:32px;line-height:40px;font-weight:400;letter-spacing:-.01em}
-  .start h1 span{display:block;margin-top:2px;font-size:24px;line-height:32px;color:var(--fg-2)}
+  .start h1{margin:0 0 48px;font-size:28px;line-height:38px;font-weight:400;letter-spacing:-.015em;white-space:nowrap}
+  .start h1 span{display:block;margin-top:0;font-size:28px;line-height:38px;color:var(--fg-2)}
   .start h1,.start .stack-in,.start .cta-go{opacity:0;transform:translateY(10px);animation:risein .7s cubic-bezier(.32,.72,0,1) forwards}
   .start h1{animation-delay:.16s}
   .start .stack-in{animation-delay:.28s}
   .start .cta-go{animation-delay:.4s}
   @keyframes risein{to{opacity:1;transform:none}}
 
-  .stack-in{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:64px}
+  .stack-in{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:48px}
   .ofield{
     display:flex;align-items:center;gap:16px;width:100%;padding:14px 16px;
     border-radius:12px;background:#151515;border:1px solid #3a3a3a;cursor:text;
@@ -1929,7 +2028,7 @@
   .oclear.on{display:grid}
   .oclear:hover{background:#242424;color:var(--fg)}
   .osub{
-    margin:4px 2px 0;font-size:14px;line-height:21px;color:var(--fg-3);
+    margin:12px 2px 0;font-size:14px;line-height:21px;color:var(--fg-3);
   }
   .osub button{
     border:0;background:transparent;padding:0;cursor:pointer;color:var(--fg-2);
@@ -1989,13 +2088,15 @@
   .start.out .start-mark,
   .start.out h1,
   .start.out .stack-in,
-  .start.out .cta-wrap{
+  .start.out .cta-wrap,
+  .start.out .osub{
     animation:liftout .44s cubic-bezier(.32,.72,0,1) forwards;
   }
   .start.out .start-mark{animation-delay:0s}
-  .start.out h1        {animation-delay:.05s}
-  .start.out .stack-in {animation-delay:.1s}
-  .start.out .cta-wrap {animation-delay:.15s}
+  .start.out h1        {animation-delay:.04s}
+  .start.out .stack-in {animation-delay:.08s}
+  .start.out .cta-wrap {animation-delay:.12s}
+  .start.out .osub     {animation-delay:.16s}
   @keyframes liftout{to{opacity:0;transform:translateY(-26px)}}
 
   /* arriving: the setup screen comes up from below on the same curve */
@@ -2013,38 +2114,53 @@
   body.setup-run .deck .col:nth-child(4){animation-delay:.28s}
   body.setup-run .deck .col:nth-child(5){animation-delay:.34s}
   body.setup-run .deck .col:nth-child(n+6){animation-delay:.4s}
+  /* leaving setup: the rail and the columns lift away, then the feed arrives */
+  body.setup-out .su-done{opacity:0;transition:opacity .38s ease}
+  body.setup-out .deck-side,
+  body.setup-out .deck .col{
+    animation:liftout .5s cubic-bezier(.32,.72,0,1) forwards;
+  }
+  body.setup-out .deck .col:nth-child(2){animation-delay:.05s}
+  body.setup-out .deck .col:nth-child(3){animation-delay:.1s}
+  body.setup-out .deck .col:nth-child(n+4){animation-delay:.15s}
+  body.feed-in #view-feed{animation:feedin .6s cubic-bezier(.32,.72,0,1) both}
+  @keyframes feedin{from{opacity:0;transform:translateY(22px)}}
   @keyframes risein2{to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){
-    .start.out .start-mark,.start.out h1,.start.out .stack-in,.start.out .cta-wrap,
+    .start.out .start-mark,.start.out h1,.start.out .stack-in,.start.out .cta-wrap,.start.out .osub,
     body.setup-run .deck-side > *,body.setup-run .deck .col{animation-duration:.01s}
   }
 
   /* ---- the setup rail, in place of the deck sidebar ---- */
-  .su-id{display:flex;align-items:flex-start;gap:12px}
-  .su-id-t{min-width:0;flex:1}
-  .su-brand{
-    display:block;font-size:32px;line-height:40px;font-weight:400;letter-spacing:-.01em;color:var(--fg);
+  /* the store you pointed us at, as one block */
+  .su-site{
+    display:flex;align-items:center;gap:12px;
+    height:54px;padding:0 10px 0 16px;
+    border-radius:14px;background:#131313;border:1px solid #242424;
   }
-  .su-url{display:block;margin-top:4px;font-size:13px;line-height:19px;color:var(--fg-3)}
+  .su-site .globe{flex:0 0 auto;color:var(--fg-3)}
+  .su-site .host{
+    flex:1;min-width:0;font-size:17px;line-height:24px;color:var(--fg);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.005em;
+  }
   .su-x{
-    flex:0 0 auto;width:30px;height:30px;margin-top:5px;border:0;border-radius:9px;
+    flex:0 0 auto;width:32px;height:32px;border:0;border-radius:10px;
     background:transparent;color:var(--fg-3);display:grid;place-items:center;cursor:pointer;
     transition:background .15s,color .15s;
   }
-  .su-x:hover{background:#1c1c1c;color:var(--fg)}
+  .su-x:hover{background:#242424;color:var(--fg)}
 
   /* the stream says one thing at a time, and shimmers while it is saying it */
   .su-stream{
-    margin-top:26px;padding:0 2px;min-height:56px;
-    display:flex;flex-direction:column;gap:10px;
-    font-size:14.5px;line-height:22px;color:var(--fg-2);
+    margin-top:24px;padding:0 2px;min-height:56px;
+    display:flex;flex-direction:column;gap:12px;
+    font-size:14px;line-height:21px;color:var(--fg-2);
   }
   .su-stream p{
-    margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    animation:linein .4s cubic-bezier(.32,.72,0,1) both;
+    margin:0;animation:linein .4s cubic-bezier(.32,.72,0,1) both;
   }
   .su-stream p.run{animation:shimx 3.6s linear infinite}
-  .su-stream p.done{color:var(--fg-3)}
+  .su-stream p.done{color:#b4b4b4}
   @keyframes linein{from{opacity:0;transform:translateY(5px)}}
 
   /* only the line being written carries the light; finished lines go plain grey */
@@ -2094,17 +2210,73 @@
   @media (prefers-reduced-motion:reduce){ .dp i{animation:none;opacity:.6} }
 
   /* the finish floats over the deck */
+  /* the finish sits in the last third of the screen, over a blur that ramps up */
   .su-done{
-    position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(14px);
-    z-index:70;display:none;align-items:center;gap:16px;
-    padding:10px 10px 10px 20px;border-radius:999px;
-    background:#151515;border:1px solid #272727;
-    box-shadow:0 18px 48px rgba(0,0,0,.66);
-    opacity:0;transition:opacity .5s ease,transform .5s cubic-bezier(.32,.72,0,1);
+    position:fixed;left:0;right:0;bottom:0;height:27%;z-index:70;display:none;
+    align-items:flex-end;justify-content:center;text-align:center;
+    padding:0 24px 44px;
+    opacity:0;transition:opacity .7s ease;
   }
-  .su-done.on{display:flex;opacity:1;transform:translateX(-50%)}
-  .su-done .lbl{font-size:14px;color:var(--fg-2)}
-  .su-done .lbl b{color:var(--fg);font-weight:500}
+  .su-done.on{display:flex;opacity:1}
+  /* The blur region is deliberately taller than the text block: the logo is the
+     top of the text, and it has to sit ON blur, not on the sharp edge above it.
+     Blur itself stays light; the darkness comes from a tall gradient instead. */
+  .su-done .haze{position:absolute;left:0;right:0;bottom:0;top:-160%;z-index:0;pointer-events:none}
+  .su-done .haze i{position:absolute;left:0;right:0;bottom:0;display:block}
+  .su-done .haze i:nth-child(1){
+    top:0;   -webkit-backdrop-filter:blur(1px); backdrop-filter:blur(1px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 60%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 60%);
+  }
+  .su-done .haze i:nth-child(2){
+    top:34%; -webkit-backdrop-filter:blur(2.5px); backdrop-filter:blur(2.5px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 60%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 60%);
+  }
+  .su-done .haze i:nth-child(3){
+    top:58%; -webkit-backdrop-filter:blur(5px);  backdrop-filter:blur(5px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 55%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 55%);
+  }
+  .su-done .haze i:nth-child(4){
+    top:76%; -webkit-backdrop-filter:blur(9px); backdrop-filter:blur(9px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 55%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 55%);
+  }
+  /* the dark does the heavy lifting: nothing at the top, solid at the floor */
+  .su-done .haze i:nth-child(5){
+    top:0;
+    background:linear-gradient(to bottom,
+      rgba(0,0,0,0) 0%, rgba(0,0,0,.20) 30%, rgba(0,0,0,.50) 52%,
+      rgba(0,0,0,.80) 72%, rgba(0,0,0,.94) 88%, rgba(0,0,0,.98) 100%);
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+  }
+
+  .su-done .done-in{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;align-items:center;
+    opacity:0;transform:translateY(18px);
+  }
+  .su-done.on .done-in{animation:doneup .7s cubic-bezier(.32,.72,0,1) .12s forwards}
+  @keyframes doneup{to{opacity:1;transform:none}}
+  .su-done .done-mark{width:40px;height:44px;display:block;margin:0 0 18px}
+  .su-done h2{
+    margin:0;font-size:30px;line-height:40px;font-weight:400;letter-spacing:-.015em;color:var(--fg);
+  }
+  .su-done .credit{
+    margin:10px 0 0;font-size:17px;line-height:26px;color:var(--fg-2);
+  }
+  .su-done .n{
+    font-size:17px;font-weight:600;color:var(--fg);
+    font-variant-numeric:tabular-nums;
+  }
+  .su-done .lm{margin-top:28px}
+  .su-done .lm-in{padding:0 18px 0 26px}
+  .su-done .lm-in svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
+  .su-done .lm:hover .lm-in svg{transform:translateX(3px)}
+  @media (prefers-reduced-motion:reduce){
+    .su-done,.su-done .done-in{transition:none;animation:none;opacity:1;transform:none}
+  }
 
   /* liquid metal: a lit rim that turns, over a near-black pill */
   .lm{position:relative;flex:0 0 auto;border:0;background:none;padding:0;cursor:pointer;font:inherit}
@@ -2146,7 +2318,7 @@
   .col.waiting .col-body{opacity:0}
 
   /* while the feed is being built a column shows its name and that it is working */
-  .col-dp{display:none;align-items:center;flex:0 0 auto;margin-left:10px}
+  .col-dp{display:none;align-items:center;flex:0 0 auto;margin-left:auto;order:9}
   body.setup-run .col-dp{display:inline-flex}
   body.setup-run .col-dot,
   body.setup-run .col-menu,
@@ -2182,6 +2354,38 @@
     font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);
   }
 
+  /* the locked state is a pitch, not an empty box */
+  .sig-lock{
+    border-radius:var(--r-card);background:var(--card);overflow:hidden;
+    border:1px solid #232323;
+    display:flex;flex-direction:column;
+  }
+  .sig-lock-art{
+    position:relative;flex:0 0 auto;height:150px;overflow:hidden;background:#0b0b0b;
+  }
+  .sig-lock-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .sig-lock-body{flex:0 0 auto;padding:16px 18px 18px}
+  .sig-tag{
+    display:inline-block;margin:0 0 10px;padding:3px 9px;border-radius:999px;
+    background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.28);
+    color:#5eead4;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  }
+  .sig-lock h3{margin:0 0 9px;font-size:18px;line-height:25px;font-weight:500;letter-spacing:-.01em;color:var(--fg)}
+  .sig-lock p{margin:0 0 9px;font-size:13.5px;line-height:20px;color:var(--fg-2)}
+  .sig-lock p:last-of-type{margin-bottom:0}
+  .sig-lock p b{color:var(--fg);font-weight:500}
+  .sig-unlock{
+    display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
+    margin:16px 0 0;height:42px;border:0;border-radius:12px;
+    background:linear-gradient(180deg,#ffffff,#e9e9e9);color:#0a0a0a;
+    font:inherit;font-size:14px;font-weight:550;cursor:pointer;
+    transition:transform .14s cubic-bezier(.34,1.4,.64,1),box-shadow .2s;
+  }
+  .sig-unlock svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
+  .sig-unlock:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+  .sig-unlock:hover svg{transform:translateX(3px)}
+  .sig-foot{margin:10px 0 0!important;font-size:12px!important;line-height:18px!important;color:var(--fg-3)!important;text-align:center}
+
   .sig-intro{
     border-radius:var(--r-card);background:var(--card);padding:18px 18px 16px;
   }
@@ -2190,7 +2394,7 @@
   .sig-will{margin:14px 0 0;display:flex;flex-direction:column;gap:9px}
   .sig-will div{display:flex;gap:10px;font-size:13px;line-height:19px;color:var(--fg-3)}
   .sig-will i{
-    width:5px;height:5px;border-radius:50%;background:#5eead4;flex:0 0 auto;margin-top:7px;opacity:.7;
+    width:4px;height:4px;border-radius:50%;background:var(--fg-3);flex:0 0 auto;margin-top:7px;
   }
 
   .src{
@@ -2201,6 +2405,8 @@
     width:34px;height:34px;border-radius:10px;flex:0 0 auto;display:grid;place-items:center;
     background:#1c1c1c;color:#fafafa;
   }
+  .src-ic img{width:20px;height:20px;object-fit:contain;display:block}
+  .src-ic img.wide{width:26px;height:16px}
   .src-t{min-width:0;flex:1}
   .src-t b{display:block;font-size:13.5px;font-weight:500;line-height:19px}
   .src-t span{display:block;font-size:12px;line-height:17px;color:var(--fg-3)}
@@ -2247,6 +2453,11 @@
   .life.loyal{background:rgba(139,156,240,.12);border:1px solid rgba(139,156,240,.26);color:#8b9cf0}
   .life.lapsed{background:rgba(224,166,60,.12);border:1px solid rgba(224,166,60,.26);color:#e0a63c}
   .life.done{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.26);color:#4ade80}
+  .sig-rule{border:0;border-top:1px solid #1f1f1f;margin:12px 0 0}
+  .sig-main{margin:12px;padding:14px 14px 12px;border-radius:14px;background:#131313}
+  .sig-main h3{margin:0 0 5px!important}
+  .sig-main p{margin:0 0 12px!important}
+  .sig-main .sig-nums{margin:0!important;background:#191919}
   .sig-card h3{margin:10px 16px 5px;font-size:16px;line-height:23px;font-weight:400;letter-spacing:-.005em}
   .sig-card p{margin:0 16px 14px;font-size:13.5px;line-height:20px;color:var(--fg-2)}
   .sig-nums{display:flex;margin:0 12px 12px;border-radius:12px;background:#171717;overflow:hidden}
@@ -2325,14 +2536,14 @@
   .funnel .minus b{color:#e0a63c}
   .funnel .last{background:#1c1c1c!important}
   .funnel .last b{font-size:16px}
-  .msg{
+  .eml{
     border-radius:14px;background:#141414;border:1px solid var(--line-soft);overflow:hidden;
   }
-  .msg-head{padding:12px 14px;border-bottom:1px solid var(--line-soft);font-size:13px;color:var(--fg-3)}
-  .msg-head b{color:var(--fg);font-weight:500}
-  .msg-body{padding:14px;font-size:13.5px;line-height:21px;color:var(--fg-2);white-space:pre-wrap}
-  .msg-body mark{background:rgba(94,234,212,.14);color:#5eead4;border-radius:4px;padding:1px 4px}
-  .msg-cta{margin:0 14px 14px;display:inline-flex;height:34px;padding:0 14px;border-radius:9px;
+  .eml-head{padding:12px 14px;border-bottom:1px solid var(--line-soft);font-size:13px;color:var(--fg-3)}
+  .eml-head b{color:var(--fg);font-weight:500}
+  .eml-body{padding:14px;font-size:13.5px;line-height:21px;color:var(--fg-2);white-space:pre-wrap}
+  .eml-body mark{background:rgba(94,234,212,.14);color:#5eead4;border-radius:4px;padding:1px 4px}
+  .eml-cta{margin:0 14px 14px;display:inline-flex;height:34px;padding:0 14px;border-radius:9px;
     background:#fafafa;color:#0a0a0a;font-size:13px;font-weight:500;align-items:center}
   .steps{display:flex;flex-direction:column;gap:0}
   .step{display:flex;gap:14px}
@@ -2355,18 +2566,22 @@
 
 
   .tune-list{display:flex;flex-direction:column;gap:4px;margin:6px 0 20px}
-  .tune-row{display:flex;align-items:center;gap:12px;padding:10px 4px}
-  .tune-row img{width:32px;height:32px;flex:0 0 auto;display:block}
+  .tune-row{display:flex;align-items:center;gap:14px;padding:12px 4px}
+  .tune-ic{
+    width:44px;height:44px;border-radius:13px;flex:0 0 auto;
+    background:#1c1c1c;display:grid;place-items:center;
+  }
+  .tune-ic img{width:28px;height:28px;display:block}
   .tune-row .who{flex:1;min-width:0}
-  .tune-row b{display:block;font-size:13.5px;font-weight:500;line-height:18px}
-  .tune-row span{display:block;font-size:12px;line-height:16px;color:var(--fg-3)}
-  .seg3{display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:#171717;flex:0 0 auto}
+  .tune-row b{display:block;font-size:14.5px;font-weight:500;line-height:20px;letter-spacing:-.005em}
+  .tune-row span{display:block;margin-top:1px;font-size:13px;line-height:19px;color:var(--fg-3)}
+  .seg3{display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:#141414;flex:0 0 auto}
   .seg3 button{
-    height:26px;padding:0 11px;border:0;border-radius:999px;background:transparent;
-    color:var(--fg-3);font:inherit;font-size:12px;cursor:pointer;transition:background .15s,color .15s;
+    height:32px;padding:0 18px;border:0;border-radius:999px;background:transparent;
+    color:var(--fg-3);font:inherit;font-size:13px;cursor:pointer;transition:background .15s,color .15s;
   }
   .seg3 button:hover{color:var(--fg-2)}
-  .seg3 button.on{background:#fafafa;color:#0a0a0a}
+  .seg3 button.on{background:#2b2b2b;color:var(--fg);font-weight:500}
 
   .drop{
     display:flex;flex-direction:column;align-items:center;gap:5px;
@@ -2501,7 +2716,7 @@
 <section class="start" id="start">
   <div class="start-in">
 
-    <svg class="start-mark" viewBox="0 0 234 234" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ShopOS">
+    <svg class="start-mark" viewBox="43.8 38.6 145.5 161" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="ShopOS">
       <path d="M188.023 124.642H148.738L176.498 152.402C174.067 155.973 171.306 159.335 168.245 162.396C168.065 162.606 167.855 162.816 167.645 163.026C164.584 166.057 161.223 168.818 157.651 171.279C155.731 172.6 153.72 173.83 151.679 174.971L142.016 155.643L135.203 142.018L132.832 137.216L131.302 134.215L129.891 131.364L128.541 128.663C127.73 127.103 126.71 125.752 125.449 124.642C124.849 124.102 124.219 123.621 123.529 123.201C123.229 122.991 122.928 122.841 122.598 122.661C120.678 121.701 118.607 121.221 116.536 121.221C113.985 121.221 111.614 121.911 109.543 123.171C108.853 123.591 108.193 124.072 107.593 124.642C106.362 125.722 105.312 127.073 104.532 128.633L103.211 131.274L101.711 134.245L100.24 137.247L97.8692 141.928L90.9666 155.763L86.1648 165.397L81.393 174.941C79.3523 173.83 77.3715 172.6 75.4508 171.279C71.7594 168.758 68.3082 165.877 65.157 162.726C62.0058 159.575 59.1247 156.124 56.5738 152.402L84.3341 124.642H45.0795C44.2692 120.32 43.8491 115.879 43.8491 111.317C43.8491 106.755 44.2692 102.284 45.0795 97.9619H84.3341L56.6038 70.2316C59.1247 66.5102 62.0058 63.0589 65.157 59.9078C68.3082 56.7566 71.7594 53.8755 75.4508 51.3546L103.211 79.1149V39.8603C107.533 39.05 111.974 38.6299 116.536 38.6299C121.098 38.6299 125.569 39.05 129.891 39.8603V79.1149L157.651 51.3546C161.343 53.8755 164.794 56.7566 167.945 59.9078C171.096 63.0589 173.977 66.5102 176.498 70.2016L148.738 97.9619H188.023C188.833 102.284 189.253 106.755 189.253 111.317C189.253 115.879 188.833 120.32 188.023 124.642Z" fill="white"/>
       <path d="M150.089 198.049C149.009 199.07 147.628 199.58 146.218 199.58C145.317 199.58 144.417 199.37 143.607 198.95L130.522 191.897L128.181 190.637L120.498 186.495C119.268 185.835 117.887 185.505 116.567 185.505C115.246 185.505 113.866 185.835 112.635 186.495L104.892 190.667L102.581 191.897L89.5266 198.95C88.7163 199.37 87.786 199.58 86.8857 199.58C85.5051 199.58 84.0946 199.07 83.0442 198.049C81.2736 196.399 80.7934 193.788 81.8438 191.597L85.025 185.205L88.4462 178.392L93.188 168.909L103.212 148.831L104.892 145.47L107.293 140.728L108.584 138.147L108.764 137.757L111.555 132.145C112.365 130.524 113.896 129.474 115.576 129.204C115.876 129.114 116.207 129.084 116.537 129.084C116.867 129.084 117.197 129.114 117.527 129.174C118.037 129.264 118.517 129.414 118.998 129.654C120.078 130.224 120.948 131.094 121.489 132.145L124.28 137.787L124.4 138.027L125.78 140.728L128.181 145.53L129.892 148.951L144.597 178.392L148.018 185.205L151.2 191.597C152.28 193.788 151.8 196.369 150.089 198.049Z" fill="url(#ogr)"/>
       <defs><linearGradient id="ogr" x1="84" y1="202" x2="143" y2="165" gradientUnits="userSpaceOnUse">
@@ -2510,7 +2725,7 @@
       </linearGradient></defs>
     </svg>
 
-    <h1>Get a team for your Brand.<span>Let’s start with your URL.</span></h1>
+    <h1>Get a team for your brand that works while you sleep.<span>Let’s start with your URL.</span></h1>
 
     <div class="stack-in">
       <form class="ofield" id="start-form">
@@ -2518,14 +2733,12 @@
           <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
           <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
         </svg>
-        <span class="scheme">https://</span>
-        <input id="start-url" type="text" inputmode="url" placeholder="yourstore.com" autocomplete="off" spellcheck="false">
+        <input id="start-url" type="text" inputmode="url" placeholder="examplestore.com" autocomplete="off" spellcheck="false">
         <button class="oclear" id="start-clear" type="button" aria-label="Clear">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </form>
 
-      <p class="osub">Don’t have a brand yet? <button type="button" id="start-fresh">Start a new brand</button></p>
     </div>
 
     <span class="cta-wrap">
@@ -2538,6 +2751,8 @@
         </span>
       </button>
     </span>
+
+    <p class="osub">Don’t have a brand yet? <button type="button" id="start-fresh">Start a new brand</button></p>
   </div>
 </section>
 
@@ -2873,7 +3088,7 @@
   <div class="modal">
     <div class="modal-body">
       <h2 id="tune-title">Tune your feed</h2>
-      <p>Five agents post here. Turn the dial on any of them and the feed rebalances tomorrow morning.</p>
+      <p>Choose what you want ShopOS to spend more or less time on.</p>
       <div class="tune-list" id="tune-list"></div>
       <button class="btn btn-lg btn-primary btn-block" data-close>Done</button>
     </div>
@@ -2903,11 +3118,45 @@
 </div>
 
 <div class="su-done" id="su-done">
-  <span class="lbl"><b>Your feed is ready.</b> The agents keep going from here.</span>
-  <button class="lm" id="su-open" aria-label="Open your feed">
-    <span class="lm-rim"><span class="lm-in">Open your feed</span></span>
-  </button>
+  <span class="haze" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+  <div class="done-in">
+    <svg class="done-mark" viewBox="43.8 38.6 145.5 161" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M188.023 124.642H148.738L176.498 152.402C174.067 155.973 171.306 159.335 168.245 162.396C168.065 162.606 167.855 162.816 167.645 163.026C164.584 166.057 161.223 168.818 157.651 171.279C155.731 172.6 153.72 173.83 151.679 174.971L142.016 155.643L135.203 142.018L132.832 137.216L131.302 134.215L129.891 131.364L128.541 128.663C127.73 127.103 126.71 125.752 125.449 124.642C124.849 124.102 124.219 123.621 123.529 123.201C123.229 122.991 122.928 122.841 122.598 122.661C120.678 121.701 118.607 121.221 116.536 121.221C113.985 121.221 111.614 121.911 109.543 123.171C108.853 123.591 108.193 124.072 107.593 124.642C106.362 125.722 105.312 127.073 104.532 128.633L103.211 131.274L101.711 134.245L100.24 137.247L97.8692 141.928L90.9666 155.763L86.1648 165.397L81.393 174.941C79.3523 173.83 77.3715 172.6 75.4508 171.279C71.7594 168.758 68.3082 165.877 65.157 162.726C62.0058 159.575 59.1247 156.124 56.5738 152.402L84.3341 124.642H45.0795C44.2692 120.32 43.8491 115.879 43.8491 111.317C43.8491 106.755 44.2692 102.284 45.0795 97.9619H84.3341L56.6038 70.2316C59.1247 66.5102 62.0058 63.0589 65.157 59.9078C68.3082 56.7566 71.7594 53.8755 75.4508 51.3546L103.211 79.1149V39.8603C107.533 39.05 111.974 38.6299 116.536 38.6299C121.098 38.6299 125.569 39.05 129.891 39.8603V79.1149L157.651 51.3546C161.343 53.8755 164.794 56.7566 167.945 59.9078C171.096 63.0589 173.977 66.5102 176.498 70.2016L148.738 97.9619H188.023C188.833 102.284 189.253 106.755 189.253 111.317C189.253 115.879 188.833 120.32 188.023 124.642Z" fill="white"/>
+      <path d="M150.089 198.049C149.009 199.07 147.628 199.58 146.218 199.58C145.317 199.58 144.417 199.37 143.607 198.95L130.522 191.897L128.181 190.637L120.498 186.495C119.268 185.835 117.887 185.505 116.567 185.505C115.246 185.505 113.866 185.835 112.635 186.495L104.892 190.667L102.581 191.897L89.5266 198.95C88.7163 199.37 87.786 199.58 86.8857 199.58C85.5051 199.58 84.0946 199.07 83.0442 198.049C81.2736 196.399 80.7934 193.788 81.8438 191.597L85.025 185.205L88.4462 178.392L93.188 168.909L103.212 148.831L104.892 145.47L107.293 140.728L108.584 138.147L108.764 137.757L111.555 132.145C112.365 130.524 113.896 129.474 115.576 129.204C115.876 129.114 116.207 129.084 116.537 129.084C116.867 129.084 117.197 129.114 117.527 129.174C118.037 129.264 118.517 129.414 118.998 129.654C120.078 130.224 120.948 131.094 121.489 132.145L124.28 137.787L124.4 138.027L125.78 140.728L128.181 145.53L129.892 148.951L144.597 178.392L148.018 185.205L151.2 191.597C152.28 193.788 151.8 196.369 150.089 198.049Z" fill="url(#dgr)"/>
+      <defs><linearGradient id="dgr" x1="84" y1="202" x2="143" y2="165" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#5735FC"/><stop offset=".385" stop-color="#FE49FE"/>
+        <stop offset=".69" stop-color="#F2A4F2"/><stop offset="1" stop-color="#F9C391"/>
+      </linearGradient></defs>
+    </svg>
+    <h2>ShopOS is ready for you.</h2>
+    <p class="credit">We are giving you <span class="n" id="su-credits">0</span> credits to get started.</p>
+    <button class="lm" id="su-open" aria-label="Get started">
+      <span class="lm-rim"><span class="lm-in">Get started
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </span></span>
+    </button>
+  </div>
 </div>
+
+<section class="agents-page" id="agents-page" hidden>
+  <button class="ap-close" id="ap-close" aria-label="Back">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="ap-in">
+    <h1>Meet your AI workers.</h1>
+    <p class="ap-sub">Your core team is ready to work across catalog, creative, performance, visibility, storefront and customers.</p>
+    <div class="ap-grid" id="ap-grid"></div>
+    <hr class="ap-rule">
+    <div class="ap-foot">
+      <p>Need something more specific? Create custom agents for the workflows,
+         roles or tasks unique to your brand.</p>
+      <button class="ap-cta" id="ap-custom">
+        Create custom agents
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
 
 <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 
@@ -3130,16 +3379,17 @@
   };
 
   const card = (p) => {
+    // take the index BEFORE cloning: the clone is not in ALL_POSTS, so indexOf
+    // on it returns -1 and every card ends up claiming post -1
+    const idx = ALL_POSTS.indexOf(p);
     p = { ...p, badge: null };
     const a = AGENTS[p.agent];
     return `
-    <article class="card${p.rows ? ' is-data' : ''}" data-post="${ALL_POSTS.indexOf(p)}">
+    <article class="card${p.rows ? ' is-data' : ''}" data-post="${idx}">
       <div class="card-head">
         <img class="avatar" src="${a.avatar}" alt="">
         <span class="identity">
           <span class="agent-name">${a.name}</span>
-          <span class="meta">•</span>
-          <span class="meta">${p.time}</span>
         </span>
         ${p.badge ? `<span class="badge ${p.badge[1]}">${p.badge[0]}</span>` : ''}
         <span class="menu-wrap">
@@ -3272,7 +3522,7 @@
   const ALL_POSTS = [...POSTS, ...TEXT_POSTS, ...DECK_ONLY];
 
   // the deck is organised by what the work is about, not by who made it
-  const COL_ORDER = ['signals', 'catalog', 'creatives', 'ads', 'storefront', 'visibility'];
+  const COL_ORDER = ['catalog', 'creatives', 'ads', 'storefront', 'visibility', 'signals'];
   const SECTORS = {
     signals:    { name:'Signals',    dot:'#5eead4' },
     catalog:    { name:'Catalog',    dot:'#e8e8e8' },
@@ -3280,14 +3530,6 @@
     ads:        { name:'Ads',        dot:'#ef8b33' },
     storefront: { name:'Storefront', dot:'#e8c34a' },
     visibility: { name:'Visibility', dot:'#7aa8ff' }
-  };
-  const SECTOR_DESC = {
-    signals:    'Who to talk to next, and why. It fills in once your customer data is connected.',
-    catalog:    'Every product and every sync. What the feed is selling, kept honest.',
-    creatives:  'What the agents made this week, and what each piece is for.',
-    ads:        'Spend, fatigue, and the cut that should run next.',
-    storefront: 'The store itself: pages, copy and the things waiting on you.',
-    visibility: 'How AI answers about you, and where the gaps still are.'
   };
   const SECTOR_BY_AGENT = {
     creative:'creatives', performance:'ads', storefront:'storefront', visibility:'visibility'
@@ -3353,12 +3595,6 @@
   // the sector's face is whoever wrote most of its cards, so nothing is hardcoded
   const SECTOR_LEAD = { signals:'crm', catalog:'storefront', creatives:'creative',
                         ads:'performance', storefront:'storefront', visibility:'visibility' };
-  const leadAgent = (k) => {
-    if (SECTOR_LEAD[k]) return SECTOR_LEAD[k];
-    const n = {};
-    byAgent(k).forEach(p => n[p.agent] = (n[p.agent] || 0) + 1);
-    return Object.keys(n).sort((a, b) => n[b] - n[a])[0] || 'creative';
-  };
 
   const SECTOR_STATE = {
     signals:    { on:false, note:'Waiting on your customer data' },
@@ -3373,7 +3609,6 @@
   const mxDots = () => Array.from({ length: 16 }, (_, i) =>
     `<i style="--s:${(i % 4) + ((i / 4) | 0)}"></i>`).join('');
   const MATRIX = `<i class="mx" aria-hidden="true">${mxDots()}</i>`;
-  const MATRIX_OFF = `<i class="mx off" aria-hidden="true">${mxDots()}</i>`;
   const sectorLive = (k) => {
     const st = SECTOR_STATE[k];
     if (!st.on) return `<i class="dot${st.soon ? ' soon' : ''}"></i>${st.note}`;
@@ -3382,7 +3617,6 @@
 
   // whatever the brand turned out to be during setup
   let BRAND_NAME = 'Urban Performance';
-  const brandMark = () => BRAND_NAME.split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
   window.__setBrand = (name) => { BRAND_NAME = name || BRAND_NAME; };
 
   const saved = new Set();
@@ -3396,44 +3630,10 @@
 
   const I_ROWS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>';
   const I_COLS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="5.5" height="16" rx="1.4"/><rect x="9.25" y="4" width="5.5" height="16" rx="1.4"/><rect x="15.5" y="4" width="5.5" height="16" rx="1.4"/></svg>';
-  const I_LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
-
   const I_CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
-
-  const agentChip = (k) => `
-    <button class="chip-f has-dot${colState[k].hidden ? ' muted' : ''}${chip === k ? ' on' : ''}"
-            data-chip="${k}" data-fk="chip-${k}" data-fk-fallback="chip-agents"
-            title="${colState[k].hidden ? 'Hidden. Click to bring it back.' : SECTORS[k].name}">
-      <span class="chip-av">
-        <i class="col-dot" style="background:${SECTORS[k].dot}"></i>
-        ${colState[k].hidden ? `<i class="off">${svg(I.eyeOff, 9)}</i>` : ''}
-      </span>${SECTORS[k].name}
-    </button>`;
-
-  const wishChip = () => '';
 
   // the single feed has no columns, so its one filter is the agent who posted
   const AGENT_ORDER = ['creative', 'performance', 'storefront', 'visibility'];
-  const filterDrop = () => {
-    const k = AGENT_ORDER.includes(chip) ? chip : null;
-    const face = k
-      ? `<span class="chip-av"><img src="${AGENTS[k].avatar}" alt=""></span>${AGENTS[k].name}`
-      : `<span class="stack">${AGENT_ORDER.map(a =>
-           `<img src="${AGENTS[a].avatar}" alt="">`).join('')}</span>Agents`;
-    return `
-      <div class="fdrop">
-        <button class="chip-f has-img fdrop-btn${k ? ' on' : ''}"
-                data-fk="chip-agents" aria-expanded="false" aria-haspopup="menu">
-          ${face}${I_CHEV}
-        </button>
-        <div class="fdrop-pop" role="menu">
-          ${AGENT_ORDER.map(a => `
-            <button role="menuitem" data-chip="${a}" class="${chip === a ? 'on' : ''}">
-              <img src="${AGENTS[a].avatar}" alt="">${AGENTS[a].name}
-            </button>`).join('')}
-        </div>
-      </div>`;
-  };
 
   // the single feed has no columns, so it is the only view that needs filters
   const subbarHTML = () => '';
@@ -3443,11 +3643,11 @@
   const subbarFeed = document.getElementById('subbar-feed');
   const paintSubbars = () => {
     subbarFeed.innerHTML = subbarHTML();
-    switchEl.innerHTML = `
+    // before upgrading there is no second view to switch to, only an invitation
+    switchEl.innerHTML = pro ? `
       <button class="ls-btn${layout === 'feed' ? ' on' : ''}" data-layout="feed" data-tip="Feed" aria-label="Single feed">${I_ROWS}</button>
-      <button class="ls-btn${layout === 'deck' ? ' on' : ''}" data-layout="deck" data-tip="${pro ? 'Pro deck' : 'Pro deck, locked'}" aria-label="Deck view">
-        ${I_COLS}${pro ? '' : `<span class="lock">${I_LOCK}</span>`}
-      </button>`;
+      <button class="ls-btn${layout === 'deck' ? ' on' : ''}" data-layout="deck" data-tip="Pro deck" aria-label="Deck view">${I_COLS}</button>`
+      : `<button class="pro-cta" id="pro-cta">${I_COLS}<span>Check out Pro mode</span></button>`;
     backEl.hidden = layout !== 'deck';
     if (deckBuilt) paintNav();
   };
@@ -3493,11 +3693,15 @@
       <section class="col" data-col="${k}">
         <div class="col-head">
           <div class="col-top">
-            <i class="col-dot" style="background:${SECTORS[k].dot}"></i>
             <h2>${SECTORS[k].name}</h2>
             <span class="col-dp" aria-hidden="true">${MATRIX}</span>
             <span class="col-fill"></span>
-            <span class="col-menu">
+            <span class="col-now">
+              ${k === 'signals' ? (typeof sigLive !== 'undefined' && sigLive ? `<span class="col-live" data-sector="signals">${MATRIX}Reading your customers</span>` : '') : SECTOR_STATE[k].on
+                ? `<span class="col-live" data-sector="${k}">${sectorLive(k)}</span>`
+                : `<span class="col-off">Agent not working</span>`}
+            </span>
+            <span class="col-menu"${k === 'signals' && !(typeof sigLive !== 'undefined' && sigLive) ? ' hidden' : ''}>
               <button class="col-dots" aria-label="Column options">${svg(I.more, 18)}</button>
               <div class="col-pop">
                 <button data-act="refresh">${svg(I.refresh, 15)} Refresh new cards</button>
@@ -3505,11 +3709,6 @@
               </div>
             </span>
           </div>
-          <p class="col-meta">
-            ${SECTOR_STATE[k].on
-              ? `<span class="col-live" data-sector="${k}">${sectorLive(k)}</span>`
-              : `<span class="col-off">${MATRIX_OFF}Agent not working</span>`}
-          </p>
           <hr>
         </div>
         <div class="col-body">
@@ -3542,17 +3741,8 @@
   });
 
   const sideEl = document.getElementById('deck-side');
-  const I_AUDIT = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m7 14 4-4 4 4 5-5"/></svg>';
-  const I_GLOBE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg>';
-
-  const AUDITS = ['Brand health, this week', 'AI visibility audit', 'Storefront audit'];
-  const EXAMPLES = ['Global feed, all brands', 'Demo: a skincare brand', 'Demo: a footwear brand'];
-
   const I_JAM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>';
-  const I_UP  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>';
   const I_TUNE= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5H3"/><path d="M12 19H3"/><path d="M14 3v4"/><path d="M16 17v4"/><path d="M21 12h-9"/><path d="M21 19h-5"/><path d="M21 5h-7"/><path d="M8 10v4"/><path d="M8 12H3"/></svg>';
-
-  const I_BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
 
   const navHTML = () => `
     ${COL_ORDER.map(k => `
@@ -3564,15 +3754,12 @@
           ? (typeof signalsLive === 'function' && signalsLive() ? SIGNALS.length : '')
           : byAgent(k).length}</span>
       </button>`).join('')}
-    <button data-col="jam">${I_JAM} Jam with the team</button>`;
+`;
 
   const sideHTML = () => `
     <div class="side-brand">
-      <i class="bmark">${brandMark()}</i>
-      <span>
-        <b>${BRAND_NAME}</b>
-        <span>A feed built for your catalog</span>
-      </span>
+      <i class="bmark"><img src="assets/brand-mark.jpg" alt=""></i>
+      <span><b>${BRAND_NAME}</b></span>
     </div>
 
     <p class="side-note">
@@ -3587,7 +3774,17 @@
     <div class="side-nav" id="side-nav">${navHTML()}</div>
 
     <div class="side-acts">
+      <div class="dash-card" id="dash-card">
+        <div class="dash-art"><img src="assets/dash-preview.jpg" alt=""></div>
+        <h4>Everything lands in your dashboard</h4>
+        <p>New batches, new lines and every run your agents finish show up there first.</p>
+        <button class="dash-cta" id="dash-go">
+          Go to dashboard
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
       <button class="side-act" id="side-tune">${I_TUNE} Tune</button>
+      <button class="side-act" id="side-jam">${I_JAM} Jam with the team</button>
     </div>`;
 
   const paintNav = () => {
@@ -3598,6 +3795,7 @@
   sideEl.addEventListener('click', (e) => {
     if (e.target.closest('#side-jam'))    return openModal('jam-scrim');
     if (e.target.closest('#side-tune'))   return openTune();
+    if (e.target.closest('#side-jam'))    return openModal('jam-scrim');
 
     const b = e.target.closest('.side-nav button');
     if (!b) return;
@@ -3631,12 +3829,15 @@
 
   let deckBuilt = false;
   const buildDeck = (empty) => {
+    // a rebuild replaces every column, which would otherwise throw the reader
+    // back to the first one — so hold the scroll across it
+    const keep = deckBuilt ? deckEl.scrollLeft : 0;
     deckEl.innerHTML = COL_ORDER.map(k => colHTML(k, empty)).join('');
     // the deck is dense, so its cards arrive already settled
     deckEl.querySelectorAll('.card').forEach(el => el.classList.add('in'));
     if (!empty) {
       sideEl.innerHTML = sideHTML(); applyChip(); watchLead(); deckBuilt = true;
-      deckEl.scrollLeft = 0;
+      deckEl.scrollLeft = keep;
       paintSignals();
     }
   };
@@ -3779,6 +3980,7 @@
       applyChip();
       return;
     }
+    if (e.target.closest('#pro-cta')) return openModal('pro-scrim');
     const l = e.target.closest('[data-layout]');
     if (!l) return;
     const want = l.dataset.layout;
@@ -3897,14 +4099,15 @@
     visibility:'How AI answers about you',
     crm:'Who to talk to next, and the journey'
   };
+  const TUNE_LABEL = { less:'Low', same:'Normal', more:'More' };
   const paintTune = () => {
     document.getElementById('tune-list').innerHTML = Object.keys(AGENTS).map(k => `
       <div class="tune-row">
-        <img src="${AGENTS[k].avatar}" alt="">
+        <i class="tune-ic"><img src="${AGENTS[k].avatar}" alt=""></i>
         <span class="who"><b>${AGENTS[k].name}</b><span>${TUNE_WHAT[k]}</span></span>
         <span class="seg3" data-tune="${k}">
           ${['less','same','more'].map(v =>
-            `<button data-v="${v}" class="${tuneState[k] === v ? 'on' : ''}">${v[0].toUpperCase() + v.slice(1)}</button>`).join('')}
+            `<button data-v="${v}" class="${tuneState[k] === v ? 'on' : ''}">${TUNE_LABEL[v]}</button>`).join('')}
         </span>
       </div>`).join('');
   };
@@ -3917,8 +4120,12 @@
   const openTune = () => { paintTune(); openModal('tune-scrim'); };
   document.getElementById('tune-feed').addEventListener('click', openTune);
 
+  // the dashboard card is painted with the sidebar, so it is delegated, not bound
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#dash-go')) toast('Opening your dashboard.');
+  });
+
   // ---- upload: the file is the easy part, what it becomes is the question
-  const openUp = () => openModal('up-scrim');
   document.addEventListener('click', (e) => {
     const u = e.target.closest('[data-up]');
     if (!u) return;
@@ -3930,6 +4137,7 @@
 
   document.getElementById('pro-go').addEventListener('click', () => {
     pro = true;
+    document.body.classList.add('is-pro');
     closeModals();
     setLayout('deck');
     toast('Pro is on. Drag a column edge to resize it.');
@@ -4420,6 +4628,51 @@
     showView('chat');
   });
 
+  // ---------- the agents page ----------
+  const AP_ORDER = ['creative', 'catalog', 'performance', 'visibility', 'storefront', 'crm'];
+  const AP_META = {
+    creative:    { name:'Creative director',    avatar:'assets/agent-creative.svg' },
+    catalog:     { name:'Catalog manager',      avatar:'assets/agent-orchestrator.svg' },
+    performance: { name:'Performance marketer', avatar:'assets/agent-performance.svg' },
+    visibility:  { name:'AI visibility',        avatar:'assets/agent-visibility.svg' },
+    storefront:  { name:'Storefront manager',   avatar:'assets/agent-storefront.svg' },
+    crm:         { name:'CRM specialist',       avatar:'assets/agent-crm.svg' }
+  };
+  const apEl = document.getElementById('agents-page');
+
+  const openAgents = () => {
+    if (!apEl.hidden) return;
+    document.getElementById('ap-grid').innerHTML = AP_ORDER.map((k, i) => `
+      <button class="ap-agent" style="--i:${i}" data-agent="${k}">
+        <img src="${AP_META[k].avatar}" alt="">
+        <span>${AP_META[k].name}</span>
+      </button>`).join('');
+    // whatever is on screen eases out first, then the page eases in
+    const host = views[view];
+    host.classList.add('is-out');
+    setTimeout(() => {
+      host.classList.remove('is-out');
+      apEl.hidden = false;
+      apEl.classList.remove('is-out');
+    }, 240);
+  };
+
+  const closeAgents = () => {
+    apEl.classList.add('is-out');
+    setTimeout(() => { apEl.hidden = true; apEl.classList.remove('is-out'); }, 420);
+  };
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-nav="agents"]')) { e.preventDefault(); return openAgents(); }
+    if (e.target.closest('#ap-close')) return closeAgents();
+    if (e.target.closest('#ap-custom')) return toast('Custom agents are coming to Pro.');
+    const a = e.target.closest('.ap-agent');
+    if (a) { closeAgents(); toast(`${AP_META[a.dataset.agent].name} is ready when you are.`); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !apEl.hidden) closeAgents();
+  });
+
   // ---------- feed <-> chat: a cross-dissolve, not a cut ----------
   const views = { feed: document.getElementById('view-feed'),
                   deck: document.getElementById('view-deck'),
@@ -4447,6 +4700,14 @@
     document.querySelector('.dock').style.opacity = next === 'chat' ? '0' : '';
     storiesEl.hidden = next !== 'feed';
     document.querySelector('.dock').style.pointerEvents = next === 'chat' ? 'none' : '';
+
+    // the docked composer is fixed-position, so leaving chat has to put it away
+    if (next !== 'chat') {
+      workDock.hidden = true;
+      workDock.classList.remove('arrive');
+      workEl.hidden = true;
+      idleEl.hidden = false;
+    }
 
     setTimeout(() => {
       from.classList.remove('is-out', 'soft');
@@ -4518,6 +4779,7 @@
     // search and history are overlays: they never take the selected state
     if (key === 'search')  return setSpot(true);
     if (key === 'history') return setHistory(!histEl.classList.contains('on'));
+    if (key === 'agents')  return;   // the agents page handles its own opening
 
     document.querySelectorAll('.rail-btn').forEach(x => x.classList.toggle('is-on', x === b));
     if (key === 'home') {
@@ -4827,17 +5089,17 @@
       unlocks:'Purchase history and lifecycle. Every signal needs this one.',
       records:'2,400 customer records · 4,118 orders · 212 products',
       steps:['Importing purchase history','Matching customer records','Preparing signals'],
-      icon:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' },
+      icon:'<img src="assets/logo-shopify.png" alt="">' },
     { id:'klaviyo',  name:'Klaviyo',           kind:'Email reachability, consent, journeys',
       unlocks:'Email as a channel, contact-frequency rules and journey conflict checks.',
       records:'2,057 subscribed profiles · 38 segments',
       steps:['Importing subscriber profiles','Checking channel eligibility','Preparing signals'],
-      icon:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' },
+      icon:'<img src="assets/logo-klaviyo.png" class="wide" alt="">' },
     { id:'whatsapp', name:'WhatsApp Business', kind:'Opt-in, reachability, replies',
       unlocks:'WhatsApp as an alternative channel, with its own consent.',
       records:'1,229 opted-in numbers',
       steps:['Importing the opt-in list','Checking channel eligibility','Preparing signals'],
-      icon:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>' },
+      icon:'<img src="assets/logo-whatsapp.png" alt="">' },
     { id:'support',  name:'Customer support',  kind:'Open issues, returns, service context', optional:true,
       unlocks:'Support exclusions, so nobody with an open complaint gets a marketing message.',
       records:'318 tickets · 41 open',
@@ -4845,7 +5107,7 @@
       icon:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>' }
   ];
   const srcState = { shopify:'off', klaviyo:'off', whatsapp:'off', support:'off' };
-  let sigLive = false;
+  let sigLive = false, sigUnlocked = false;
   const srcOn = (id) => srcState[id] === 'on';
   const signalsLive = () => srcOn('shopify') && (srcOn('klaviyo') || srcOn('whatsapp'));
 
@@ -4972,13 +5234,16 @@
           <b>${sc.name}</b><span class="when">· just now</span>
           <span class="src-ok">Connected</span>
         </div>
-        <h3>${sc.name} is feeding your signals</h3>
-        <p>${sc.unlocks}</p>
-        <div class="sig-nums">
-          ${sc.records.split(' · ').map(r => {
-            const m = r.match(/^([\d,]+)\s+(.*)$/);
-            return `<div><b>${m ? m[1] : r}</b><span>${m ? m[2] : ''}</span></div>`;
-          }).join('')}
+        <hr class="sig-rule">
+        <div class="sig-main">
+          <h3>${sc.name} is feeding your signals</h3>
+          <p>${sc.unlocks}</p>
+          <div class="sig-nums">
+            ${sc.records.split(' · ').map(r => {
+              const m = r.match(/^([\d,]+)\s+(.*)$/);
+              return `<div><b>${m ? m[1] : r}</b><span>${m ? m[2] : ''}</span></div>`;
+            }).join('')}
+          </div>
         </div>
       </article>`;
     return `
@@ -5001,12 +5266,15 @@
           <img src="${AGENTS.crm.avatar}" alt="">
           <b>CRM specialist</b><span class="when">· ${sg.when}</span>
         </div>
+        <hr class="sig-rule">
+        <div class="sig-main">
         <h3>${sg.headline}</h3>
         <p>${sg.why}</p>
         <div class="sig-nums">
           <div><b>${num(c.eligible)}</b><span>fit the rules</span></div>
           <div><b>${num(f)}</b><span>reachable today</span></div>
           <div><b>${sg.channel}</b><span>channel</span></div>
+        </div>
         </div>
         <button class="sig-open" data-open="${sg.id}">
           Open signal
@@ -5021,10 +5289,13 @@
         <img src="${AGENTS.crm.avatar}" alt="">
         <b>CRM specialist</b><span class="when">· ${DONE_SIGNAL.when}</span>
       </div>
+      <hr class="sig-rule">
+      <div class="sig-main">
       <h3>${DONE_SIGNAL.headline}</h3>
       <p>${DONE_SIGNAL.why}</p>
       <div class="sig-nums">
         ${DONE_SIGNAL.nums.map(n => `<div><b>${n[0]}</b><span>${n[1]}</span></div>`).join('')}
+      </div>
       </div>
     </article>`;
 
@@ -5032,23 +5303,32 @@
     const host = document.getElementById('sig-body');
     if (!host) return;
     const live = signalsLive();
+    const lockedCard = `
+      <article class="sig-lock">
+        <div class="sig-lock-art" aria-hidden="true"><img src="assets/signals-hero.jpg" alt=""></div>
+        <div class="sig-lock-body">
+          <h3>Signals reads the people buying from your store and turns that into a card you
+              can act on.</h3>
+          <div class="sig-will">
+            <div><i></i>First-time buyers who are due a second order</div>
+            <div><i></i>Repeat customers worth early access to a drop</div>
+            <div><i></i>People who went quiet, and what to ask them</div>
+          </div>
+          <button class="sig-unlock" id="sig-unlock">
+            Unlock Signals
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      </article>`;
+
     host.innerHTML = live
       ? SIGNALS.map(sigCardHTML).join('') + doneCardHTML() +
         `<p class="sig-sec">Connected</p>` +
         SOURCES.filter(sc => srcOn(sc.id)).map(srcHTML).join('') +
         SOURCES.filter(sc => !srcOn(sc.id)).map(srcHTML).join('')
-      : `
-        <div class="sig-intro">
-          <h3>Nothing here yet, and that is the point.</h3>
-          <p>Signals reads your customer data and tells you who to talk to next. Connect Shopify and one
-             channel below and this column fills in within a few minutes.</p>
-          <div class="sig-will">
-            <div><i></i>First-time buyers who are due a second order</div>
-            <div><i></i>Repeat customers worth giving first access to a drop</div>
-            <div><i></i>People who went quiet, and what to ask them</div>
-          </div>
-        </div>
-        ${SOURCES.map(srcHTML).join('')}`;
+      : !sigUnlocked
+        ? lockedCard
+        : `<p class="sig-sec">Connect your sources</p>${SOURCES.map(srcHTML).join('')}`;
     paintSideSrc();
   };
 
@@ -5083,6 +5363,11 @@
                     'Re-reading consent','Watching for replies'] }
         : { on:false, note:'Waiting on your customer data' };
       if (sigLive && !wasLive) {
+        const col = deckEl.querySelector('.col[data-col="signals"]');
+        const now = col && col.querySelector('.col-now');
+        if (now) now.innerHTML = `<span class="col-live" data-sector="signals">${MATRIX}Reading your customers</span>`;
+        const menu = col && col.querySelector('.col-menu');
+        if (menu) menu.hidden = false;
         buildDeck();
         toast('Signals is live. Three of them are waiting.');
       } else {
@@ -5115,10 +5400,10 @@
 
     if (dwTab === 'message') return `
       <h4>Draft, on ${sg.channel}</h4>
-      <div class="msg">
-        ${sg.msg.subject ? `<div class="msg-head">Subject <b>${sg.msg.subject.replace(/{{(\w+)}}/g, '<mark>$1</mark>')}</b></div>` : ''}
-        <div class="msg-body">${sg.msg.body.replace(/{{(\w+)}}/g, '<mark>$1</mark>')}</div>
-        <span class="msg-cta">${sg.msg.cta}</span>
+      <div class="eml">
+        ${sg.msg.subject ? `<div class="eml-head">Subject <b>${sg.msg.subject.replace(/{{(\w+)}}/g, '<mark>$1</mark>')}</b></div>` : ''}
+        <div class="eml-body">${sg.msg.body.replace(/{{(\w+)}}/g, '<mark>$1</mark>')}</div>
+        <span class="eml-cta">${sg.msg.cta}</span>
       </div>
       <p style="margin-top:14px">Highlighted fields are filled per person at send time.</p>
       ${sg.asset ? `<h4>Waiting on</h4><p>${sg.asset}</p>` : ''}`;
@@ -5176,6 +5461,12 @@
 
   document.addEventListener('click', (e) => {
     const con = e.target.closest('[data-connect]');
+    if (e.target.closest('#sig-unlock')) {
+      sigUnlocked = true;
+      paintSignals();
+      toast('Signals unlocked. Connect a source to fill it in.');
+      return;
+    }
     if (con) return connectSource(con.dataset.connect);
     const op = e.target.closest('[data-open], .sig-card[data-sig]');
     if (op) return openDrawer(op.dataset.open || op.dataset.sig);
@@ -5208,17 +5499,17 @@
 
     let BRAND = { host:'urbanperformance.com', name:'Urban Performance', products:212, fresh:false };
 
-    const I_TICK = '<svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
     const AG_ORDER = ['creative', 'performance', 'storefront', 'visibility'];
 
     const suHTML = () => `
-      <div class="su-id">
-        <span class="su-id-t">
-          <b class="su-brand">${BRAND.name}</b>
-          <span class="su-url">${BRAND.fresh ? 'A brand new store' : BRAND.host}</span>
-        </span>
+      <div class="su-site">
+        <svg class="globe" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span class="host">${BRAND.fresh ? 'A brand new store' : BRAND.host}</span>
         <button class="su-x" id="su-x" aria-label="Start over">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
 
@@ -5244,7 +5535,7 @@
     const streamEl = () => document.getElementById('su-stream');
     // a line is written, then it sits there shimmering while the work behind it
     // happens, and only then does it settle and the next line start
-    const HOLD = 5200;
+    const HOLD = 2300;
 
     const say = (text, onStart) => { streamQ.push({ text, onStart }); if (!streaming) pump(); };
 
@@ -5302,19 +5593,6 @@
       });
     };
 
-    const SCRIPT = () => [
-      { t: BRAND.fresh ? 'Opening a new workspace' : 'Reaching ' + BRAND.host, ms:2400 },
-      { t: BRAND.fresh ? 'Setting up a new catalog' : `Reading the catalog, ${BRAND.products} products`,
-        ms:4000, col:'catalog', agent:'storefront' },
-      { t: BRAND.fresh ? 'Learning the category you are entering' : 'Learning how the brand writes', ms:2800 },
-      { t: BRAND.fresh ? 'Drafting a first look' : 'Looking at what you have shot before',
-        ms:4200, col:'creatives', agent:'creative' },
-      { t: BRAND.fresh ? 'Planning a first campaign' : 'Pulling the last 30 days of spend',
-        ms:4000, col:'ads', agent:'performance' },
-      { t:'Checking the storefront end to end', ms:3800, col:'storefront' },
-      { t:'Asking what AI says about you', ms:4200, col:'visibility', agent:'visibility' },
-      { t:'Sorting what needs you first', ms:2600 }
-    ];
 
     // one agent at a time, slowly, while the work runs
     // an agent only shows up when its turn comes; a line that mentions one before
@@ -5330,22 +5608,46 @@
     };
 
     const LINES = (B) => B.fresh ? [
-      `Opening a new workspace for ${B.name}.`,
-      'No catalog to read yet, so the agents are working from the category you are entering.',
-      'The Creative director is drafting a first look, and the Performance marketer is planning a first campaign.',
-      'The Storefront manager is laying out a store you can edit rather than start from nothing.',
-      'Checking how AI answers about your category, so you know what you are walking into.',
-      'That is enough to react to. Your feed is ready.'
+      'Opening a new workspace.',
+      'No catalog yet, so we start from your category.',
+      'Drafting a first look.',
+      'Planning a first campaign.',
+      'Laying out a store you can edit.',
+      'Checking how AI answers in your category.',
+      'That is enough to react to.'
     ] : [
-      `Reaching ${B.host}.`,
-      `Reading the catalog. ${B.products} products, with prices, stock and how each one is described.`,
-      'Learning how the brand writes: the words that repeat, the ones that never appear, the length of a sentence.',
-      'Looking at what you have shot before, and which frames held attention the longest.',
-      'Pulling the last 30 days of spend, then the frequency and the cost per acquisition behind it.',
-      'Checking the storefront end to end, and what is still waiting on someone to approve it.',
-      'Asking the models what they say about you in your category, and where the gaps are.',
-      'Sorting all of it by what needs you first. Your feed is ready.'
+      'Opening your store.',
+      'Reading the theme and collections.',
+      `Reading the catalog. ${B.products} products.`,
+      'Checking prices and stock.',
+      'Learning how the brand writes.',
+      'Pulling your product photography.',
+      'Ranking frames by attention held.',
+      'Pulling 30 days of ad spend.',
+      'Checking frequency and cost per sale.',
+      'Finding audiences seeing too much.',
+      'Checking the storefront end to end.',
+      'Counting what waits on approval.',
+      'Asking the models about your brand.',
+      'Comparing you with three rivals.',
+      'Sorting it by what needs you first.'
     ];
+
+    // the credits land on the number rather than just appearing
+    const countTo = (el, target) => {
+      if (!el) return;
+      const t0 = performance.now(), dur = 1600;
+      const tick = (now) => {
+        const k = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - k, 3);
+        // it shuffles through near misses before it settles
+        el.textContent = k < 1
+          ? Math.round(target * e + (1 - e) * (Math.random() * 180 - 90))
+          : target;
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
 
     const run = () => {
       const lines = LINES(BRAND);
@@ -5362,16 +5664,24 @@
       });
 
       // the agents turn up one at a time while the text runs
-      AG_ORDER.forEach((k, i) => at(2200 + i * 6400, () => wakeAgent(k, 'Reading your store', true, true)));
+      AG_ORDER.forEach((k, i) => at(2200 + i * 7000, () => wakeAgent(k, 'Reading your store', true, true)));
 
       streamDone = () => {
         AG_ORDER.forEach(k => wakeAgent(k, 'Posting to your feed', true, true));
         document.getElementById('su-done').classList.add('on');
+        countTo(document.getElementById('su-credits'), 500);
       };
     };
 
     const openFeed = () => {
       timers.forEach(clearTimeout);
+      // the setup screen eases out before the feed eases in
+      document.body.classList.add('setup-out');
+      setTimeout(reallyOpenFeed, 620);
+    };
+
+    const reallyOpenFeed = () => {
+      document.body.classList.remove('setup-out');
       document.body.classList.remove('setup', 'setup-run');
       document.getElementById('su-done').classList.remove('on');
       window.__setBrand(BRAND.name);
@@ -5381,6 +5691,8 @@
       document.querySelectorAll('#view-deck').forEach(el => el.hidden = true);
       document.getElementById('view-feed').hidden = false;
       window.scrollTo(0, 0);
+      document.body.classList.add('feed-in');
+      setTimeout(() => document.body.classList.remove('feed-in'), 800);
       toast(`${BRAND.name} is set up. This is your feed.`);
     };
 
@@ -5392,7 +5704,7 @@
 
       // the first screen lifts away, and the setup screen rises in behind it
       startEl.classList.add('out');
-      at(560, () => {
+      at(720, () => {
         startEl.remove();
         document.body.classList.remove('setup');
         document.body.classList.add('setup-run');

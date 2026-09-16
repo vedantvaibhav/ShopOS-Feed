@@ -822,7 +822,7 @@
   .col-pop hr{border:0;border-top:1px solid #262626;margin:5px 8px}
   .col.is-refreshing .col-body{opacity:.45;transition:opacity .2s}
   .col-body{
-    flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;
+    flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;
     padding:22px 22px 40px;display:flex;flex-direction:column;gap:20px;
   }
   .col-body::-webkit-scrollbar{width:7px}
@@ -1041,6 +1041,16 @@
     border:7px solid transparent;border-top-color:#fafafa;
   }
   .act:hover .tip,.act:focus-visible .tip{opacity:1;visibility:visible;transform:translate(-50%,0)}
+  /* a column no longer scrolls sideways, so the end tips are pinned inside it
+     instead of hanging off the edge and getting clipped */
+  .act-group .act:first-child .tip{left:0;transform:translate(0,4px)}
+  .act-group .act:first-child:hover .tip,
+  .act-group .act:first-child:focus-visible .tip{transform:translate(0,0)}
+  .act-group .act:first-child .tip::after{left:14px}
+  .card-actions > .act:last-child .tip{left:auto;right:0;transform:translate(0,4px)}
+  .card-actions > .act:last-child:hover .tip,
+  .card-actions > .act:last-child:focus-visible .tip{transform:translate(0,0)}
+  .card-actions > .act:last-child .tip::after{left:auto;right:7px;margin-left:0}
   /* a column scrolls, so the tip hangs under the icon where nothing clips it */
   .col .act .tip{bottom:auto;top:calc(100% + 12px)}
   .col .act .tip::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#fafafa}
@@ -2137,7 +2147,8 @@
     height:54px;padding:0 10px 0 16px;
     border-radius:14px;background:#131313;border:1px solid #242424;
   }
-  .su-site .globe{flex:0 0 auto;color:var(--fg-3)}
+  .su-site .globe{flex:0 0 auto;color:var(--fg-3);cursor:pointer;transition:color .15s}
+  .su-site .globe:hover{color:var(--fg)}
   .su-site .host{
     flex:1;min-width:0;font-size:17px;line-height:24px;color:var(--fg);
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.005em;
@@ -3521,7 +3532,7 @@
   const ALL_POSTS = [...POSTS, ...TEXT_POSTS, ...DECK_ONLY];
 
   // the deck is organised by what the work is about, not by who made it
-  const COL_ORDER = ['catalog', 'creatives', 'ads', 'storefront', 'visibility', 'signals'];
+  const COL_ORDER = ['signals', 'catalog', 'creatives', 'ads', 'storefront', 'visibility'];
   const SECTORS = {
     signals:    { name:'Signals',    dot:'#5eead4' },
     catalog:    { name:'Catalog',    dot:'#e8e8e8' },
@@ -3830,6 +3841,9 @@
     // a rebuild replaces every column, which would otherwise throw the reader
     // back to the first one — so hold the scroll across it
     const keep = deckBuilt ? deckEl.scrollLeft : 0;
+    // scroll snapping re-snaps whatever we restore, so it is held off for the
+    // one frame it takes to put the scroll back where the reader left it
+    document.body.classList.add('col-dragging');
     deckEl.innerHTML = COL_ORDER.map(k => colHTML(k, empty)).join('');
     // the deck is dense, so its cards arrive already settled
     deckEl.querySelectorAll('.card').forEach(el => el.classList.add('in'));
@@ -3838,6 +3852,10 @@
       deckEl.scrollLeft = keep;
       paintSignals();
     }
+    requestAnimationFrame(() => {
+      deckEl.scrollLeft = keep;
+      document.body.classList.remove('col-dragging');
+    });
   };
 
   // the leftmost column mostly on screen is the one the nav marks as current
@@ -5501,7 +5519,8 @@
 
     const suHTML = () => `
       <div class="su-site">
-        <svg class="globe" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="globe" id="su-skip" role="button" tabindex="0" aria-label="Skip setup"
+             width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
         </svg>
@@ -5720,6 +5739,9 @@
 
     sideEl.addEventListener('click', (e) => {
       if (e.target.closest('#su-x')) location.reload();
+      // the globe skips the stream and drops straight into the finished feed,
+      // for running the demo without sitting through setup
+      if (e.target.closest('#su-skip')) openFeed();
     });
     document.getElementById('su-open').addEventListener('click', openFeed);
 

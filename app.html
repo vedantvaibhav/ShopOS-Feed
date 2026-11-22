@@ -99,7 +99,7 @@ html[data-theme="dark"] .pop.v img{display:block}
 .tapstage .slot img{height:min(84px,10vh);width:auto;filter:var(--felt)}
 .tapstage .me .ground::after{width:min(150px,38%)}
 .tapstage .slot.many img{height:min(56px,7vh)}
-.tapstage .me{height:100%;min-width:240px;margin:0 -24px;display:grid;place-items:center}
+.tapstage .me{flex:none;height:100%;width:240px;margin:0 -24px;display:grid;place-items:center}   /* a fixed width: whatever stands on it, the page around it never shifts */
 .tapstage .me .lead{height:min(232px,26vh)}
 .tapstage .me .pop.v video.lead{height:min(250px,28vh)}
 /* a role change moves like one strip scrolled sideways: the look on stage and the next one travel the same distance together.
@@ -126,7 +126,7 @@ html[data-theme="dark"] .pop.v img{display:block}
   .onb.split .tapstage .slot{width:150px}
   .onb.split .tapstage .slot img{height:min(104px,12vh)}
   .onb.split .tapstage .slot.many img{height:min(80px,9.5vh)}
-  .onb.split .tapstage .me{min-width:390px;margin:0 -48px}
+  .onb.split .tapstage .me{width:390px;margin:0 -48px}
   .onb.split .tapstage .me .lead{height:min(400px,47vh)}
   .onb.split .tapstage .me .pop.v video.lead{height:min(440px,52vh)}
 }
@@ -352,7 +352,7 @@ html.still ::-webkit-scrollbar{display:none}
   .tapstage .slot{width:92px}
   .tapstage .slot img{height:58px}
   .tapstage .slot.many img{height:42px}
-  .tapstage .me{min-width:190px;margin:0 -30px}
+  .tapstage .me{width:190px;margin:0 -30px}
   .tapstage .me .lead{height:164px}
   .tapstage .me .pop.v video.lead{height:176px}
   .read-tiles i{width:46px;height:46px;border-radius:12px}

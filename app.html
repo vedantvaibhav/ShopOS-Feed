@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=9">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=10">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 body{padding-left:60px;min-height:100vh;overflow-x:hidden}
@@ -52,7 +52,7 @@ a{text-decoration:none}
 .feed.arrive .slide.at .fcard{animation:land .9s .25s cubic-bezier(.2,.9,.25,1.1) both}
 .feed.arrive .stories .story{animation:rise .5s both}
 .feed.arrive .slide.at .acts > *{animation:rise .45s both}
-@media (prefers-reduced-motion:reduce){.pop,.bob,.land,.in3d,.curtain,.onb-body > *,.feed.arrive *{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.pop,.bob,.land,.in3d,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *{animation:none!important}}
 /* Jammie moves: a short loop on white, laid onto the page */
 .pop.v{mix-blend-mode:multiply}
 .pop.v img{display:none}
@@ -101,6 +101,11 @@ html[data-theme="dark"] .pop.v img{display:block}
 .tapstage .me{height:100%;min-width:190px;display:grid;place-items:center}
 .tapstage .me .lead{height:min(232px,26vh)}
 .tapstage .me .pop.v video.lead{height:min(250px,28vh)}
+.tapstage .me > *{grid-area:1/1}
+.slide-in{animation:slide-in .48s var(--ease) both}
+.slide-out{animation:slide-out .48s var(--ease) both}
+@keyframes slide-in{from{opacity:0;transform:translateX(84px)}}
+@keyframes slide-out{to{opacity:0;transform:translateX(-84px)}}
 .in3d{animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,sway3d 6s ease-in-out .85s infinite}
 @keyframes in3d{0%{opacity:0;transform:perspective(500px) translateY(30px) rotateY(-80deg) rotateX(18deg) scale(.8)}60%{opacity:1;transform:perspective(500px) translateY(-5px) rotateY(14deg) rotateX(-3deg) scale(1.03)}100%{opacity:1;transform:perspective(500px) rotateY(0) scale(1)}}
 @keyframes sway3d{0%,100%{transform:perspective(500px) rotateY(0)}25%{transform:perspective(500px) rotateY(14deg)}75%{transform:perspective(500px) rotateY(-14deg)}}
@@ -368,8 +373,8 @@ html.still ::-webkit-scrollbar{display:none}
 <main id="app"></main>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=9"></script>
-<script src="assets/jammie/v3/data.js?v=9"></script>
+<script src="assets/jammie/v3/icons.js?v=10"></script>
+<script src="assets/jammie/v3/data.js?v=10"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, fcard, icard, srow } = window.JAMMIE;
@@ -444,7 +449,10 @@ html.still ::-webkit-scrollbar{display:none}
   const CHANS = { Instagram: 'instagram', 'Meta ads': 'meta', Google: 'google', Email: 'email' };
   function tapPicked(ask){
     const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim()), $ = id => document.getElementById(id);
-    if (kind === 'role' && on[0]) $('meSlot').innerHTML = `<div class="pop"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`;
+    if (kind === 'role' && on[0]) { const me = $('meSlot'), old = me.lastElementChild;                 // the one on stage leaves to the left as the new one comes in from the right
+      [...me.children].forEach(el => { if (el !== old) el.remove(); });
+      if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 480); }
+      me.insertAdjacentHTML('beforeend', `<div class="look slide-in"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`); }
     if (kind === 'goal' && on[0]) $('goalSlot').innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`;
     if (kind === 'chan') { const slot = $('chanSlot');
       [...slot.children].forEach(el => { if (!on.includes(el.dataset.n)) el.remove(); });

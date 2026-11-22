@@ -44,16 +44,17 @@ window.JAMMIE = (() => {
     return `<article class="fcard ${o.cls || ''}" data-idea="${d.id}">
     <div class="fc-media">${media(d)}
       <div class="fcard-top"><span style="display:flex;gap:6px">
-        ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
+        ${d.draft ? `<span class="pill">Initial draft</span>` : ''}${d.tag ? `<span class="pill">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
 
-      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}</div>
-    <div class="fc-body"><div class="fc-text"><h3>${d.title}</h3><p>${d.line}</p></div></div></article>`; };
+      <div class="fc-over"><h3>${d.title}</h3><p>${d.line}</p></div></div></article>`; };
 
-  // carousels work the same on every page: the arrows move a frame, the count follows the scroll
+  // carousels work the same on every page: the arrows move a frame, the count follows the scroll.
+  // A frame is a little narrower than the card, so the edge of the next one always shows
+  const frameW = fr => fr.children[0].getBoundingClientRect().width + 4;
   document.addEventListener('click', e => { const b = e.target.closest('[data-frame]'); if (!b) return;
-    const fr = b.closest('.fc-media').querySelector('.frames'); fr.scrollBy({ left: +b.dataset.frame * fr.clientWidth, behavior: 'smooth' }); });
+    const fr = b.closest('.fc-media').querySelector('.frames'); fr.scrollBy({ left: +b.dataset.frame * frameW(fr), behavior: 'smooth' }); });
   document.addEventListener('scroll', e => { const fr = e.target; if (!fr.classList || !fr.classList.contains('frames')) return;
-    const n = fr.children.length, i = Math.min(n - 1, Math.round(fr.scrollLeft / fr.clientWidth)), m = fr.closest('.fc-media');
+    const n = fr.children.length, i = fr.scrollLeft >= fr.scrollWidth - fr.clientWidth - 2 ? n - 1 : Math.min(n - 1, Math.round(fr.scrollLeft / frameW(fr))), m = fr.closest('.fc-media');
     m.querySelector('[data-fr-count]').textContent = `${i + 1}/${n}`;
     m.querySelector('.fr-nav.prev').disabled = i === 0; m.querySelector('.fr-nav.next').disabled = i === n - 1; }, true);
 
@@ -68,5 +69,5 @@ window.JAMMIE = (() => {
   const srow = (title, meta, imgs, href = '#') => `<a class="srow draw" href="${href}">
     <span class="stack">${imgs.map(f => `<i style="background-image:url(${D}${f})"></i>`).join('')}</span>
     <b>${title}</b><span>${meta}</span>${ico('arrow')}</a>`;
-  return { A, D, GUIDE, IDEAS, real, av, fcard, icard, srow };
+  return { A, D, GUIDE, IDEAS, real, av, fcard, icard, srow, frameW };
 })();

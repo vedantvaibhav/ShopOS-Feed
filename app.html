@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=7">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=8">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 body{padding-left:60px;min-height:100vh;overflow-x:hidden}
@@ -15,129 +15,138 @@ body.bare{padding-left:0}
 body.bare .rail,body.bare .fab{display:none}
 a{text-decoration:none}
 
-/* ---------- onboarding: Jammie, one thought, one control ---------- */
-.center{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:64px 24px 40px;text-align:center}
+/* ---------- onboarding: one column, centred. Jammie, one thought, one control ---------- */
 .h1{font-size:calc(var(--h-size) * .8);line-height:1.08}
 .h2{font-size:calc(var(--h-size) * .58);line-height:1.12}
 .lead{height:150px;width:auto;filter:drop-shadow(0 14px 10px rgba(0,0,0,.14))}
-.dots{position:absolute;top:24px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.dots{position:absolute;top:28px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
 .dots i{width:20px;height:4px;border-radius:4px;background:var(--s3)}
 .dots i.on{background:var(--on)}
-.skip{position:absolute;top:14px;right:20px}
-.onb{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh}
-.onb-art{background:var(--s2);display:grid;place-items:center;padding:40px;position:relative}
-.onb-art .lead{height:min(300px,34vh)}
-.onb-art{overflow:hidden}
-.book{flex:none}
-.onb-art .book{width:190px}
-.onb-art .pop .lead{height:min(230px,28vh)}
-.onb:not(:has(.book)) .onb-art .pop .lead{height:min(300px,34vh)}
-.glow{position:absolute;width:min(520px,80%);aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--jam) 26%,transparent),transparent);animation:breathe 4.5s ease-in-out infinite}
+.dots i.now{animation:fill .5s var(--ease) both;transform-origin:left}
+.skip{position:absolute;top:16px;right:20px}
+.onb{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:76px 24px 44px;text-align:center}
+.brandmark{position:absolute;left:28px;top:20px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
+.brandmark img{height:28px}
+.onb-art{position:relative;display:grid;place-items:center}
+.onb-art .lead{height:min(240px,27vh)}
+.onb-body{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+.onb-body .h1,.onb-body .h2{max-width:18ch}
 .pop{position:relative;animation:pop .75s cubic-bezier(.34,1.56,.64,1) both}
 .bob{position:relative;animation:bob 3.4s ease-in-out .8s infinite}
-.scan .bob{animation:scan 2.2s ease-in-out .8s infinite}
-.fl{position:absolute;width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.12));animation:fl-in .8s cubic-bezier(.34,1.4,.64,1) both,drift 6s ease-in-out infinite alternate}
-.bit{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px;border-radius:14px;object-fit:cover;border:3px solid #fff;box-shadow:var(--shadow-2);animation:suck 2.4s cubic-bezier(.5,0,.8,.4) infinite both}
 .land{animation:land .9s cubic-bezier(.2,.9,.25,1.12) both}
 .land::before{content:"";position:absolute;inset:0;z-index:5;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-120%);animation:shine 1.1s .5s ease-out both;pointer-events:none}
-.flyin{animation:flyin .9s cubic-bezier(.2,.9,.25,1.15) both}
-.burst{position:absolute;left:50%;top:50%;width:26px;height:auto;animation:burst 1.3s .35s cubic-bezier(.2,.8,.3,1) both}
-.onb-body > *:not(.dots):not(.skip){animation:rise .65s var(--ease) both}
-.onb-body > *:nth-child(3){animation-delay:.12s!important}
-.onb-body > *:nth-child(4){animation-delay:.22s!important}
-.onb-body > *:nth-child(5){animation-delay:.32s!important}
-.dots i.on:last-of-type,.dots i.now{animation:fill .5s var(--ease) both;transform-origin:left}
+.onb-body > *:not(.skip){animation:rise .65s var(--ease) both}
+.onb-body > *:nth-child(2){animation-delay:.1s}
+.onb-body > *:nth-child(3){animation-delay:.2s}
+.onb-body > *:nth-child(4){animation-delay:.3s}
 .curtain{position:fixed;inset:0;z-index:60;background:var(--jam);clip-path:circle(0% at var(--cx,50%) var(--cy,50%));animation:bloom .5s cubic-bezier(.6,0,.3,1) forwards}
 .curtain.lift{clip-path:none;animation:lift .6s cubic-bezier(.6,0,.2,1) forwards}
 .curtain img{position:absolute;left:50%;top:50%;height:120px;transform:translate(-50%,-50%);filter:brightness(0) invert(1);opacity:.9}
-@keyframes breathe{50%{transform:scale(1.12);opacity:.75}}
 @keyframes pop{from{opacity:0;transform:translateY(40px) scale(.55)}}
 @keyframes bob{50%{transform:translateY(-9px)}}
-@keyframes scan{0%,100%{transform:rotate(-4deg) translateX(-6px)}50%{transform:rotate(4deg) translateX(6px)}}
-@keyframes fl-in{from{opacity:0;scale:.4}}
-@keyframes drift{to{translate:0 -14px;rotate:6deg}}
-@keyframes suck{0%{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1);opacity:0}15%{opacity:1}100%{transform:translate(0,10px) rotate(0) scale(.15);opacity:0}}
 @keyframes land{from{opacity:0;transform:translateY(70px) rotate(-4deg) scale(.9)}}
 @keyframes shine{to{transform:translateX(120%)}}
-@keyframes flyin{from{opacity:0;transform:translateX(160px) rotate(18deg)}}
-@keyframes burst{from{transform:translate(-50%,-50%) scale(.2);opacity:1}to{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(var(--r));opacity:0}}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}}
 @keyframes fill{from{transform:scaleX(0)}}
 @keyframes bloom{to{clip-path:circle(150% at var(--cx,50%) var(--cy,50%))}}
 @keyframes lift{to{transform:translateY(-100%)}}
-.feed.arrive .fcard{animation:land .9s .25s cubic-bezier(.2,.9,.25,1.1) both}
+.feed.arrive .slide.at .fcard{animation:land .9s .25s cubic-bezier(.2,.9,.25,1.1) both}
 .feed.arrive .stories .story{animation:rise .5s both}
-.feed.arrive .acts > *{animation:rise .45s both}
-@media (prefers-reduced-motion:reduce){.pop,.bob,.fl,.bit,.land,.flyin,.burst,.glow,.curtain,.onb-body > *,.feed.arrive *{animation:none!important}.bit,.burst{display:none}}
-.onb-art .fcard.mid p{display:none}
-.onb-art .fcard.mid .fc-media{height:min(470px,54vh)}
-/* Jammie moves: a short loop on white, laid onto the stage */
+.feed.arrive .slide.at .acts > *{animation:rise .45s both}
+@media (prefers-reduced-motion:reduce){.pop,.bob,.land,.in3d,.curtain,.onb-body > *,.feed.arrive *{animation:none!important}}
+/* Jammie moves: a short loop on white, laid onto the page */
 .pop.v{mix-blend-mode:multiply}
 .pop.v img{display:none}
-.onb-art .pop.v video.lead,.onb:not(:has(.book)) .onb-art .pop.v video.lead{display:block;height:min(350px,40vh);aspect-ratio:1;object-fit:cover;filter:none}
-.onb:has(.book) .onb-art .pop.v video.lead{height:min(270px,32vh)}
+.onb-art .pop.v video.lead{display:block;height:min(300px,32vh);aspect-ratio:1;object-fit:cover;filter:none}
+.onb.small .onb-art .pop.v video.lead{height:min(190px,21vh)}
+.onb.small .onb-art .lead{height:min(150px,17vh)}
 html[data-theme="dark"] .pop.v{mix-blend-mode:normal}
 html[data-theme="dark"] .pop.v video{display:none!important}
 html[data-theme="dark"] .pop.v img{display:block}
-/* sign-in is a popup over the first screen, then a hello */
-.gate{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.36);backdrop-filter:blur(3px);animation:fade .25s}
-.gate-card{position:relative;width:min(390px,100%);padding:26px 28px 26px;text-align:center;display:grid;justify-items:center;gap:14px;animation:gate-in .55s cubic-bezier(.2,.9,.25,1.1) both}
+/* sign-in is a popup over the first screen: Google, or a name and an email */
+.gate{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.36);backdrop-filter:blur(3px);animation:fade .25s}
+.gate-card{position:relative;width:min(390px,100%);max-height:calc(100vh - 32px);overflow-y:auto;padding:22px 28px 26px;text-align:center;display:grid;justify-items:center;gap:12px;animation:gate-in .55s cubic-bezier(.2,.9,.25,1.1) both;scrollbar-width:none}
 @keyframes gate-in{from{opacity:0;transform:translateY(28px) scale(.94)}}
-.gate-card .pop.v video.lead{display:block;height:190px;aspect-ratio:1;object-fit:cover;filter:none}
-.gate-card .lead{height:150px}
-.gate-card h2{font-size:25px;line-height:1.14}
+.gate-card .pop.v video.lead{display:block;height:150px;aspect-ratio:1;object-fit:cover;filter:none}
+.gate-card .lead{height:120px}
+.gate-card h2{font-size:24px;line-height:1.14}
 .gate-card .btn{width:100%}
-/* what we found: pictures, not a table */
-.found{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(520px,100%)}
-.ftile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-height:clamp(104px,17vh,150px);padding:14px 16px;border:0;border-radius:18px;overflow:hidden;background:var(--s2) center/cover;color:inherit;text-align:left;animation:rise .55s var(--ease) both}
-.ftile:nth-child(2){animation-delay:.08s}.ftile:nth-child(3){animation-delay:.16s}.ftile:nth-child(4){animation-delay:.24s}.ftile:nth-child(5){animation-delay:.32s}
-.ftile:hover{box-shadow:0 0 0 2px var(--on-line)}
-.ftile.wide{grid-column:1/-1;min-height:96px;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
-.ftile.pic{color:#fff;background-color:#111}
-.ftile.pic::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.66))}
-.ftile > *{position:relative}
-.ftile b{display:block;font-size:27px;font-weight:var(--h-weight);line-height:1.05;letter-spacing:var(--h-track)}
-.ftile small{display:block;font-size:13px;opacity:.86}
-.ftile img.el{position:absolute;right:8px;top:6px;height:72px;width:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.14))}
-.ftile .swatches i{width:30px;height:30px}
-.onb-art .brandmark{position:absolute;left:28px;top:22px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
-.onb-art .brandmark img{height:28px}
-.onb-body{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:20px;padding:72px clamp(28px,6vw,88px);text-align:left}
-.onb-body .dots{left:clamp(28px,6vw,88px);transform:none;top:34px}
-.onb-body .h1,.onb-body .h2{max-width:14ch}
-.onb-body .pair{justify-content:flex-start}
-.store{display:flex;align-items:center;gap:10px;width:min(500px,100%);height:56px;padding:0 7px 0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2)}
+.gate-card form{display:grid;gap:8px;width:100%}
+.gate-card .input{padding:11px 14px;text-align:left}
+.or{display:flex;align-items:center;gap:10px;width:100%;color:var(--fg-3);font-size:13px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+.store{display:flex;align-items:center;gap:10px;width:min(500px,100%);height:56px;padding:0 7px 0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card)}
 .store:focus-within{border-color:var(--on-line)}
 .store input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit;font-size:16px}
 .store .btn{border-radius:var(--r-pill);height:42px}
 .store > [data-ico]{color:var(--fg-2)}
+/* reading the store: its pictures land one by one, one line says what was found */
+.read{display:grid;justify-items:center;gap:16px;width:min(388px,100%)}
+.read-tiles{display:flex;gap:8px}
+.read-tiles i{position:relative;width:58px;height:58px;border-radius:14px;background:var(--s2);overflow:hidden}
+.read-tiles i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.8) 50%,transparent 70%);animation:shimmer 1.3s linear infinite}
+.read-tiles i.in::after{display:none}
+.read-tiles img{width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(.6);transition:opacity .35s,transform .55s cubic-bezier(.34,1.56,.64,1)}
+.read-tiles i.in img{opacity:1;transform:none}
+.read-bar{width:100%;height:5px;border-radius:5px;background:var(--s3);overflow:hidden}
+.read-bar b{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,color-mix(in srgb,var(--jam) 78%,#fff),var(--jam-2));transition:width 1s var(--ease)}
+.read-line{margin:0;min-height:1.5em;font-size:16px;color:var(--fg-2)}
+.read-line b{color:var(--fg);font-weight:600}
+.read-line.swap{animation:rise .4s var(--ease) both}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+/* three taps: every pick shows up on Jammie, or lands beside it */
+.tapstage{display:flex;align-items:center;justify-content:center;gap:10px;height:min(250px,28vh)}
+.tapstage .slot{width:132px;height:100%;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px}
+.tapstage .slot img{height:min(84px,10vh);width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.14))}
+.tapstage .slot.many img{height:min(56px,7vh)}
+.tapstage .me{height:100%;min-width:190px;display:grid;place-items:center}
+.tapstage .me .lead{height:min(232px,26vh)}
+.tapstage .me .pop.v video.lead{height:min(250px,28vh)}
+.in3d{animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,sway3d 6s ease-in-out .85s infinite}
+@keyframes in3d{0%{opacity:0;transform:perspective(500px) translateY(46px) rotateY(-85deg) rotateX(24deg) scale(.3)}60%{opacity:1;transform:perspective(500px) translateY(-8px) rotateY(16deg) rotateX(-4deg) scale(1.08)}100%{opacity:1;transform:perspective(500px) rotateY(0) scale(1)}}
+@keyframes sway3d{0%,100%{transform:perspective(500px) rotateY(0)}25%{transform:perspective(500px) rotateY(14deg)}75%{transform:perspective(500px) rotateY(-14deg)}}
+.asks{display:grid;gap:16px;width:min(560px,100%)}
+.asks h4{font-size:14px;font-weight:600;letter-spacing:0;margin-bottom:8px}
+.asks .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+/* hey, here it is: everything Jammie read, as one card */
+.brandcard{position:relative;width:min(400px,100%);border:1px solid var(--line-soft);border-radius:var(--r-card);background:var(--card);overflow:hidden;text-align:left}
+.bc-pics{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr;gap:3px;height:min(230px,26vh)}
+.bc-pics img{width:100%;height:100%;object-fit:cover;min-height:0}
+.bc-pics img:first-child{grid-row:1/3}
+.bc-body{display:grid;gap:14px;padding:16px 18px 18px}
+.bc-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bc-top b{font-size:26px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.1}
+.bc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bc-stats span{font-size:13px;color:var(--fg-2)}
+.bc-stats b{display:block;font-size:22px;font-weight:var(--h-weight);letter-spacing:var(--h-track);color:var(--fg);line-height:1.15}
 .todo{padding:0;margin:0}
 .gbtn{gap:10px}
 .gbtn svg{width:18px;height:18px}
-.asks{display:grid;gap:18px;width:min(520px,100%);text-align:left}
-.asks h4{font-size:14px;font-weight:600;letter-spacing:0;margin-bottom:8px}
-.asks .chips{display:flex;flex-wrap:wrap;gap:8px}
 .swatches{display:flex;gap:6px}
 .swatches i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .pair{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.book{position:relative;width:220px;aspect-ratio:3/4;border-radius:6px 14px 14px 6px;background:#2B50E0;color:#fff;padding:18px;text-align:left;box-shadow:var(--shadow-3),inset 6px 0 0 rgba(0,0,0,.14);transform:rotate(-3deg)}
+.book{position:relative;flex:none;width:220px;aspect-ratio:3/4;border-radius:6px 14px 14px 6px;background:#2B50E0;color:#fff;padding:18px;text-align:left;box-shadow:var(--shadow-3),inset 6px 0 0 rgba(0,0,0,.14);transform:rotate(-3deg)}
 .book small{font-size:11px;font-weight:600;opacity:.8}
 .book b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:6px}
 .book p{font-size:12.5px;line-height:1.35;margin:6px 0 0;opacity:.9}
 .book img{position:absolute;right:-18px;bottom:16px;width:58%;border-radius:8px;border:3px solid #fff;box-shadow:var(--shadow-2);transform:rotate(6deg)}
 
 /* ---------- the feed ---------- */
-.feed{position:relative;height:100vh;display:flex;flex-direction:column;align-items:center}
-.stories{flex:none;display:flex;gap:16px;padding:14px 0 10px}
+/* stories start where the card starts; the cards below are a real scroll, one card a stop */
+.feed{--side-w:min(440px,100vw);--col-w:calc(var(--fc-h) * .8 + 62px);position:relative;height:100vh;display:flex;flex-direction:column;padding-top:max(0px,calc((100vh - var(--fc-h) - 204px) / 2))}
+.stories-row{flex:none;display:flex;justify-content:center;padding:14px 92px 14px}
+.stories{display:flex;gap:16px;width:var(--col-w);max-width:100%;overflow-x:auto;scrollbar-width:none}
 .story{border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;color:var(--fg-2)}
 .story i{width:50px;height:50px;border-radius:50%;padding:2.5px;background:var(--jam);display:block}
 .story.seen i{background:var(--line)}
 .story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
-.feed{--side-w:min(440px,100vw)}
-.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:0 92px 14px;transition:padding .35s var(--ease)}
+.stage{flex:1;min-height:0;width:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+.stage::-webkit-scrollbar{display:none}
+.slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;padding:0 92px}
 .feed-col{display:flex;align-items:flex-start;gap:10px;min-width:0;justify-content:center}
 .feed-col .acts{height:var(--fc-h);justify-content:flex-end}
-.feed:has(.side) .stage{padding-right:calc(var(--side-w) + 28px)}
+.feed:has(.side) .slide,.feed:has(.side) .stories-row{padding-right:calc(var(--side-w) + 28px)}
+.feed:has(.side) .stage,.feed:has(.scrim) .stage{overflow:hidden}
 .feed:has(.side) .feed-nav,.feed:has(.side) .corner{display:none}
 body:has(.side) .fab{display:none}
 .age{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--fg-2);padding:8px 0}
@@ -157,8 +166,6 @@ body:has(.side) .fab{display:none}
 .order small{display:block;font-size:12px;color:var(--fg-2)}
 .order small em{font-style:normal;color:var(--jam);font-weight:600}
 .feed.has-panel .feed-nav{display:none}
-.fcard.enter-down{animation:in-down .42s var(--ease)}
-.fcard.enter-up{animation:in-up .42s var(--ease)}
 @keyframes in-down{from{opacity:0;transform:translateY(32px)}}
 @keyframes in-up{from{opacity:0;transform:translateY(-32px)}}
 .fab{position:fixed;right:24px;bottom:20px;z-index:12;height:46px;padding:0 16px 0 6px;border-radius:99px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-2);display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:inherit}
@@ -262,7 +269,6 @@ body:has(.side) .fab{display:none}
 .toasts{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;display:grid;gap:8px;pointer-events:none}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 html.still *{animation-duration:0s!important;animation-delay:0s!important}
-html.still .bit,html.still .burst{display:none}
 html.still ::-webkit-scrollbar{display:none}
 
 /* ---------- phone ---------- */
@@ -270,12 +276,14 @@ html.still ::-webkit-scrollbar{display:none}
   body{padding-left:0;padding-bottom:58px}
   body.bare{padding-bottom:0}
   .rail{inset:auto 0 0 0;width:auto;height:58px;flex-direction:row;padding:0 8px;border-right:0;border-top:1px solid var(--line-soft)}
-  .rail-brand{display:none}
+  .rail .rail-brand{display:none}
   .rail-nav{flex-direction:row;margin:0;gap:0;width:100%;justify-content:space-around}
   .feed{height:calc(100vh - 58px)}
-  .stories{gap:10px;padding:8px 0 6px}
+  .feed{padding-top:0}
+  .stories-row{padding:8px 10px 6px}
+  .stories{gap:10px;width:100%}
   .story i{width:42px;height:42px}
-  .stage,.feed:has(.side) .stage{padding:0 10px 8px}
+  .slide,.feed:has(.side) .slide,.feed:has(.side) .stories-row{padding-left:10px;padding-right:10px}
   .fcard{width:100%}
   .fc-media{width:100%;height:min(62vh,calc(100vh - 300px));aspect-ratio:auto}
   .feed-col{position:relative;width:100%}
@@ -290,13 +298,16 @@ html.still ::-webkit-scrollbar{display:none}
   .grid3,.tiles,.board{grid-template-columns:1fr}
   .learn{grid-template-columns:1fr}
   .col{width:86vw}
-  .onb{grid-template-columns:1fr}
-  .onb-art{min-height:34vh;padding:24px}
-  .onb-art .lead{height:150px}
-  .onb-art .pop.v video.lead,.onb:not(:has(.book)) .onb-art .pop.v video.lead{height:200px}
-  .found{gap:8px}
-  .onb-body{padding:56px 20px 32px;justify-content:flex-start}
-  .onb-body .dots{left:20px;top:22px}
+  .onb{padding:64px 18px 32px;gap:16px}
+  .onb-art .pop.v video.lead{height:200px}
+  .tapstage{height:176px;gap:2px}
+  .tapstage .slot{width:92px}
+  .tapstage .slot img{height:58px}
+  .tapstage .slot.many img{height:42px}
+  .tapstage .me{min-width:128px}
+  .tapstage .me .lead{height:164px}
+  .tapstage .me .pop.v video.lead{height:176px}
+  .read-tiles i{width:46px;height:46px;border-radius:12px}
 }
 </style>
 </head>
@@ -317,8 +328,8 @@ html.still ::-webkit-scrollbar{display:none}
 <main id="app"></main>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=7"></script>
-<script src="assets/jammie/v3/data.js?v=7"></script>
+<script src="assets/jammie/v3/icons.js?v=8"></script>
+<script src="assets/jammie/v3/data.js?v=8"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, fcard, icard, srow } = window.JAMMIE;
@@ -351,38 +362,34 @@ html.still ::-webkit-scrollbar{display:none}
     document.getElementById('toasts').append(t); setTimeout(() => t.remove(), 2700);
   }
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
-  function runTodo(next){
-    const li = [...app.querySelectorAll('.todo li')];
-    if (STILL) return;
-    li.forEach((el, i) => { el.className = i === 0 ? 'now' : ''; });
-    li.forEach((el, i) => later(() => {
-      el.className = 'done'; if (li[i + 1]) li[i + 1].className = 'now';
-      if (i === li.length - 1) later(() => { location.hash = next; }, 600);
-    }, 900 * (i + 1)));
+  // reading the store: pictures land one by one, the bar moves, one line says what was just found
+  const READ = ['ivory-angles.jpg', 'reviews.jpg', 'midnight.jpg', 'ivory.jpg', 'farak.jpg', 'sketch.jpg'];
+  const FOUND = [[229, 'products'], [1171, 'things customers said'], [6, 'rivals and their ads'], [0, 'Your own ads']];
+  function runRead(next){
+    const tiles = [...app.querySelectorAll('.read-tiles i')], bar = app.querySelector('.read-bar b'), line = app.querySelector('.read-line');
+    const say = i => { const [n, l] = FOUND[i]; line.innerHTML = n ? `<b data-count="${n}">${n.toLocaleString('en-IN')}</b> ${l}` : l;
+      line.classList.remove('swap'); void line.offsetWidth; line.classList.add('swap'); countUp(); };
+    if (STILL) { tiles.slice(0, 4).forEach(t => t.classList.add('in')); bar.style.width = '62%'; say(1); return; }
+    FOUND.forEach((_, i) => later(() => { say(i); bar.style.width = `${25 * (i + 1)}%`; }, 80 + i * 1150));
+    tiles.forEach((t, i) => later(() => t.classList.add('in'), 300 + i * 720));
+    later(() => { location.hash = next; }, 80 + FOUND.length * 1150 + 350);
   }
   const todo = (items, doneN) => `<ul class="todo">${items.map((t, i) =>
     `<li class="${i < doneN ? 'done' : i === doneN ? 'now' : ''}"><i>${ico('check')}</i>${t}</li>`).join('')}</ul>`;
-  const dots = n => `<div class="dots">${[1, 2, 3, 4, 5, 6, 7, 8].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</div>`;
-  const chips = (list, on = 0) => `<div class="chips">${list.map((c, i) => `<button class="chip ${i === on ? 'on' : ''}">${c}</button>`).join('')}</div>`;
+  const dots = n => `<div class="dots">${[1, 2, 3, 4].map(i => `<i class="${i < n ? 'on' : i === n ? 'on now' : ''}"></i>`).join('')}</div>`;
+  const chips = (list, on = -1) => `<div class="chips">${list.map((c, i) => `<button class="chip ${i === on ? 'on' : ''}">${c}</button>`).join('')}</div>`;
   const mark = `<span class="brandmark"><img src="${A}char-dollop.png" alt="">jammie</span>`;
-  // the onboarding stage: Jammie (or what it made) on one side, one thought and one control on the other
-  const fl = (el, x, y, h, d) => `<img class="fl" src="${A}el-${el}.png" alt="" style="left:${x}%;top:${y}%;height:${h}px;animation-delay:${d}s,${d + .8}s">`;
-  const FLOAT = { 1: [['bag', 12, 16, 64, .2], ['magnifier', 76, 62, 70, .35]], 2: [['heart', 14, 64, 60, .2], ['sparkle', 78, 18, 54, .35]], 3: [], 4: [['megaphone', 10, 20, 70, .2], ['clapper', 76, 64, 66, .35], ['chart', 78, 14, 56, .5]],
-    5: [['sparkle', 14, 18, 54, .2], ['heart', 78, 66, 58, .35]], 6: [['megaphone', 12, 62, 64, .2], ['sparkle', 76, 16, 50, .35]], 7: [], 8: [] };
-  const onb = (n, art, body, cls = '') => `<section class="onb ${cls}"><div class="onb-art">${mark}<div class="glow"></div>${(FLOAT[n] || []).map(f => fl(...f)).join('')}${art}</div><div class="onb-body">${dots(n)}${body}</div></section>`;
+  // the onboarding stage: one centred column. Jammie on top, then one thought and one control
+  const onb = (n, art, body, cls = '') => `<section class="onb ${cls}">${mark}${dots(n)}<div class="onb-art">${art}</div><div class="onb-body">${body}</div></section>`;
   // five short loops (idle, wave, search, cheer, sit); the flow map and reduced motion get the still
   const LOOPS = ['idle', 'wave', 'search', 'cheer', 'sit'], calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;
   const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
   const pose = p => LOOPS.includes(p) && !calm
     ? `<div class="pop v"><video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video><img class="lead" src="${stillOf(p)}" alt=""></div>`
     : `<div class="pop"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
-  const bits = () => [['reviews.jpg', -210, -150, -14], ['midnight.jpg', 220, -120, 12], ['xlows.jpg', -230, 110, 10], ['ivory.jpg', 210, 150, -10], ['sketch.jpg', 0, -220, 6]]
-    .map(([f, x, y, r], i) => `<img class="bit" src="${D}${f}" alt="" style="--x:${x}px;--y:${y}px;--r:${r}deg;animation-delay:${i * .45}s">`).join('');
-  const sparks = () => [[-170, -150, -30], [180, -130, 40], [-200, 60, 20], [190, 90, -25], [0, -210, 10], [-60, 190, 35]]
-    .map(([x, y, r]) => `<img class="burst" src="${A}el-sparkle.png" alt="" style="--x:${x}px;--y:${y}px;--r:${r}deg">`).join('');
   // numbers tick up as Jammie reads
   function countUp(){ if (STILL) return; app.querySelectorAll('[data-count]').forEach(el => { const to = +el.dataset.count, t0 = performance.now();
-    (function tick(t){ const k = Math.min(1, (t - t0) / 1400), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); })(t0); }); }
+    (function tick(t){ const k = Math.min(1, (t - t0) / 800), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); })(t0); }); }
   // a coral bloom from where you pressed, then it lifts off the next screen
   function bloom(e, next){
     if (STILL || matchMedia('(prefers-reduced-motion:reduce)').matches) { location.hash = next; return; }
@@ -390,6 +397,19 @@ html.still ::-webkit-scrollbar{display:none}
     c.innerHTML = `<img src="${A}pose-cheer.png" alt="">`; document.body.append(c);
     setTimeout(() => { arriving = true; location.hash = next; }, 520);
     setTimeout(() => c.classList.add('lift'), 760); setTimeout(() => c.remove(), 1400);
+  }
+  // three taps: the role dresses Jammie, the goal and the channels land beside it
+  const ROLES = { Founder: 'founder', Marketer: 'marketer', Designer: 'designer', Agency: 'agency' };
+  const GOALS = { Sales: 'bag', 'Repeat buyers': 'heart', Reach: 'megaphone', 'Better ads': 'clapper' };
+  const CHANS = { Instagram: 'instagram', 'Meta ads': 'meta', Google: 'google', Email: 'email' };
+  function tapPicked(ask){
+    const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim()), $ = id => document.getElementById(id);
+    if (kind === 'role' && on[0]) $('meSlot').innerHTML = `<div class="pop"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`;
+    if (kind === 'goal' && on[0]) $('goalSlot').innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`;
+    if (kind === 'chan') { const slot = $('chanSlot');
+      [...slot.children].forEach(el => { if (!on.includes(el.dataset.n)) el.remove(); });
+      on.forEach(n => { if (!slot.querySelector(`[data-n="${n}"]`)) slot.insertAdjacentHTML('beforeend', `<img class="in3d" data-n="${n}" src="${A}el-${CHANS[n]}.png" alt="">`); });
+      slot.classList.toggle('many', on.length > 2); }
   }
   const gate = inner => `<div class="gate"><div class="sheet gate-card">${inner}</div></div>`;
   const startScreen = () => onb(1, pose('search'), `
@@ -400,7 +420,7 @@ html.still ::-webkit-scrollbar{display:none}
 
   // ---- pieces of the feed
   const STORIES = [['Today', 'reel.jpg'], ['Trends', 'midnight.jpg'], ['Popular ads', 'xlows.jpg'], ['Industry news', 'rival.jpg'], ['How to', 'sketch.jpg']];
-  const stories = () => `<div class="stories">${STORIES.map(([n, f], i) => `<a class="story ${i > 2 ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${f})"></b></i>${n}</a>`).join('')}</div>`;
+  const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, f], i) => `<a class="story ${i > 2 ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${f})"></b></i>${n}</a>`).join('')}</div></div>`;
   const orderRow = o => { const d = idea(o.id); return `<a class="order" href="#/order?o=${o.id}"><img src="${D}${d.img}" alt=""><span><b>${o.how === 'note' ? 'Your note to the team' : d.title}</b><small><em>${HOW[o.how][0]}</em> · ${HOW[o.how][1]}</small></span></a>`; };
   const acts = d => d.special ? '' : `<div class="acts">
       <div class="age">${ico('clock')}${d.age}</div>
@@ -412,13 +432,14 @@ html.still ::-webkit-scrollbar{display:none}
       <button class="act draw" data-do="feedback">${ico('message')}Note</button>
     </div>`;
   const topRight = feed => `${feed ? `<button class="btn b-soft b-sm draw" data-do="refresh" title="Bring a fresh set of ideas">${ico('refresh')}Refresh</button>` : ''}<a class="ico-btn draw" href="#/bell" aria-label="Updates">${ico('bell')}</a><a href="#/you" aria-label="You">${av(32)}</a>`;
-  const feedShell = (d, panel = '', o = {}) => `<section class="feed ${panel ? 'has-panel' : ''} ${arriving ? 'arrive' : ''}">
+  const feedShell = (d, panel = '', o = {}) => { const at = IDEAS.indexOf(d); if (at > -1) cur = at;
+    return `<section class="feed ${panel ? 'has-panel' : ''} ${arriving ? 'arrive' : ''}">
       ${stories()}
-      <div class="stage"><div class="feed-col">${fcard(d, o)}${acts(d)}</div>${panel}</div>
+      <div class="stage">${IDEAS.map((x, i) => `<div class="slide ${i === cur ? 'at' : ''}" data-i="${i}"><div class="feed-col">${fcard(x, i === cur ? o : {})}${acts(x)}</div></div>`).join('')}</div>${panel}
       ${orders.length ? `<a class="team" href="#/bell"><span class="stack">${orders.slice(0, 2).map(o => `<i style="background-image:url(${D}${idea(o.id).img})"></i>`).join('')}</span>With the team <em>${orders.length}</em></a>` : ''}
       <div class="corner">${topRight(true)}</div>
       <div class="feed-nav"><button class="btn b-round draw" data-do="prev" aria-label="Previous idea">${ico('up')}</button><button class="btn b-round draw" data-do="next" aria-label="Next idea">${ico('down')}</button></div>
-    </section>`;
+    </section>`; };
   const side = (inner, back = '#/feed') => `<aside class="sheet side"><a class="ico-btn x draw" href="${back}" aria-label="Close">${ico('close')}</a>${inner}</aside>`;
   const pageHead = (title, right = '') => `<div class="page-h"><h1>${title}</h1><div class="right">${right}${topRight()}</div></div>`;
   const noteBox = ph => `<div class="note"><textarea placeholder="${ph}" aria-label="Your note"></textarea><button class="btn b-round mic draw" data-do="mic" aria-label="Hold to talk">${ico('play')}</button></div>`;
@@ -453,43 +474,37 @@ html.still ::-webkit-scrollbar{display:none}
         <a class="ico-btn x draw" href="#/start" aria-label="Close">${ico('close')}</a>
         ${pose('wave')}
         <h2>Sign in to keep your ideas</h2>
-        <a class="btn b-out gbtn" href="#/welcome">${G}Continue with Google</a>`) },
-    welcome: { bare: true, html: () => startScreen() + gate(`
-        ${sparks()}${pose('cheer')}
-        <h2>You’re in.</h2>
-        <a class="btn b-jam draw" href="#/reading">Read my store${ico('arrow')}</a>`), enter: () => { if (!STILL) later(() => { location.hash = '#/reading'; }, 2600); } },
-    reading: { bare: true, html: () => onb(3, bits() + pose('search'), `
-        <h1 class="h2">Opening your store.</h1>
-        ${todo(['<b data-count="229">229</b>&nbsp;products', '<b data-count="1171">1,171</b>&nbsp;things customers said', '<b data-count="6">6</b>&nbsp;rivals and their ads', 'Your own ads'], 2)}`, 'scan'), enter: () => { countUp(); runTodo('#/taps'); } },
-    taps: { bare: true, html: () => onb(4, pose('idle'), `
-        <a class="btn b-text skip" href="#/check">Skip</a>
+        <a class="btn b-out gbtn" href="#/reading">${G}Continue with Google</a>
+        <div class="or">or</div>
+        <form data-go="#/reading">
+          <label class="input"><input placeholder="Your name" aria-label="Your name" autocomplete="name"></label>
+          <label class="input"><input type="email" placeholder="Email" aria-label="Email" autocomplete="email"></label>
+          <button class="btn b-jam draw">Continue${ico('arrow')}</button></form>`) },
+    reading: { bare: true, html: () => onb(2, pose('search'), `
+        <h1 class="h2">Reading wearcomet.com</h1>
+        <div class="read"><div class="read-tiles">${READ.map(f => `<i><img src="${D}${f}" alt=""></i>`).join('')}</div>
+          <div class="read-bar"><b></b></div><p class="read-line">&nbsp;</p></div>`), enter: () => runRead('#/taps') },
+    taps: { bare: true, html: () => onb(3, `<div class="tapstage"><div class="slot" id="goalSlot"></div><div class="me" id="meSlot">${pose('idle')}</div><div class="slot" id="chanSlot"></div></div>`, `
         <h1 class="h2">Three quick taps</h1>
         <div class="asks">
-          <div><h4>You are the</h4>${chips(['Founder', 'Marketer', 'Designer', 'Agency'])}</div>
-          <div><h4>You want more</h4>${chips(['Sales', 'Repeat buyers', 'Reach', 'Better ads'])}</div>
-          <div><h4>You post on</h4>${chips(['Instagram', 'Meta ads', 'Google', 'Email'])}</div>
+          <div data-ask="role"><h4>You are the</h4>${chips(Object.keys(ROLES))}</div>
+          <div data-ask="goal"><h4>You want more</h4>${chips(Object.keys(GOALS))}</div>
+          <div data-ask="chan"><h4>You post on</h4>${chips(Object.keys(CHANS))}</div>
         </div>
-        <a class="btn b-jam draw" href="#/check">Continue${ico('arrow')}</a>`) },
-    check: { bare: true, html: () => onb(5, pose('cheer'), `
-        <h1 class="h2">Here’s what we found.</h1>
-        <div class="found">
-          <button class="ftile wide" data-do="fix"><span><small>Your brand</small><b>Comet</b><small>Homegrown sneakers, for men and women in India</small></span><span class="swatches"><i style="background:#2765FA"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i><i style="background:#4CAF50"></i></span></button>
-          <button class="ftile pic" data-do="fix" style="background-image:url(${D}xlows.jpg)"><b>229</b><small>products</small></button>
-          <button class="ftile pic" data-do="fix" style="background-image:url(${D}reviews.jpg)"><b>1,171</b><small>things customers said</small></button>
-          <button class="ftile pic" data-do="fix" style="background-image:url(${D}rival.jpg)"><b>6</b><small>rivals, 1,103 live ads</small></button>
-          <button class="ftile" data-do="fix"><img class="el" src="${A}el-megaphone.png" alt=""><b>More sales</b><small>on Instagram</small></button>
-        </div>
-        <div class="pair"><a class="btn b-jam draw" href="#/wait">Looks right. Write my first idea${ico('arrow')}</a><button class="btn b-out" data-do="fix">Fix something</button></div>`) },
-    wait: { bare: true, html: () => onb(6, pose('sit'), `
-        <h1 class="h2">Sit back. We’ve got this.</h1>
-        ${todo(['Picking the best angle', 'Writing your first idea', 'Making the picture'], 1)}`), enter: () => runTodo('#/first') },
-    first: { bare: true, html: () => onb(7, `<div class="land" style="position:relative">${fcard(real[1], { cls: 'mid', cta: false })}</div>`, `
-        <div class="who">${av(34)}<b>Your first ideas are in.</b></div>
-        <h1 class="h2">Your first idea is here.</h1>
-        <a class="btn b-jam draw" href="#/book">Open my feed${ico('arrow')}</a>`) },
-    book: { bare: true, html: () => onb(8, `${sparks()}<div style="display:flex;align-items:flex-end;gap:6px;position:relative">${pose('cheer')}<div class="flyin"><div class="book"><small>Brand book · Vol. 1</small><b>Comet</b><p>Homegrown lifestyle sneakers for men and women</p><img src="${D}reviews.jpg" alt=""></div></div></div>`, `
-        <h1 class="h2">Comet’s book is ready.</h1>
-        <div class="pair"><a class="btn b-jam draw" href="#/feed" data-bloom>Keep it in my feed${ico('arrow')}</a><button class="btn b-out" data-do="emailbook">Email it to me</button></div>`) },
+        <a class="btn b-jam draw" href="#/here">Continue${ico('arrow')}</a>
+        <a class="btn b-text skip" href="#/here">Skip</a>`),
+      enter: () => { if (!STILL) return;                                       // the flow map shows it with picks made
+        [['role', [0]], ['goal', [0]], ['chan', [0, 1]]].forEach(([k, on]) => { const ask = app.querySelector(`[data-ask="${k}"]`);
+          ask.querySelectorAll('.chip').forEach((c, i) => c.classList.toggle('on', on.includes(i))); tapPicked(ask); }); } },
+    here: { bare: true, html: () => onb(4, pose('cheer'), `
+        <h1 class="h2">Hey, here it is.</h1>
+        <div class="brandcard land">
+          <div class="bc-pics"><img src="${D}ivory-angles.jpg" alt=""><img src="${D}reviews.jpg" alt=""><img src="${D}midnight.jpg" alt=""></div>
+          <div class="bc-body">
+            <div class="bc-top"><b>Comet</b><span class="swatches"><i style="background:#2765FA"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i><i style="background:#4CAF50"></i></span></div>
+            <div class="bc-stats"><span><b>229</b>products</span><span><b>1,171</b>reviews</span><span><b>6</b>rivals</span></div>
+          </div></div>
+        <a class="btn b-jam draw" href="#/feed" data-bloom>Open my feed${ico('arrow')}</a>`, 'small') },
 
     // ================= the feed and everything that opens over it =================
     feed: { nav: 'feed', html: () => feedShell(IDEAS[cur]) },
@@ -649,15 +664,23 @@ html.still ::-webkit-scrollbar{display:none}
     app.innerHTML = s.html(q);
     window.jammieIcons(document);
     window.scrollTo(0, 0);
+    const sc = app.querySelector('.stage');
+    if (sc) { const mark = () => [...sc.children].forEach((el, i) => { el.inert = i !== cur; });   // only the card on screen takes the keyboard
+      sc.scrollTop = cur * sc.clientHeight; mark();
+      sc.addEventListener('scroll', () => { const i = Math.round(sc.scrollTop / sc.clientHeight); if (IDEAS[i] && i !== cur) { cur = i; mark(); } }, { passive: true }); }
     arriving = false;
     if (s.enter) s.enter();
   }
-  function step(dir){
-    cur = (cur + dir + IDEAS.length) % IDEAS.length;
-    if (location.hash !== '#/feed') history.replaceState(null, '', '#/feed');
-    render();
-    const c = app.querySelector('.fcard'); if (c) c.classList.add(dir > 0 ? 'enter-down' : 'enter-up');
+  // move the feed's own scroll to a card; a second press while it is still moving counts from where it is heading
+  let aim = 0, aimAt = 0;
+  function show(n){
+    const sc = app.querySelector('.stage');
+    if (!sc || !/^#\/feed(\?|$)/.test(location.hash)) { cur = n; history.replaceState(null, '', '#/feed'); render(); return; }
+    const from = Date.now() - aimAt < 600 ? aim : cur; aim = n; aimAt = Date.now();
+    sc.scrollTo({ top: n * sc.clientHeight, behavior: calm || Math.abs(n - from) > 1 ? 'auto' : 'smooth' });
   }
+  function step(dir, wrap = true){ const from = Date.now() - aimAt < 600 ? aim : cur, n = from + dir;
+    if (!wrap && (n < 0 || n >= IDEAS.length)) return; show((n + IDEAS.length) % IDEAS.length); }
   const go = h => { if (location.hash === h) render(); else location.hash = h; };
 
   const DO = {
@@ -665,7 +688,7 @@ html.still ::-webkit-scrollbar{display:none}
     share: () => toast('Link copied'), copy: () => toast('Caption copied'),
     later: () => { toast('Saved for later', 'sleep'); step(1); },
     less: () => { toast('Got it. Fewer like this.', 'worry'); step(1); },
-    feedback: () => go('#/change'), sound: () => toast('Sound on'), refresh: () => { let n = cur; while (n === cur) n = Math.floor(Math.random() * real.length); cur = n; go('#/feed'); const c = app.querySelector('.fcard'); if (c) c.classList.add('enter-down'); toast('Fresh ideas'); },
+    feedback: () => go('#/change'), sound: () => toast('Sound on'), refresh: () => { let n = cur; while (n === cur) n = Math.floor(Math.random() * real.length); show(n); toast('Fresh ideas'); },
     next: () => step(1), prev: () => step(-1),
     ship: () => { send('ship', curIdea().id); go('#/feed'); toast('Sent to the team. Files land in your inbox.'); },
     sendchange: () => { send('change', curIdea().id); go('#/feed'); toast('Sent. The team answers within 24 hours.'); },
@@ -677,7 +700,7 @@ html.still ::-webkit-scrollbar{display:none}
     sent: () => { toast('Sent. We will be in touch.'); go('#/feed'); },
     connect: b => toast(`${b.dataset.id} opens its own sign-in`, 'search'), work: () => go('#/work'), feed: () => go('#/feed'),
     gounlock: () => go('#/unlock'), restart: () => go('#/start'), help: () => toast('Opens your email', 'search'),
-    fix: () => toast('Tap any card to fix it. Fixing comes next.', 'search'), emailbook: () => toast('On its way to your inbox'), mic: () => toast('Hold to talk', 'search'), wrong: () => toast('Tell me what’s wrong', 'worry'),
+    mic: () => toast('Hold to talk', 'search'), wrong: () => toast('Tell me what’s wrong', 'worry'),
   };
   const LATER = ['report', 'costs', 'park', 'more', 'menu', 'source', 'plan', 'tile', 'openbook', 'addnote', 'pause', 'rename', 'theme', 'learns', 'legal'];
 
@@ -687,11 +710,16 @@ html.still ::-webkit-scrollbar{display:none}
     if (like) { e.preventDefault(); const id = like.dataset.id; liked.has(id) ? liked.delete(id) : liked.add(id); keep('jammie-proto-liked', [...liked]); like.classList.toggle('liked'); return; }
     const open = e.target.closest('[data-open]');
     if (open) { const i = IDEAS.findIndex(d => d.id === open.dataset.open); if (i > -1) cur = i; }
+    const sl = e.target.closest('.slide'); if (sl) cur = +sl.dataset.i;        // whatever was pressed belongs to this card
     const b = e.target.closest('[data-do]');
     if (b) { const what = b.dataset.do; if (DO[what]) DO[what](b); else if (LATER.includes(what)) toast('This opens in the full build', 'search'); return; }
     const card = e.target.closest('.feed-col .fcard:not(.plain)');           // the card itself opens the idea
     if (card && !e.target.closest('a,button') && /^#\/feed/.test(location.hash)) { location.hash = '#/idea'; return; }
-    const chip = e.target.closest('.chip'); if (chip && chip.tagName === 'BUTTON') chip.parentElement.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
+    const chip = e.target.closest('.chip');
+    if (chip && chip.tagName === 'BUTTON') { const ask = chip.closest('[data-ask]');
+      if (ask && ask.dataset.ask === 'chan') chip.classList.toggle('on');     // you can post in more than one place
+      else chip.parentElement.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
+      if (ask) tapPicked(ask); }
     const sg = e.target.closest('.seg button'); if (sg) sg.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === sg));
   });
   document.addEventListener('submit', e => { const f = e.target.closest('[data-go]'); if (f) { e.preventDefault(); location.hash = f.dataset.go; } });
@@ -700,18 +728,23 @@ html.still ::-webkit-scrollbar{display:none}
     const onFeed = /^#\/feed(\?|$)/.test(location.hash);
     if (onFeed && (e.key === 'ArrowDown' || e.key === 'j')) { e.preventDefault(); step(1); }
     if (onFeed && (e.key === 'ArrowUp' || e.key === 'k')) { e.preventDefault(); step(-1); }
-    if (e.key === 'Escape' && /^#\/(signin|welcome)/.test(location.hash)) location.hash = '#/start';
+    if (e.key === 'Escape' && /^#\/signin/.test(location.hash)) location.hash = '#/start';
     if (e.key === 'Escape' && !document.body.classList.contains('bare') && !/^#\/(feed|command|work|learned|connectors|you)/.test(location.hash)) location.hash = '#/feed';
   });
-  let wheelAt = 0, wheelLast = 0, touchY = null;
-  const onFeedNow = e => /^#\/feed(\?|$)/.test(location.hash) && !(e.target.closest && e.target.closest('.side,.scrim,.gate'));
+  // Touch scrolls the feed natively and it stops on each card. A wheel or trackpad is turned into one card a gesture,
+  // because a snapped list springs back unless the wheel travels half a card. A gesture starts small, so add it up.
+  let wAcc = 0, wLast = 0, wAbs = 0, wArmed = true, wStep = 0;
   addEventListener('wheel', e => {
-    const now = Date.now(), fresh = now - wheelLast > 160; wheelLast = now;       // one step a gesture, not one a tick
-    if (!onFeedNow(e) || Math.abs(e.deltaY) < 12 || !fresh || now - wheelAt < 420) return;
-    wheelAt = now; step(e.deltaY > 0 ? 1 : -1);
-  }, { passive: true });
-  addEventListener('touchstart', e => { touchY = onFeedNow(e) ? e.touches[0].clientY : null; }, { passive: true });
-  addEventListener('touchend', e => { if (touchY === null) return; const dy = e.changedTouches[0].clientY - touchY; touchY = null; if (Math.abs(dy) > 60) step(dy < 0 ? 1 : -1); }, { passive: true });
+    if (e.ctrlKey || !/^#\/feed(\?|$)/.test(location.hash) || !(e.target.closest && e.target.closest('.feed')) || e.target.closest('.side,.scrim')) return;
+    e.preventDefault();
+    const now = Date.now(), abs = Math.abs(e.deltaY);
+    if (now - wLast > 180) { wAcc = 0; wArmed = true; }                                             // a new gesture
+    else if (!wArmed && now - wStep > 500 && abs > wAbs + 6 && abs >= 10) { wAcc = 0; wArmed = true; } // pushed again while the last one coasts
+    wLast = now; wAbs = abs;
+    if (!wArmed) return;
+    wAcc += e.deltaY;
+    if (Math.abs(wAcc) >= 36) { wArmed = false; wStep = now; step(wAcc > 0 ? 1 : -1, false); }
+  }, { passive: false });
   addEventListener('hashchange', render);
   render();
 })();

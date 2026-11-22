@@ -157,7 +157,7 @@ html[data-theme="dark"] .pop.v img{display:block}
 /* ---------- the feed ---------- */
 /* stories start where the card starts; the cards below are a real scroll, one card a stop */
 .feed{--side-w:min(440px,100vw);--col-w:calc(var(--fc-h) * .75);position:relative;height:100vh;display:flex;flex-direction:column;padding-top:max(0px,calc((100vh - var(--fc-h) - 228px) / 2))}
-.stories-row{flex:none;display:flex;justify-content:center;padding:14px 92px 14px}
+.stories-row{flex:none;display:flex;justify-content:center;padding:14px 92px 8px}
 .stories{display:flex;gap:16px;width:var(--col-w);max-width:100%;overflow-x:auto;scrollbar-width:none}
 .story{border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12.5px;color:var(--fg-2)}
 .story i{width:64px;height:64px;border-radius:50%;padding:3px;background:var(--jam);display:block}
@@ -165,7 +165,7 @@ html[data-theme="dark"] .pop.v img{display:block}
 .story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
 .stage{flex:1;min-height:0;width:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
 .stage::-webkit-scrollbar{display:none}
-.slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;padding:0 92px}
+.slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;padding:6px 92px 0}   /* the top gap keeps a hairline of the next card from showing at the foot */
 /* as on Winning Ads: the card itself is centred, and its actions hang outside it on the right, level with the foot of the picture */
 .feed-col{position:relative;min-width:0}
 .feed-col .acts{position:absolute;left:calc(100% + 2px);top:0;height:var(--fc-h);justify-content:flex-end;gap:4px}
@@ -319,6 +319,7 @@ html.still ::-webkit-scrollbar{display:none}
   .fcard{width:100%}
   .fc-media{width:100%;height:calc(100vh - 258px);aspect-ratio:auto}
   .fc-body{margin-top:10px}
+  .fcard-top{justify-content:flex-start}
   .fc-text p{padding-right:122px}
   .feed-col{position:relative;width:100%}
   .feed-col .acts{position:absolute;left:auto;right:4px;top:8px;z-index:3;height:auto;justify-content:flex-start;gap:2px}

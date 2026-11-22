@@ -20,33 +20,41 @@ window.JAMMIE = (() => {
     { id:'rival',   kicker:'Seen on CHNKS',  kind:'Rival watch', age:'59m', img:'rival.jpg', tag:'Theirs · CHNKS', title:'Launch an ad inspired by CHNKS', line:'Running six versions for eleven days shows this approach works.', goes:'Meta video ad · 9:16', makes:'1 ad' },
     { id:'angles2', kicker:'From your store',kind:'Product page',age:'3h',  img:'midnight-angles.jpg', n:8, title:'Aeres Hukum Midnight: nine shelf-ready angles for its product page', line:'Side, pair, heel, sole, the star-panel macro and the top-down pair, all locked to the real shoe.', goes:'Product page · 9 photos', makes:'9 photos' },
     { id:'end',     special:'end' },
-    { id:'locked',  special:'locked' },
   ];
   const real = IDEAS.filter(d => !d.special);
   const av = size => `<span class="av"${size ? ` style="width:${size}px;height:${size}px"` : ''}><img src="${A}char-dollop.png" alt=""></span>`;
   const ico = n => `<i data-ico="${n}"></i>`;
-  const media = d => d.video ? `<video class="fcard-media" src="${D}${d.video}" poster="${D}${d.img}" muted loop autoplay playsinline></video>` : `<img class="fcard-media" src="${D}${d.img}" alt="">`;
+  // a carousel shows its frames: its own picture first, then the store's others (the demo has one picture an idea)
+  const frames = d => [d.img, ...real.map(x => x.img).filter(f => f !== d.img)].slice(0, d.n);
+  const media = d => d.video ? `<video class="fcard-media" src="${D}${d.video}" poster="${D}${d.img}" muted loop autoplay playsinline></video>`
+    : d.n ? `<div class="frames">${frames(d).map((f, i) => `<img src="${D}${f}" alt="" ${i ? 'loading="lazy"' : ''}>`).join('')}</div>
+      <button class="fr-nav prev draw" data-frame="-1" aria-label="Previous picture" disabled>${ico('back')}</button><button class="fr-nav next draw" data-frame="1" aria-label="Next picture">${ico('arrow')}</button>`
+    : `<img class="fcard-media" src="${D}${d.img}" alt="">`;
+  const LOGOS = ['meta', 'google', 'analytics', 'slack'];
 
   // the feed card. opts: cta (label, or false), href, cls
   const fcard = (d, o = {}) => {
-    if (d.special === 'connect') return `<article class="fcard plain ${o.cls || ''}" data-idea="${d.id}"><img class="el" src="${A}el-chart.png" alt="">
-      <h3>See this with your own numbers</h3><p>It takes a minute, and you can disconnect Shopify any time.</p>
+    if (d.special === 'connect') return `<article class="fcard plain ${o.cls || ''}" data-idea="${d.id}">
+      <div class="logos"><img class="big" src="${A}el-shopify.png" alt="Shopify"><span>${LOGOS.map(n => `<img src="${A}el-${n}.png" alt="">`).join('')}</span></div>
+      <h3>See this with your own numbers</h3>
       <a class="btn b-jam draw" href="${o.base || ''}#/connectors">Connect Shopify${ico('arrow')}</a><button class="btn b-text" data-do="noshopify">We don’t use Shopify</button></article>`;
     if (d.special === 'end') return `<article class="fcard plain ${o.cls || ''}" data-idea="${d.id}"><img class="el" src="${A}pose-cheer.png" alt="">
-      <h3>That’s your top 10</h3><p>8 more ideas are lined up behind them, best first.</p>
+      <h3>That’s your top 10</h3>
       <button class="btn b-out" data-do="more8">See the next 8</button></article>`;
-    if (d.special === 'locked') return `<article class="fcard plain ${o.cls || ''}" data-idea="${d.id}">${ico('lock')}
-      <h3>Jammie found 54 more ideas for Comet</h3>
-      <a class="btn b-jam draw" href="${o.base || ''}#/unlock">Unlock everything${ico('arrow')}</a></article>`;
     return `<article class="fcard ${o.cls || ''}" data-idea="${d.id}">
     <div class="fc-media">${media(d)}
       <div class="fcard-top"><span style="display:flex;gap:6px">
-        ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill">1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
-      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}
-      <div class="fcard-bar"><i></i></div></div>
-    <div class="fc-body">
-      <h3>${d.title}</h3><p>${d.line}</p>
-    </div></article>`; };
+        ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
+      <div class="fc-over"><div class="fc-text"><h3>${d.title}</h3><p>${d.line}</p></div>
+        ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}</div></div></article>`; };
+
+  // carousels work the same on every page: the arrows move a frame, the count follows the scroll
+  document.addEventListener('click', e => { const b = e.target.closest('[data-frame]'); if (!b) return;
+    const fr = b.closest('.fc-media').querySelector('.frames'); fr.scrollBy({ left: +b.dataset.frame * fr.clientWidth, behavior: 'smooth' }); });
+  document.addEventListener('scroll', e => { const fr = e.target; if (!fr.classList || !fr.classList.contains('frames')) return;
+    const n = fr.children.length, i = Math.min(n - 1, Math.round(fr.scrollLeft / fr.clientWidth)), m = fr.closest('.fc-media');
+    m.querySelector('[data-fr-count]').textContent = `${i + 1}/${n}`;
+    m.querySelector('.fr-nav.prev').disabled = i === 0; m.querySelector('.fr-nav.next').disabled = i === n - 1; }, true);
 
   // the idea card in a grid: picture, a quiet meta line, the title, one button
   const icard = (d, o = {}) => `<article class="icard">

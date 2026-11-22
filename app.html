@@ -98,14 +98,16 @@ html[data-theme="dark"] .pop.v img{display:block}
 .tapstage .slot{width:132px;height:100%;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px}
 .tapstage .slot img{height:min(84px,10vh);width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.14))}
 .tapstage .slot.many img{height:min(56px,7vh)}
-.tapstage .me{height:100%;min-width:190px;display:grid;place-items:center}
+.tapstage .me{height:100%;min-width:240px;margin:0 -24px;display:grid;place-items:center}
 .tapstage .me .lead{height:min(232px,26vh)}
 .tapstage .me .pop.v video.lead{height:min(250px,28vh)}
-.tapstage .me > *{grid-area:1/1}
-.slide-in{animation:slide-in .48s var(--ease) both}
-.slide-out{animation:slide-out .48s var(--ease) both}
-@keyframes slide-in{from{opacity:0;transform:translateX(84px)}}
-@keyframes slide-out{to{opacity:0;transform:translateX(-84px)}}
+/* a role change moves like one strip scrolled sideways: the look on stage and the next one travel the same distance, together */
+.tapstage .me{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}   /* the track is wider than Jammie, so its soft edges never touch Jammie at rest */
+.tapstage .me > *{grid-area:1/1;width:100%;display:grid;place-items:center}
+.slide-in{animation:slide-in .8s cubic-bezier(.65,0,.35,1) both}
+.slide-out{animation:slide-out .8s cubic-bezier(.65,0,.35,1) both}
+@keyframes slide-in{from{transform:translateX(100%)}}
+@keyframes slide-out{to{transform:translateX(-100%)}}
 .in3d{animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,sway3d 6s ease-in-out .85s infinite}
 @keyframes in3d{0%{opacity:0;transform:perspective(500px) translateY(30px) rotateY(-80deg) rotateX(18deg) scale(.8)}60%{opacity:1;transform:perspective(500px) translateY(-5px) rotateY(14deg) rotateX(-3deg) scale(1.03)}100%{opacity:1;transform:perspective(500px) rotateY(0) scale(1)}}
 @keyframes sway3d{0%,100%{transform:perspective(500px) rotateY(0)}25%{transform:perspective(500px) rotateY(14deg)}75%{transform:perspective(500px) rotateY(-14deg)}}
@@ -122,7 +124,7 @@ html[data-theme="dark"] .pop.v img{display:block}
   .onb.split .tapstage .slot{width:150px}
   .onb.split .tapstage .slot img{height:min(104px,12vh)}
   .onb.split .tapstage .slot.many img{height:min(80px,9.5vh)}
-  .onb.split .tapstage .me{min-width:290px}
+  .onb.split .tapstage .me{min-width:390px;margin:0 -48px}
   .onb.split .tapstage .me .lead{height:min(400px,47vh)}
   .onb.split .tapstage .me .pop.v video.lead{height:min(440px,52vh)}
 }
@@ -348,7 +350,7 @@ html.still ::-webkit-scrollbar{display:none}
   .tapstage .slot{width:92px}
   .tapstage .slot img{height:58px}
   .tapstage .slot.many img{height:42px}
-  .tapstage .me{min-width:128px}
+  .tapstage .me{min-width:190px;margin:0 -30px}
   .tapstage .me .lead{height:164px}
   .tapstage .me .pop.v video.lead{height:176px}
   .read-tiles i{width:46px;height:46px;border-radius:12px}
@@ -451,7 +453,7 @@ html.still ::-webkit-scrollbar{display:none}
     const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim()), $ = id => document.getElementById(id);
     if (kind === 'role' && on[0]) { const me = $('meSlot'), old = me.lastElementChild;                 // the one on stage leaves to the left as the new one comes in from the right
       [...me.children].forEach(el => { if (el !== old) el.remove(); });
-      if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 480); }
+      if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 820); }
       me.insertAdjacentHTML('beforeend', `<div class="look slide-in"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`); }
     if (kind === 'goal' && on[0]) $('goalSlot').innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`;
     if (kind === 'chan') { const slot = $('chanSlot');

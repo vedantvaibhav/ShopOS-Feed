@@ -32,6 +32,10 @@ window.JAMMIE_ICONS = {
   image: '<rect x="4" y="5" width="16" height="14" rx="2.500"/><circle cx="9" cy="10" r="1.500"/><path d="m4.500 17 4.500-4 3.500 3 2.500-2 4.500 4"/>',
   download: '<path d="M12 4v11.500"/><path d="m7.500 11.500 4.500 4.500 4.500-4.500"/><path d="M5 20h14"/>',
   more: '<circle cx="5.500" cy="12" r=".9"/><circle cx="12" cy="12" r=".9"/><circle cx="18.500" cy="12" r=".9"/>',
+  team: '<circle cx="9" cy="8.500" r="3.500"/><path d="M2.500 20a6.500 6.500 0 0 1 13 0"/><path d="M15.500 5.200a3.500 3.500 0 0 1 0 6.600"/><path d="M18 14.300a6.500 6.500 0 0 1 3.500 5.700"/>',
+  lock: '<rect x="5" y="10.500" width="14" height="10" rx="2.500"/><path d="M8 10.500V8a4 4 0 0 1 8 0v2.500"/>',
+  back: '<path d="M19.500 12h-15"/><path d="m10.500 6-6 6 6 6"/>',
+  clock: '<circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/>',
   eye: '<path d="M2.800 12S6 5.800 12 5.800 21.200 12 21.200 12 18 18.200 12 18.200 2.800 12 2.800 12Z"/><circle cx="12" cy="12" r="3"/>',
 };
 
@@ -39,7 +43,7 @@ window.JAMMIE_ICONS = {
 window.jammieIcons = function (root) {
   (root || document).querySelectorAll('[data-ico]').forEach(function (el) {
     var body = window.JAMMIE_ICONS[el.dataset.ico];
-    if (!body || el.firstChild) return;
+    if (!body || el.querySelector('svg')) return;
     el.innerHTML = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' +
       body.replace(/<(path|circle|rect)/g, function (m, tag) { return '<' + tag + ' pathLength="1"'; }) + '</svg>';
     el.querySelectorAll('.ico > *').forEach(function (s, i) { s.style.setProperty('--i', i); });

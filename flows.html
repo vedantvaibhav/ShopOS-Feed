@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jammie flows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=3">
+<style>
+body{background:var(--s2)}
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+.top-in{max-width:1680px;margin:0 auto;padding:0 40px;height:72px;display:flex;align-items:center;gap:20px}
+.brand{display:inline-flex;align-items:center;gap:8px;color:var(--jam);font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none;margin-right:auto}
+.brand img{height:34px;width:auto}
+.jump{display:flex;gap:8px;flex-wrap:wrap}
+.wrap{max-width:1680px;margin:0 auto;padding:8px 40px 120px}
+.flow{padding:44px 0 0;scroll-margin-top:80px}
+.flow h2{font-size:26px;margin-bottom:20px}
+.strip{display:flex;align-items:center;padding:4px 4px 20px}
+
+/* one screen: the real prototype in a scaled frame */
+.shot{flex:none;width:calc(1440px * var(--z));text-decoration:none;color:inherit}
+.frame{position:relative;width:calc(1440px * var(--z));height:calc(900px * var(--z));border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow-2);transition:box-shadow .2s,transform .2s var(--ease)}
+.shot:hover .frame{box-shadow:var(--shadow-3);transform:translateY(-2px)}
+.frame iframe{will-change:transform;width:1440px;height:900px;border:0;transform:scale(var(--z));transform-origin:0 0;pointer-events:none}
+.shot b{display:block;margin-top:12px;font-weight:600;font-size:15px}
+
+/* the step between two screens: what the person does */
+.hop{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:112px;padding:0 6px;margin-bottom:34px;color:var(--fg-2);font-size:13px;font-weight:600;text-align:center}
+.hop span{height:28px;padding:0 12px;border-radius:99px;background:var(--card);box-shadow:var(--shadow-1);display:inline-flex;align-items:center;color:var(--fg);white-space:nowrap}
+.hop .ico{width:100%;height:14px}
+
+@media (max-width:760px){.top-in,.wrap{padding-left:16px;padding-right:16px}.jump{display:none}.strip{overflow-x:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="design-system.html"><img src="assets/jammie/v3/char-dollop.png" alt="">jammie</a>
+  <nav class="jump" id="jump"></nav>
+  <a class="btn b-out b-sm" href="design-system.html">Design system</a>
+  <a class="btn b-jam b-sm" href="app.html">Open prototype</a>
+</div></header>
+
+<main class="wrap" id="flows"></main>
+
+<script>
+// each flow: screens in order, with the action that leads to the next one
+const FLOWS = [
+  { id:'first',  name:'First visit', steps:[['start','Add your store','Read my store'],['reading','Reading the store','About a minute'],['first','First idea','Open my feed'],['feed','Feed']] },
+  { id:'daily',  name:'Every morning', steps:[['feed','Feed','Next'],['feed?i=1','Next idea','Keep'],['liked','Liked']] },
+  { id:'make',   name:'Make an idea', steps:[['feed','Feed','Why'],['why','Why this','Make this'],['making','Making','Ready'],['result','Result','Download']] },
+  { id:'team',   name:'By teammate', steps:[['team','Team','Pick one'],['feed?i=3','Their idea','Why'],['why?i=3','Why this']] },
+  { id:'numbers',name:'From a number', steps:[['numbers','Numbers','Open the idea'],['feed?i=4','The idea behind it','Make this'],['making','Making']] },
+  { id:'unlock', name:'Unlock', steps:[['feed?i=5','A locked idea','Unlock'],['unlock','Unlock every idea','Send'],['feed','Feed']] },
+];
+const arrow = '<svg class="ico" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7h114"/><path d="m110 2 6 5-6 5" /></svg>';
+document.getElementById('jump').innerHTML = FLOWS.map(f => `<a class="chip" href="#${f.id}">${f.name}</a>`).join('');
+document.getElementById('flows').innerHTML = FLOWS.map(f => `<section class="flow" id="${f.id}"><h2>${f.name}</h2><div class="strip">` +
+  f.steps.map(([route, label, action]) => `<a class="shot" href="app.html#/${route}">
+      <div class="frame"><iframe src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
+    (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : '')).join('') + `</div></section>`).join('');
+
+// size every frame so a whole flow fits its row; on a phone the row scrolls instead
+function fit(){
+  document.querySelectorAll('.strip').forEach(strip => {
+    const n = strip.querySelectorAll('.shot').length, hops = strip.querySelectorAll('.hop').length;
+    const z = innerWidth < 760 ? .2 : Math.min(.3, (strip.clientWidth - 8 - hops * 112) / (n * 1440));
+    strip.style.setProperty('--z', z.toFixed(4));
+  });
+}
+fit(); addEventListener('resize', fit);
+// a scaled frame can stay blank until its first repaint, so nudge each one as it finishes loading
+document.querySelectorAll('iframe').forEach(f => f.addEventListener('load', () => {
+  f.style.display = 'none'; void f.offsetHeight; f.style.display = '';
+  setTimeout(() => { f.contentWindow && f.contentWindow.dispatchEvent(new Event('resize')); }, 60);
+}));
+</script>
+</body>
+</html>

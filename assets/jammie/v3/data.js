@@ -42,12 +42,11 @@ window.JAMMIE = (() => {
     <div class="fc-media">${media(d)}
       <div class="fcard-top"><span class="pill">${d.kicker}</span><span style="display:flex;gap:6px">
         ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill">1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
+      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}
       <div class="fcard-bar"><i></i></div></div>
     <div class="fc-body">
-      <div class="who">${av(28)}<b>Jammie</b><span>${d.kind} · ${d.age}</span></div>
+      <div class="who">${av(26)}<b>Jammie</b><span>${d.kind} · ${d.age}</span></div>
       <h3>${d.title}</h3><p>${d.line}</p>
-      <div class="fc-meta"><span>${d.goes}</span></div>
-      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}
     </div></article>`; };
 
   // the idea card in a grid: picture, a quiet meta line, the title, one button

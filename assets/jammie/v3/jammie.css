@@ -4,6 +4,7 @@
   --jam:#E93A4C;                 /* one clean red, no orange in it */
   --jam-2:#E0245E;               /* where the primary button drifts to, kept close on purpose */
   --on-jam:#FFFFFF;
+  --fc-h:min(640px,calc(100vh - 286px));   /* the idea picture: tall, 4 by 5 */
   --font:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --h-weight:700;
   --h-track:-0.005em;
@@ -24,11 +25,13 @@
   color-scheme:light;
   --bg:#FFFFFF; --s2:#F7F7F7; --s3:#EBEBEB; --line:#DDDDDD; --line-soft:#EBEBEB;
   --fg:#222222; --fg-2:#6A6A6A; --fg-3:#B0B0B0; --card:#FFFFFF;
+  --on:#555555; --on-line:#A6A6A6; --on-bg:#F0F0F0;   /* picked, switched on, done: a soft grey, never full black */
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --bg:#0F0F0F; --s2:#1B1B1B; --s3:#262626; --line:#343434; --line-soft:#242424;
   --fg:#F7F7F7; --fg-2:#A6A6A6; --fg-3:#6A6A6A; --card:#181818;
+  --on:#BDBDBD; --on-line:#6A6A6A; --on-bg:#262626;
   --shadow-1:0 1px 2px rgba(0,0,0,.5); --shadow-2:0 3px 12px rgba(0,0,0,.5); --shadow-3:0 8px 28px rgba(0,0,0,.6);
 }
 
@@ -42,8 +45,8 @@ a{color:inherit}
 h1,h2,h3,h4{margin:0;font-weight:var(--h-weight);letter-spacing:var(--h-track);text-wrap:balance}
 [contenteditable]{outline:none;border-radius:6px;transition:box-shadow .15s}
 [contenteditable]:hover{box-shadow:0 0 0 1px var(--line)}
-[contenteditable]:focus{box-shadow:0 0 0 2px var(--fg)}
-:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+[contenteditable]:focus{box-shadow:0 0 0 2px var(--on-line)}
+:focus-visible{outline:2px solid var(--on-line);outline-offset:2px}
 a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 
 /* ---------- line icons: the line traces in on hover, nothing moves or scales ---------- */
@@ -67,13 +70,13 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .b-out{background:var(--card);box-shadow:inset 0 0 0 1px var(--fg)}
 .b-out:hover{background:var(--s2)}
 .b-line{background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
-.b-line:hover{box-shadow:inset 0 0 0 1px var(--fg)}
+.b-line:hover{box-shadow:inset 0 0 0 1px var(--on-line)}
 .b-soft{background:var(--s2)}
 .b-soft:hover{background:var(--s3)}
 .b-text{background:none;padding:0 4px;text-decoration:underline;text-underline-offset:3px}
 .b-sm{height:34px;padding:0 13px;font-size:14px;border-radius:calc(var(--r-btn) * .8)}
 .b-round{width:42px;height:42px;padding:0;border-radius:50%;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
-.b-round:hover{box-shadow:inset 0 0 0 1px var(--fg)}
+.b-round:hover{box-shadow:inset 0 0 0 1px var(--on-line)}
 
 /* the main action: one red that drifts a little on its own, and warms under the pointer */
 .b-jam,.fcard-cta,.search-go{position:relative;isolation:isolate;overflow:hidden;color:var(--on-jam);
@@ -86,8 +89,8 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 
 /* chips and the segmented switch */
 .chip{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:500}
-.chip:hover{border-color:var(--fg)}
-.chip.on{box-shadow:inset 0 0 0 1px var(--fg);border-color:var(--fg);background:var(--s2)}
+.chip:hover{border-color:var(--on-line)}
+.chip.on{box-shadow:inset 0 0 0 1px var(--on-line);border-color:var(--on-line);background:var(--on-bg)}
 .chip .ico{width:16px;height:16px}
 .seg{display:inline-flex;padding:3px;border-radius:var(--r-pill);background:var(--s2)}
 .seg button{border:0;background:none;height:32px;padding:0 16px;border-radius:var(--r-pill);font-weight:600;font-size:14px;color:var(--fg-2)}
@@ -129,16 +132,16 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .row + .row{margin-top:16px}
 .input{display:block;border:1px solid var(--fg-3);border-radius:var(--r-btn);padding:7px 14px;width:100%;background:var(--card)}
-.input:focus-within{box-shadow:inset 0 0 0 1px var(--fg);border-color:var(--fg)}
+.input:focus-within{box-shadow:inset 0 0 0 1px var(--on-line);border-color:var(--on-line)}
 .input small{display:block;font-size:12px;color:var(--fg-2)}
 .input input{width:100%;border:0;background:none;outline:none;color:var(--fg);font:inherit;padding:0}
 .step{display:inline-flex;align-items:center;gap:12px}
 .step button{width:30px;height:30px;border-radius:50%;border:1px solid var(--fg-3);background:none;display:grid;place-items:center}
-.step button:hover{border-color:var(--fg)}
+.step button:hover{border-color:var(--on-line)}
 .step .ico{width:13px;height:13px;stroke-width:2.2}
 .switch{position:relative;width:46px;height:28px;border-radius:99px;background:var(--fg-3);border:0;transition:background .2s}
 .switch::after{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s var(--ease)}
-.switch[aria-checked="true"]{background:var(--fg)}
+.switch[aria-checked="true"]{background:var(--on)}
 .switch[aria-checked="true"]::after{transform:translateX(18px)}
 
 /* toast */
@@ -163,41 +166,33 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail a:hover{background:var(--s2);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
-/* the idea card: the picture on one side, the idea on the other, taking the whole width */
-.fcard{position:relative;flex:1;min-width:0;max-width:1060px;height:min(680px,calc(100vh - 150px));border-radius:var(--r-card);overflow:hidden;background:var(--card);border:1px solid var(--line-soft);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);isolation:isolate}
-.fc-media{position:relative;background:#111;min-height:0;overflow:hidden}
+/* the idea card: one tall picture, and its words underneath like a post */
+.fcard{position:relative;flex:none;display:flex;flex-direction:column;gap:12px;width:fit-content;max-width:100%}
+.fc-media{position:relative;height:var(--fc-h);aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;background:#111;isolation:isolate}
 .fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fc-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.26) 0,transparent 15%,transparent 72%,rgba(0,0,0,.5) 100%)}
 .fcard-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:2}
 .pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border:0}
 .pill.light{background:#fff;color:#222}
 .pill .ico{width:14px;height:14px}
-.fcard-bar{position:absolute;left:14px;right:14px;bottom:12px;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden;z-index:2}
+.fcard-cta{position:absolute;left:14px;bottom:22px;z-index:2;display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 15px 0 17px;border-radius:var(--r-pill);font-weight:600;font-size:14.5px;text-decoration:none;border:0}
+.fcard-cta .ico{width:16px;height:16px}
+.fcard-bar{position:absolute;left:14px;right:14px;bottom:10px;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden;z-index:2}
 .fcard-bar i{display:block;height:100%;width:0;background:#fff;border-radius:3px;animation:fbar 8s linear infinite}
 @keyframes fbar{to{width:100%}}
-.fc-body{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:clamp(22px,3.4vw,52px);min-width:0}
-.fc-body .who{font-size:14px}
-.fc-body h3{font-size:clamp(23px,2.5vw,36px);line-height:1.1}
-.fc-body p{margin:0;font-size:16px;line-height:1.45;color:var(--fg-2)}
-.fc-meta{display:flex;flex-wrap:wrap;gap:6px}
-.fc-meta span{height:28px;padding:0 10px;border-radius:99px;background:var(--s2);font-size:13px;font-weight:500;display:inline-flex;align-items:center}
-.fcard-cta{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px 0 22px;border-radius:var(--r-pill);font-weight:600;font-size:16px;text-decoration:none;border:0;margin-top:10px}
-.fcard-cta .ico{width:17px;height:17px}
-/* smaller, for the first-idea moment and the workbench */
-.fcard.mid{flex:none;width:min(760px,100%);height:min(400px,52vh)}
-.fcard.mid .fc-body{padding:28px}
-.fcard.mid h3{font-size:24px}
+.fc-body{width:0;min-width:100%;display:grid;gap:4px;padding:0 4px}
+.fc-body .who{font-size:13.5px;margin-bottom:2px}
+.fc-body h3{font-size:16.5px;font-weight:600;letter-spacing:0;line-height:1.3}
+.fc-body p{margin:0;font-size:14.5px;line-height:1.4;color:var(--fg-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* smaller, for the first-idea moment */
+.fcard.mid .fc-media{height:min(380px,44vh)}
+.fcard.mid .fc-body h3{font-size:15.5px}
 /* a card with no picture: connect a tool, the end of the list, a locked block */
-.fcard.plain{grid-template-columns:1fr;background:var(--s2);border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center}
-.fcard.plain h3{font-size:26px}
+.fcard.plain{height:var(--fc-h);aspect-ratio:4/5;border-radius:var(--r-card);background:var(--s2);align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center}
+.fcard.plain h3{font-size:24px}
 .fcard.plain p{color:var(--fg-2);margin:0}
 .fcard.plain img.el{height:130px;width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
-@media (max-width:860px){
-  .fcard{grid-template-columns:1fr;grid-template-rows:minmax(0,1.2fr) auto}
-  .fc-body{padding:18px;gap:8px}
-  .fc-body h3{font-size:21px}
-  .fc-body p{font-size:14.5px}
-  .fcard-cta{height:40px;font-size:15px;margin-top:4px}
-}
+.fcard.plain .fcard-cta{position:static}
 
 /* the action column beside the card */
 .acts{display:flex;flex-direction:column;gap:2px}
@@ -224,9 +219,9 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .todo li i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;transition:.3s}
 .todo li i .ico{width:12px;height:12px;stroke-width:2.6;opacity:0}
 .todo li.now{color:var(--fg)}
-.todo li.now i{border-color:var(--fg);border-top-color:transparent;animation:spin .9s linear infinite}
+.todo li.now i{border-color:var(--on);border-top-color:transparent;animation:spin .9s linear infinite}
 .todo li.done{color:var(--fg)}
-.todo li.done i{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.todo li.done i{background:var(--on);border-color:var(--on);color:var(--bg)}
 .todo li.done i .ico{opacity:1}
 @keyframes spin{to{transform:rotate(360deg)}}
 

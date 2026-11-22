@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=6">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=7">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 body{padding-left:60px;min-height:100vh;overflow-x:hidden}
@@ -22,7 +22,7 @@ a{text-decoration:none}
 .lead{height:150px;width:auto;filter:drop-shadow(0 14px 10px rgba(0,0,0,.14))}
 .dots{position:absolute;top:24px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
 .dots i{width:20px;height:4px;border-radius:4px;background:var(--s3)}
-.dots i.on{background:var(--fg)}
+.dots i.on{background:var(--on)}
 .skip{position:absolute;top:14px;right:20px}
 .onb{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh}
 .onb-art{background:var(--s2);display:grid;place-items:center;padding:40px;position:relative}
@@ -69,10 +69,37 @@ a{text-decoration:none}
 .feed.arrive .stories .story{animation:rise .5s both}
 .feed.arrive .acts > *{animation:rise .45s both}
 @media (prefers-reduced-motion:reduce){.pop,.bob,.fl,.bit,.land,.flyin,.burst,.glow,.curtain,.onb-body > *,.feed.arrive *{animation:none!important}.bit,.burst{display:none}}
-.onb-art .fcard.mid{width:min(560px,100%);height:min(340px,46vh)}
-.onb-art .fcard.mid .fc-body{padding:20px}
-.onb-art .fcard.mid h3{font-size:19px}
-.onb-art .fcard.mid p,.onb-art .fcard.mid .fc-meta{display:none}
+.onb-art .fcard.mid p{display:none}
+.onb-art .fcard.mid .fc-media{height:min(470px,54vh)}
+/* Jammie moves: a short loop on white, laid onto the stage */
+.pop.v{mix-blend-mode:multiply}
+.pop.v img{display:none}
+.onb-art .pop.v video.lead,.onb:not(:has(.book)) .onb-art .pop.v video.lead{display:block;height:min(350px,40vh);aspect-ratio:1;object-fit:cover;filter:none}
+.onb:has(.book) .onb-art .pop.v video.lead{height:min(270px,32vh)}
+html[data-theme="dark"] .pop.v{mix-blend-mode:normal}
+html[data-theme="dark"] .pop.v video{display:none!important}
+html[data-theme="dark"] .pop.v img{display:block}
+/* sign-in is a popup over the first screen, then a hello */
+.gate{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.36);backdrop-filter:blur(3px);animation:fade .25s}
+.gate-card{position:relative;width:min(390px,100%);padding:26px 28px 26px;text-align:center;display:grid;justify-items:center;gap:14px;animation:gate-in .55s cubic-bezier(.2,.9,.25,1.1) both}
+@keyframes gate-in{from{opacity:0;transform:translateY(28px) scale(.94)}}
+.gate-card .pop.v video.lead{display:block;height:190px;aspect-ratio:1;object-fit:cover;filter:none}
+.gate-card .lead{height:150px}
+.gate-card h2{font-size:25px;line-height:1.14}
+.gate-card .btn{width:100%}
+/* what we found: pictures, not a table */
+.found{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(520px,100%)}
+.ftile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;min-height:clamp(104px,17vh,150px);padding:14px 16px;border:0;border-radius:18px;overflow:hidden;background:var(--s2) center/cover;color:inherit;text-align:left;animation:rise .55s var(--ease) both}
+.ftile:nth-child(2){animation-delay:.08s}.ftile:nth-child(3){animation-delay:.16s}.ftile:nth-child(4){animation-delay:.24s}.ftile:nth-child(5){animation-delay:.32s}
+.ftile:hover{box-shadow:0 0 0 2px var(--on-line)}
+.ftile.wide{grid-column:1/-1;min-height:96px;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}
+.ftile.pic{color:#fff;background-color:#111}
+.ftile.pic::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.66))}
+.ftile > *{position:relative}
+.ftile b{display:block;font-size:27px;font-weight:var(--h-weight);line-height:1.05;letter-spacing:var(--h-track)}
+.ftile small{display:block;font-size:13px;opacity:.86}
+.ftile img.el{position:absolute;right:8px;top:6px;height:72px;width:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.14))}
+.ftile .swatches i{width:30px;height:30px}
 .onb-art .brandmark{position:absolute;left:28px;top:22px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
 .onb-art .brandmark img{height:28px}
 .onb-body{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:20px;padding:72px clamp(28px,6vw,88px);text-align:left}
@@ -80,7 +107,7 @@ a{text-decoration:none}
 .onb-body .h1,.onb-body .h2{max-width:14ch}
 .onb-body .pair{justify-content:flex-start}
 .store{display:flex;align-items:center;gap:10px;width:min(500px,100%);height:56px;padding:0 7px 0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2)}
-.store:focus-within{border-color:var(--fg)}
+.store:focus-within{border-color:var(--on-line)}
 .store input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit;font-size:16px}
 .store .btn{border-radius:var(--r-pill);height:42px}
 .store > [data-ico]{color:var(--fg-2)}
@@ -90,8 +117,6 @@ a{text-decoration:none}
 .asks{display:grid;gap:18px;width:min(520px,100%);text-align:left}
 .asks h4{font-size:14px;font-weight:600;letter-spacing:0;margin-bottom:8px}
 .asks .chips{display:flex;flex-wrap:wrap;gap:8px}
-.found{width:min(440px,100%);text-align:left}
-.found .rowi b{text-align:right}
 .swatches{display:flex;gap:6px}
 .swatches i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .pair{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -108,16 +133,18 @@ a{text-decoration:none}
 .story i{width:50px;height:50px;border-radius:50%;padding:2.5px;background:var(--jam);display:block}
 .story.seen i{background:var(--line)}
 .story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
-.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;gap:22px;padding:0 92px 22px 28px}
-.feed-col{display:flex;align-items:flex-end;gap:8px;flex:1;min-width:0;max-width:1130px;justify-content:center}
-.feed.has-panel .feed-col{flex:none}
-.feed.has-panel .fcard{flex:none;grid-template-columns:1fr;aspect-ratio:9/16;max-width:none}
-.feed.has-panel .fc-body{display:none}
+.feed{--side-w:min(440px,100vw)}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:0 92px 14px;transition:padding .35s var(--ease)}
+.feed-col{display:flex;align-items:flex-start;gap:10px;min-width:0;justify-content:center}
+.feed-col .acts{height:var(--fc-h);justify-content:flex-end}
+.feed:has(.side) .stage{padding-right:calc(var(--side-w) + 28px)}
+.feed:has(.side) .feed-nav,.feed:has(.side) .corner{display:none}
+body:has(.side) .fab{display:none}
 .age{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--fg-2);padding:8px 0}
 .age .ico{color:var(--fg)}
 .feed-nav{position:absolute;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
 .corner{position:absolute;top:14px;right:20px;display:flex;align-items:center;gap:2px}
-.count{position:absolute;left:24px;bottom:20px;font-size:13px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.corner .btn{margin-right:6px}
 .team{position:absolute;left:24px;top:16px;height:36px;padding:0 12px 0 5px;border-radius:99px;border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:inherit}
 .team:hover{box-shadow:var(--shadow-1)}
 .team .stack{width:28px;height:28px}
@@ -139,8 +166,10 @@ a{text-decoration:none}
 .fab img{height:34px;width:auto}
 
 /* ---------- side panel: idea, let's jam, a note, an order ---------- */
-.side{position:relative;width:390px;max-height:calc(100vh - 150px);overflow-y:auto;align-self:center;animation:in-side .4s var(--ease);scrollbar-width:thin}
-@keyframes in-side{from{opacity:0;transform:translateX(20px)}}
+/* a drawer on the right edge, as tall as the window */
+.side{position:fixed;top:0;right:0;bottom:0;z-index:25;width:var(--side-w);border-radius:0;border-left:1px solid var(--line-soft);overflow-y:auto;display:flex;flex-direction:column;padding-top:26px;animation:in-side .42s var(--ease);scrollbar-width:thin}
+.side > *{flex:none}
+@keyframes in-side{from{transform:translateX(100%)}}
 .side h2{font-size:21px;line-height:1.18;margin:10px 36px 6px 0}
 .side .sub{color:var(--fg-2);font-size:14px;margin:0 0 16px}
 .side h4{font-size:13px;margin:18px 0 8px;color:var(--fg-2);font-weight:600;letter-spacing:0}
@@ -149,8 +178,9 @@ a{text-decoration:none}
 .cap{border:1px solid var(--line-soft);border-radius:12px;padding:12px;font-size:14px;display:grid;gap:8px}
 .side .chips{display:flex;gap:6px;flex-wrap:wrap}
 .side .chip{height:32px;padding:0 12px;font-size:13px}
-.side-foot{position:sticky;bottom:-24px;margin:18px -24px -24px;padding:12px 24px;background:var(--card);border-top:1px solid var(--line-soft);display:flex;align-items:center;gap:6px}
+.side-foot{position:sticky;bottom:-24px;margin:auto -24px -24px;padding:12px 24px;background:var(--card);border-top:1px solid var(--line-soft);display:flex;align-items:center;gap:6px}
 .side-foot .btn{margin-left:auto}
+.side > :nth-last-child(2){margin-bottom:18px}
 .opt{display:flex;gap:12px;align-items:flex-start;width:100%;padding:13px 4px;border:0;border-bottom:1px solid var(--line-soft);background:none;text-align:left;color:inherit}
 .opt:last-of-type{border-bottom:0}
 .opt:hover b{text-decoration:underline;text-underline-offset:3px}
@@ -159,7 +189,7 @@ a{text-decoration:none}
 .opt small{display:block;color:var(--fg-2);font-size:13.5px;line-height:1.35}
 .note{position:relative;margin:4px 0 12px}
 .note textarea{width:100%;min-height:120px;border:1px solid var(--fg-3);border-radius:14px;padding:12px 14px;font:inherit;color:var(--fg);background:var(--card);resize:vertical;outline:none}
-.note textarea:focus{border-color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+.note textarea:focus{border-color:var(--on-line);box-shadow:inset 0 0 0 1px var(--on-line)}
 .note .mic{position:absolute;right:10px;bottom:14px}
 
 /* ---------- story viewer ---------- */
@@ -168,7 +198,7 @@ a{text-decoration:none}
 .sview{width:min(430px,100%);max-height:calc(100vh - 40px);overflow-y:auto;padding:16px 18px 18px;animation:in-down .4s var(--ease)}
 .segs{display:flex;gap:4px;margin-bottom:12px}
 .segs i{flex:1;height:3px;border-radius:3px;background:var(--s3)}
-.segs i.on{background:var(--fg)}
+.segs i.on{background:var(--on)}
 .sview-h{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px}
 .sview-h .ico-btn{width:32px;height:32px}
 .sview img.pic{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}
@@ -194,7 +224,7 @@ a{text-decoration:none}
 .cols{display:flex;gap:16px;overflow-x:auto;padding-bottom:18px;scrollbar-width:thin}
 .col{flex:none;width:320px;display:grid;gap:12px;align-content:start}
 .col-h{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15.5px}
-.col-h i{width:8px;height:8px;border-radius:50%;background:var(--fg)}
+.col-h i{width:8px;height:8px;border-radius:50%;background:var(--on)}
 .col-h small{margin-left:auto;font-size:12px;font-weight:600;color:#1A7F4B}
 .col > p{margin:-8px 0 0;font-size:13px;color:var(--fg-2)}
 .stat .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
@@ -204,7 +234,7 @@ a{text-decoration:none}
 .stat .line{font-size:13.5px;color:var(--fg-2);margin:2px 0 0}
 .bars{display:flex;align-items:flex-end;gap:5px;height:70px;margin:12px 0 10px}
 .bars i{flex:1;border-radius:5px 5px 2px 2px;background:var(--s3)}
-.bars i.hi{background:var(--fg)}
+.bars i.hi{background:var(--on)}
 .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft)}
 .mini button{border:0;background:none;padding:0;text-align:left;color:inherit}
 .mini small{font-size:12px}
@@ -245,16 +275,17 @@ html.still ::-webkit-scrollbar{display:none}
   .feed{height:calc(100vh - 58px)}
   .stories{gap:10px;padding:8px 0 6px}
   .story i{width:42px;height:42px}
-  .stage{padding:0 8px 8px;gap:0}
-  .fcard{height:100%;width:100%}
-  .feed.has-panel .fcard{aspect-ratio:auto}
-  .feed-col{position:relative;width:100%;height:100%}
-  .feed-col .acts{position:absolute;right:4px;top:8px;z-index:3}
+  .stage,.feed:has(.side) .stage{padding:0 10px 8px}
+  .fcard{width:100%}
+  .fc-media{width:100%;height:min(62vh,calc(100vh - 300px));aspect-ratio:auto}
+  .feed-col{position:relative;width:100%}
+  .feed-col .acts{position:absolute;right:4px;top:8px;z-index:3;height:auto;justify-content:flex-start}
   .feed-col .act,.feed-col .age,.feed-col .act .ico,.feed-col .age .ico{color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
-  .feed-nav,.count,.corner{display:none}
+  .feed-nav,.corner{display:none}
   .team{top:auto;bottom:72px;left:12px}
   .fab{bottom:70px;right:12px}
-  .side{position:fixed;inset:auto 0 0 0;width:auto;max-height:84vh;border-radius:var(--r-card) var(--r-card) 0 0;z-index:30}
+  .fc-body p{padding-right:118px}
+  .side{inset:auto 0 0 0;width:auto;max-height:84vh;border-left:0;border-radius:var(--r-card) var(--r-card) 0 0;z-index:30;animation-name:in-down}
   .page{padding:0 16px 80px}
   .grid3,.tiles,.board{grid-template-columns:1fr}
   .learn{grid-template-columns:1fr}
@@ -262,6 +293,8 @@ html.still ::-webkit-scrollbar{display:none}
   .onb{grid-template-columns:1fr}
   .onb-art{min-height:34vh;padding:24px}
   .onb-art .lead{height:150px}
+  .onb-art .pop.v video.lead,.onb:not(:has(.book)) .onb-art .pop.v video.lead{height:200px}
+  .found{gap:8px}
   .onb-body{padding:56px 20px 32px;justify-content:flex-start}
   .onb-body .dots{left:20px;top:22px}
 }
@@ -284,8 +317,8 @@ html.still ::-webkit-scrollbar{display:none}
 <main id="app"></main>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=6"></script>
-<script src="assets/jammie/v3/data.js?v=6"></script>
+<script src="assets/jammie/v3/icons.js?v=7"></script>
+<script src="assets/jammie/v3/data.js?v=7"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, fcard, icard, srow } = window.JAMMIE;
@@ -337,7 +370,12 @@ html.still ::-webkit-scrollbar{display:none}
   const FLOAT = { 1: [['bag', 12, 16, 64, .2], ['magnifier', 76, 62, 70, .35]], 2: [['heart', 14, 64, 60, .2], ['sparkle', 78, 18, 54, .35]], 3: [], 4: [['megaphone', 10, 20, 70, .2], ['clapper', 76, 64, 66, .35], ['chart', 78, 14, 56, .5]],
     5: [['sparkle', 14, 18, 54, .2], ['heart', 78, 66, 58, .35]], 6: [['megaphone', 12, 62, 64, .2], ['sparkle', 76, 16, 50, .35]], 7: [], 8: [] };
   const onb = (n, art, body, cls = '') => `<section class="onb ${cls}"><div class="onb-art">${mark}<div class="glow"></div>${(FLOAT[n] || []).map(f => fl(...f)).join('')}${art}</div><div class="onb-body">${dots(n)}${body}</div></section>`;
-  const pose = p => `<div class="pop"><div class="bob"><img class="lead" src="${A}pose-${p}.png" alt=""></div></div>`;
+  // five short loops (idle, wave, search, cheer, sit); the flow map and reduced motion get the still
+  const LOOPS = ['idle', 'wave', 'search', 'cheer', 'sit'], calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
+  const pose = p => LOOPS.includes(p) && !calm
+    ? `<div class="pop v"><video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video><img class="lead" src="${stillOf(p)}" alt=""></div>`
+    : `<div class="pop"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
   const bits = () => [['reviews.jpg', -210, -150, -14], ['midnight.jpg', 220, -120, 12], ['xlows.jpg', -230, 110, 10], ['ivory.jpg', 210, 150, -10], ['sketch.jpg', 0, -220, 6]]
     .map(([f, x, y, r], i) => `<img class="bit" src="${D}${f}" alt="" style="--x:${x}px;--y:${y}px;--r:${r}deg;animation-delay:${i * .45}s">`).join('');
   const sparks = () => [[-170, -150, -30], [180, -130, 40], [-200, 60, 20], [190, 90, -25], [0, -210, 10], [-60, 190, 35]]
@@ -353,6 +391,11 @@ html.still ::-webkit-scrollbar{display:none}
     setTimeout(() => { arriving = true; location.hash = next; }, 520);
     setTimeout(() => c.classList.add('lift'), 760); setTimeout(() => c.remove(), 1400);
   }
+  const gate = inner => `<div class="gate"><div class="sheet gate-card">${inner}</div></div>`;
+  const startScreen = () => onb(1, pose('search'), `
+        <h1 class="h1">Add your store.</h1>
+        <form class="store" data-go="#/signin">${ico('link')}<input placeholder="Paste a link or type its name" aria-label="Store link" value="wearcomet.com">
+          <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>`);
   const G = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.300c0-.800-.100-1.600-.200-2.300H12v4.500h6.200a5.300 5.300 0 0 1-2.300 3.500v2.900h3.700c2.200-2 3.400-5 3.400-8.600Z"/><path fill="#34A853" d="M12 23.500c3.100 0 5.700-1 7.600-2.800l-3.700-2.900c-1 .700-2.400 1.100-3.900 1.100-3 0-5.500-2-6.400-4.700H1.800v3A11.500 11.500 0 0 0 12 23.500Z"/><path fill="#FBBC05" d="M5.600 14.200a6.900 6.900 0 0 1 0-4.400v-3H1.800a11.500 11.500 0 0 0 0 10.400Z"/><path fill="#EA4335" d="M12 5.100c1.700 0 3.200.600 4.400 1.700l3.300-3.300A11.500 11.500 0 0 0 1.800 6.800l3.800 3c.900-2.700 3.400-4.700 6.400-4.700Z"/></svg>`;
 
   // ---- pieces of the feed
@@ -368,14 +411,13 @@ html.still ::-webkit-scrollbar{display:none}
       <a class="act draw" href="#/idea">${ico('eye')}Why</a>
       <button class="act draw" data-do="feedback">${ico('message')}Note</button>
     </div>`;
-  const topRight = () => `<button class="ico-btn draw" data-do="shuffle" aria-label="Shuffle">${ico('spark')}</button><a class="ico-btn draw" href="#/bell" aria-label="Updates">${ico('bell')}</a><a href="#/you" aria-label="You">${av(32)}</a>`;
+  const topRight = feed => `${feed ? `<button class="btn b-soft b-sm draw" data-do="refresh" title="Bring a fresh set of ideas">${ico('refresh')}Refresh</button>` : ''}<a class="ico-btn draw" href="#/bell" aria-label="Updates">${ico('bell')}</a><a href="#/you" aria-label="You">${av(32)}</a>`;
   const feedShell = (d, panel = '', o = {}) => `<section class="feed ${panel ? 'has-panel' : ''} ${arriving ? 'arrive' : ''}">
       ${stories()}
       <div class="stage"><div class="feed-col">${fcard(d, o)}${acts(d)}</div>${panel}</div>
       ${orders.length ? `<a class="team" href="#/bell"><span class="stack">${orders.slice(0, 2).map(o => `<i style="background-image:url(${D}${idea(o.id).img})"></i>`).join('')}</span>With the team <em>${orders.length}</em></a>` : ''}
-      <div class="corner">${topRight()}</div>
+      <div class="corner">${topRight(true)}</div>
       <div class="feed-nav"><button class="btn b-round draw" data-do="prev" aria-label="Previous idea">${ico('up')}</button><button class="btn b-round draw" data-do="next" aria-label="Next idea">${ico('down')}</button></div>
-      <div class="count">${cur + 1} of ${IDEAS.length}</div>
     </section>`;
   const side = (inner, back = '#/feed') => `<aside class="sheet side"><a class="ico-btn x draw" href="${back}" aria-label="Close">${ico('close')}</a>${inner}</aside>`;
   const pageHead = (title, right = '') => `<div class="page-h"><h1>${title}</h1><div class="right">${right}${topRight()}</div></div>`;
@@ -406,17 +448,20 @@ html.still ::-webkit-scrollbar{display:none}
 
   const SCREENS = {
     // ================= onboarding, as the live product does it =================
-    start: { bare: true, html: () => onb(1, pose('search'), `
-        <h1 class="h1">Add your store.</h1>
-        <form class="store" data-go="#/signin">${ico('link')}<input placeholder="Paste a link or type its name" aria-label="Store link" value="wearcomet.com">
-          <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>`) },
-    signin: { bare: true, html: () => onb(2, pose('wave'), `
-        <h1 class="h2">Sign in to keep your ideas</h1>
-        <a class="btn b-out gbtn" href="#/reading">${G}Continue with Google</a>`) },
+    start: { bare: true, html: () => startScreen() },
+    signin: { bare: true, html: () => startScreen() + gate(`
+        <a class="ico-btn x draw" href="#/start" aria-label="Close">${ico('close')}</a>
+        ${pose('wave')}
+        <h2>Sign in to keep your ideas</h2>
+        <a class="btn b-out gbtn" href="#/welcome">${G}Continue with Google</a>`) },
+    welcome: { bare: true, html: () => startScreen() + gate(`
+        ${sparks()}${pose('cheer')}
+        <h2>You’re in.</h2>
+        <a class="btn b-jam draw" href="#/reading">Read my store${ico('arrow')}</a>`), enter: () => { if (!STILL) later(() => { location.hash = '#/reading'; }, 2600); } },
     reading: { bare: true, html: () => onb(3, bits() + pose('search'), `
         <h1 class="h2">Opening your store.</h1>
         ${todo(['<b data-count="229">229</b>&nbsp;products', '<b data-count="1171">1,171</b>&nbsp;things customers said', '<b data-count="6">6</b>&nbsp;rivals and their ads', 'Your own ads'], 2)}`, 'scan'), enter: () => { countUp(); runTodo('#/taps'); } },
-    taps: { bare: true, html: () => onb(4, pose('walk'), `
+    taps: { bare: true, html: () => onb(4, pose('idle'), `
         <a class="btn b-text skip" href="#/check">Skip</a>
         <h1 class="h2">Three quick taps</h1>
         <div class="asks">
@@ -427,18 +472,18 @@ html.still ::-webkit-scrollbar{display:none}
         <a class="btn b-jam draw" href="#/check">Continue${ico('arrow')}</a>`) },
     check: { bare: true, html: () => onb(5, pose('cheer'), `
         <h1 class="h2">Here’s what we found.</h1>
-        <div class="rows found">
-          <div class="rowi"><small class="grow">Brand</small><b>Comet</b></div>
-          <div class="rowi"><small class="grow">Sells</small><b>Homegrown sneakers</b></div>
-          <div class="rowi"><small class="grow">For</small><b>Men and women in India</b></div>
-          <div class="rowi"><small class="grow">Products</small><b>229</b></div>
-          <div class="rowi"><small class="grow">Colours</small><span class="swatches"><i style="background:#2765FA"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i><i style="background:#4CAF50"></i></span></div>
+        <div class="found">
+          <button class="ftile wide" data-do="fix"><span><small>Your brand</small><b>Comet</b><small>Homegrown sneakers, for men and women in India</small></span><span class="swatches"><i style="background:#2765FA"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i><i style="background:#4CAF50"></i></span></button>
+          <button class="ftile pic" data-do="fix" style="background-image:url(${D}xlows.jpg)"><b>229</b><small>products</small></button>
+          <button class="ftile pic" data-do="fix" style="background-image:url(${D}reviews.jpg)"><b>1,171</b><small>things customers said</small></button>
+          <button class="ftile pic" data-do="fix" style="background-image:url(${D}rival.jpg)"><b>6</b><small>rivals, 1,103 live ads</small></button>
+          <button class="ftile" data-do="fix"><img class="el" src="${A}el-megaphone.png" alt=""><b>More sales</b><small>on Instagram</small></button>
         </div>
         <div class="pair"><a class="btn b-jam draw" href="#/wait">Looks right. Write my first idea${ico('arrow')}</a><button class="btn b-out" data-do="fix">Fix something</button></div>`) },
     wait: { bare: true, html: () => onb(6, pose('sit'), `
         <h1 class="h2">Sit back. We’ve got this.</h1>
         ${todo(['Picking the best angle', 'Writing your first idea', 'Making the picture'], 1)}`), enter: () => runTodo('#/first') },
-    first: { bare: true, html: () => onb(7, `<div class="land" style="position:relative;width:min(560px,100%)">${fcard(real[1], { cls: 'mid', cta: false })}</div>`, `
+    first: { bare: true, html: () => onb(7, `<div class="land" style="position:relative">${fcard(real[1], { cls: 'mid', cta: false })}</div>`, `
         <div class="who">${av(34)}<b>Your first ideas are in.</b></div>
         <h1 class="h2">Your first idea is here.</h1>
         <a class="btn b-jam draw" href="#/book">Open my feed${ico('arrow')}</a>`) },
@@ -620,7 +665,7 @@ html.still ::-webkit-scrollbar{display:none}
     share: () => toast('Link copied'), copy: () => toast('Caption copied'),
     later: () => { toast('Saved for later', 'sleep'); step(1); },
     less: () => { toast('Got it. Fewer like this.', 'worry'); step(1); },
-    feedback: () => go('#/change'), sound: () => toast('Sound on'), shuffle: () => { cur = Math.floor(Math.random() * real.length); go('#/feed'); toast('Shuffled'); },
+    feedback: () => go('#/change'), sound: () => toast('Sound on'), refresh: () => { let n = cur; while (n === cur) n = Math.floor(Math.random() * real.length); cur = n; go('#/feed'); const c = app.querySelector('.fcard'); if (c) c.classList.add('enter-down'); toast('Fresh ideas'); },
     next: () => step(1), prev: () => step(-1),
     ship: () => { send('ship', curIdea().id); go('#/feed'); toast('Sent to the team. Files land in your inbox.'); },
     sendchange: () => { send('change', curIdea().id); go('#/feed'); toast('Sent. The team answers within 24 hours.'); },
@@ -632,7 +677,7 @@ html.still ::-webkit-scrollbar{display:none}
     sent: () => { toast('Sent. We will be in touch.'); go('#/feed'); },
     connect: b => toast(`${b.dataset.id} opens its own sign-in`, 'search'), work: () => go('#/work'), feed: () => go('#/feed'),
     gounlock: () => go('#/unlock'), restart: () => go('#/start'), help: () => toast('Opens your email', 'search'),
-    fix: () => toast('Fixing comes next', 'search'), emailbook: () => toast('On its way to your inbox'), mic: () => toast('Hold to talk', 'search'), wrong: () => toast('Tell me what’s wrong', 'worry'),
+    fix: () => toast('Tap any card to fix it. Fixing comes next.', 'search'), emailbook: () => toast('On its way to your inbox'), mic: () => toast('Hold to talk', 'search'), wrong: () => toast('Tell me what’s wrong', 'worry'),
   };
   const LATER = ['report', 'costs', 'park', 'more', 'menu', 'source', 'plan', 'tile', 'openbook', 'addnote', 'pause', 'rename', 'theme', 'learns', 'legal'];
 
@@ -655,8 +700,18 @@ html.still ::-webkit-scrollbar{display:none}
     const onFeed = /^#\/feed(\?|$)/.test(location.hash);
     if (onFeed && (e.key === 'ArrowDown' || e.key === 'j')) { e.preventDefault(); step(1); }
     if (onFeed && (e.key === 'ArrowUp' || e.key === 'k')) { e.preventDefault(); step(-1); }
+    if (e.key === 'Escape' && /^#\/(signin|welcome)/.test(location.hash)) location.hash = '#/start';
     if (e.key === 'Escape' && !document.body.classList.contains('bare') && !/^#\/(feed|command|work|learned|connectors|you)/.test(location.hash)) location.hash = '#/feed';
   });
+  let wheelAt = 0, wheelLast = 0, touchY = null;
+  const onFeedNow = e => /^#\/feed(\?|$)/.test(location.hash) && !(e.target.closest && e.target.closest('.side,.scrim,.gate'));
+  addEventListener('wheel', e => {
+    const now = Date.now(), fresh = now - wheelLast > 160; wheelLast = now;       // one step a gesture, not one a tick
+    if (!onFeedNow(e) || Math.abs(e.deltaY) < 12 || !fresh || now - wheelAt < 420) return;
+    wheelAt = now; step(e.deltaY > 0 ? 1 : -1);
+  }, { passive: true });
+  addEventListener('touchstart', e => { touchY = onFeedNow(e) ? e.touches[0].clientY : null; }, { passive: true });
+  addEventListener('touchend', e => { if (touchY === null) return; const dy = e.changedTouches[0].clientY - touchY; touchY = null; if (Math.abs(dy) > 60) step(dy < 0 ? 1 : -1); }, { passive: true });
   addEventListener('hashchange', render);
   render();
 })();

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jammie, system vs app</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:wght@900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#000; --s1:#0A0A0A; --s2:#121212; --s3:#1C1C1C; --s4:#262626;
+  --line:#262626; --line-soft:#1A1A1A;
+  --fg:#FAFAFA; --fg-2:#A8A8A8; --fg-3:#8A8A8A;
+  --jam:#D7192F; --jam-ink:#FF6B75; --cream:#FFF4E2; --on-jam:#FFF4E2;
+  --font:"Hanken Grotesk",-apple-system,sans-serif;
+  --font-display:"Sofia Sans Extra Condensed","Arial Narrow",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,monospace;
+  --r-card:24px; --r-btn:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+.mono{font:500 11px/1.4 var(--font-mono);color:var(--fg-3);letter-spacing:.02em}
+.display{font-family:var(--font-display);font-weight:900;letter-spacing:-.01em;line-height:.92;margin:0}
+
+/* top */
+.top{position:sticky;top:0;z-index:5;background:rgba(0,0,0,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line-soft)}
+.top-in{max-width:1400px;margin:0 auto;padding:14px 32px;display:grid;grid-template-columns:200px 1fr 1.35fr;gap:24px;align-items:center}
+.top-in img{height:40px;width:auto}
+.top-in .mono{color:var(--fg-2)}
+.wrap{max-width:1400px;margin:0 auto;padding:0 32px 120px}
+.intro{padding:72px 0 40px}
+.intro .display{font-size:88px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.jump a{height:32px;padding:0 12px;display:inline-flex;align-items:center;border-radius:999px;border:1px solid var(--line);color:var(--fg-2);text-decoration:none;font-size:13px}
+.jump a:hover{color:var(--fg);border-color:var(--fg-3)}
+
+/* a row: name | design system | in the app */
+.row{display:grid;grid-template-columns:200px 1fr 1.35fr;gap:24px;padding:40px 0;border-top:1px solid var(--line-soft);scroll-margin-top:72px}
+.name .display{font-size:40px}
+.name .mono{margin-top:12px;display:grid;gap:4px}
+.pane{position:relative;background:var(--s1);border:1px solid var(--line);border-radius:20px;min-height:280px;overflow:hidden}
+.pane.pad{padding:28px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.pane.scroll{max-height:620px;overflow-y:auto;scrollbar-width:thin}
+.pane.scroll img{width:100%}
+.pane.center{display:grid;place-items:center;padding:20px}
+.pane.center img{max-height:580px;width:auto;border-radius:12px}
+
+/* production shot with a spotlight on the element */
+.shot{position:relative;cursor:zoom-in;line-height:0}
+.shot img{width:100%;height:auto}
+.shot .hl{position:absolute;border:2px solid var(--jam);border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.5),0 0 24px rgba(215,25,47,.45);pointer-events:none}
+.shots{display:grid;gap:12px;padding:12px}
+.shots.two{grid-template-columns:2.6fr 1fr;align-items:start}
+.shots .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.shots .shot.tall{max-height:min(520px,60vh);overflow-y:auto;scrollbar-width:thin}
+.none{display:grid;place-items:center;height:100%;min-height:280px;color:var(--fg-3);font:500 12px var(--font-mono)}
+
+/* live design-system pieces, straight from tokens */
+.lock-row{display:flex;gap:16px;align-items:stretch}
+.lock-tile{flex:1;border-radius:16px;display:grid;place-items:center;padding:28px 12px;min-height:180px}
+.lock-tile img{height:110px;width:auto}
+.lock-tile.red img,.lock-tile.dark img.cream{filter:brightness(0) invert(95%) sepia(10%) saturate(480%) hue-rotate(320deg)}
+.sw{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.sw div{min-width:0;overflow:hidden;word-break:break-word;border-radius:14px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font:500 10px/1.2 var(--font-mono);color:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.sw div.lt{color:rgba(30,20,18,.75)}
+.sw.surf div{aspect-ratio:auto;height:56px}
+.ts-1{font-family:var(--font-display);font-weight:900;font-size:72px;line-height:.92;color:var(--cream)}
+.ts-2{font-size:20px;font-weight:500;color:var(--fg-2)}
+.ts-3{font-size:15px}
+.ts-4{font:500 12px var(--font-mono);color:var(--fg-2)}
+.btns{display:grid;grid-template-columns:repeat(2,auto);gap:12px;justify-content:start;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border:0;border-radius:var(--r-btn);font:600 15px var(--font);cursor:pointer;white-space:nowrap}
+.b-ink{background:#FAFAFA;color:#111}
+.b-quiet{background:var(--s4);color:var(--fg)}
+.b-jam{background:var(--jam);color:var(--on-jam);border-radius:999px}
+.b-text{background:none;color:var(--fg);padding:0 4px}
+.b-cream{background:var(--cream);color:#1E1412;border-radius:999px}
+.field{display:flex;align-items:center;gap:8px;height:56px;padding:6px 6px 6px 18px;border-radius:999px;border:1px solid var(--line);background:var(--s2)}
+.field input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit}
+.field input::placeholder{color:var(--fg-3)}
+.jm-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.jm-row svg{width:84px;height:97px;--halo:#FFF4E2}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.92);display:none;place-items:center;padding:32px;cursor:zoom-out}
+.lb.on{display:grid}
+.lb img{max-width:100%;max-height:100%;border-radius:12px}
+
+@media (max-width:1000px){
+  .top-in{grid-template-columns:1fr 1fr}.top-in img{display:none}
+  .row{grid-template-columns:1fr}
+  .intro .display{font-size:56px}
+  .shots.two{grid-template-columns:1fr}
+  .wrap,.top-in{padding-left:16px;padding-right:16px}
+  .sw{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="sprite" hidden></div>
+
+<header class="top"><div class="top-in">
+  <img src="assets/jammie/logo/lockup-o1.svg" alt="jammie">
+  <span class="mono">design system · v2.1.0</span>
+  <span class="mono">in the app · production, dark</span>
+</div></header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1 class="display">the system,<br>and the app.</h1>
+    <nav class="jump" id="jump"></nav>
+  </section>
+
+  <!-- logo -->
+  <section class="row" id="logo">
+    <div class="name"><h2 class="display">logo</h2><div class="mono"><span>O1 lockup, lid on top</span><span>lid mark</span></div></div>
+    <div class="pane pad">
+      <div class="lock-row">
+        <div class="lock-tile dark" style="background:#000"><img class="cream" src="assets/jammie/logo/lockup-o1.svg" alt="jammie lockup"></div>
+        <div class="lock-tile red" style="background:var(--jam)"><img src="assets/jammie/logo/lockup-o1.svg" alt="jammie lockup on red"></div>
+        <div class="lock-tile" style="background:var(--cream)"><img src="assets/jammie/logo/mark-lid.svg" alt="lid mark" style="height:70px"></div>
+      </div>
+    </div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-deck-1440.webp" alt="deck, laptop"><i class="hl" style="left:1.4%;top:2.8%;width:24.5%;height:14%"></i></div>
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-390.webp" alt="feed, phone"><i class="hl" style="left:2.5%;top:3.5%;width:16%;height:8%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- colour -->
+  <section class="row" id="colour">
+    <div class="name"><h2 class="display">colour</h2><div class="mono"><span>one red #D7192F</span><span>dark = Instagram dark</span><span>status = coloured mono text</span></div></div>
+    <div class="pane pad">
+      <div class="sw">
+        <div style="background:#D7192F">strawberry</div>
+        <div class="lt" style="background:#FFF4E2">cream</div>
+        <div style="background:#1E1412">burnt toast</div>
+        <div style="background:#F28C1B">marmalade</div>
+        <div style="background:#3A1B4A">blackcurrant</div>
+        <div class="lt" style="background:#FFB3C4">berry cream</div>
+      </div>
+      <div class="sw surf">
+        <div style="background:#000">#000</div>
+        <div style="background:#121212">#121212</div>
+        <div style="background:#1C1C1C">#1C1C1C</div>
+        <div style="background:#262626">#262626</div>
+        <div style="background:#A8A8A8;color:#111">#A8A8A8</div>
+        <div class="lt" style="background:#FAFAFA">#FAFAFA</div>
+      </div>
+      <div class="mono" style="display:flex;gap:16px"><span style="color:#5BD98A">live</span><span style="color:#FFB15C">needs you</span><span style="color:#FF6B75">▼ 24%</span><span style="color:#7FB4FF">46 min ago</span></div>
+    </div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-command-1440.webp" alt="command centre"><i class="hl" style="left:52%;top:13%;width:47%;height:5%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- type -->
+  <section class="row" id="type">
+    <div class="name"><h2 class="display">type</h2><div class="mono"><span>Sofia Sans Extra Condensed 900</span><span>Hanken Grotesk 400–700</span><span>JetBrains Mono 500</span></div></div>
+    <div class="pane pad">
+      <div class="ts-1">drop your store.</div>
+      <div class="ts-2">we'll read it while you have chai.</div>
+      <div class="ts-3">tap for the details. heart what fits, and jammie learns what to bring next.</div>
+      <div class="ts-4">how your feed works</div>
+    </div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-onboarding-1440.webp" alt="onboarding"><i class="hl" style="left:33%;top:54%;width:34%;height:16%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- buttons -->
+  <section class="row" id="buttons">
+    <div class="name"><h2 class="display">buttons</h2><div class="mono"><span>ink · quiet · jam · text</span><span>radius 12, pill = let's jam only</span></div></div>
+    <div class="pane pad">
+      <div class="btns">
+        <button class="btn b-ink">read my store</button><span class="mono">ink</span>
+        <button class="btn b-quiet">not now</button><span class="mono">quiet</span>
+        <button class="btn b-jam">✋ let's jam</button><span class="mono">jam</span>
+        <button class="btn b-text">see all</button><span class="mono">text</span>
+        <button class="btn b-cream">read my store</button><span class="mono">cream, onboarding</span>
+      </div>
+    </div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-paywall-1440.webp" alt="unlock everything"><i class="hl" style="left:58%;top:91.5%;width:14.5%;height:7.5%"></i></div>
+      <div class="shot tall"><img src="assets/jammie/actual/system--buttons.webp" alt="every button state"></div>
+    </div></div>
+  </section>
+
+  <!-- fields -->
+  <section class="row" id="fields">
+    <div class="name"><h2 class="display">fields</h2><div class="mono"><span>pill field + action</span><span>quiet 12px inputs in sheets</span></div></div>
+    <div class="pane pad">
+      <label class="field"><input placeholder="your site or brand" aria-label="your site or brand"><button class="btn b-cream" style="height:42px">read my store</button></label>
+    </div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-onboarding-1440.webp" alt="onboarding field"><i class="hl" style="left:31.5%;top:70.5%;width:37%;height:9%"></i></div>
+      <div class="shot tall"><img src="assets/jammie/actual/system--fields.webp" alt="field states"></div>
+    </div></div>
+  </section>
+
+  <!-- idea card -->
+  <section class="row" id="card">
+    <div class="name"><h2 class="display">the idea card</h2><div class="mono"><span>radius 24, 560px column</span><span>heart · share · let's jam</span></div></div>
+    <div class="pane center"><img src="assets/jammie/actual/feed--card-state-rest-picture.webp" alt="idea card, design system"></div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-1440.webp" alt="feed, laptop"><i class="hl" style="left:33.6%;top:68.5%;width:37%;height:31%"></i></div>
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-390.webp" alt="feed, phone"><i class="hl" style="left:3.5%;top:64%;width:93%;height:28%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- welcome card -->
+  <section class="row" id="coach">
+    <div class="name"><h2 class="display">first card</h2><div class="mono"><span>paper #FFF4E2</span><span>berry cream wave</span></div></div>
+    <div class="pane center"><img src="assets/jammie/actual/kit--blank-states.webp" alt="blank states"></div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-1440.webp" alt="feed, laptop"><i class="hl" style="left:33.6%;top:9.5%;width:37%;height:56%"></i></div>
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-390.webp" alt="feed, phone"><i class="hl" style="left:3.5%;top:14.5%;width:93%;height:45%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- rail -->
+  <section class="row" id="rail">
+    <div class="name"><h2 class="display">rail and tabs</h2><div class="mono"><span>rail 76px, open 236px</span><span>four tabs on a phone</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/kit--rail-states.webp" alt="rail states"><img src="assets/jammie/actual/kit--rail-phone-tabs.webp" alt="phone tabs"></div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-1440.webp" alt="feed, laptop"><i class="hl" style="left:.3%;top:42%;width:3.6%;height:57%"></i></div>
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-390.webp" alt="feed, phone"><i class="hl" style="left:0;top:92%;width:100%;height:8%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- mascot -->
+  <section class="row" id="mascot">
+    <div class="name"><h2 class="display">jammie</h2><div class="mono"><span>one locked drawing</span><span>10 flavours, 27 poses</span><span>plum line, cream halo</span></div></div>
+    <div class="pane pad"><div class="jm-row" id="jmRow"></div></div>
+    <div class="pane"><div class="shots two">
+      <div class="shot"><img src="assets/jammie/actual/screen-onboarding-1440.webp" alt="onboarding mascot"><i class="hl" style="left:42.5%;top:27%;width:16%;height:25%"></i></div>
+      <div class="shot"><img src="assets/jammie/actual/screen-feed-390.webp" alt="feed mascot"><i class="hl" style="left:74%;top:81%;width:24%;height:11%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- wait -->
+  <section class="row" id="wait">
+    <div class="name"><h2 class="display">wait</h2><div class="mono"><span>jammie waits, one line</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/system-wait--every-context.webp" alt="every wait"></div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-jam-1440.webp" alt="a jam, waiting"><i class="hl" style="left:41%;top:11%;width:22%;height:24%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- empty -->
+  <section class="row" id="empty">
+    <div class="name"><h2 class="display">empty</h2><div class="mono"><span>sleepy jammie + one line</span></div></div>
+    <div class="pane center"><img src="assets/jammie/actual/kit--spinner-states.webp" alt="spinner states"></div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-deck-1440.webp" alt="empty deck"><i class="hl" style="left:37.5%;top:24%;width:29%;height:23%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- sheets -->
+  <section class="row" id="sheets">
+    <div class="name"><h2 class="display">sheets</h2><div class="mono"><span>bottom sheet, grabber</span><span>yes/no, paid confirm</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/popups--idea-open.webp" alt="idea sheet"><img src="assets/jammie/actual/kit--confirm-priced.webp" alt="paid confirm"><img src="assets/jammie/actual/popups--idea-menu.webp" alt="idea menu"></div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-paywall-1440.webp" alt="unlock everything"><i class="hl" style="left:26%;top:27.5%;width:48%;height:72%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- charts -->
+  <section class="row" id="charts">
+    <div class="name"><h2 class="display">numbers</h2><div class="mono"><span>five calm columns</span><span>one question a card</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/kit--charts-states.webp" alt="every chart"></div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-command-1440.webp" alt="command centre"><i class="hl" style="left:33%;top:28.5%;width:25.5%;height:60%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- controls -->
+  <section class="row" id="controls">
+    <div class="name"><h2 class="display">choosing</h2><div class="mono"><span>picker, option rows</span><span>toggles, steps</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/kit--picker-states.webp" alt="picker"><img src="assets/jammie/actual/system--option-rows.webp" alt="option rows"><img src="assets/jammie/actual/system--toggles-and-status.webp" alt="toggles and status"><img src="assets/jammie/actual/system--steps.webp" alt="steps"></div>
+    <div class="pane"><div class="shots">
+      <div class="shot"><img src="assets/jammie/actual/screen-paywall-1440.webp" alt="team size picker"><i class="hl" style="left:27.5%;top:60%;width:45.5%;height:7%"></i></div>
+    </div></div>
+  </section>
+
+  <!-- toasts -->
+  <section class="row" id="toasts">
+    <div class="name"><h2 class="display">toasts</h2><div class="mono"><span>pops up 24px, settles</span></div></div>
+    <div class="pane scroll"><img src="assets/jammie/actual/system--toasts.webp" alt="toasts"></div>
+    <div class="pane"><div class="none">not on any captured screen</div></div>
+  </section>
+
+  <!-- every screen -->
+  <section class="row" id="screens" style="grid-template-columns:220px 1fr">
+    <div class="name"><h2 class="display">every screen</h2><div class="mono"><span>laptop 1440 · phone 390</span></div></div>
+    <div id="allScreens" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px"></div>
+  </section>
+</main>
+
+<div class="lb" id="lb"><img alt=""></div>
+
+<script>
+// jump links
+document.getElementById('jump').innerHTML = [...document.querySelectorAll('.row')]
+  .map(r => `<a href="#${r.id}">${r.querySelector('h2').textContent}</a>`).join('');
+
+// every production screen, laptop beside phone
+const SCREENS = [['feed','feed'],['deck','deck'],['work','work'],['liked','liked'],['learned','what we learned'],['store','your store'],['connectors','connectors'],['settings','settings'],['command','command centre'],['jam','a jam'],['onboarding','onboarding'],['pricing','locked ideas'],['paywall','unlock everything'],['error','page not found']];
+document.getElementById('allScreens').innerHTML = SCREENS.map(([k, n]) => `
+  <figure style="margin:0">
+    <div class="shots two" style="padding:0">
+      <div class="shot"><img loading="lazy" src="assets/jammie/actual/screen-${k}-1440.webp" alt="${n}, laptop"></div>
+      <div class="shot"><img loading="lazy" src="assets/jammie/actual/screen-${k}-390.webp" alt="${n}, phone"></div>
+    </div>
+    <figcaption class="mono" style="margin-top:8px">${n}</figcaption>
+  </figure>`).join('');
+
+// mascot, live from the app's own sprite
+fetch('assets/jammie/mascot/sprite.svg').then(r => r.text()).then(svg => {
+  const box = document.getElementById('sprite'); box.innerHTML = svg; box.hidden = false;
+  const flav = [['#E8465A','#F5A54A','jm-grin'],['#F28C1B','#FFE08A','jm-x-smug'],['#5B2C8A','#B9A3E3','jm-x-happy'],['#2F6FDE','#A9CDFF','jm-x-wink'],['#22A06B','#BFEBD2','jm-x-look'],['#E9B10F','#FFF1B8','jm-x-love'],['#0F9FA8','#B4EEEB','jm-x-heart'],['#B832C9','#F2C4F7','jm-laughing']];
+  document.getElementById('jmRow').innerHTML = flav.map(([j,l,p]) =>
+    `<svg viewBox="-14 -30 156 180" style="--jam:${j};--lid:${l}"><use href="#${p}"/></svg>`).join('');
+});
+
+// click any shot to see it big
+const lb = document.getElementById('lb');
+document.addEventListener('click', e => {
+  const s = e.target.closest('.shot, .pane.center, .pane.scroll');
+  if (lb.classList.contains('on')) { lb.classList.remove('on'); return; }
+  const img = e.target.tagName === 'IMG' ? e.target : s && s.querySelector('img');
+  if (s && img) { lb.querySelector('img').src = img.src; lb.classList.add('on'); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
+</script>
+</body>
+</html>

@@ -23,7 +23,7 @@ a{text-decoration:none}
 .dots i{width:20px;height:4px;border-radius:4px;background:var(--s3)}
 .dots i.on{background:var(--on)}
 .dots i.now{animation:fill .5s var(--ease) both;transform-origin:left}
-.onb{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:76px 24px 44px;text-align:center}
+.onb{position:relative;overflow-x:clip;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:76px 24px 44px;text-align:center}
 .brandmark{position:absolute;left:28px;top:20px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
 .brandmark img{height:28px}
 .onb-art{position:relative;display:grid;place-items:center}
@@ -101,13 +101,14 @@ html[data-theme="dark"] .pop.v img{display:block}
 .tapstage .me{height:100%;min-width:240px;margin:0 -24px;display:grid;place-items:center}
 .tapstage .me .lead{height:min(232px,26vh)}
 .tapstage .me .pop.v video.lead{height:min(250px,28vh)}
-/* a role change moves like one strip scrolled sideways: the look on stage and the next one travel the same distance, together */
-.tapstage .me{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(90deg,transparent,#000 11%,#000 89%,transparent)}   /* the track is wider than Jammie, so its soft edges never touch Jammie at rest */
+/* a role change moves like one strip scrolled sideways: the look on stage and the next one travel the same distance together.
+   Each one fades as it goes, from fully there to gone. Nothing clips them, so there is no edge to slide into */
+.tapstage .slot{position:relative;z-index:1}
 .tapstage .me > *{grid-area:1/1;width:100%;display:grid;place-items:center}
 .slide-in{animation:slide-in .8s cubic-bezier(.65,0,.35,1) both}
 .slide-out{animation:slide-out .8s cubic-bezier(.65,0,.35,1) both}
-@keyframes slide-in{from{transform:translateX(100%)}}
-@keyframes slide-out{to{transform:translateX(-100%)}}
+@keyframes slide-in{from{opacity:0;transform:translateX(100%)}}
+@keyframes slide-out{to{opacity:0;transform:translateX(-100%)}}
 .in3d{animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,sway3d 6s ease-in-out .85s infinite}
 @keyframes in3d{0%{opacity:0;transform:perspective(500px) translateY(30px) rotateY(-80deg) rotateX(18deg) scale(.8)}60%{opacity:1;transform:perspective(500px) translateY(-5px) rotateY(14deg) rotateX(-3deg) scale(1.03)}100%{opacity:1;transform:perspective(500px) rotateY(0) scale(1)}}
 @keyframes sway3d{0%,100%{transform:perspective(500px) rotateY(0)}25%{transform:perspective(500px) rotateY(14deg)}75%{transform:perspective(500px) rotateY(-14deg)}}

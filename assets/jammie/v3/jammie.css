@@ -4,7 +4,7 @@
   --jam:#E93A4C;                 /* one clean red, no orange in it */
   --jam-2:#E0245E;               /* where the primary button drifts to, kept close on purpose */
   --on-jam:#FFFFFF;
-  --fc-h:calc(100vh - 128px);   /* the idea picture fills the height under the stories, 5 by 8 */
+  --fc-h:calc(var(--vh,100vh) - 128px);   /* the idea picture fills the height under the stories, 5 by 8 */
   --r-feed:24px;                /* the feed card is a little rounder than the rest */
   --font:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --h-weight:600;
@@ -27,14 +27,14 @@
   --bg:#FFFFFF; --s2:#F7F7F7; --s3:#EBEBEB; --line:#DDDDDD; --line-soft:#EBEBEB;
   --fg:#222222; --fg-2:#6A6A6A; --fg-3:#B0B0B0; --card:#FFFFFF;
   --floor:#F3EFE9;   /* what a side panel sits on, behind the page: a warm, slightly brown grey */
-  --on:#555555; --on-line:#A6A6A6; --on-bg:#F0F0F0;   /* picked, switched on, done: a soft grey, never full black */
+  --on:#555555; --on-line:#A6A6A6;   /* picked, switched on, done: a soft grey, never full black */
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#0F0F0F; --s2:#1B1B1B; --s3:#262626; --line:#343434; --line-soft:#242424;
+  --bg:#0F0F0F; --s2:#232323; --s3:#2E2E2E; --line:#343434; --line-soft:#242424;
   --fg:#F7F7F7; --fg-2:#A6A6A6; --fg-3:#6A6A6A; --card:#181818;
-  --floor:#0C0A08;
-  --on:#BDBDBD; --on-line:#6A6A6A; --on-bg:#262626;
+  --floor:#1C1917;
+  --on:#BDBDBD; --on-line:#6A6A6A;
   --shadow-1:0 1px 2px rgba(0,0,0,.5); --shadow-2:0 3px 12px rgba(0,0,0,.5); --shadow-3:0 8px 28px rgba(0,0,0,.6);
 }
 
@@ -50,7 +50,7 @@ h1,h2,h3,h4{margin:0;font-weight:var(--h-weight);letter-spacing:var(--h-track);t
 [contenteditable]:hover{box-shadow:0 0 0 1px var(--line)}
 [contenteditable]:focus{box-shadow:0 0 0 2px var(--on-line)}
 :focus-visible{outline:2px solid var(--on-line);outline-offset:2px}
-a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
+a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.srow{text-decoration:none}
 
 /* ---------- line icons: the line traces in on hover, nothing moves or scales ---------- */
 [data-ico]{display:inline-flex;flex:none}
@@ -62,7 +62,8 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 }
 @keyframes ico-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 .ico-btn{width:38px;height:38px;border:0;background:none;border-radius:50%;display:grid;place-items:center}
-.ico-btn:hover{background:var(--s2)}
+.ico-btn:hover{background:var(--s3)}
+.ico-btn.liked .ico > *{fill:var(--jam);stroke:var(--jam)}
 .ico-btn .ico{width:18px;height:18px}
 
 /* buttons */
@@ -82,12 +83,12 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .b-round:hover{box-shadow:inset 0 0 0 1px var(--on-line)}
 
 /* the main action: one red that drifts a little on its own, and warms under the pointer */
-.b-jam,.fcard-cta,.search-go{position:relative;isolation:isolate;overflow:hidden;color:var(--on-jam);
+.b-jam,.search-go{position:relative;isolation:isolate;overflow:hidden;color:var(--on-jam);
   background:linear-gradient(112deg,color-mix(in srgb,var(--jam) 74%,#fff) 0%,var(--jam) 34%,var(--jam-2) 68%,color-mix(in srgb,var(--jam-2) 80%,#5B0F3A) 100%);
   background-size:170% 100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.26);animation:jam-drift 9s ease-in-out infinite alternate}
-.b-jam::before,.fcard-cta::before,.search-go::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
+.b-jam::before,.search-go::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
   background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%),var(--jam-2),transparent 72%)}
-.b-jam:hover::before,.fcard-cta:hover::before,.search-go:hover::before{opacity:.85}
+.b-jam:hover::before,.search-go:hover::before{opacity:.85}
 @keyframes jam-drift{from{background-position:0% 0}to{background-position:100% 0}}
 
 /* chips and the segmented switch */
@@ -98,6 +99,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .seg{display:inline-flex;padding:3px;border-radius:var(--r-pill);background:var(--s2)}
 .seg button{border:0;background:none;height:32px;padding:0 16px;border-radius:var(--r-pill);font-weight:600;font-size:14px;color:var(--fg-2)}
 .seg button.on{background:var(--card);color:var(--fg);box-shadow:var(--shadow-1)}
+:root[data-theme="dark"] .seg button.on{background:var(--s3)}
 
 /* art box: a picture always fits inside its tile */
 .art{position:relative;background:var(--s2)}
@@ -122,7 +124,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 /* row with a small stack of pictures: bold line, quiet line, arrow */
 .srow{display:flex;align-items:center;gap:16px;padding:14px 4px;color:inherit;border-bottom:1px solid var(--line-soft)}
 .stack{position:relative;width:54px;height:54px;flex:none}
-.stack i{position:absolute;inset:0;border-radius:12px;border:2.5px solid #fff;background:var(--s2) center/cover no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.16)}
+.stack i{position:absolute;inset:0;border-radius:12px;border:2.5px solid var(--card);background:var(--s2) center/cover no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.16)}
 .stack i:nth-child(1){transform:rotate(-9deg) translate(-3px,2px)}
 .stack i:nth-child(2){transform:rotate(7deg) translate(3px,1px)}
 .srow b{font-weight:var(--h-weight);font-size:17px;letter-spacing:var(--h-track)}
@@ -134,7 +136,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .ctl{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .row + .row{margin-top:16px}
-.input{display:block;border:1px solid var(--fg-3);border-radius:var(--r-btn);padding:7px 14px;width:100%;background:var(--card)}
+.input{display:block;border:1px solid var(--line);border-radius:var(--r-btn);padding:7px 14px;width:100%;background:var(--card)}
 .input:focus-within{box-shadow:inset 0 0 0 1px var(--on-line);border-color:var(--on-line)}
 .input small{display:block;font-size:12px;color:var(--fg-2)}
 .input input{width:100%;border:0;background:none;outline:none;color:var(--fg);font:inherit;padding:0}
@@ -157,9 +159,6 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 /* jammie's face in a circle */
 .av{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:var(--card);box-shadow:inset 0 0 0 1px var(--line-soft)}
 .av img{height:74%;width:auto}
-.who{display:flex;align-items:center;gap:9px;font-size:14px}
-.who b{font-weight:600}
-.who span:not(.av){color:var(--fg-2)}
 
 /* felt art carries no shadow around its shape. Objects get the faintest lift; Jammie gets a small patch of ground under its feet */
 :root{--felt:drop-shadow(0 2px 3px rgba(0,0,0,.07))}
@@ -175,7 +174,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail-nav a::after{content:attr(aria-label);position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);padding:5px 9px;border-radius:8px;background:var(--fg);color:var(--bg);font-size:12px;font-weight:500;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:2}
 .rail-nav a:hover::after{opacity:1}
 .rail a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--fg-2);text-decoration:none}
-.rail a:hover{background:var(--s2);color:var(--fg)}
+.rail a:hover{background:var(--s3);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
 /* the idea card: one tall picture that fills the height, as on Winning Ads. Its words sit on the picture, over a soft blur */
@@ -190,8 +189,10 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .fc-over::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent,rgba(0,0,0,.34) 46%,rgba(0,0,0,.62));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);-webkit-mask-image:linear-gradient(180deg,transparent,#000 52%);mask-image:linear-gradient(180deg,transparent,#000 52%)}
 .fc-over h3{font-size:18px;font-weight:600;letter-spacing:0;line-height:1.28;color:#fff;text-wrap:pretty}
 .fc-over p{margin:0;font-size:14.5px;line-height:1.4;color:rgba(255,255,255,.86);text-wrap:pretty;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.fcard-cta{flex:none;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 15px 0 17px;border-radius:var(--r-pill);font-weight:600;font-size:14.5px;text-decoration:none;border:0}
-.fcard-cta .ico{width:16px;height:16px}
+/* a picture with its own words in it is never cropped: it sits whole at the top, and a soft blur of itself fills the rest of the card */
+.fc-media.fit{background-size:cover;background-position:center}
+.fc-media.fit::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.34);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px)}
+.fc-media.fit .fcard-media,.fc-media.fit .frames img{object-fit:contain}
 /* a carousel: its frames slide sideways inside the card */
 .frames{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
 .frames::-webkit-scrollbar{display:none}
@@ -206,7 +207,6 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 /* a card with no picture: connect a tool, the end of the list */
 .fcard.plain{display:flex;flex-direction:column;height:var(--fc-h);aspect-ratio:5/8;border-radius:var(--r-feed);background:var(--s2);align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center}
 .fcard.plain h3{font-size:26px;max-width:14ch}
-.fcard.plain p{color:var(--fg-2);margin:0}
 .fcard.plain img.el{height:130px;width:auto;filter:var(--felt)}
 .fcard.plain .logos{display:grid;justify-items:center;gap:16px;margin-bottom:8px}
 .fcard.plain .logos img{width:auto;filter:var(--felt)}
@@ -220,7 +220,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .act{width:50px;padding:2px 0 4px;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;font-weight:500;color:var(--fg-2);text-decoration:none}
 .act > i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;transition:background .15s}
 .act:hover{color:var(--fg)}
-.act:hover > i{background:var(--s2)}
+.act:hover > i{background:var(--s3)}
 .act .ico{color:var(--fg)}
 .act.liked .ico > *{fill:var(--jam);stroke:var(--jam)}
 .act.liked{color:var(--fg)}
@@ -234,35 +234,23 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rows{border:1px solid var(--line-soft);border-radius:var(--r-card);background:var(--card);overflow:hidden}
 .rowi{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left}
 .rows > :last-child{border-bottom:0}
-.rowi:hover{background:var(--s2)}
+button.rowi:hover,a.rowi:hover{background:var(--s2)}   /* only a row you can press lights up */
 .rowi .grow{flex:1;min-width:0}
 .rowi b{display:block;font-weight:600}
 .rowi small{display:block;color:var(--fg-2);font-size:13.5px}
-.rowi > .ico,.rowi > [data-ico]{color:var(--fg-2)}
-.logo-tile{flex:none;width:36px;height:36px;border-radius:10px;background:var(--s2);display:grid;place-items:center;font-weight:700;font-size:14px}
+.rowi > [data-ico]{color:var(--fg-2)}
+
 
 /* steps: what jammie is doing, one line each */
-.todo{display:grid;gap:12px;text-align:left}
-.todo li{list-style:none;display:flex;align-items:center;gap:11px;color:var(--fg-3);font-weight:500;transition:color .3s}
-.todo li i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;transition:.3s}
-.todo li i .ico{width:12px;height:12px;stroke-width:2.6;opacity:0}
-.todo li.now{color:var(--fg)}
-.todo li.now i{border-color:var(--on);border-top-color:transparent;animation:spin .9s linear infinite}
-.todo li.done{color:var(--fg)}
-.todo li.done i{background:var(--on);border-color:var(--on);color:var(--bg)}
-.todo li.done i .ico{opacity:1}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* sheet and number card */
 .sheet{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow-3);padding:24px}
-.stat{border:1px solid var(--line-soft);border-radius:var(--r-card);padding:18px;background:var(--card)}
-.stat small{display:block;color:var(--fg-2);font-size:14px}
-.stat b{display:block;font-size:30px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.15;margin-top:4px}
 .delta{font-size:13px;font-weight:600}
 .delta.up{color:#1A7F4B}.delta.down{color:var(--jam)}
 :root[data-theme="dark"] .delta.up{color:#5BD98A}
 
 @media (prefers-reduced-motion:reduce){
   .draw .ico > *{animation:none!important;stroke-dasharray:none!important}
-  .b-jam,.fcard-cta,.search-go,.todo li.now i{animation:none}
+  .b-jam,.search-go{animation:none}
 }

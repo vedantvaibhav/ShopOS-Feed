@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=15">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=16">
 <style>
 /* this page only: tokens and shared pieces live in jammie.css */
 /* ---------- header ---------- */
@@ -75,13 +75,13 @@
 
 .feed-demo{--fc-h:480px;display:flex;justify-content:center;align-items:flex-start;gap:12px}
 .feed-demo .acts{height:var(--fc-h);justify-content:flex-end}
-.loops{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:16px}
+.loops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:16px}
 .loop{position:relative;aspect-ratio:1;border-radius:var(--r-card);background:var(--s2);overflow:hidden}
 .loop video{position:absolute;inset:6%;width:88%;height:88%;object-fit:contain;mix-blend-mode:multiply}
 .loop small{position:absolute;left:14px;bottom:10px;font-size:13px;color:var(--fg-2)}
 html[data-theme="dark"] .loop{background:#F7F7F7}
 html[data-theme="dark"] .loop small{color:#6A6A6A}
-.actions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.actions{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
 .action{border:1px solid var(--line-soft);border-radius:14px;background:var(--card);padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:112px;justify-content:center;text-align:center}
 .action small{font-size:12px;color:var(--fg-2)}
 
@@ -98,7 +98,7 @@ html[data-theme="dark"] .loop small{color:#6A6A6A}
 
 .states{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .state{border:1px solid var(--line-soft);border-radius:var(--r-card);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;background:var(--card)}
-.state img{height:110px;width:auto;filter:var(--felt)}
+.state > img{height:110px;width:auto;filter:var(--felt)}
 .state h4{font-size:17px}
 
 .sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
@@ -293,7 +293,7 @@ body.tune-open .tune-fab{right:288px}
       <div class="state"><img src="assets/jammie/v3/pose-search.png" alt=""><h4 contenteditable data-k="st1">Reading your store</h4></div>
       <div class="state"><img src="assets/jammie/v3/pose-sleep.png" alt=""><h4 contenteditable data-k="st2">Nothing new yet</h4></div>
       <div class="state"><img src="assets/jammie/v3/pose-worry.png" alt=""><h4 contenteditable data-k="st3">That didn't work</h4><button class="btn b-out b-sm">Try again</button></div>
-      <div class="state"><div class="toast demo"><img src="assets/jammie/v3/pose-cheer.png" alt=""><span contenteditable data-k="st4">Saved to liked</span></div></div>
+      <div class="state"><div class="toast demo"><img src="assets/jammie/v3/pose-cheer.png" alt=""><span contenteditable data-k="st4b">Kept. It is in Saved.</span></div></div>
     </div>
   </section>
 
@@ -364,8 +364,8 @@ body.tune-open .tune-fab{right:288px}
 <button class="btn b-ink b-sm tune-fab draw" id="fab"><i data-ico="filter"></i>Tune</button>
 <div class="copied" id="copied">Tokens copied</div>
 
-<script src="assets/jammie/v3/icons.js?v=15"></script>
-<script src="assets/jammie/v3/data.js?v=15"></script>
+<script src="assets/jammie/v3/icons.js?v=16"></script>
+<script src="assets/jammie/v3/data.js?v=16"></script>
 <script>
 (() => {
   const root = document.documentElement;
@@ -374,8 +374,8 @@ body.tune-open .tune-fab{right:288px}
   const POSES = [['wave','Wave'],['walk','Side'],['back','Back'],['cheer','Cheer'],['sleep','Asleep'],['search','Search'],['worry','Worry'],['sit','Sit']];
   const ELS = [['megaphone','Megaphone'],['clapper','Clapper'],['bag','Bag'],['heart','Heart'],['bell','Bell'],['magnifier','Magnifier'],['chart','Chart'],['sparkle','Sparkle'],['instagram','Instagram'],['meta','Meta'],['google','Google'],['email','Email'],['shopify','Shopify'],['analytics','Analytics'],['slack','Slack'],['book','Book'],['passport','Passport'],['stamp','Stamp']];
   // every action a person can take in the product, and where it leads
-  const ACTIONS = [['arrow','Let’s jam','Sends it to the team','cta'],['heart','Keep','Jammie learns from it','like'],['share','Share','Copies a link'],['calendar','Later','Saves it for later'],['filter','Less','Fewer like this'],['eye','Why','Opens the idea sheet'],
-    ['message','Note','A note to the team'],['plus','New','Start something new'],['down','Next','Next idea'],['up','Previous','Last idea'],['lock','Unlock','Opens every idea'],['link','Copy caption','Copies the caption']];
+  const ACTIONS = [['spark','Jam','Opens Let’s jam','cta'],['heart','Keep','Keeps it in Saved','like'],['share','Share','Copies a link'],['calendar','Later','Puts it aside in Saved'],['filter','Less','Fewer like this'],['eye','Why','Why this idea'],
+    ['message','Note','A note to the team']];
 
   let state = load() || {};
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
@@ -385,12 +385,12 @@ body.tune-open .tune-fab{right:288px}
 
   $('poseGrid').innerHTML = POSES.map(([f, n]) => tile('pose-' + f, n)).join('') + [['founder','Founder'],['marketer','Marketer'],['designer','Designer'],['agency','Agency']].map(([f, n]) => tile('look-' + f, n)).join('');
   // the small moves used in onboarding: three seconds each, looping
-  $('loopGrid').innerHTML = [['idle','Idle'],['wave','Wave'],['search','Search'],['cheer','Cheer'],['sit','Wait']].map(([f, n]) => `<div class="loop"><video autoplay loop muted playsinline src="${A}anim/${f}.mp4"></video><small>${n}</small></div>`).join('');
+  $('loopGrid').innerHTML = [['idle','Idle'],['wave','Wave'],['cheer','Cheer'],['sit','Wait']].map(([f, n]) => `<div class="loop"><video autoplay loop muted playsinline src="${A}anim/${f}.mp4"></video><small>${n}</small></div>`).join('');
   $('elGrid').innerHTML = ELS.map(([f, n]) => tile('el-' + f, n)).join('');
   $('guideGrid').innerHTML = J.GUIDE.map(c => tile('char-' + c.id, c.shape)).join('');
   $('iconGrid').innerHTML = Object.keys(window.JAMMIE_ICONS).map(n => `<button class="icon-tile draw"><i data-ico="${n}"></i>${n}</button>`).join('');
   $('ideaGrid').innerHTML = J.real.slice(1, 4).map(d => J.icard(d, { href: 'app.html#/idea' })).join('');
-  $('rowDemo').innerHTML = J.srow('With the team', '2 ideas · files land in your inbox', ['midnight.jpg', 'xlows.jpg', 'reviews.jpg'], 'app.html#/work') +
+  $('rowDemo').innerHTML = J.srow('With the team', '2 ideas · files land in your inbox', ['midnight.jpg', 'xlows.jpg', 'reviews.jpg'], 'app.html#/bell') +
     J.srow('View today\'s ideas', 'Comet · 10 new', ['sketch.jpg', 'ivory.jpg', 'reel.jpg'], 'app.html#/feed');
   $('feedDemo').innerHTML = J.fcard(J.real[1], { href: 'app.html#/jam' }) + `<div class="acts">
       <button class="act draw" data-like><i data-ico="heart"></i>Keep</button>

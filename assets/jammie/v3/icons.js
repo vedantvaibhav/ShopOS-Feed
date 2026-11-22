@@ -39,6 +39,8 @@ window.JAMMIE_ICONS = {
   refresh: '<path d="M20 11a8 8 0 0 0-14.500-4.300L4 8.500"/><path d="M4 4.500v4h4"/><path d="M4 13a8 8 0 0 0 14.500 4.300L20 15.500"/><path d="M20 19.500v-4h-4"/>',
   book: '<path d="M12 6.600C10 5.200 7.400 4.800 4.500 5.100v13c2.900-.3 5.500.1 7.500 1.500 2-1.400 4.600-1.800 7.500-1.500v-13c-2.900-.3-5.500.1-7.500 1.500Z"/><path d="M12 6.600v13"/>',
   send: '<path d="M20.500 3.500 10.200 13.800"/><path d="M20.500 3.500 14 20.500l-3.800-6.700L3.500 10Z"/>',
+  sound: '<path d="M4.500 9.500v5h3.300l4.700 3.800V5.700L7.800 9.500Z"/><path d="M15.500 9.200a4 4 0 0 1 0 5.600"/><path d="M18 6.700a7.500 7.500 0 0 1 0 10.600"/>',
+  mute: '<path d="M4.500 9.500v5h3.300l4.700 3.800V5.700L7.800 9.500Z"/><path d="m16 9.500 5 5"/><path d="m21 9.500-5 5"/>',
   moon: '<path d="M20 14.600A8.300 8.300 0 0 1 9.400 4 8.300 8.300 0 1 0 20 14.600Z"/>',
   eye: '<path d="M2.800 12S6 5.800 12 5.800 21.200 12 21.200 12 18 18.200 12 18.200 2.800 12 2.800 12Z"/><circle cx="12" cy="12" r="3"/>',
 };
@@ -56,7 +58,7 @@ window.jammieIcons = function (root) {
 
 // jam-pointer: the main action warms under the pointer, so tell it where the pointer is
 document.addEventListener('pointermove', function (e) {
-  var b = e.target.closest && e.target.closest('.b-jam,.fcard-cta,.search-go');
+  var b = e.target.closest && e.target.closest('.b-jam,.search-go');
   if (!b) return;
   var r = b.getBoundingClientRect();
   b.style.setProperty('--mx', (e.clientX - r.left) + 'px');

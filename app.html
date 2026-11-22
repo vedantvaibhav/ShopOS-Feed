@@ -2,105 +2,114 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>jammie</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=15">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=16">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
-:root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--pp:#FBF7F0}
+:root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--pp:#FBF7F0;--vh:100vh}
+@supports (height:100dvh){:root{--vh:100dvh}}   /* on a phone, the height you can see while the browser's bars show */
 :root[data-theme="dark"]{--pp:#1D1A16}
-body{padding-left:60px;height:100vh;overflow:hidden}
+body{padding-left:60px;height:var(--vh);overflow:hidden}
 body.bare{padding-left:0;height:auto;overflow-x:hidden;overflow-y:auto}
 body.bare .rail,body.bare .fab,body.bare .topbar{display:none}
 a{text-decoration:none}
 
 /* ---------- the shell: one top bar that never moves, a page under it, and a panel that opens beside the page ---------- */
-#app{position:relative;height:100vh;background:var(--bg);transition:margin-right var(--t) var(--ease),border-radius var(--t) var(--ease)}
-body.bare #app{height:auto;min-height:100vh}
-.topbar{position:fixed;top:0;left:60px;right:0;z-index:8;height:var(--bar);display:flex;align-items:center;gap:20px;padding:0 20px 0 24px;pointer-events:none;transition:right var(--t) var(--ease),border-radius var(--t) var(--ease)}
+#app{position:relative;height:var(--vh);background:var(--bg);transition:margin-right var(--t) var(--ease),border-radius var(--t) var(--ease),background .3s var(--ease)}
+body.bare #app{height:auto;min-height:var(--vh)}
+.topbar{position:fixed;top:0;left:60px;right:0;z-index:8;height:var(--bar);display:flex;align-items:center;gap:24px;padding:0 24px;border-bottom:1px solid transparent;pointer-events:none;transition:right var(--t) var(--ease),border-radius var(--t) var(--ease)}
 .topbar > *{pointer-events:auto}
-.topbar.solid{background:var(--bg);border-bottom:1px solid var(--line-soft)}
+.topbar.solid{background:var(--bg);border-bottom-color:var(--line-soft)}   /* the line is always there, so the two buttons never move by a pixel */
 .topbar h1{font-size:19px;font-weight:600;letter-spacing:0;white-space:nowrap}
 .top-right{margin-left:auto;display:flex;gap:8px}
 .top-right .ico-btn{position:relative;width:40px;height:40px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
-.top-right .ico-btn:hover,.top-right .ico-btn.on{background:var(--s2)}
+.top-right .ico-btn:hover{background:var(--s3)}
+.top-right .ico-btn.on{background:var(--s2)}
+.top-right em[hidden]{display:none}
 .top-right em{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--jam);color:#fff;font-style:normal;font-size:10.5px;font-weight:700;display:grid;place-items:center}
 /* a page change: the bar stays, the page under it fades up a little. The same curve and time as every other move */
 .page-in{animation:page-in var(--t) var(--ease) both}
-@keyframes page-in{from{opacity:0;transform:translateY(10px)}}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes page-in{from{opacity:0;transform:translateY(12px)}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
 @keyframes fade{from{opacity:0}}
 /* the page steps aside as a sheet with round corners, and the panel sits on the floor beside it */
 body.has-side{background:var(--floor)}
 body.has-side #app{margin-right:var(--side-w);border-radius:0 28px 28px 0;overflow:hidden;box-shadow:0 0 0 1px var(--line-soft),10px 0 34px rgba(0,0,0,.05)}
 body.has-side .topbar{right:var(--side-w);border-top-right-radius:28px}
-#side{position:fixed;top:0;right:0;bottom:0;z-index:5;width:var(--side-w);display:flex;flex-direction:column;visibility:hidden;opacity:0;transition:opacity .25s var(--ease),visibility 0s .25s}
+#side{position:fixed;top:0;right:0;bottom:0;z-index:5;width:var(--side-w);display:flex;flex-direction:column;visibility:hidden;opacity:0;transition:opacity var(--t) var(--ease),visibility 0s var(--t)}
 body.has-side #side{visibility:visible;opacity:1;transition:opacity var(--t) .12s var(--ease)}
-.side-h{flex:none;display:flex;align-items:center;gap:6px;height:var(--bar);padding:0 14px 0 26px}
+.side-h{flex:none;display:flex;align-items:center;gap:8px;height:var(--bar);padding:0 12px 0 24px}
 .side-h h2{font-size:19px;font-weight:600;letter-spacing:0;margin-right:auto}
 .side-h .back{margin-left:-12px}
-.side-body{flex:1;min-height:0;overflow-y:auto;padding:4px 26px 24px;display:flex;flex-direction:column;scrollbar-width:thin;animation:rise .4s var(--ease) both}
+.side-body{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 24px;display:flex;flex-direction:column;scrollbar-width:thin;animation:rise var(--t) var(--ease) both}
 .side-body > *{flex:none}
-.side-foot{flex:none;display:flex;align-items:center;gap:8px;padding:12px 26px 22px}
+.side-foot{flex:none;display:flex;align-items:center;gap:8px;padding:16px 24px 24px}
 .side-foot .btn{margin-left:auto}
-.side-empty{flex:1;display:grid;place-content:center;justify-items:center;gap:4px;text-align:center;padding-bottom:var(--bar)}
-.side-empty img{height:120px;width:auto;margin-bottom:10px}
+.side-foot .ico-btn:first-child{margin-left:-10px}   /* the heart's glyph, not its circle, lines up with the text above */
+.side-empty{flex:1;display:grid;place-content:center;justify-items:center;gap:4px;text-align:center;padding-bottom:48px}   /* 48px: centred in the whole panel, not just under its header */
+.side-empty img{height:120px;width:auto;margin-bottom:8px}
 .side-empty h3{font-size:19px;font-weight:600;letter-spacing:0}
 .side-empty p{margin:0;color:var(--fg-2);font-size:14.5px}
 /* inside a panel: a lead, then sections with room between them */
 .lead-t{font-size:22px;font-weight:600;letter-spacing:0;line-height:1.22;text-wrap:pretty}
 .lead-p{margin:8px 0 0;color:var(--fg-2);font-size:15.5px;line-height:1.5}
-.sec{padding:22px 0;border-top:1px solid var(--line-soft)}
-.sec:first-child{border-top:0;padding-top:6px}
-.sec h4{font-size:15px;font-weight:600;letter-spacing:0;margin-bottom:10px}
+.side-body > .lead-p:first-child{margin-top:0}
+.sec{padding:24px 0;border-top:1px solid var(--line-soft)}
+.sec:first-child{border-top:0;padding-top:8px}
+.sec h4{font-size:15px;font-weight:600;letter-spacing:0;margin-bottom:8px}
 .sec p{margin:0;font-size:15px;line-height:1.5;color:var(--fg-2)}
 .sec .chips{display:flex;gap:8px;flex-wrap:wrap}
-.cap{display:grid;gap:10px;justify-items:start;padding:14px 16px;border-radius:16px;background:var(--card);font-size:15px;line-height:1.5}
-.opt{display:flex;gap:14px;align-items:center;width:100%;padding:14px 4px;border:0;border-bottom:1px solid var(--line-soft);background:none;text-align:left;color:inherit}
+.cap{display:grid;gap:8px;justify-items:start;padding:16px;border-radius:16px;background:var(--card);font-size:15px;line-height:1.5}
+.opt{display:flex;gap:16px;align-items:center;width:100%;padding:16px 0;border:0;border-bottom:1px solid var(--line-soft);background:none;text-align:left;color:inherit}
 .opt:last-of-type{border-bottom:0}
 .opt:hover b{text-decoration:underline;text-underline-offset:3px}
 .opt > i{width:40px;height:40px;border-radius:50%;background:var(--card);display:grid;place-items:center;flex:none}
 .opt b{display:block;font-weight:600}
 .opt small{display:block;color:var(--fg-2);font-size:13.5px;line-height:1.35}
-.msg{display:flex;align-items:center;gap:14px;padding:11px 0}
+.msg{display:flex;align-items:center;gap:16px;padding:12px 0;color:inherit}
+.msg .av{width:48px;height:48px}
 .msg img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none;background:var(--card)}
 .msg span{flex:1;min-width:0}
-.msg b{display:block;font-size:15.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.msg small{display:block;font-size:14px;color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msg b{font-size:15.5px;font-weight:500;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.msg small{display:block;margin-top:2px;font-size:14px;line-height:1.35;color:var(--fg-2)}
 .msg em{flex:none;font-style:normal;font-size:13px;color:var(--fg-2)}
 /* a note to the team: what you can ask sits above, the box you type in is always at the foot */
 .asks-for{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px}
+.composer.shake{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .composer{display:flex;align-items:flex-end;gap:8px;width:100%;padding:8px 8px 8px 18px;border:1px solid var(--line);border-radius:24px;background:var(--card)}
 .composer:focus-within{border-color:var(--on-line)}
-.composer textarea{flex:1;min-width:0;min-height:40px;max-height:168px;padding:9px 0;border:0;outline:0;background:none;resize:none;font:inherit;line-height:1.45;color:var(--fg)}
+.composer textarea{flex:1;min-width:0;min-height:40px;max-height:168px;padding:9px 0;border:0;outline:0;background:none;resize:none;font:inherit;line-height:1.45;color:var(--fg);scrollbar-width:none}
+.composer textarea::-webkit-scrollbar{display:none}
 .composer .btn{flex:none;width:40px;height:40px;padding:0;border-radius:50%;margin:0}
 
 /* ---------- onboarding: one column, centred. Jammie, one thought, one control ---------- */
 .h1{font-size:calc(var(--h-size) * .8);line-height:1.08}
-.h2{font-size:calc(var(--h-size) * .58);line-height:1.12}
+.h2{font-size:28px;line-height:1.14}
 .lead{height:150px;width:auto}
-.dots{position:absolute;top:28px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.dots{position:absolute;top:36px;left:50%;transform:translateX(-50%);display:flex;gap:4px}
 .dots i{width:20px;height:4px;border-radius:4px;background:var(--s3)}
 .dots i.on{background:var(--on)}
 .dots i.now{animation:fill .5s var(--ease) both;transform-origin:left}
-.onb{position:relative;overflow-x:clip;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:76px 24px 44px;text-align:center}
-.brandmark{position:absolute;left:28px;top:20px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
+.onb{position:relative;overflow-x:clip;min-height:var(--vh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:80px 24px 48px;text-align:center}
+.brandmark{position:absolute;left:24px;top:24px;display:flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em}
 .brandmark img{height:28px}
 .onb-art{position:relative;display:grid;place-items:center}
 .onb-art .lead{height:min(240px,27vh)}
-.onb-body{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%}
+.onb-body{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%}
 .onb-body .h1,.onb-body .h2{max-width:18ch}
 .pop{position:relative;animation:pop .7s var(--ease) both}   /* Jammie arrives by fading up a little. It never grows */
 .bob{position:relative;animation:bob 3.4s ease-in-out .8s infinite}
 .land{animation:land .9s cubic-bezier(.2,.9,.25,1.12) both}
 .land::before{content:"";position:absolute;inset:0;z-index:5;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.5) 50%,transparent 60%);transform:translateX(-120%);animation:shine 1.1s .5s ease-out both;pointer-events:none}
+html[data-theme="dark"] .land::before{background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%)}
 .onb-body > *{animation:rise .65s var(--ease) both}
 .onb-body > *:nth-child(2){animation-delay:.1s}
 .onb-body > *:nth-child(3){animation-delay:.2s}
-.onb-body > *:nth-child(4){animation-delay:.3s}
 .curtain{position:fixed;inset:0;z-index:60;background:var(--jam);clip-path:circle(0% at var(--cx,50%) var(--cy,50%));animation:bloom .5s cubic-bezier(.6,0,.3,1) forwards}
 .curtain.lift{clip-path:none;animation:lift .6s cubic-bezier(.6,0,.2,1) forwards}
 .curtain img{position:absolute;left:50%;top:50%;height:120px;transform:translate(-50%,-50%);filter:brightness(0) invert(1);opacity:.9}
@@ -118,28 +127,30 @@ body.has-side #side{visibility:visible;opacity:1;transition:opacity var(--t) .12
 /* Jammie moves: a short loop on white, laid onto the page */
 .pop.v{mix-blend-mode:multiply}
 .pop.v img{display:none}
-.onb-art .pop.v video.lead{display:block;height:min(300px,32vh);aspect-ratio:1;object-fit:cover}
-.onb.small .onb-art .pop.v video.lead{height:min(170px,19vh)}
+.onb-art{--v:min(300px,32vh)}
+.onb.small .onb-art{--v:min(170px,19vh)}
+.pop.v video.lead{display:block;height:var(--v);aspect-ratio:1;object-fit:cover}
 .onb.small .onb-art .lead{height:min(130px,15vh)}
-html[data-theme="dark"] .pop.v{mix-blend-mode:normal}
+/* in dark the white loops cannot be laid onto the page: the still stands in, at the size Jammie has inside the loop, and bobs */
+html[data-theme="dark"] .pop.v{mix-blend-mode:normal;display:grid;place-items:center;height:var(--v)}
 html[data-theme="dark"] .pop.v video{display:none!important}
-html[data-theme="dark"] .pop.v img{display:block}
+html[data-theme="dark"] .pop.v img.lead{display:block;height:calc(var(--v) * .78);animation:bob 3.4s ease-in-out .8s infinite}
 /* sign-in is a popup over the first screen: Google, or a name and an email */
-.gate{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.36);backdrop-filter:blur(3px);animation:fade .25s}
-.gate-card{position:relative;width:min(390px,100%);max-height:calc(100vh - 32px);overflow-y:auto;padding:22px 28px 26px;text-align:center;display:grid;justify-items:center;gap:12px;animation:rise var(--t) var(--ease) both;scrollbar-width:none}
-.gate-card .pop.v video.lead{display:block;height:150px;aspect-ratio:1;object-fit:cover}
+.gate{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.36);backdrop-filter:blur(3px);animation:fade var(--t) var(--ease)}
+.gate-card{position:relative;width:min(392px,100%);max-height:calc(var(--vh) - 32px);overflow-y:auto;padding:24px;text-align:center;display:grid;justify-items:center;gap:16px;animation:rise var(--t) var(--ease) both;scrollbar-width:none}
+.gate-card{--v:150px}
 .gate-card .lead{height:120px}
 .gate-card h2{font-size:24px;line-height:1.14}
 .gate-card .btn{width:100%}
 .gate-card form{display:grid;gap:8px;width:100%}
-.gate-card .input{padding:11px 14px;text-align:left}
+.gate-card .input{padding:9px 16px;text-align:left}
 .x{position:absolute;top:12px;right:12px}
-.or{display:flex;align-items:center;gap:10px;width:100%;color:var(--fg-3);font-size:13px}
+.or{display:flex;align-items:center;gap:12px;width:100%;color:var(--fg-2);font-size:13px}
 .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line-soft)}
-.store{display:flex;align-items:center;gap:10px;width:min(500px,100%);height:56px;padding:0 7px 0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card)}
+.store{display:flex;align-items:center;gap:8px;width:min(504px,100%);height:56px;padding:0 8px 0 24px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card)}
 .store:focus-within{border-color:var(--on-line)}
 .store input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit;font-size:16px}
-.store .btn{border-radius:var(--r-pill);height:42px}
+.store .btn{border-radius:var(--r-pill);height:40px}
 .store > [data-ico]{color:var(--fg-2)}
 .gbtn{gap:10px}
 .gbtn svg{width:18px;height:18px}
@@ -148,8 +159,8 @@ html[data-theme="dark"] .pop.v img{display:block}
 .hop{position:absolute;left:var(--x);top:var(--y);height:min(68px,8vh);width:auto;opacity:0;filter:var(--felt)}
 .hop.on{opacity:1;animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,hop var(--d,2.2s) .85s infinite}
 @keyframes hop{0%,100%{translate:0 0;animation-timing-function:cubic-bezier(.2,.6,.4,1)}50%{translate:0 -18px;animation-timing-function:cubic-bezier(.6,0,.8,.4)}}
-.stream{list-style:none;margin:0;padding:0;display:grid;gap:10px;align-content:start;width:min(400px,100%);min-height:172px;text-align:left}
-.stream li{display:flex;align-items:center;gap:10px;font-size:16px;animation:rise .35s var(--ease) both}
+.stream{list-style:none;margin:0;padding:0;display:grid;gap:8px;align-content:start;width:min(400px,100%);min-height:160px;text-align:left}
+.stream li{display:flex;align-items:center;gap:12px;font-size:16px;line-height:24px;animation:rise .35s var(--ease) both}
 .stream .tick{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none}
 .stream .tick .ico{width:11px;height:11px;stroke-width:2.6;opacity:0}
 .stream li.now .tick{border-color:var(--on);border-top-color:transparent;animation:spin .9s linear infinite}
@@ -157,16 +168,20 @@ html[data-theme="dark"] .pop.v img{display:block}
 .stream li.done{color:var(--fg-2)}
 .stream li.done .tick{background:var(--on);border-color:var(--on);color:var(--bg)}
 .stream li.done .tick .ico{opacity:1}
-.eta{margin:0;font-size:13.5px;color:var(--fg-3)}
+.eta{margin:0;font-size:13.5px;color:var(--fg-2)}
 /* three taps: every pick shows up on Jammie, or lands beside it */
-.tapstage{display:flex;align-items:center;justify-content:center;gap:10px;height:min(250px,28vh)}
+.tapstage{display:flex;align-items:center;justify-content:center;gap:8px;height:min(250px,28vh)}
 .tapstage .slot{position:relative;z-index:1;width:132px;height:100%;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px}
 .tapstage .slot img{height:min(84px,10vh);width:auto;filter:var(--felt)}
 .tapstage .me .ground::after{width:min(150px,38%)}
-.tapstage .slot.many img{height:min(56px,7vh)}
-.tapstage .me{flex:none;height:100%;width:240px;margin:0 -24px;display:grid;place-items:center}   /* a fixed width: whatever stands on it, the page around it never shifts */
-.tapstage .me .lead{height:min(232px,26vh)}
-.tapstage .me .pop.v video.lead{height:min(250px,28vh)}
+/* where you post: four fixed places, one size. An icon lands in its own place and nothing already there moves */
+#chanSlot{--ci:min(52px,6vh);display:grid;grid-template-rows:repeat(4,var(--ci));gap:6px;align-content:center;justify-items:center}
+#chanSlot img{height:var(--ci)}
+.tapstage .me{--v:min(250px,28vh);--lh:min(232px,26vh);flex:none;height:100%;width:var(--v);margin:0 calc((192px - var(--v)) / 2);display:grid;place-items:center}   /* as wide as the loop that stands on it, so Jammie is centred and the page around it never shifts */
+.tapstage .me .lead{height:var(--lh)}
+/* the plain still is cropped tighter than the dressed ones: draw it smaller and push it down so its size and feet match theirs */
+.tapstage .me .pop:not(.v) img.lead,html[data-theme="dark"] .tapstage .me .pop.v img.lead{height:calc(var(--lh) * .86);margin-top:calc(var(--lh) * .14)}
+html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
 /* a role change moves like one strip scrolled sideways: the look on stage and the next one travel the same distance together.
    Each one fades as it goes, from fully there to gone. Nothing clips them, so there is no edge to slide into */
 .tapstage .me > *{grid-area:1/1;width:100%;display:grid;place-items:center}
@@ -184,32 +199,39 @@ html[data-theme="dark"] .pop.v img{display:block}
 @media (min-width:1061px){
   .onb.split{flex-direction:row;gap:clamp(24px,5vw,84px)}
   .onb.split .onb-body{width:min(430px,100%);align-items:flex-start;text-align:left}
-  .onb.split .asks{width:100%;gap:20px}
+  .onb.split .asks{width:100%;gap:24px}
   .onb.split .asks .chips{justify-content:flex-start}
   .onb.split .tapstage{height:min(440px,52vh);gap:4px}
   .onb.split .tapstage .slot{width:150px}
   .onb.split .tapstage .slot img{height:min(104px,12vh)}
-  .onb.split .tapstage .slot.many img{height:min(80px,9.5vh)}
-  .onb.split .tapstage .me{width:390px;margin:0 -48px}
-  .onb.split .tapstage .me .lead{height:min(400px,47vh)}
-  .onb.split .tapstage .me .pop.v video.lead{height:min(440px,52vh)}
+  .onb.split #chanSlot{--ci:min(80px,9.5vh);gap:8px}
+  .onb.split .tapstage .me{--v:min(440px,52vh);--lh:min(400px,47vh);margin:0 calc((294px - var(--v)) / 2)}
 }
 /* hey, here it is: what Jammie read comes back as a passport for the brand, stamped */
 .passport{position:relative;width:min(760px,100%);display:grid;grid-template-columns:5fr 6fr;border:1px solid var(--line-soft);border-radius:22px;background:var(--pp);overflow:hidden;text-align:left}
-.pp-left{position:relative;padding:22px}
+.pp-left{position:relative;min-width:0;padding:24px}
 .pp-photo{width:100%;height:100%;min-height:min(300px,34vh);object-fit:cover;border-radius:14px}
-.pp-stamp{position:absolute;right:6px;bottom:8px;height:min(104px,12vh);width:auto;transform:rotate(-10deg);filter:var(--felt);animation:stamp .5s .9s cubic-bezier(.3,1.5,.5,1) both}
+.pp-stamp{position:absolute;right:12px;bottom:8px;height:min(104px,12vh);width:auto;transform:rotate(-10deg);filter:var(--felt);animation:stamp .5s .9s cubic-bezier(.3,1.5,.5,1) both}
 @keyframes stamp{from{opacity:0;transform:rotate(-10deg) translateY(-26px)}}
-.pp-right{display:flex;flex-direction:column;gap:16px;padding:24px 26px 20px;border-left:1px dashed var(--line)}
+.pp-right{display:flex;flex-direction:column;min-width:0;gap:16px;padding:24px;border-left:1px dashed var(--line)}
 .pp-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
 .pp-top img{height:40px;width:auto;filter:var(--felt)}
 .pp-name{font-size:42px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1}
-.pp-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin:0}
+.pp-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0}
 .pp-facts dt{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-2)}
 .pp-facts dd{margin:2px 0 0;font-size:16px;font-weight:600}
 .pp-mrz{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font:500 12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:var(--fg-3);white-space:nowrap;overflow:hidden}
 .swatches{display:flex;gap:6px}
-.swatches i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.swatches i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 22%,transparent)}
+
+@media (max-height:800px) and (min-width:861px){
+  .onb.small{gap:16px;padding:64px 24px 24px}
+  .onb.small .onb-art{--v:112px}
+  .onb.small .onb-art .lead{height:96px}
+  .pp-name{font-size:34px}
+  .pp-right{gap:12px;padding:20px 24px 16px}
+  .pp-photo{min-height:0}
+}
 
 /* ---------- the feed: stories across the card's width, then one tall card a stop ---------- */
 .feed{--col-w:calc(var(--fc-h) * .625);height:100%;display:flex;flex-direction:column}
@@ -220,6 +242,8 @@ html[data-theme="dark"] .pop.v img{display:block}
 .story.seen i{background:var(--line)}
 .story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
 .story:hover{color:var(--fg)}
+.story:focus-visible,.act:focus-visible{outline:0}
+.story:focus-visible i,.act:focus-visible > i{outline:2px solid var(--on-line);outline-offset:2px}   /* the focus ring is a circle too */
 .stage{flex:1;min-height:0;width:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
 .stage::-webkit-scrollbar{display:none}
 .slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;padding:6px 24px 0}   /* the top gap keeps a hairline of the next card from showing at the foot */
@@ -227,154 +251,202 @@ html[data-theme="dark"] .pop.v img{display:block}
 .feed-col{position:relative;min-width:0}
 .feed-col .acts{position:absolute;left:calc(100% + 12px);top:0;height:var(--fc-h);justify-content:flex-end;gap:4px}
 body.has-side .stage,body.has-modal .stage{overflow:hidden}
-.fab{position:fixed;right:24px;bottom:20px;z-index:4;height:52px;padding:0 20px 0 6px;border-radius:99px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-2);display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:inherit;transition:opacity .25s,box-shadow .2s}
+.fab{position:fixed;right:24px;bottom:24px;z-index:4;height:52px;padding:0 20px 0 6px;border-radius:99px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-2);display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:inherit;transition:opacity var(--t) var(--ease),box-shadow var(--t) var(--ease)}
 .fab:hover{box-shadow:var(--shadow-3)}
 .fab span{width:40px;height:40px;border-radius:50%;background:var(--s2);display:grid;place-items:center}   /* Jammie sits in a circle */
 .fab img{height:30px;width:auto}
 body.has-side .fab{opacity:0;pointer-events:none}
 
 /* ---------- story viewer ---------- */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:grid;place-items:center;padding:24px;animation:fade .25s}
-.sview{width:min(430px,100%);max-height:calc(100vh - 40px);overflow-y:auto;padding:16px 18px 18px;animation:rise var(--t) var(--ease) both}
-.segs{display:flex;gap:4px;margin-bottom:12px}
-.segs i{flex:1;height:3px;border-radius:3px;background:var(--s3)}
-.segs i.on{background:var(--on)}
-.sview-h{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-weight:600;font-size:14px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:grid;place-items:center;padding:24px 24px 24px 84px;animation:fade var(--t) var(--ease)}   /* 84px: centred over the page, not the rail */
+.sview{width:min(432px,100%);max-height:calc(var(--vh) - 48px);overflow-y:auto;padding:16px;animation:rise var(--t) var(--ease) both}
+.sview-h{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-weight:600;font-size:14px}
 .sview-h .ico-btn{width:32px;height:32px}
 .sview-h .story{width:34px;pointer-events:none}
 .sview-h .story i{width:34px;height:34px}
 .sview img.pic{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px}
-.sview h2{font-size:22px;line-height:1.18;margin:12px 0 6px;text-wrap:pretty}
+.sview h2{font-size:22px;line-height:1.18;margin:16px 0 8px;text-wrap:pretty}
 .sview p{margin:0;color:var(--fg-2);font-size:14.5px}
 .sview .btn{width:100%;margin-top:16px}
 
 /* ---------- every page is a deck: equal columns that run the full height and scroll on their own ---------- */
 .deck{height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
 .deck-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
-.deck-tabs button{flex:none;display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px;border:0;border-radius:var(--r-pill);background:none;font-size:13.5px;color:var(--fg-2)}
+.deck-tabs button{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:none;font-size:13.5px;color:var(--fg-2)}
 .deck-tabs button:hover{background:var(--s2);color:var(--fg)}
 .deck-tabs i,.dcol-h i{width:7px;height:7px;border-radius:50%;background:var(--s3);flex:none}
 .deck-tabs i.need,.dcol-h i.need{background:var(--jam)}
 .deck-cols{flex:1;min-height:0;display:flex;overflow-x:auto;scrollbar-width:thin}
-.dcol{flex:none;width:340px;display:flex;flex-direction:column;border-right:1px solid var(--line-soft)}
-.dcol.wide{width:400px}
-.dcol-h{flex:none;display:flex;align-items:center;gap:9px;height:52px;padding:0 20px;font-weight:600;font-size:15.5px;border-bottom:1px solid var(--line-soft)}
-.dcol-h small{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--fg-3)}
+.dcol{flex:1 0 0;min-width:272px;max-width:480px;display:flex;flex-direction:column;border-right:1px solid var(--line-soft)}   /* the columns share the width, so five of them fill a laptop */
+.dcol.flash .dcol-h{animation:flash 1s var(--ease)}
+@keyframes flash{from{background:var(--s3)}}
+.dcol-h{flex:none;display:flex;align-items:center;gap:8px;height:56px;padding:0 24px;font-weight:600;font-size:15.5px;border-bottom:1px solid var(--line-soft)}
+.dcol-h small{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--fg-2)}
 .dcol-h small.need{color:var(--jam);font-weight:600}
 .dcol-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
 .dcol-body > *{flex:none}
-.dcard{display:block;width:100%;padding:18px 20px 16px;border:0;border-bottom:1px solid var(--line-soft);background:none;text-align:left;color:inherit}
+.dcard{display:block;width:100%;padding:16px 24px;border:0;border-bottom:1px solid var(--line-soft);background:none;text-align:left;color:inherit}
+button.dcard{min-height:88px}
 button.dcard:hover{background:var(--s2)}
 .dcard.need{box-shadow:inset 3px 0 0 var(--jam)}
 .dcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;color:var(--fg-2)}
-.dcard .top em{font-style:normal;font-size:12px;color:var(--fg-3)}
+.dcard .top em{font-style:normal;font-size:12px;color:var(--fg-2)}
 .dcard .top em.need{color:var(--jam);font-weight:600}
-.dcard .big{display:flex;align-items:baseline;gap:8px;margin-top:6px}
-.dcard .top + .big{margin-top:6px}
+.dcard .big{display:flex;align-items:baseline;gap:8px;margin-top:8px}
+.dcard .delta{color:var(--fg-2)}   /* red is kept for the one card that needs you */
 .dcard .big:first-child{margin-top:0}
 .dcard .big b{font-size:30px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.1}
 .dcard .big b.t{font-size:17px;font-weight:600;letter-spacing:0;line-height:1.3}
 .dcard .line{margin:4px 0 0;font-size:13.5px;line-height:1.4;color:var(--fg-2)}
-.bars{display:flex;align-items:flex-end;gap:4px;height:44px;margin:14px 0 2px}
+.bars{display:flex;align-items:flex-end;gap:4px;height:48px;margin:16px 0 0}
 .bars i{flex:1;border-radius:3px 3px 1px 1px;background:var(--s3)}
 .bars i.hi{background:var(--on)}
-.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:8px;margin-top:16px}
 .mini button{border:0;background:none;padding:0;text-align:left;color:inherit}
 .mini small{display:block;font-size:12px;color:var(--fg-2)}
 .mini b{display:block;font-size:15px;font-weight:600}
-.dcard .foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:14px}
+.dcard .foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;margin-top:16px}
 .dcard .foot button{border:0;background:none;padding:0;font-size:13px;font-weight:500;color:var(--fg-2)}
 .dcard .foot button:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
-.dcard .foot .btn{height:30px;padding:0 12px;font-size:13px;margin-left:auto}
-.dnote{padding:16px 20px;border-bottom:1px solid var(--line-soft);font-size:14.5px;line-height:1.45;color:var(--fg-2)}
+.dcard .foot .btn{height:32px;padding:0 12px;font-size:13px;margin-left:auto}
+.dnote{padding:16px 24px;border-bottom:1px solid var(--line-soft);font-size:14.5px;line-height:1.45;color:var(--fg-2)}
 .dempty{flex:1;display:grid;place-content:center;justify-items:center;gap:4px;padding:24px;text-align:center;color:var(--fg-2);font-size:14.5px}
 .dempty img{height:96px;width:auto;margin-bottom:8px}
 /* memory: the brand book is a thing you can pick up */
-.bookcase{display:grid;justify-items:center;gap:10px;padding:30px 24px 26px;border-bottom:1px solid var(--line-soft);text-align:center}
+.bookcase{display:grid;justify-items:center;gap:8px;padding:32px 24px 24px;border-bottom:1px solid var(--line-soft);text-align:center}
 .bookcase img{height:min(230px,28vh);width:auto;filter:var(--felt);transition:transform .5s var(--ease)}
 .bookcase:hover img{transform:rotate(-3deg) translateY(-4px)}
 .bookcase h2{font-size:28px;line-height:1.1}
 .bookcase p{margin:0;color:var(--fg-2);font-size:14.5px;max-width:26ch}
-.bookcase .pair{display:flex;gap:8px;margin-top:8px}
+.bookcase .pair{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
 /* saved and tools: plain rows */
-.drow{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 20px;border-bottom:1px solid var(--line-soft)}
+.drow{display:flex;align-items:center;gap:16px;min-height:80px;padding:12px 16px 12px 24px;border-bottom:1px solid var(--line-soft)}
 .drow > img{flex:none;width:52px;height:52px;border-radius:12px;object-fit:cover}
 .drow > img.logo{width:38px;height:38px;border-radius:0;object-fit:contain;filter:var(--felt)}
 .drow .grow{flex:1;min-width:0;color:inherit}
 .drow b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-weight:600;font-size:14.5px;line-height:1.3}
-.drow small{display:block;color:var(--fg-2);font-size:13px}
+.drow small{display:block;color:var(--fg-2);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .logo-tile{flex:none;width:38px;height:38px;border-radius:50%;background:var(--s2);display:grid;place-items:center;font-weight:700;font-size:14px}
-.shop{display:grid;justify-items:center;gap:8px;padding:30px 24px 28px;border-bottom:1px solid var(--line-soft);text-align:center}
+.shop{display:grid;justify-items:center;gap:8px;padding:32px 24px 24px;border-bottom:1px solid var(--line-soft);text-align:center}
 .shop img{height:min(150px,18vh);width:auto;filter:var(--felt)}
 .shop h2{font-size:26px}
 .shop p{margin:0 0 8px;color:var(--fg-2);font-size:14.5px}
 
-.toasts{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;display:grid;gap:8px;pointer-events:none}
+.toasts{position:fixed;left:calc(30px + 50vw);top:72px;transform:translateX(-50%);z-index:40;display:grid;justify-items:center;gap:8px;pointer-events:none;transition:left var(--t) var(--ease)}   /* under the bar and centred on the page, clear of the card's words and its actions */
+body.has-side .toasts{left:calc(30px + 50vw - var(--side-w) / 2)}
+body.bare .toasts{left:50%}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 html.still *{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}
 html.still ::-webkit-scrollbar{display:none}
 @media (prefers-reduced-motion:reduce){.pop,.bob,.land,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body,.pp-stamp{animation:none!important}.hop{opacity:1}}
 
-/* ---------- phone ---------- */
+/* ---------- phone: one 16px gutter everywhere, everything you tap at least 40px ---------- */
 @media (max-width:860px){
   body{padding-left:0}
-  #app{height:calc(100vh - 58px)}
-  .rail{inset:auto 0 0 0;width:auto;height:58px;flex-direction:row;padding:0 8px;border-right:0;border-top:1px solid var(--line-soft)}
+  #app{height:calc(var(--vh) - 58px)}
+  .rail{inset:auto 0 0 0;width:auto;height:calc(58px + env(safe-area-inset-bottom));flex-direction:row;justify-content:space-around;padding:0 8px env(safe-area-inset-bottom);border-right:0;border-top:1px solid var(--line-soft)}
   .rail .rail-brand{display:none}
-  .rail-nav,.rail-nav.low{flex:1;flex-direction:row;margin:0;gap:0;justify-content:space-around}
+  .rail-nav,.rail-nav.low{display:contents}   /* five icons, evenly spaced */
   .rail-nav a::after{display:none}
-  .topbar{left:0;padding:0 12px 0 16px}
+  .rail a{width:44px;height:44px}
+  .topbar{left:0;padding:0 16px}
+  .topbar{gap:0}
   .topbar .deck-tabs{display:none}
-  /* the panel is a sheet that rises from the foot; the page behind it stays where it is */
+  .topbar.tabbed{height:calc(var(--bar) + 44px);flex-wrap:wrap;align-content:flex-start}
+  .topbar.tabbed h1,.topbar.tabbed .top-right{height:var(--bar);line-height:var(--bar);align-items:center}
+  .topbar.tabbed .deck-tabs{display:flex;order:3;flex:none;width:calc(100% + 16px);height:44px;margin:0 -8px;align-items:flex-start}   /* the columns, as a row you can scroll */
+  .deck-tabs button{height:36px}
+  body.tabbed .deck{padding-top:calc(var(--bar) + 44px)}
+  .toasts,body.has-side .toasts,body.bare .toasts{left:16px;right:16px;top:72px;transform:none}
+  .ico-btn,.sview-h .ico-btn{width:44px;height:44px}
+  .b-sm,.chip,.seg button{height:40px}
+  button.pill{height:40px;min-width:40px;justify-content:center}
+  .composer textarea,.input input{font-size:16px}   /* under 16px, iOS zooms the page when you tap a field */
+  /* a panel is a sheet that rises from the foot, over a shade you can tap to close it */
   body.has-side{background:var(--bg)}
   body.has-side #app{margin-right:0;border-radius:0;box-shadow:none}
   body.has-side .topbar{right:0;border-radius:0}
-  #side{top:auto;left:0;width:auto;max-height:86vh;z-index:30;background:var(--card);border-radius:24px 24px 0 0;box-shadow:var(--shadow-3);visibility:visible;opacity:1;transform:translateY(105%);transition:transform var(--t) var(--ease)}
+  #shade{position:fixed;inset:0;z-index:29;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity var(--t) var(--ease)}
+  body.has-side #shade{opacity:1;pointer-events:auto}
+  #side{top:auto;left:0;width:auto;max-height:calc(var(--vh) * .86);z-index:30;background:var(--card);border-top:1px solid var(--line-soft);border-radius:24px 24px 0 0;box-shadow:var(--shadow-3);visibility:visible;opacity:1;transform:translateY(105%);transition:transform var(--t) var(--ease)}
   body.has-side #side{transform:none;transition:transform var(--t) var(--ease)}
-  .side-h{padding-left:20px}
-  .side-body{padding:4px 20px 20px}
-  .side-foot{padding:12px 20px 18px}
-  .side-empty{padding:28px 0}
-  .opt > i{background:var(--s2)}
-  .cap{background:var(--s2)}
-  .asks-for{margin-top:18px}
-  /* feed */
-  .feed{--fc-h:calc(100vh - 58px - 104px)}
-  .stories-row{justify-content:flex-start;padding:10px 104px 6px 12px;overflow-x:auto;scrollbar-width:none}
-  .stories{width:auto;gap:12px;justify-content:flex-start}
-  .story{width:54px;font-size:11.5px}
-  .story i{width:54px;height:54px}
-  .slide{padding:4px 10px 0}
+  #side::before{content:"";flex:none;width:36px;height:4px;margin:8px auto -4px;border-radius:4px;background:var(--line)}
+  .side-h{padding:0 8px 0 16px}
+  .side-foot .ico-btn:first-child{margin-left:-13px}
+  .scrim{padding:16px}
+  .dcol,.dcol.wide{flex:none;max-width:none}
+  .dcard{padding:16px}
+  .bookcase,.shop{padding:24px 16px}
+  .side-body{padding:8px 16px 24px}
+  .side-foot{padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+  .side-empty{padding:32px 0}
+  .opt > i,.cap{background:var(--s2)}
+  .asks-for{margin-top:24px}
+  /* feed: the picture fills the screen, so everything on it sits on a dark backing and stays readable */
+  .feed{--fc-h:calc(var(--vh) - 58px - 104px)}
+  .stories-row{justify-content:flex-start;margin-right:108px;padding:10px 0 6px 16px;overflow-x:auto;scrollbar-width:none}   /* the row stops before the two buttons top right, and scrolls */
+  .stories-row::-webkit-scrollbar{display:none}
+  .stories{width:auto;max-width:none;gap:8px;justify-content:flex-start}
+  .story{width:46px;font-size:11px;overflow:hidden;text-overflow:ellipsis;display:block;text-align:center}
+  .story i{width:46px;height:46px;margin-bottom:4px}
+  .slide{padding:8px 16px 0}
   .feed-col,.fcard{width:100%}
   .fc-media,.fcard.plain{width:100%;height:var(--fc-h);aspect-ratio:auto}
-  .fc-over{padding:64px 70px 16px 16px}
+  .fc-over{padding:64px 72px 16px 16px}
   .fcard-top{justify-content:flex-start}
-  .feed-col .acts{left:auto;right:6px;top:auto;bottom:70px;z-index:3;height:auto;gap:2px}
-  .feed-col .act,.feed-col .act .ico{color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
-  .feed-col .act.jam,.feed-col .act.jam .ico{filter:none}
-  .feed-col .act.jam{text-shadow:0 1px 2px rgba(0,0,0,.6)}
-  .feed-col .act:hover > i{background:rgba(255,255,255,.18)}
-  .fab{right:14px;bottom:72px;height:52px;width:52px;padding:0;justify-content:center;font-size:0;gap:0}
+  .feed-col .acts{left:auto;right:8px;top:auto;bottom:72px;z-index:3;height:auto;gap:2px}
+  .feed-col .act{width:48px;padding:0 0 2px;font-size:11px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+  .feed-col .act > i{width:38px;height:38px;background:rgba(0,0,0,.34);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .feed-col .act .ico{color:#fff}
+  .feed-col .act:hover > i{background:rgba(0,0,0,.5)}
+  .feed-col .act.jam > i{width:46px;height:46px;background:linear-gradient(135deg,color-mix(in srgb,var(--jam) 78%,#fff),var(--jam) 45%,var(--jam-2))}
+  .fab{right:16px;bottom:74px;height:52px;width:52px;padding:0;justify-content:center;font-size:0;gap:0}
   .fab span{width:42px;height:42px}
-  /* decks */
+  /* decks: one column a screen, with its cards' actions big enough to tap */
   .deck-cols{scroll-snap-type:x mandatory}
   .dcol,.dcol.wide{width:88vw;scroll-snap-align:start}
+  .dnote{padding-left:16px;padding-right:16px}
+  .dcol-h{padding:0 16px}
+  .drow{padding:12px 8px 12px 16px}
+  .dcard .foot{gap:0 16px;margin-top:8px}
+  .dcard .foot button{min-height:40px}
+  .dcard .foot .btn{height:40px}
+  .mini{margin-top:16px}
   /* onboarding */
-  .onb{padding:64px 18px 32px;gap:16px}
-  .onb-art .pop.v video.lead{height:200px}
+  .onb{padding:64px 16px 32px;gap:16px}
+  .brandmark{left:16px}
+  .onb-art{--v:200px}
   .hop{height:48px}
+  .store{flex-wrap:wrap;height:auto;gap:8px;padding:0;border:0;background:none}   /* the field gets the whole row, the button its own */
+  .store > [data-ico]{display:none}
+  .store input{flex:none;width:100%;height:56px;padding:0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card)}
+  .store .btn{width:100%;height:48px}
   .tapstage{height:176px;gap:2px}
   .tapstage .slot{width:92px}
   .tapstage .slot img{height:58px}
-  .tapstage .slot.many img{height:42px}
-  .tapstage .me{width:190px;margin:0 -30px}
-  .tapstage .me .lead{height:164px}
-  .tapstage .me .pop.v video.lead{height:176px}
-  .passport{grid-template-columns:1fr}
+  #chanSlot{--ci:36px;gap:4px}
+  .tapstage .me{--v:176px;--lh:164px;width:190px;margin:0 -30px}
+  .asks .chips{display:grid;grid-template-columns:1fr 1fr}
+  .asks .chip{justify-content:center}
+  .onb.small .onb-art{--v:112px}
+  .onb.small .onb-art .lead{height:96px}
+  .passport{grid-template-columns:minmax(0,1fr)}
   .pp-left{padding:16px 16px 0}
-  .pp-photo{min-height:0;height:170px}
-  .pp-right{border-left:0;padding:18px 18px 16px;gap:14px}
-  .pp-name{font-size:34px}
+  .pp-photo{min-height:0;height:120px}
+  .pp-stamp{height:72px;right:8px;bottom:-16px}
+  .pp-top img{display:none}
+  .pp-right{border-left:0;padding:16px;gap:12px}
+  .pp-name{font-size:32px}
+  .pp-facts{gap:8px 16px}
+  .pp-mrz{display:none}
+}
+/* a short phone: fewer actions on the picture (Less and Note are in Why), a shorter stage for the three taps */
+@media (max-width:860px) and (max-height:700px){
+  .feed-col .act[data-do="less"],.feed-col .act[data-do="feedback"]{display:none}
+  .tapstage{height:128px}
+  .tapstage .me{--v:128px;--lh:120px;width:150px;margin:0 -24px}
+  .tapstage .slot img{height:44px}
+  #chanSlot{--ci:28px}
 }
 </style>
 </head>
@@ -402,14 +474,15 @@ html.still ::-webkit-scrollbar{display:none}
 <a class="fab draw" href="#/new" aria-label="Ask the team for something new"><span><img src="assets/jammie/v3/char-dollop.png" alt=""></span>New</a>
 <main id="app"></main>
 <aside id="side" aria-label="panel"></aside>
+<div id="shade"></div>
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=15"></script>
-<script src="assets/jammie/v3/data.js?v=15"></script>
+<script src="assets/jammie/v3/icons.js?v=16"></script>
+<script src="assets/jammie/v3/data.js?v=16"></script>
 <script>
 (() => {
-  const { A, D, IDEAS, real, av, fcard, frameW } = window.JAMMIE;
+  const { A, D, IDEAS, real, av, fcard, turnFrame } = window.JAMMIE;
   const $ = id => document.getElementById(id);
   const root = document.documentElement, app = $('app'), sideEl = $('side'), modal = $('modal');
   const STILL = new URLSearchParams(location.search).has('still');   // the flow map shows screens at rest
@@ -438,7 +511,8 @@ html.still ::-webkit-scrollbar{display:none}
   let orders = STILL ? [{ id: 'reel', how: 'ship' }] : store('jammie-proto-orders', []);
   const HOW = { ship: ['With the team', 'Files land in your inbox'], change: ['With the team', 'They answer within 24 hours'], sloosh: ['Being made on Sloosh', 'About 4 minutes'], note: ['With the team', 'They answer within 24 hours'] };
   const idea = id => real.find(d => d.id === id) || real[0];
-  function send(how, id){ orders = orders.filter(o => o.id !== id); orders.unshift({ id, how }); keep('jammie-proto-orders', orders); }
+  function send(how, id, text){ const key = how === 'note' ? 'note' + Date.now() : id; orders = orders.filter(o => o.id !== key); orders.unshift({ id: key, how, text }); keep('jammie-proto-orders', orders); }
+  let readN = STILL ? 0 : store('jammie-proto-read', 0);   // how many updates you have already opened the bell on
 
   function toast(text, pose = 'cheer'){
     const t = document.createElement('div'); t.className = 'toast';
@@ -453,8 +527,8 @@ html.still ::-webkit-scrollbar{display:none}
   const mark = `<span class="brandmark"><img src="${A}char-dollop.png" alt="">jammie</span>`;
   // the onboarding stage: one centred column. Jammie on top, then one thought and one control
   const onb = (n, art, body, cls = '') => `<section class="onb ${cls}">${mark}${dots(n)}<div class="onb-art">${art}</div><div class="onb-body">${body}</div></section>`;
-  // five short loops (idle, wave, search, cheer, sit); the flow map and reduced motion get the still
-  const LOOPS = ['idle', 'wave', 'search', 'cheer', 'sit'], calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;
+  // four short loops (idle, wave, cheer, sit); the flow map and reduced motion get the still
+  const LOOPS = ['idle', 'wave', 'cheer', 'sit'], calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;
   const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
   const pose = p => LOOPS.includes(p) && !calm
     ? `<div class="pop v"><video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video><img class="lead" src="${stillOf(p)}" alt=""></div>`
@@ -478,9 +552,9 @@ html.still ::-webkit-scrollbar{display:none}
     if (STILL) { READS.slice(0, 3).forEach(([t, e]) => { add(t, 'done'); hop(e); }); add(READS[3][0], 'now'); hop(READS[3][1]); eta.textContent = 'About 3 seconds left'; return; }
     const SPEED = 22, PAUSE = 460, total = READS.reduce((n, [t]) => n + t.length * SPEED + PAUSE, 0); let spent = 0;
     (function line(i){
-      if (i === READS.length) { eta.textContent = 'All read'; later(() => { location.hash = next; }, 520); return; }
+      if (i === READS.length) { eta.textContent = 'All read'; later(() => { location.replace(next); }, 520); return; }   // replace: Back from the next screen must not land here and be pushed forward again
       const [text, el] = READS[i], li = add('', 'now'), span = li.lastChild; hop(el); let c = 0;
-      (function type(){ span.textContent = text.slice(0, ++c); spent += SPEED; eta.textContent = `About ${Math.max(1, Math.ceil((total - spent) / 1000))} seconds left`;
+      (function type(){ span.textContent = text.slice(0, ++c); spent += SPEED; const left = Math.max(1, Math.ceil((total - spent) / 1000)); eta.textContent = `About ${left} second${left === 1 ? '' : 's'} left`;
         if (c < text.length) later(type, SPEED); else later(() => { li.className = 'done'; spent += PAUSE; line(i + 1); }, PAUSE); })();
     })(0);
   }
@@ -488,20 +562,25 @@ html.still ::-webkit-scrollbar{display:none}
   const ROLES = { Founder: 'founder', Marketer: 'marketer', Designer: 'designer', Agency: 'agency' };
   const GOALS = { Sales: 'bag', 'Repeat buyers': 'heart', Reach: 'megaphone', 'Better ads': 'clapper' };
   const CHANS = { Instagram: 'instagram', 'Meta ads': 'meta', Google: 'google', Email: 'email' };
+  const picks = { role: [], goal: [], chan: [] };   // kept, so coming Back to this screen shows what you chose
   function tapPicked(ask){
-    const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim());
-    if (kind === 'role' && on[0]) { const me = $('meSlot'), old = me.lastElementChild;                 // the one on stage leaves to the left as the new one comes in from the right
+    const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim()); picks[kind] = on;
+    if (kind === 'role' && on[0]) { const me = $('meSlot'); if (me.dataset.role === on[0]) return; me.dataset.role = on[0];
+      const old = me.lastElementChild;                                        // the one on stage leaves to the left as the new one comes in from the right
       [...me.children].forEach(el => { if (el !== old) el.remove(); });
       if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 640); }
       me.insertAdjacentHTML('beforeend', `<div class="look ground slide-in"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`); }
-    if (kind === 'goal' && on[0]) $('goalSlot').innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`;
-    if (kind === 'chan') { const slot = $('chanSlot');
+    if (kind === 'goal' && on[0]) { const slot = $('goalSlot'); if (slot.dataset.goal === on[0]) return; slot.dataset.goal = on[0];
+      slot.innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`; }
+    if (kind === 'chan') { const slot = $('chanSlot'), all = Object.keys(CHANS);
       [...slot.children].forEach(el => { if (!on.includes(el.dataset.n)) el.remove(); });
-      on.forEach(n => { if (!slot.querySelector(`[data-n="${n}"]`)) slot.insertAdjacentHTML('beforeend', `<img class="in3d" data-n="${n}" src="${A}el-${CHANS[n]}.png" alt="">`); });
-      slot.classList.toggle('many', on.length > 2); }
+      on.forEach(n => { if (!slot.querySelector(`[data-n="${n}"]`)) slot.insertAdjacentHTML('beforeend', `<img class="in3d" data-n="${n}" style="grid-row:${all.indexOf(n) + 1}" src="${A}el-${CHANS[n]}.png" alt="">`); }); }
   }
+  // show the three taps with picks already made: what you chose before, or a sample for the flow map
+  function showPicks(p){ Object.entries(p).forEach(([k, on]) => { const ask = app.querySelector(`[data-ask="${k}"]`); if (!ask || !on.length) return;
+    ask.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', on.includes(c.textContent.trim()))); tapPicked(ask); }); }
   const gate = inner => `<div class="gate"><div class="sheet gate-card">${inner}</div></div>`;
-  const startScreen = () => onb(1, pose('search'), `
+  const startScreen = () => onb(1, pose('wave'), `
         <h1 class="h1">Add your store.</h1>
         <form class="store" data-go="#/signin">${ico('link')}<input placeholder="Paste a link or type its name" aria-label="Store link" value="wearcomet.com">
           <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>`);
@@ -509,8 +588,9 @@ html.still ::-webkit-scrollbar{display:none}
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
   // ---- pieces of the feed
-  const STORIES = [['Today', 'reel.jpg'], ['Trends', 'midnight.jpg'], ['Popular ads', 'xlows.jpg'], ['Industry news', 'rival.jpg'], ['How to', 'sketch.jpg']];
-  const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, f], i) => `<a class="story ${i > 2 ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${f})"></b></i>${n}</a>`).join('')}</div></div>`;
+  const STORIES = [['Today', 'reel'], ['Trends', 'midnight'], ['Popular ads', 'xlows'], ['Industry news', 'rival'], ['How to', 'sketch']];   // each ring opens the idea it shows
+  const seen = new Set(STILL ? [3, 4] : []);
+  const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, id], i) => `<a class="story ${seen.has(i) ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${idea(id).img})"></b></i>${n}</a>`).join('')}</div></div>`;
   // the actions hang beside the card. Jam is one of them: the main one, so it is red and a little larger
   const acts = d => d.special ? '' : `<div class="acts">
       <button class="act draw ${liked.has(d.id) ? 'liked' : ''}" data-do="keep">${ico('heart')}Keep</button>
@@ -518,7 +598,7 @@ html.still ::-webkit-scrollbar{display:none}
       <button class="act draw" data-do="later">${ico('calendar')}Later</button>
       <button class="act draw" data-do="less">${ico('filter')}Less</button>
       <a class="act draw" href="#/idea">${ico('eye')}Why</a>
-      <button class="act draw" data-do="feedback">${ico('message')}Note</button>
+      <a class="act draw" href="#/note">${ico('message')}Note</a>
       <a class="act jam draw" href="#/jam">${ico('spark')}Jam</a>
     </div>`;
   const feedPage = () => `<section class="feed ${arriving ? 'arrive' : ''}">
@@ -526,14 +606,19 @@ html.still ::-webkit-scrollbar{display:none}
       <div class="stage">${IDEAS.map((x, i) => `<div class="slide ${i === cur ? 'at' : ''}" data-i="${i}"><div class="feed-col">${fcard(x)}${acts(x)}</div></div>`).join('')}</div>
     </section>`;
   const curIdea = () => IDEAS[cur].special ? real[0] : IDEAS[cur];
-  const msgRow = o => { const d = idea(o.id); return `<div class="msg"><img src="${D}${d.img}" alt=""><span><b>${o.how === 'note' ? 'Your note to the team' : d.title}</b><small>${HOW[o.how][0]} · ${HOW[o.how][1]}</small></span><em>Now</em></div>`; };
+  // an update about an idea opens that idea; a note you wrote is just your note
+  const msgRow = o => { const d = idea(o.id), sub = `<small>${HOW[o.how][0]} · ${HOW[o.how][1]}</small>`;
+    return o.how === 'note' ? `<div class="msg">${av(48)}<span><b>${o.text || 'Your note to the team'}</b>${sub}</span><em>Now</em></div>`
+      : `<a class="msg" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt=""><span><b>${d.title}</b>${sub}</span><em>Now</em></a>`; };
   // a note to the team: what you might ask for, and the box you type in at the foot. The round button in the box sends it
   const composer = (ph, what) => `<form class="composer" data-send="${what}"><textarea rows="1" placeholder="${ph}" aria-label="Your note"></textarea><button class="btn b-jam draw" aria-label="Send to the team">${ico('send')}</button></form>`;
   const asksFor = list => `<div class="asks-for">${list.map(t => `<button class="chip" data-do="suggest">${t}</button>`).join('')}</div>`;
 
   // ---- decks: every page is a row of columns. One column is a header and a stack of cards
-  const col = (name, body, o = {}) => `<section class="dcol ${o.wide ? 'wide' : ''}" id="${o.id || ''}"><header class="dcol-h"><i class="${o.need ? 'need' : ''}"></i>${name}${o.note ? `<small class="${o.need ? 'need' : ''}">${o.note}</small>` : ''}</header><div class="dcol-body">${body}</div></section>`;
-  const deck = cols => `<section class="deck"><div class="deck-cols">${cols.join('')}</div></section>`;
+  const col = (name, body, o = {}) => `<section class="dcol" id="${o.id || ''}"><header class="dcol-h"><i class="${o.need ? 'need' : ''}"></i>${name}${o.note ? `<small class="${o.need ? 'need' : ''}">${o.note}</small>` : ''}</header><div class="dcol-body">${body}</div></section>`;
+  const deck = cols => `<section class="deck"><div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
+  const jumps = cols => cols.length > 2 ? cols.map(([name, , o = {}], i) => `<button data-do="col" data-id="${i}"><i class="${o.need ? 'need' : ''}"></i>${name}</button>`).join('') : '';
+  const deckPage = (title, cols) => ({ title, tabs: () => jumps(cols()), page: () => deck(cols()) });
   const empty = (line, p = 'sleep') => `<div class="dempty"><img src="${A}pose-${p}.png" alt="">${line}</div>`;
   // command centre: five columns, one question a card (numbers are the demo's)
   const dcard = c => `<div class="dcard ${c.need ? 'need' : ''}"><div class="top"><span>${c.label}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : c.when || ''}</em></div>
@@ -548,7 +633,7 @@ html.still ::-webkit-scrollbar{display:none}
       { label: 'What you keep · 7 days', when: '40 min ago', value: 'Not counted yet', line: 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report']] },
       { label: 'Refunds · 7 days', when: '40 min ago', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', acts: [['More', 'more'], ['P&L report', 'report']] }]],
     ['Marketing return', [
-      { label: 'Sales per ₹1 of ads · 7 days', when: '40 min ago', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], mini: [['Cost of a new customer', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
+      { label: 'Sales per ₹1 of ads · 7 days', when: '40 min ago', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
       { label: 'Campaigns · 7 days', need: true, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report']] },
       { label: 'Site funnel · 7 days', when: '40 min ago', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
     ['Stock & delivery', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report']] }]],
@@ -570,17 +655,17 @@ html.still ::-webkit-scrollbar{display:none}
   const SCREENS = {
     // ================= onboarding =================
     start: { bare: true, page: () => startScreen() },
-    signin: { bare: true, page: () => startScreen() + gate(`
+    signin: { under: 'start', modal: () => gate(`
         <a class="ico-btn x draw" href="#/start" aria-label="Close">${ico('close')}</a>
-        ${pose('wave')}
+        ${pose('idle')}
         <h2>Sign in to keep your ideas</h2>
-        <a class="btn b-out gbtn" href="#/reading">${G}Continue with Google</a>
+        <a class="btn b-line gbtn" href="#/reading">${G}Continue with Google</a>
         <div class="or">or</div>
         <form data-go="#/reading">
           <label class="input"><input placeholder="Your name" aria-label="Your name" autocomplete="name"></label>
           <label class="input"><input type="email" placeholder="Email" aria-label="Email" autocomplete="email"></label>
           <button class="btn b-jam draw">Continue${ico('arrow')}</button></form>`) },
-    reading: { bare: true, page: () => onb(2, `<div class="hopstage">${HOPS.map(([n, x, y, d]) => `<img class="hop" data-el="${n}" src="${A}el-${n}.png" alt="" style="--x:${x}%;--y:${y}%;--d:${d}s">`).join('')}${pose('search')}</div>`, `
+    reading: { bare: true, page: () => onb(2, `<div class="hopstage">${HOPS.map(([n, x, y, d]) => `<img class="hop" data-el="${n}" src="${A}el-${n}.png" alt="" style="--x:${x}%;--y:${y}%;--d:${d}s">`).join('')}${pose('sit')}</div>`, `
         <h1 class="h2">Reading wearcomet.com</h1>
         <ul class="stream" aria-live="polite"></ul>
         <p class="eta">&nbsp;</p>`), enter: () => runRead('#/taps') },
@@ -592,9 +677,7 @@ html.still ::-webkit-scrollbar{display:none}
           <div data-ask="chan"><h4>You post on</h4>${chips(Object.keys(CHANS))}</div>
         </div>
         <a class="btn b-jam draw" href="#/here">Continue${ico('arrow')}</a>`, 'split'),
-      enter: () => { if (!STILL) return;                                       // the flow map shows it with picks made
-        [['role', [0]], ['goal', [0]], ['chan', [0, 1]]].forEach(([k, on]) => { const ask = app.querySelector(`[data-ask="${k}"]`);
-          ask.querySelectorAll('.chip').forEach((c, i) => c.classList.toggle('on', on.includes(i))); tapPicked(ask); }); } },
+      enter: () => showPicks(STILL ? { role: ['Founder'], goal: ['Sales'], chan: ['Instagram', 'Meta ads'] } : { ...picks }) },
     here: { bare: true, page: () => onb(4, pose('cheer'), `
         <h1 class="h2">Hey, here it is.</h1>
         <div class="passport land">
@@ -613,22 +696,20 @@ html.still ::-webkit-scrollbar{display:none}
 
     // ================= pages =================
     feed: { page: feedPage },
-    command: { title: 'Command centre',
-      tabs: () => COLS.map(([name, cards], i) => `<button data-do="col" data-id="${i}"><i class="${needs(cards) ? 'need' : ''}"></i>${name}</button>`).join(''),
-      page: () => deck(COLS.map(([name, cards], i) => col(name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line) })).join(''),
-        { id: 'dcol' + i, need: needs(cards), note: needs(cards) ? 'One needs you' : cards.length === 1 ? '1 card' : cards.length + ' cards' }))) },
-    saved: { title: 'Saved', page: () => deck([
-        col('Kept', liked.size ? [...liked].map(id => savedRow(id, 'liked')).join('') : empty('Nothing kept yet.'), { note: String(liked.size), wide: true }),
-        col('For later', SETS.later.size ? [...SETS.later].map(id => savedRow(id, 'later')).join('') : empty('Nothing put aside.'), { note: String(SETS.later.size), wide: true })]) },
-    memory: { title: 'Memory', page: () => deck([
-        col('Brand book', `<div class="bookcase"><img src="${A}el-book.png" alt=""><h2>Comet</h2><p>India’s homegrown sneaker brand for men and women</p>
-          <div class="pair"><button class="btn b-out b-sm" data-do="openbook">Open the book</button><button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div></div>
-          <p class="dnote">I’m still getting to know Comet.</p>`, { wide: true }),
-        ...KNOWS.map(([name, tiles]) => col(name, tiles.map(t => tile(...t)).join('')))]) },
-    connectors: { title: 'Connectors', page: () => deck([
-        col('Start here', `<div class="shop"><img src="${A}el-shopify.png" alt=""><h2>Shopify</h2><p>I can only see your public pages. Start with Shopify.</p>
-          <button class="btn b-jam draw" data-do="connect" data-id="Shopify">Connect Shopify${ico('arrow')}</button></div>`, { wide: true }),
-        col('All tools', TOOLS.map(([n, line, logo]) => `<div class="drow">${logo ? `<img class="logo" src="${A}el-${logo}.png" alt="">` : `<span class="logo-tile">${n[0]}</span>`}<span class="grow"><b>${n}</b><small>${line}</small></span><button class="btn b-line b-sm" data-do="connect" data-id="${n}">Connect</button></div>`).join(''), { note: String(TOOLS.length), wide: true })]) },
+    command: deckPage('Command centre', () => COLS.map(([name, cards]) => [name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line) })).join(''),
+      { need: needs(cards), note: needs(cards) ? 'One needs you' : cards.length === 1 ? '1 card' : cards.length + ' cards' }])),
+    saved: deckPage('Saved', () => [
+      ['Kept', liked.size ? [...liked].map(id => savedRow(id, 'liked')).join('') : empty('Nothing kept yet.'), { note: String(liked.size) }],
+      ['For later', SETS.later.size ? [...SETS.later].map(id => savedRow(id, 'later')).join('') : empty('Nothing put aside.'), { note: String(SETS.later.size) }]]),
+    memory: deckPage('Memory', () => [
+      ['Brand book', `<div class="bookcase"><img src="${A}el-book.png" alt=""><h2>Comet</h2><p>India’s homegrown sneaker brand for men and women</p>
+          <div class="pair"><button class="btn b-line b-sm" data-do="openbook">Open the book</button><button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div></div>
+          <p class="dnote">I’m still getting to know Comet.</p>`],
+      ...KNOWS.map(([name, tiles]) => [name, tiles.map(t => tile(...t)).join('')])]),
+    connectors: deckPage('Connectors', () => [
+      ['Start here', `<div class="shop"><img src="${A}el-shopify.png" alt=""><h2>Shopify</h2><p>I can only see your public pages. Start with Shopify.</p>
+          <button class="btn b-jam draw" data-do="connect" data-id="Shopify">Connect Shopify${ico('arrow')}</button></div>`],
+      ['All tools', TOOLS.map(([n, line, logo]) => `<div class="drow">${logo ? `<img class="logo" src="${A}el-${logo}.png" alt="">` : `<span class="logo-tile">${n[0]}</span>`}<span class="grow"><b>${n}</b><small>${line}</small></span><button class="btn b-line b-sm" data-do="connect" data-id="${n}">Connect</button></div>`).join(''), { note: String(TOOLS.length) }]]),
 
     // ================= panels over the feed: they are about the card on screen =================
     idea: { under: 'feed', panel: () => { const d = curIdea(); return { title: 'Why this idea', body: `
@@ -648,15 +729,18 @@ html.still ::-webkit-scrollbar{display:none}
         <button class="opt" data-do="morelike"><i>${ico('heart')}</i><span><b>More like this</b><small>Jammie learns it. More ideas like this one.</small></span></button>
         <a class="opt" href="#/sloosh"><i>${ico('spark')}</i><span><b>Make it with Sloosh</b><small>A full video, made on Sloosh. You see the exact credits first.</small></span></a>` }) },
     change: { under: 'feed', panel: () => ({ title: 'Change first', back: '#/jam', body: `
-        <p class="lead-p" style="margin-top:6px">A person from our team takes it from here.</p>
+        <p class="lead-p">A person from our team takes it from here.</p>
         ${asksFor(['A different opening line', 'Make it shorter', 'Use another photo'])}`, foot: composer('What to change, what to keep…', 'sendchange') }) },
+    note: { under: 'feed', panel: () => ({ title: 'Note to the team', body: `
+        <p class="lead-p">Say anything about this idea. A person from our team reads it.</p>
+        ${asksFor(['Not right for us', 'Wrong product', 'Make more like this'])}`, foot: composer('Your note about this idea…', 'sendchange') }) },
     sloosh: { under: 'feed', panel: () => ({ title: 'Make it with Sloosh', back: '#/jam', body: `
-        <p class="lead-p" style="margin:6px 0 18px">You see the cost before anything is made.</p>
+        <p class="lead-p" style="margin-bottom:16px">You see the cost before anything is made.</p>
         <div class="rows"><div class="rowi"><small class="grow">What</small><b>${curIdea().goes}</b></div><div class="rowi"><small class="grow">Takes</small><b>About 4 minutes</b></div><div class="rowi"><small class="grow">Credits</small><b>120</b></div></div>`,
         foot: `<a class="btn b-out" href="#/jam" style="margin:0">Not now</a><button class="btn b-jam draw" data-do="makesloosh">Make it${ico('arrow')}</button>` }) },
     // ================= panels over any page =================
     new: { panel: () => ({ title: 'Ask the team', body: `
-        <p class="lead-p" style="margin-top:6px">A person from our team takes it from here. Ask for anything, big or small.</p>
+        <p class="lead-p">A person from our team takes it from here. Ask for anything, big or small.</p>
         ${asksFor(['A launch film', 'A reply to a thread', 'A new product page'])}`, foot: composer('Tell us what you need…', 'sendnote') }) },
     bell: { panel: () => ({ title: 'Updates', body: orders.length ? orders.map(msgRow).join('')
         : `<div class="side-empty"><img src="${A}pose-sleep.png" alt=""><h3>All quiet.</h3><p>Nothing new since you looked.</p></div>` }) },
@@ -666,9 +750,10 @@ html.still ::-webkit-scrollbar{display:none}
         <div class="sec"><h4>Your jam</h4><div class="rows">${row('What Jammie learns', 'Learning from you', 'learns')}${row('Start again from the first screen', '', 'restart')}</div></div>
         <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}</div></div>` }; } },
     // ================= a story, over the feed =================
-    story: { under: 'feed', modal: q => { const s = +(q.get('s') || 0) % STORIES.length, [name, file] = STORIES[s], d = real[s] || real[0]; return `<div class="scrim"><div class="sheet sview">
-        <div class="segs"><i class="on"></i><i></i><i></i><i></i></div>
-        <div class="sview-h"><span class="story"><i><b style="background-image:url(${D}${file})"></b></i></span>${name}
+    story: { under: 'feed', modal: q => { const s = +(q.get('s') || 0) % STORIES.length, [name, id] = STORIES[s], d = idea(id); seen.add(s);
+        app.querySelectorAll('.stories .story').forEach((el, i) => el.classList.toggle('seen', seen.has(i)));
+        return `<div class="scrim"><div class="sheet sview">
+        <div class="sview-h"><span class="story"><i><b style="background-image:url(${D}${d.img})"></b></i></span>${name}
           <span style="margin-left:auto;display:flex">
             <a class="ico-btn draw" href="#/story?s=${(s + STORIES.length - 1) % STORIES.length}" aria-label="Previous">${ico('back')}</a>
             <a class="ico-btn draw" href="#/story?s=${(s + 1) % STORIES.length}" aria-label="Next">${ico('arrow')}</a>
@@ -680,41 +765,44 @@ html.still ::-webkit-scrollbar{display:none}
 
   // ---- drawing a screen. The page is redrawn only when it changes, so the feed keeps its place and the bar never flickers
   const slideH = sc => sc.scrollHeight / sc.children.length;   // a card's true height, which is rarely a whole pixel: rounding it cut later cards at the top
+  const markSlides = () => app.querySelectorAll('.slide').forEach((el, i) => { el.inert = i !== cur; });   // only the card on screen takes the keyboard
   function wireFeed(){
     const sc = app.querySelector('.stage'); if (!sc) return;
-    const mark = () => [...sc.children].forEach((el, i) => { el.inert = i !== cur; });   // only the card on screen takes the keyboard
-    sc.scrollTop = cur * slideH(sc); mark();
-    sc.addEventListener('scroll', () => { const i = Math.round(sc.scrollTop / slideH(sc)); if (IDEAS[i] && i !== cur) { cur = i; mark(); } }, { passive: true });
+    sc.scrollTop = cur * slideH(sc); markSlides();
+    sc.addEventListener('scroll', () => { const i = Math.round(sc.scrollTop / slideH(sc)); if (IDEAS[i]) { cur = i; markSlides(); } }, { passive: true });
   }
   function render(force){
     timers.forEach(clearTimeout); timers = [];
     const [raw, query] = (location.hash.replace(/^#\/?/, '') || 'start').split('?');
     const name = SCREENS[raw] ? raw : 'start', s = SCREENS[name], q = new URLSearchParams(query || '');
-    const layer = !!(s.panel || s.modal), pageName = layer ? (s.under || lastPage) : name, pg = SCREENS[pageName];
+    const over = q.get('on'), layer = !!(s.panel || s.modal);                 // ?on=command: show this panel over that page
+    const pageName = layer ? (s.under || (SCREENS[over] && SCREENS[over].page && !SCREENS[over].bare ? over : lastPage)) : name, pg = SCREENS[pageName];
     const jump = q.get('i') !== null && IDEAS[+q.get('i')]; if (jump) cur = +q.get('i');
     if (!pg.bare) lastPage = pageName;
     document.body.classList.toggle('bare', !!pg.bare);
     document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === pageName));
-    if (force || pg.bare || shown !== pageName) {
+    if (force || shown !== pageName) {
       app.innerHTML = pg.page(q); shown = pageName;
       window.jammieIcons(app); wireFeed();
       if (!pg.bare && !STILL) app.firstElementChild.classList.add('page-in');
       app.scrollTop = 0; if (pg.bare) window.scrollTo(0, 0);
       if (pg.enter) pg.enter();
     } else if (pageName === 'feed') { const sc = app.querySelector('.stage');                 // the feed was not redrawn: bring it to the card we mean
-      if (Math.round(sc.scrollTop / slideH(sc)) !== cur) sc.scrollTo({ top: cur * slideH(sc), behavior: jump || calm ? 'auto' : 'smooth' }); }
+      if (Math.round(sc.scrollTop / slideH(sc)) !== cur) sc.scrollTo({ top: cur * slideH(sc), behavior: jump || calm ? 'auto' : 'smooth' });
+      markSlides(); }
     arriving = false;
     // the panel and the modal
     const p = s.panel ? s.panel(q) : null, home = '#/' + pageName;
     document.body.classList.toggle('has-side', !!p); document.body.classList.toggle('has-modal', !!s.modal);
     if (p) { sideEl.innerHTML = `<header class="side-h">${p.back ? `<a class="ico-btn back draw" href="${p.back}" aria-label="Back">${ico('back')}</a>` : ''}<h2>${p.title}</h2><a class="ico-btn draw" href="${home}" aria-label="Close">${ico('close')}</a></header>
       <div class="side-body">${p.body}</div>${p.foot ? `<footer class="side-foot">${p.foot}</footer>` : ''}`; window.jammieIcons(sideEl); }
-    modal.innerHTML = s.modal ? s.modal(q) : ''; window.jammieIcons(modal);
+    modal.innerHTML = s.modal ? s.modal(q) : ''; window.jammieIcons(modal); app.inert = !!s.modal;   // what is under a popup takes no clicks or keys
     // the top bar: same place on every page. It only changes its words
-    $('topbar').classList.toggle('solid', pageName !== 'feed');
+    $('topbar').classList.toggle('solid', pageName !== 'feed'); $('topbar').classList.toggle('tabbed', !!pg.tabs); document.body.classList.toggle('tabbed', !!pg.tabs);
     $('barTitle').textContent = pg.title || ''; $('barTabs').innerHTML = pg.tabs ? pg.tabs() : '';
     [['bellBtn', 'bell'], ['youBtn', 'you']].forEach(([id, n]) => { $(id).classList.toggle('on', name === n); $(id).setAttribute('href', name === n ? home : '#/' + n); });
-    $('bellN').hidden = !orders.length; $('bellN').textContent = orders.length;
+    if (name === 'bell') { readN = orders.length; keep('jammie-proto-read', readN); }
+    const unread = Math.max(0, orders.length - readN); $('bellN').hidden = !unread; $('bellN').textContent = unread;
   }
   // move the feed's own scroll to a card; a second press while it is still moving counts from where it is heading
   let aim = 0, aimAt = 0;
@@ -733,25 +821,28 @@ html.still ::-webkit-scrollbar{display:none}
   const DO = {
     keep: b => { const d = curIdea(); liked.has(d.id) ? liked.delete(d.id) : liked.add(d.id); saveSet('liked'); document.querySelectorAll('[data-do="keep"]').forEach(x => { if (!x.closest('.slide') || x.closest('.slide:not([inert])')) x.classList.toggle('liked', liked.has(d.id)); }); if (liked.has(d.id)) toast('Kept. It is in Saved.'); },
     share: () => toast('Link copied'), copy: () => toast('Caption copied'),
-    later: () => { SETS.later.add(curIdea().id); saveSet('later'); toast('Put aside. It is in Saved.', 'sleep'); step(1); },
-    less: () => { toast('Got it. Fewer like this.', 'worry'); step(1); },
+    later: () => { SETS.later.add(curIdea().id); saveSet('later'); toast('Put aside. It is in Saved.', 'sleep'); step(1, false); },
+    less: () => { toast('Got it. Fewer like this.', 'worry'); step(1, false); },
     unsave: b => { SETS[b.dataset.set].delete(b.dataset.id); saveSet(b.dataset.set); render(true); },
-    feedback: () => go('#/change'), sound: () => toast('Sound on'),
+    sound: b => { const v = b.closest('.fc-media').querySelector('video'); v.muted = !v.muted; b.innerHTML = ico(v.muted ? 'mute' : 'sound'); window.jammieIcons(b); b.setAttribute('aria-label', v.muted ? 'Sound on' : 'Sound off'); toast(v.muted ? 'Sound off' : 'Sound on'); },
     ship: () => { send('ship', curIdea().id); go('#/feed'); toast('Sent to the team. Files land in your inbox.'); },
     sendchange: () => { send('change', curIdea().id); go('#/feed'); toast('Sent to the team. They answer within 24 hours.'); },
-    sendnote: () => { send('note', curIdea().id); home(); toast('Sent to the team. They answer within 24 hours.'); },
+    sendnote: text => { send('note', null, text); home(); toast('Sent to the team. They answer within 24 hours.'); },
     makesloosh: () => { send('sloosh', curIdea().id); go('#/feed'); toast('On it. About 4 minutes.'); },
-    morelike: () => { toast('Noted. More like this one.'); step(1); },
+    morelike: () => { toast('Noted. More like this one.'); step(1, false); },
     suggest: b => { const t = sideEl.querySelector('.composer textarea'); if (t) { t.value = b.textContent; t.focus(); } },
-    noshopify: () => { toast('No problem. Estimates stay.', 'sleep'); step(1); }, more8: () => toast('8 more are on the way'),
+    noshopify: () => { toast('No problem. Estimates stay.', 'sleep'); step(1, false); }, more8: () => toast('8 more are on the way'),
     connect: b => toast(`${b.dataset.id} opens its own sign-in`, 'search'), feed: () => go('#/feed'), bell: () => go('#/bell'),
-    col: b => { const c = $('dcol' + b.dataset.id); if (c) c.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', inline: 'start', block: 'nearest' }); },
-    theme: b => { setTheme(b.dataset.id); render(); },
+    col: b => { const c = $('dcol' + b.dataset.id); if (!c) return; c.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
+      c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); },   // the column you jumped to lights up for a moment
+    theme: b => { setTheme(b.dataset.id); b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); },   // only the switch changes: the panel is not redrawn
     restart: () => go('#/start'), help: () => toast('Opens your email', 'search'),
   };
   const LATER = ['report', 'costs', 'park', 'more', 'source', 'plan', 'tile', 'openbook', 'addnote', 'rename', 'learns', 'legal'];
 
   document.addEventListener('click', e => {
+    if (e.target.id === 'shade') { location.hash = '#/' + lastPage; return; }   // on a phone, a tap outside the sheet closes it
+    if (e.target.matches('.gate,.scrim')) { location.hash = e.target.matches('.gate') ? '#/start' : '#/feed'; return; }   // a tap outside a popup closes it
     const bl = e.target.closest('[data-bloom]'); if (bl) { e.preventDefault(); bloom(e, bl.getAttribute('href')); return; }
     const sl = e.target.closest('.slide'); if (sl) cur = +sl.dataset.i;        // whatever was pressed belongs to this card
     const open = e.target.closest('[data-open]');
@@ -768,7 +859,9 @@ html.still ::-webkit-scrollbar{display:none}
   });
   document.addEventListener('submit', e => {
     const f = e.target.closest('[data-go]'); if (f) { e.preventDefault(); location.hash = f.dataset.go; return; }
-    const c = e.target.closest('[data-send]'); if (c) { e.preventDefault(); DO[c.dataset.send](); }
+    const c = e.target.closest('[data-send]'); if (c) { e.preventDefault(); const t = c.querySelector('textarea'), text = t.value.trim();
+      if (!text) { t.focus(); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); return; }   // an empty note is not sent
+      DO[c.dataset.send](text); }
   });
   document.addEventListener('input', e => { const t = e.target; if (t.matches && t.matches('.composer textarea')) { t.style.height = 'auto'; t.style.height = Math.min(168, t.scrollHeight) + 'px'; } });
   document.addEventListener('keydown', e => {
@@ -776,9 +869,9 @@ html.still ::-webkit-scrollbar{display:none}
     if (typing && e.key === 'Enter' && !e.shiftKey && e.target.closest('.composer')) { e.preventDefault(); e.target.closest('form').requestSubmit(); return; }
     if (e.key === 'Escape') { if (/^#\/signin/.test(location.hash)) location.hash = '#/start'; else if (document.body.matches('.has-side,.has-modal')) location.hash = '#/' + lastPage; return; }
     if (typing || !onFeed()) return;
-    if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); step(1); }
-    if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); step(-1); }
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const fr = app.querySelector('.slide:not([inert]) .frames'); if (fr) fr.scrollBy({ left: (e.key === 'ArrowRight' ? 1 : -1) * frameW(fr), behavior: 'smooth' }); }
+    if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); step(1, false); }   // the keys stop at the ends, as the wheel does
+    if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); step(-1, false); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const fr = app.querySelector('.slide:not([inert]) .frames'); if (fr) turnFrame(fr, e.key === 'ArrowRight' ? 1 : -1); }
   });
   // Touch scrolls the feed natively and it stops on each card. A wheel or trackpad is turned into one card a gesture,
   // because a snapped list springs back unless the wheel travels half a card. A gesture starts small, so add it up.

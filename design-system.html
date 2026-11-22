@@ -7,161 +7,146 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=3">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=4">
 <style>
+/* this page only: tokens and shared pieces live in jammie.css */
 /* ---------- header ---------- */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line-soft)}
-.top-in{max-width:1280px;margin:0 auto;padding:0 40px;height:88px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px}
-.brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--jam);font-weight:800;font-size:24px;letter-spacing:-.03em}
-.brand img{height:38px;width:auto}
-.tabs{display:flex;gap:28px;align-self:stretch}
-.tab{position:relative;display:flex;align-items:center;gap:8px;border:0;background:none;padding:0 2px;color:var(--fg-2);font-weight:500;font-size:15px}
-.tab img{height:46px;width:auto;transition:filter .2s}
-.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--fg);opacity:0;transition:opacity .2s}
+.top-in{max-width:1200px;margin:0 auto;padding:0 32px;height:68px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px}
+.brand{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--jam);font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand img{height:30px;width:auto}
+.tabs{display:flex;gap:22px;align-self:stretch}
+.tab{position:relative;display:flex;align-items:center;gap:7px;border:0;background:none;padding:0 2px;color:var(--fg-2);font-weight:500;font-size:14px}
+.tab img{height:32px;width:auto}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.5px;border-radius:3px 3px 0 0;background:var(--fg);opacity:0;transition:opacity .2s}
 .tab:hover{color:var(--fg)}
 .tab.on{color:var(--fg);font-weight:600}
 .tab.on::after{opacity:1}
-.top-right{justify-self:end;display:flex;align-items:center;gap:6px}
-.link-btn{border:0;background:none;height:42px;padding:0 14px;border-radius:var(--r-pill);font-weight:600;font-size:14px}
-.link-btn:hover,.ico-btn:hover{background:var(--s2)}
-.ico-btn{width:42px;height:42px;border:0;background:none;border-radius:50%;display:grid;place-items:center}
-.ico-btn .ico{width:20px;height:20px}
-.menu-pill{display:flex;align-items:center;gap:10px;height:48px;padding:0 6px 0 14px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);transition:box-shadow .2s}
+.top-right{justify-self:end;display:flex;align-items:center;gap:2px}
+.link-btn{display:inline-flex;align-items:center;border:0;background:none;height:36px;padding:0 12px;border-radius:var(--r-pill);font-weight:600;font-size:14px}
+.link-btn:hover{background:var(--s2)}
+.menu-pill{display:flex;align-items:center;gap:8px;height:40px;padding:0 5px 0 12px;margin-left:4px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);transition:box-shadow .2s}
 .menu-pill:hover{box-shadow:var(--shadow-2)}
-.menu-pill .ico{width:18px;height:18px}
-.menu-pill span{width:34px;height:34px;border-radius:50%;background:var(--s2);display:grid;place-items:center;overflow:hidden}
-.menu-pill span img{height:28px;width:auto}
+.menu-pill .ico{width:16px;height:16px}
 
 /* ---------- search pill ---------- */
-.search{max-width:860px;margin:24px auto 0;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;align-items:center;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2);padding-right:8px}
-.search-seg{padding:14px 28px;border-radius:var(--r-pill);position:relative;min-width:0}
-.search-seg + .search-seg::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:var(--line)}
+.search{max-width:760px;margin:20px auto 0;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;align-items:center;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2);padding-right:7px}
+.search-seg{padding:10px 24px;border-radius:var(--r-pill);position:relative;min-width:0}
+.search-seg + .search-seg::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:1px;background:var(--line)}
 .search-seg:hover{background:var(--s2)}
 .search-seg:hover::before,.search-seg:hover + .search-seg::before{opacity:0}
 .search-seg b{display:block;font-size:12px;font-weight:600}
 .search-seg span{display:block;font-size:14px;color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.search-go{width:48px;height:48px;border:0;border-radius:50%;background:linear-gradient(90deg,var(--jam),var(--jam-2));color:var(--on-jam);display:grid;place-items:center}
-.search-go .ico{width:18px;height:18px;stroke-width:2.4}
+.search-go{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center}
+.search-go .ico{width:16px;height:16px;stroke-width:2.4}
 
 /* ---------- page ---------- */
-.stage{max-width:1280px;margin:0 auto;padding:0 40px 160px}
-.sec{padding:64px 0 0;scroll-margin-top:96px}
-.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:24px}
-.sec-h h2{font-size:22px}
+.stage{max-width:1200px;margin:0 auto;padding:0 32px 140px}
+.sec{padding:52px 0 0;scroll-margin-top:84px}
+.sec-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.sec-h h2{font-size:20px}
 .sec-h small{color:var(--fg-2);font-size:14px}
 
-/* hero */
-.hero{display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:32px;padding-top:56px}
-.hero h1{font-size:var(--h-size);line-height:1.05;max-width:11ch}
-.hero p{font-size:calc(var(--body-size) * 1.15);color:var(--fg-2);max-width:36ch;margin:20px 0 28px}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.lineup{position:relative;container-type:inline-size;min-height:calc(var(--char-size) * 1.05);display:grid;place-items:end center}
-.lineup #heroChar{position:relative;z-index:2;height:min(var(--char-size),62cqw);width:auto;filter:drop-shadow(0 22px 18px rgba(0,0,0,.16))}
-.lineup .bg{position:absolute;width:auto;filter:blur(2.5px);opacity:.42;z-index:1}
+.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:24px;padding-top:40px}
+.hero h1{font-size:var(--h-size);line-height:1.06;max-width:12ch}
+.hero p{font-size:calc(var(--body-size) * 1.12);color:var(--fg-2);max-width:36ch;margin:16px 0 24px}
+.hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.hero-art{display:grid;place-items:center}
+.hero-art img{height:var(--char-size);max-height:60vw;width:auto;filter:drop-shadow(0 22px 18px rgba(0,0,0,.16))}
 
-.feed-demo{display:flex;justify-content:center;align-items:flex-end;gap:10px}
-.feed-demo .fcard{height:640px}
-.actions{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-.action{border:1px solid var(--line-soft);border-radius:16px;background:var(--card);padding:16px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:132px;justify-content:center}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.tile{aspect-ratio:1;border-radius:var(--r-card);--pad:16%}
+.tile img{filter:drop-shadow(0 10px 10px rgba(0,0,0,.1))}
+.tile small{position:absolute;left:14px;bottom:10px;font-size:13px;color:var(--fg-2)}
+.tiles.el .tile{aspect-ratio:4/3;--pad:18%}
+.tiles.guide{grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+.tiles.guide .tile{--pad:14%}
+.tiles.guide .tile small{position:static;display:block;text-align:center;padding-top:calc(100% + 6px)}
+.tiles.guide .tile{margin-bottom:26px}
+.rules{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.rules span{height:32px;padding:0 12px;border-radius:99px;background:var(--s2);font-size:14px;display:inline-flex;align-items:center}
+.off{height:26px;padding:0 10px;border-radius:99px;background:var(--s2);color:var(--fg-2);font-size:12px;font-weight:600;display:inline-flex;align-items:center}
+
+.icons{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:10px}
+.icon-tile{border:1px solid var(--line-soft);border-radius:14px;background:var(--card);height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--fg-2);transition:border-color .2s,color .2s}
+.icon-tile:hover{border-color:var(--fg);color:var(--fg)}
+.icon-tile .ico{width:24px;height:24px;color:var(--fg)}
+.inuse{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+
+.feed-demo{display:flex;justify-content:center;align-items:flex-end;gap:8px}
+.feed-demo .fcard{height:580px}
+.actions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.action{border:1px solid var(--line-soft);border-radius:14px;background:var(--card);padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:112px;justify-content:center;text-align:center}
 .action small{font-size:12px;color:var(--fg-2)}
 
-/* the cast */
-.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:24px}
-.member{border:0;background:none;padding:0;text-align:left}
-.member-art{position:relative;aspect-ratio:1;border-radius:var(--r-card);overflow:hidden;transition:box-shadow .2s;--pad:18px}
-.member-art img{object-position:center bottom;filter:drop-shadow(0 10px 10px rgba(0,0,0,.12))}
-.member.on .member-art{box-shadow:inset 0 0 0 2px var(--fg)}
-.member b{display:block;margin-top:12px;font-weight:600;font-size:15px}
-.member span{color:var(--fg-2);font-size:14px}
-
-/* tiles: poses, elements */
-/* art boxes: the picture always fits inside its tile */
-.member-art > img,.tile > img{position:absolute;inset:var(--pad,28px);width:calc(100% - var(--pad,28px) * 2);height:calc(100% - var(--pad,28px) * 2);max-width:none;object-fit:contain}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.tile{background:var(--s2);border-radius:var(--r-card);aspect-ratio:1;position:relative;--pad:32px}
-.tile img{filter:drop-shadow(0 10px 10px rgba(0,0,0,.1))}
-.tile small{position:absolute;left:16px;bottom:12px;font-size:13px;color:var(--fg-2)}
-.tiles.el .tile{aspect-ratio:4/3;--pad:36px}
-
-/* icon grid */
-.icons{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
-.icon-tile{border:1px solid var(--line-soft);border-radius:16px;background:var(--card);height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-size:12px;color:var(--fg-2);transition:border-color .2s,color .2s}
-.icon-tile:hover{border-color:var(--fg);color:var(--fg)}
-.icon-tile .ico{width:28px;height:28px;color:var(--fg)}
-.inuse{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-
-/* type */
-.scale{display:grid;gap:22px}
-.scale-row{display:grid;grid-template-columns:140px 1fr;align-items:baseline;gap:24px}
+.scale{display:grid;gap:18px}
+.scale-row{display:grid;grid-template-columns:120px 1fr;align-items:baseline;gap:20px}
 .scale-row > span{font-size:13px;color:var(--fg-2)}
-.t1{font-size:var(--h-size);line-height:1.05;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
-.t2{font-size:calc(var(--h-size) * .57);line-height:1.12;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
-.t3{font-size:22px;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
-.t4{font-size:calc(var(--body-size) * 1.15)}
+.t1{font-size:var(--h-size);line-height:1.06;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
+.t2{font-size:calc(var(--h-size) * .64);line-height:1.1;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
+.t3{font-size:20px;font-weight:var(--h-weight);letter-spacing:var(--h-track)}
+.t4{font-size:calc(var(--body-size) * 1.12)}
 .t5{font-size:var(--body-size)}
-.t6{font-size:calc(var(--body-size) * .875);color:var(--fg-2)}
+.t6{font-size:14px;color:var(--fg-2)}
 .t7{font-size:12px;font-weight:600}
 
-/* states */
-.states{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.state{border:1px solid var(--line);border-radius:var(--r-card);min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:var(--card)}
-.state img{height:130px;width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.1))}
-.state h4{font-size:18px}
-.toast{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:14px;padding:10px 18px 10px 10px;box-shadow:var(--shadow-3);font-weight:500;font-size:14px;animation:toast 3s var(--ease) infinite}
-/* colour */
-.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
-.sw div{border-radius:16px;height:96px;display:flex;align-items:flex-end;padding:10px 12px;font-size:12px;font-weight:600;color:#222;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.states{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.state{border:1px solid var(--line-soft);border-radius:var(--r-card);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;background:var(--card)}
+.state img{height:110px;width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.1))}
+.state h4{font-size:17px}
+
+.sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.sw div{border-radius:14px;height:80px;display:flex;align-items:flex-end;padding:9px 11px;font-size:12px;font-weight:600;color:#222;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .sw div.d{color:#fff}
 
 /* ---------- tune panel ---------- */
-.tune{position:fixed;inset:0 0 0 auto;width:320px;background:var(--card);border-left:1px solid var(--line);overflow-y:auto;z-index:30;font-size:13px;scrollbar-width:thin;transform:translateX(100%);transition:transform .35s var(--ease)}
+.tune{position:fixed;inset:0 0 0 auto;width:272px;background:var(--card);border-left:1px solid var(--line);overflow-y:auto;z-index:30;font-size:13px;scrollbar-width:thin;transform:translateX(100%);transition:transform .35s var(--ease)}
 body.tune-open .tune{transform:none}
-.tune-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 18px;background:var(--card);border-bottom:1px solid var(--line-soft)}
-.tune-head b{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.tune-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;height:56px;padding:0 14px;background:var(--card);border-bottom:1px solid var(--line-soft)}
+.tune-head b{font-size:15px;font-weight:700}
+.tune-head .btn{height:30px;padding:0 10px;font-size:13px}
 .tg{border-bottom:1px solid var(--line-soft)}
-.tg summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:12px;font-weight:600;display:flex;justify-content:space-between}
+.tg summary{list-style:none;cursor:pointer;padding:11px 14px;font-size:12px;font-weight:600;display:flex;justify-content:space-between}
 .tg summary::-webkit-details-marker{display:none}
 .tg summary::after{content:"+";color:var(--fg-3)}
 .tg[open] summary::after{content:"–"}
-.tg-body{padding:2px 18px 18px;display:grid;gap:14px}
-.k{display:grid;gap:6px}
+.tg-body{padding:0 14px 14px;display:grid;gap:10px}
+.k{display:grid;gap:3px}
 .k-top{display:flex;justify-content:space-between;color:var(--fg-2)}
 .k-top output{font-size:12px;color:var(--fg-3);font-variant-numeric:tabular-nums}
-.k input[type=range]{width:100%;accent-color:var(--fg)}
-.k select{width:100%;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:0 10px;font:inherit}
+.k input[type=range]{width:100%;height:18px;accent-color:var(--fg)}
+.k select{width:100%;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:0 8px;font:inherit}
 .k-color{display:flex;align-items:center;justify-content:space-between;color:var(--fg-2)}
-.k-color input{width:44px;height:28px;border:1px solid var(--line);border-radius:8px;background:none;padding:2px;cursor:pointer}
-.k-seg{display:flex;padding:3px;border-radius:10px;background:var(--s2)}
-.k-seg button{flex:1;border:0;background:none;height:30px;border-radius:8px;color:var(--fg-2);font-size:12px;font-weight:600}
+.k-color input{width:36px;height:22px;border:1px solid var(--line);border-radius:6px;background:none;padding:1px;cursor:pointer}
+.k-seg{display:flex;padding:3px;border-radius:9px;background:var(--s2)}
+.k-seg button{flex:1;border:0;background:none;height:26px;border-radius:7px;color:var(--fg-2);font-size:12px;font-weight:600}
 .k-seg button.on{background:var(--card);color:var(--fg);box-shadow:var(--shadow-1)}
-.tune-fab{position:fixed;right:20px;bottom:20px;z-index:31;box-shadow:var(--shadow-3)}
-body.tune-open .tune-fab{right:340px}
-.copied{position:fixed;left:50%;bottom:28px;transform:translate(-50%,40px);opacity:0;background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:13px;transition:.3s var(--ease);z-index:40;pointer-events:none}
+.tune-fab{position:fixed;right:16px;bottom:16px;z-index:31;box-shadow:var(--shadow-3)}
+body.tune-open .tune-fab{right:288px}
+.copied{position:fixed;left:50%;bottom:24px;transform:translate(-50%,40px);opacity:0;background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:12px;font-weight:600;font-size:13px;transition:.3s var(--ease);z-index:40;pointer-events:none}
 .copied.show{transform:translate(-50%,0);opacity:1}
 
 @media (max-width:1100px){
   .ideas{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .icons{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .icons{grid-template-columns:repeat(5,minmax(0,1fr))}
   .states,.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .hero{grid-template-columns:1fr}
-  .ctl{grid-template-columns:1fr}
+  .tiles.guide{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .actions{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hero,.ctl{grid-template-columns:1fr}
   .tabs{display:none}
   .top-in{grid-template-columns:1fr auto}
 }
 @media (max-width:760px){
   body.tune-open{padding-right:0}
-  .tune{width:min(340px,100%)}
-  body.tune-open .tune-fab{right:20px}
+  body.tune-open .tune-fab{right:16px}
   .top-in,.stage{padding-left:16px;padding-right:16px}
-  .top-in{height:68px}
   .link-btn{display:none}
-  .search{grid-template-columns:1fr auto;margin:16px 16px 0}
+  .search{grid-template-columns:1fr auto;margin:14px 16px 0}
   .search-seg:nth-child(n+2):not(.search-go){display:none}
-  .hero h1{font-size:40px}
-  .lineup{min-height:300px;margin-top:24px}
-  .ideas{gap:16px}
+  .hero h1{font-size:38px}
+  .ideas{grid-template-columns:1fr}
   .scale-row{grid-template-columns:1fr;gap:4px}
-  .feedcard{width:min(380px,calc(100vw - 100px))}
+  .feed-demo .fcard{height:520px}
 }
 </style>
 </head>
@@ -173,13 +158,13 @@ body.tune-open .tune-fab{right:340px}
     <button class="tab on"><img src="assets/jammie/v3/el-sparkle.png" alt="">Ideas</button>
     <button class="tab"><img src="assets/jammie/v3/el-megaphone.png" alt="">Ads</button>
     <button class="tab"><img src="assets/jammie/v3/el-clapper.png" alt="">Reels</button>
-    <button class="tab"><img src="assets/jammie/v3/el-bag.png" alt="">Store</button>
+    <button class="tab"><img src="assets/jammie/v3/el-chart.png" alt="">Numbers</button>
   </nav>
   <div class="top-right">
-    <a class="link-btn" href="flows.html" style="display:inline-flex;align-items:center;text-decoration:none">Flows</a>
-    <a class="link-btn" href="app.html" style="display:inline-flex;align-items:center;text-decoration:none">Prototype</a>
+    <a class="link-btn" href="flows.html">Flows</a>
+    <a class="link-btn" href="app.html">Prototype</a>
     <button class="ico-btn draw" aria-label="language"><i data-ico="globe"></i></button>
-    <button class="menu-pill draw" aria-label="menu"><i data-ico="menu"></i><span><img src="assets/jammie/v3/char-dollop.png" alt=""></span></button>
+    <button class="menu-pill draw" aria-label="menu"><i data-ico="menu"></i><span class="av"><img src="assets/jammie/v3/char-dollop.png" alt=""></span></button>
   </div>
 </div></header>
 
@@ -201,16 +186,11 @@ body.tune-open .tune-fab{right:340px}
         <button class="btn b-out" contenteditable data-k="cta-2">See today's ideas</button>
       </div>
     </div>
-    <div class="lineup" id="lineup"></div>
-  </section>
-
-  <section class="sec" id="cast">
-    <div class="sec-h"><h2>The cast</h2></div>
-    <div class="cast" id="castGrid"></div>
+    <div class="hero-art"><img src="assets/jammie/v3/char-dollop.png" alt="Jammie"></div>
   </section>
 
   <section class="sec" id="sheet">
-    <div class="sec-h"><h2>Character sheet</h2></div>
+    <div class="sec-h"><h2>Jammie</h2></div>
     <div class="tiles" id="poseGrid"></div>
   </section>
 
@@ -226,15 +206,20 @@ body.tune-open .tune-fab{right:340px}
       <button class="chip draw on"><i data-ico="spark"></i>For you</button>
       <button class="chip draw"><i data-ico="megaphone"></i>Ads</button>
       <button class="chip draw"><i data-ico="film"></i>Reels</button>
-      <button class="chip draw"><i data-ico="store"></i>Storefront</button>
+      <button class="chip draw"><i data-ico="store"></i>Store</button>
       <button class="chip draw"><i data-ico="chart"></i>Numbers</button>
       <button class="chip draw"><i data-ico="filter"></i>Filters</button>
     </div>
   </section>
 
   <section class="sec" id="ideas">
-    <div class="sec-h"><h2 contenteditable data-k="ideas-h">Today's ideas for Comet</h2></div>
+    <div class="sec-h"><h2 contenteditable data-k="ideas-h">Ideas for you</h2></div>
     <div class="ideas" id="ideaGrid"></div>
+  </section>
+
+  <section class="sec" id="rows">
+    <div class="sec-h"><h2>Rows</h2></div>
+    <div id="rowDemo"></div>
   </section>
 
   <section class="sec" id="feed">
@@ -258,6 +243,7 @@ body.tune-open .tune-fab{right:340px}
         </div>
         <div class="row">
           <button class="btn b-soft b-sm">Show all</button>
+          <button class="btn b-line b-sm">Make this</button>
           <button class="btn b-out b-sm draw"><i data-ico="filter"></i>Filters</button>
           <button class="btn b-text">Learn more</button>
           <button class="btn b-round draw" aria-label="next"><i data-ico="arrow"></i></button>
@@ -285,7 +271,7 @@ body.tune-open .tune-fab{right:340px}
     <div class="scale">
       <div class="scale-row"><span>Title 1</span><div class="t1" contenteditable data-k="t1">Add your store.</div></div>
       <div class="scale-row"><span>Title 2</span><div class="t2" contenteditable data-k="t2">Your first idea is here.</div></div>
-      <div class="scale-row"><span>Title 3</span><div class="t3" contenteditable data-k="t3">Today's ideas for Comet</div></div>
+      <div class="scale-row"><span>Title 3</span><div class="t3" contenteditable data-k="t3">Ideas for you</div></div>
       <div class="scale-row"><span>Body large</span><div class="t4" contenteditable data-k="t4">We'll read it while you have chai.</div></div>
       <div class="scale-row"><span>Body</span><div class="t5" contenteditable data-k="t5">Open a card for the details. Keep what fits, and Jammie learns what to bring next.</div></div>
       <div class="scale-row"><span>Small</span><div class="t6" contenteditable data-k="t6">A ₹4,299 price needs proof of quality for new buyers.</div></div>
@@ -305,21 +291,34 @@ body.tune-open .tune-fab{right:340px}
 
   <section class="sec" id="colour">
     <div class="sec-h"><h2>Colour</h2></div>
-    <div class="sw" id="swatches"></div>
+    <div class="sw">
+      <div class="d" style="background:var(--jam)">Accent</div>
+      <div class="d" style="background:#222222">Ink</div>
+      <div class="d" style="background:#6A6A6A">Quiet</div>
+      <div style="background:#DDDDDD">Hairline</div>
+      <div style="background:#F7F7F7">Surface</div>
+      <div style="background:#FFFFFF">Page</div>
+    </div>
+  </section>
+
+  <section class="sec" id="guideline">
+    <div class="sec-h"><h2>More characters, later</h2><span class="off">Not in the product</span></div>
+    <div class="tiles guide" id="guideGrid"></div>
+    <div class="rules"><span>One simple shape</span><span>One colour</span><span>Felt, never glossy</span><span>Two eyes, no mouth</span><span>Short legs, small feet</span><span>Same height as Jammie</span></div>
   </section>
 </main>
 
 <aside class="tune" id="tune" aria-label="tune">
   <div class="tune-head">
     <b>Tune</b>
-    <div class="row" style="gap:6px"><button class="btn b-soft b-sm" id="reset">Reset</button><button class="btn b-ink b-sm" id="copy">Copy tokens</button></div>
+    <div class="row" style="gap:6px"><button class="btn b-soft" id="reset">Reset</button><button class="btn b-ink" id="copy">Copy tokens</button></div>
   </div>
   <details class="tg" open><summary>Theme</summary><div class="tg-body">
     <div class="k-seg" data-seg="theme"><button data-v="light" class="on">Light</button><button data-v="dark">Dark</button></div>
   </div></details>
   <details class="tg" open><summary>Colour</summary><div class="tg-body">
-    <label class="k-color">Accent<input type="color" data-var="--jam" value="#EC4F43"></label>
-    <label class="k-color">Accent, far end<input type="color" data-var="--jam-2" value="#DB2F5B"></label>
+    <label class="k-color">Accent<input type="color" data-var="--jam" value="#E93A4C"></label>
+    <label class="k-color">Accent, drift<input type="color" data-var="--jam-2" value="#E0245E"></label>
     <label class="k-color">Page<input type="color" data-var="--bg" data-themed value="#FFFFFF"></label>
     <label class="k-color">Surface<input type="color" data-var="--s2" data-themed value="#F7F7F7"></label>
     <label class="k-color">Hairline<input type="color" data-var="--line" data-themed value="#DDDDDD"></label>
@@ -337,93 +336,64 @@ body.tune-open .tune-fab{right:340px}
         <option value='"Nunito Sans",-apple-system,sans-serif'>Nunito Sans</option>
         <option value='-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif'>System (SF)</option>
       </select></label>
-    <label class="k"><span class="k-top">Title weight<output></output></span><input type="range" data-var="--h-weight" min="400" max="800" step="100" value="600"></label>
-    <label class="k"><span class="k-top">Title size<output></output></span><input type="range" data-var="--h-size" data-unit="px" min="36" max="88" value="56"></label>
-    <label class="k"><span class="k-top">Title tracking<output></output></span><input type="range" data-var="--h-track" data-unit="em" min="-0.05" max="0.02" step="0.005" value="-0.02"></label>
-    <label class="k"><span class="k-top">Text size<output></output></span><input type="range" data-var="--body-size" data-unit="px" min="14" max="19" step="0.5" value="16"></label>
+    <label class="k"><span class="k-top">Title weight<output></output></span><input type="range" data-var="--h-weight" min="400" max="800" step="100" value="700"></label>
+    <label class="k"><span class="k-top">Title size<output></output></span><input type="range" data-var="--h-size" data-unit="px" min="36" max="88" value="55"></label>
+    <label class="k"><span class="k-top">Title tracking<output></output></span><input type="range" data-var="--h-track" data-unit="em" min="-0.05" max="0.02" step="0.005" value="-0.005"></label>
+    <label class="k"><span class="k-top">Text size<output></output></span><input type="range" data-var="--body-size" data-unit="px" min="14" max="19" step="0.5" value="15.5"></label>
   </div></details>
-  <details class="tg" open><summary>Character</summary><div class="tg-body">
-    <label class="k"><span class="k-top">Lead character</span><select id="charSel"></select></label>
-    <label class="k"><span class="k-top">Size<output></output></span><input type="range" data-var="--char-size" data-unit="px" min="200" max="520" value="380"></label>
+  <details class="tg" open><summary>Jammie</summary><div class="tg-body">
+    <label class="k"><span class="k-top">Size<output></output></span><input type="range" data-var="--char-size" data-unit="px" min="200" max="520" value="340"></label>
   </div></details>
   <details class="tg" open><summary>Icons</summary><div class="tg-body">
     <label class="k"><span class="k-top">Line weight<output></output></span><input type="range" data-var="--ico-w" min="1" max="2.6" step="0.05" value="1.75"></label>
     <label class="k"><span class="k-top">Draw time<output></output></span><input type="range" data-var="--ico-dur" data-unit="ms" min="250" max="1400" step="50" value="600"></label>
   </div></details>
   <details class="tg" open><summary>Shape</summary><div class="tg-body">
-    <label class="k"><span class="k-top">Card radius<output></output></span><input type="range" data-var="--r-card" data-unit="px" min="0" max="36" value="20"></label>
+    <label class="k"><span class="k-top">Card radius<output></output></span><input type="range" data-var="--r-card" data-unit="px" min="0" max="36" value="18"></label>
     <label class="k"><span class="k-top">Button radius<output></output></span><input type="range" data-var="--r-btn" data-unit="px" min="0" max="28" value="10"></label>
   </div></details>
 </aside>
 <button class="btn b-ink b-sm tune-fab draw" id="fab"><i data-ico="filter"></i>Tune</button>
 <div class="copied" id="copied">Tokens copied</div>
 
-<script src="assets/jammie/v3/icons.js?v=3"></script>
-<script src="assets/jammie/v3/data.js?v=3"></script>
+<script src="assets/jammie/v3/icons.js?v=4"></script>
+<script src="assets/jammie/v3/data.js?v=4"></script>
 <script>
 (() => {
   const root = document.documentElement;
-  const KEY = 'jammie-workbench-v3';
-  const A = 'assets/jammie/v3/';
-
-  // the cast: one felt character per teammate, each a different simple shape
-  const CAST = window.JAMMIE.CAST;
+  const KEY = 'jammie-workbench-v4';
+  const J = window.JAMMIE, A = J.A;
   const POSES = [['wave','Wave'],['walk','Side'],['back','Back'],['cheer','Cheer'],['sleep','Asleep'],['search','Search'],['worry','Worry'],['sit','Sit']];
-  const ELS = [['megaphone','Megaphone','#FBE3DF'],['clapper','Clapper','#E6E6E6'],['bag','Bag','#FBF0C9'],['heart','Heart','#FBE0E8'],['bell','Bell','#FBF0C9'],['magnifier','Magnifier','#DCEBFA'],['chart','Chart','#DDF0E2'],['sparkle','Sparkle','#E9E1F6']];
-  const IDEAS = [
-    ['megaphone','#FBE3DF','Your best ad is tired','Swap the opener','Performance','Start here'],
-    ['clapper','#E6E6E6','Film the unboxing in one take','15 seconds, no cuts','Reel maker',''],
-    ['bag','#FBF0C9','Three sizes are out of stock','Hide them before Friday','Storefront',''],
-    ['heart','#FBE0E8','214 buyers have gone quiet','Write to them this week','Customers','New'],
-  ];
-  const THEMED = {
-    light:{'--bg':'#FFFFFF','--s2':'#F7F7F7','--line':'#DDDDDD','--fg':'#222222','--fg-2':'#6A6A6A'},
-    dark:{'--bg':'#0F0F0F','--s2':'#1B1B1B','--line':'#343434','--fg':'#F7F7F7','--fg-2':'#A6A6A6'}
-  };
+  const ELS = [['megaphone','Megaphone'],['clapper','Clapper'],['bag','Bag'],['heart','Heart'],['bell','Bell'],['magnifier','Magnifier'],['chart','Chart'],['sparkle','Sparkle']];
+  // every action a person can take in the product, and where it leads
+  const ACTIONS = [['heart','Keep','Saves to Liked','like'],['share','Share','Copies a link'],['message','Ask','Asks Jammie'],['eye','Why','Opens the proof'],
+    ['arrow','Make this','Starts the making','cta'],['download','Download','Saves what was made'],['spark','Make more','Another round'],['down','Next','Next idea'],['up','Previous','Last idea'],['lock','Unlock','Opens every idea'],['close','Not for me','Fewer like this'],['more','More','The rest']];
 
   let state = load() || {};
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} }
   const $ = id => document.getElementById(id);
-  const img = (file, alt = '') => `<img src="${A}${file}.png" alt="${alt}" loading="lazy" onerror="this.style.visibility='hidden'">`;
+  const tile = (file, name) => `<div class="tile art"><img src="${A}${file}.png" alt="${name}" loading="lazy"><small>${name}</small></div>`;
 
-  // ---- build the generated sections
-  $('castGrid').innerHTML = CAST.map(c => `<button class="member" data-char="${c.id}">
-    <div class="member-art" style="background:${c.tint}">${img('char-' + c.id, c.name)}</div><b>${c.name}</b><span>${c.role}</span></button>`).join('');
-  $('poseGrid').innerHTML = POSES.map(([f, n]) => `<div class="tile">${img('pose-' + f, n)}<small>${n}</small></div>`).join('');
-  $('elGrid').innerHTML = ELS.map(([f, n, t]) => `<div class="tile" style="background:${t}">${img('el-' + f, n)}<small>${n}</small></div>`).join('');
+  $('poseGrid').innerHTML = POSES.map(([f, n]) => tile('pose-' + f, n)).join('');
+  $('elGrid').innerHTML = ELS.map(([f, n]) => tile('el-' + f, n)).join('');
+  $('guideGrid').innerHTML = J.GUIDE.map(c => tile('char-' + c.id, c.shape)).join('');
   $('iconGrid').innerHTML = Object.keys(window.JAMMIE_ICONS).map(n => `<button class="icon-tile draw"><i data-ico="${n}"></i>${n}</button>`).join('');
-  $('ideaGrid').innerHTML = IDEAS.map(([el, tint, h, p, who, badge], i) => `<article class="idea">
-    <div class="idea-art" style="background:${tint}">${img('el-' + el)}${badge ? `<span class="badge">${badge}</span>` : ''}
-      <button class="like draw" data-like aria-label="keep"><i data-ico="heart"></i></button></div>
-    <h3 contenteditable data-k="i${i}h">${h}</h3><p contenteditable data-k="i${i}p">${p}</p><div class="meta"><b>${who}</b></div></article>`).join('');
-  $('charSel').innerHTML = CAST.map(c => `<option value="${c.id}">${c.name}, ${c.role.toLowerCase()}</option>`).join('');
-  $('swatches').innerHTML = [['Accent','var(--jam)',1],['Ink','#222222',1],['Quiet','#6A6A6A',1],['Hairline','#DDDDDD'],['Surface','#F7F7F7'],['Page','#FFFFFF'],
-    ...CAST.map(c => [c.name, c.tint])].map(([n, c, d]) => `<div class="${d ? 'd' : ''}" style="background:${c}">${n}</div>`).join('');
-  const J = window.JAMMIE;
+  $('ideaGrid').innerHTML = J.IDEAS.slice(0, 3).map(d => J.icard(d, { href: 'app.html#/why' })).join('');
+  $('rowDemo').innerHTML = J.srow('Made for you', '3 ads · today', ['sparkle', 'heart', 'megaphone'], 'app.html#/result') +
+    J.srow('View today\'s ideas', 'Comet · 6 new', ['megaphone', 'chart', 'clapper'], 'app.html#/feed');
   $('feedDemo').innerHTML = J.fcard(J.IDEAS[0], { top: true, href: 'app.html#/why' }) + `<div class="acts">
       <button class="act draw" data-like><i data-ico="heart"></i>Keep</button>
       <button class="act draw"><i data-ico="share"></i>Share</button>
       <button class="act draw"><i data-ico="message"></i>Ask</button>
       <button class="act draw"><i data-ico="eye"></i>Why</button>
       <button class="act draw" aria-label="More"><i data-ico="more"></i></button></div>`;
-  // every action a person can take in the product, and where it leads
-  const ACTIONS = [['heart','Keep','Saves to Liked',1],['share','Share','Copies a link'],['message','Ask','Asks the teammate'],['eye','Why','Opens the proof'],
-    ['arrow','Make this','Starts the making','cta'],['download','Download','Saves what was made'],['spark','Make more','Another round'],['down','Next','Next idea'],['up','Previous','Last idea'],['lock','Unlock','Opens every idea'],['close','Not for me','Fewer like this'],['more','More','The rest']];
   $('actionGrid').innerHTML = ACTIONS.map(([ic, name, does, kind]) => `<div class="action">` +
     (kind === 'cta' ? `<a class="fcard-cta draw" style="margin:0" href="app.html#/why">${name}<i data-ico="${ic}"></i></a>` : `<button class="act draw" ${kind ? 'data-like' : ''}><i data-ico="${ic}"></i>${name}</button>`) +
     `<small>${does}</small></div>`).join('');
   window.jammieIcons();
 
-  function buildLineup(lead){
-    const spots = [[0,12,26],[80,4,28],[3,62,22],[79,60,27],[19,0,18],[65,0,18],[93,36,18],[14,38,16]];   // left %, top %, height % of the lead
-    const others = CAST.filter(c => c.id !== lead);
-    $('lineup').innerHTML = others.map((c, i) => `<img class="bg" src="${A}char-${c.id}.png" alt="" style="left:${spots[i][0]}%;top:${spots[i][1]}%;height:calc(min(var(--char-size),62cqw) * ${spots[i][2] / 60})">`).join('') +
-      `<img id="heroChar" src="${A}char-${lead}.png" alt="">`;
-  }
-
   function set(k, v){ state[k] = v; save(); applyAll(); }
-
   document.querySelectorAll('[data-var]').forEach(el => {
     const v = el.dataset.var, unit = el.dataset.unit || '';
     el.addEventListener('input', () => {
@@ -435,30 +405,20 @@ body.tune-open .tune-fab{right:340px}
   document.querySelectorAll('[data-seg]').forEach(seg => seg.addEventListener('click', e => {
     const b = e.target.closest('button'); if (b) set(seg.dataset.seg, b.dataset.v);
   }));
-  $('charSel').addEventListener('change', e => set('lead', e.target.value));
-  $('castGrid').addEventListener('click', e => { const b = e.target.closest('.member'); if (b) set('lead', b.dataset.char); });
-
   document.addEventListener('input', e => {
     const el = e.target.closest('[data-k]'); if (!el) return;
     state.text = state.text || {}; state.text[el.dataset.k] = el.innerText; save();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey && e.target.closest('[data-k]')) { e.preventDefault(); e.target.blur(); }
+    if (e.key === 'Enter' && !e.shiftKey && e.target.closest && e.target.closest('[data-k]')) { e.preventDefault(); e.target.blur(); }
   });
 
-  let lastLead;
   function applyAll(){
     const theme = state.theme || 'light';
     root.dataset.theme = theme;
     root.removeAttribute('style');
     Object.entries(state).forEach(([k, v]) => { if (k.startsWith('--')) root.style.setProperty(k, v); });
     Object.entries((state.themed && state.themed[theme]) || {}).forEach(([k, v]) => root.style.setProperty(k, v));
-
-    const lead = state.lead || 'dollop';
-    if (lead !== lastLead) { buildLineup(lead); lastLead = lead; }
-    document.querySelectorAll('.member').forEach(b => b.classList.toggle('on', b.dataset.char === lead));
-    $('charSel').value = lead;
-
     const cs = getComputedStyle(root);
     document.querySelectorAll('[data-var]').forEach(el => {
       const raw = cs.getPropertyValue(el.dataset.var).trim();
@@ -466,10 +426,7 @@ body.tune-open .tune-fab{right:340px}
       else if (el.type === 'color') { if (/^#[0-9a-f]{6}$/i.test(raw)) el.value = raw; }
       else if (el.tagName === 'SELECT') { [...el.options].forEach(o => { if (o.value === raw) el.value = raw; }); }
     });
-    document.querySelectorAll('[data-seg]').forEach(seg => {
-      const cur = { theme }[seg.dataset.seg];
-      seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === cur));
-    });
+    document.querySelectorAll('[data-seg]').forEach(seg => seg.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === theme)));
     $('fontName').textContent = cs.getPropertyValue('--font').split(',')[0].replace(/"/g, '').replace('-apple-system', 'System');
     if (state.text) Object.entries(state.text).forEach(([k, t]) => {
       const el = document.querySelector(`[data-k="${k}"]`);
@@ -477,9 +434,8 @@ body.tune-open .tune-fab{right:340px}
     });
   }
 
-  // ---- small interactions
   document.addEventListener('click', e => {
-    const like = e.target.closest('[data-like]'); if (like) like.classList.toggle('liked');
+    const like = e.target.closest('[data-like]'); if (like) { e.preventDefault(); like.classList.toggle('liked'); }
     const sw = e.target.closest('.switch'); if (sw) sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
     const tab = e.target.closest('.tab'); if (tab) document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === tab));
     const chip = e.target.closest('.chip'); if (chip) chip.parentElement.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
@@ -496,14 +452,12 @@ body.tune-open .tune-fab{right:340px}
   $('copy').addEventListener('click', () => {
     const cs = getComputedStyle(root);
     const names = ['--jam','--jam-2','--bg','--s2','--line','--fg','--fg-2','--font','--h-weight','--h-size','--h-track','--body-size','--r-card','--r-btn','--ico-w','--ico-dur','--char-size'];
-    const css = `/* jammie workbench · ${root.dataset.theme} · lead ${state.lead || 'dollop'} */\n:root{\n` +
-      names.map(n => `  ${n}:${cs.getPropertyValue(n).trim()};`).join('\n') + '\n}\n';
+    const css = `/* jammie workbench · ${root.dataset.theme} */\n:root{\n` + names.map(n => `  ${n}:${cs.getPropertyValue(n).trim()};`).join('\n') + '\n}\n';
     const done = () => { $('copied').classList.add('show'); setTimeout(() => $('copied').classList.remove('show'), 1600); };
     (navigator.clipboard ? navigator.clipboard.writeText(css) : Promise.reject()).then(done, () => { console.log(css); done(); });
   });
   $('fab').addEventListener('click', () => document.body.classList.toggle('tune-open'));
   if (innerWidth < 1000) document.body.classList.remove('tune-open');
-
   applyAll();
 })();
 </script>

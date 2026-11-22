@@ -7,57 +7,151 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=3">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=4">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
-.top-in{max-width:1680px;margin:0 auto;padding:0 40px;height:72px;display:flex;align-items:center;gap:20px}
-.brand{display:inline-flex;align-items:center;gap:8px;color:var(--jam);font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none;margin-right:auto}
-.brand img{height:34px;width:auto}
-.jump{display:flex;gap:8px;flex-wrap:wrap}
-.wrap{max-width:1680px;margin:0 auto;padding:8px 40px 120px}
-.flow{padding:44px 0 0;scroll-margin-top:80px}
-.flow h2{font-size:26px;margin-bottom:20px}
-.strip{display:flex;align-items:center;padding:4px 4px 20px}
+.top-in{max-width:1560px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;gap:8px}
+.brand{display:inline-flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em;text-decoration:none;margin-right:auto}
+.brand img{height:28px;width:auto}
+.wrap{max-width:1560px;margin:0 auto;padding:0 32px 100px}
+.block{padding:40px 0 0;scroll-margin-top:72px}
+.block > h2{font-size:22px;margin-bottom:16px}
 
-/* one screen: the real prototype in a scaled frame */
+/* the list of every flow */
+.list{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);overflow:hidden}
+.list a,.list div.item{display:grid;grid-template-columns:28px 210px 1fr auto;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none}
+.list > :last-child{border-bottom:0}
+.list a:hover{background:var(--s2)}
+.list .n{color:var(--fg-3);font-variant-numeric:tabular-nums;font-size:14px}
+.list b{font-weight:600}
+.list .path{color:var(--fg-2);font-size:14.5px}
+.tag{height:24px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;background:var(--s2);color:var(--fg-2)}
+.tag.done{background:#E7F5EC;color:#1A7F4B}
+:root[data-theme="dark"] .tag.done{background:#15301F;color:#5BD98A}
+
+/* the flowchart */
+.chart{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);padding:8px;overflow-x:auto}
+.chart svg{display:block;min-width:1180px;width:100%;height:auto;font-family:var(--font)}
+.node rect{fill:var(--card);stroke:var(--line);stroke-width:1.2}
+.node text{fill:var(--fg);font-size:14px;font-weight:600}
+.node.hub rect{fill:var(--fg);stroke:var(--fg)}
+.node.hub text{fill:var(--bg);font-size:15px}
+.node.end rect{fill:var(--s2);stroke:none}
+.node.end text{fill:var(--fg-2);font-weight:500}
+.node.todo rect{fill:none;stroke-dasharray:4 4}
+.node.todo text{fill:var(--fg-2);font-weight:500}
+a .node:hover rect{stroke:var(--fg)}
+.edge{fill:none;stroke:var(--fg-3);stroke-width:1.3}
+.edge.todo{stroke-dasharray:4 4}
+.elabel{font-size:12px;font-weight:600;fill:var(--fg-2);paint-order:stroke;stroke:var(--card);stroke-width:6px;stroke-linejoin:round}
+.group{font-size:12px;font-weight:600;fill:var(--fg-3);letter-spacing:.04em}
+
+/* the screens, flow by flow */
+.flow{padding:28px 0 0;scroll-margin-top:72px}
+.flow h3{font-size:17px;margin-bottom:14px}
+.strip{display:flex;align-items:center;flex-wrap:wrap;row-gap:18px;padding:4px 4px 12px}
 .shot{flex:none;width:calc(1440px * var(--z));text-decoration:none;color:inherit}
-.frame{position:relative;width:calc(1440px * var(--z));height:calc(900px * var(--z));border-radius:14px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow-2);transition:box-shadow .2s,transform .2s var(--ease)}
+.frame{position:relative;width:calc(1440px * var(--z));height:calc(900px * var(--z));border-radius:12px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow-2);transition:box-shadow .2s,transform .2s var(--ease)}
 .shot:hover .frame{box-shadow:var(--shadow-3);transform:translateY(-2px)}
 .frame iframe{will-change:transform;width:1440px;height:900px;border:0;transform:scale(var(--z));transform-origin:0 0;pointer-events:none}
-.shot b{display:block;margin-top:12px;font-weight:600;font-size:15px}
+.shot b{display:block;margin-top:10px;font-weight:600;font-size:14px}
+.hop{flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;width:104px;padding:0 5px;margin-bottom:30px;font-size:12px;font-weight:600;text-align:center}
+.hop span{height:26px;padding:0 10px;border-radius:99px;background:var(--card);box-shadow:var(--shadow-1);display:inline-flex;align-items:center;white-space:nowrap}
+.hop svg{width:100%;height:12px;fill:none;stroke:var(--fg-3);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 
-/* the step between two screens: what the person does */
-.hop{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:112px;padding:0 6px;margin-bottom:34px;color:var(--fg-2);font-size:13px;font-weight:600;text-align:center}
-.hop span{height:28px;padding:0 12px;border-radius:99px;background:var(--card);box-shadow:var(--shadow-1);display:inline-flex;align-items:center;color:var(--fg);white-space:nowrap}
-.hop .ico{width:100%;height:14px}
-
-@media (max-width:760px){.top-in,.wrap{padding-left:16px;padding-right:16px}.jump{display:none}.strip{overflow-x:auto}}
+@media (max-width:760px){.top-in,.wrap{padding-left:16px;padding-right:16px}.strip{overflow-x:auto}.list a,.list div.item{grid-template-columns:22px 1fr auto}.list .path{display:none}}
 </style>
 </head>
 <body>
 <header class="top"><div class="top-in">
   <a class="brand" href="design-system.html"><img src="assets/jammie/v3/char-dollop.png" alt="">jammie</a>
-  <nav class="jump" id="jump"></nav>
+  <a class="btn b-soft b-sm" href="#list">All flows</a>
+  <a class="btn b-soft b-sm" href="#chart">Flowchart</a>
+  <a class="btn b-soft b-sm" href="#screens">Screens</a>
   <a class="btn b-out b-sm" href="design-system.html">Design system</a>
   <a class="btn b-jam b-sm" href="app.html">Open prototype</a>
 </div></header>
 
-<main class="wrap" id="flows"></main>
+<main class="wrap">
+  <section class="block" id="list"><h2>All flows</h2><div class="list" id="flowList"></div></section>
+  <section class="block" id="chart"><h2>Flowchart</h2><div class="chart" id="flowChart"></div></section>
+  <section class="block" id="screens"><h2>Screens</h2><div id="flows"></div></section>
+</main>
 
 <script>
-// each flow: screens in order, with the action that leads to the next one
+// ---- every flow in the product. steps = [route in the prototype, screen name, the action that leads on]
 const FLOWS = [
-  { id:'first',  name:'First visit', steps:[['start','Add your store','Read my store'],['reading','Reading the store','About a minute'],['first','First idea','Open my feed'],['feed','Feed']] },
-  { id:'daily',  name:'Every morning', steps:[['feed','Feed','Next'],['feed?i=1','Next idea','Keep'],['liked','Liked']] },
-  { id:'make',   name:'Make an idea', steps:[['feed','Feed','Why'],['why','Why this','Make this'],['making','Making','Ready'],['result','Result','Download']] },
-  { id:'team',   name:'By teammate', steps:[['team','Team','Pick one'],['feed?i=3','Their idea','Why'],['why?i=3','Why this']] },
-  { id:'numbers',name:'From a number', steps:[['numbers','Numbers','Open the idea'],['feed?i=4','The idea behind it','Make this'],['making','Making']] },
-  { id:'unlock', name:'Unlock', steps:[['feed?i=5','A locked idea','Unlock'],['unlock','Unlock every idea','Send'],['feed','Feed']] },
+  { id:'onboarding', name:'Onboarding', path:'Add your store → Reading → Confirm the brand → Pick a goal → First idea → Feed',
+    steps:[['start','Add your store','Read my store'],['reading','Reading the store','About a minute'],['brand','Confirm the brand','Looks right'],['goal','Pick a goal','Continue'],['first','First idea','Open my feed'],['feed','Feed']] },
+  { id:'browse', name:'Browse the feed', path:'Feed → Next or Previous → Keep, Share or Not for me',
+    steps:[['feed','Feed','Next'],['feed?i=1','Next idea','Keep'],['liked','Liked']] },
+  { id:'make', name:'Make an idea', path:'Feed → Why → Make this → Making → Result → Download, Share or Make more',
+    steps:[['feed','Feed','Why'],['why','Why this','Make this'],['making','Making','Ready'],['result','Result']] },
+  { id:'liked', name:'Come back to a kept idea', path:'Liked → the idea → Make this',
+    steps:[['liked','Liked','Make this'],['why?i=1','Why this','Make this'],['making','Making']] },
+  { id:'numbers', name:'Start from a number', path:'Numbers → the idea behind it → Make this',
+    steps:[['numbers','Numbers','Open the idea'],['feed?i=4','The idea behind it','Why'],['why?i=4','Why this']] },
+  { id:'unlock', name:'Unlock', path:'A locked idea → Unlock every idea → Send',
+    steps:[['feed?i=5','A locked idea','Unlock'],['unlock','Unlock every idea','Send'],['feed','Feed']] },
+  { name:'Ask Jammie about an idea', path:'Feed → Ask → a short chat → back to the idea' },
+  { name:'Fix what Jammie learned', path:'Confirm the brand → Fix it → edit → save' },
+  { name:'Updates', path:'Bell → what was made while you were away → Result' },
+  { name:'Connect your tools', path:'Your store → pick a tool → sign in → connected' },
+  { name:'Settings and stores', path:'Your store → details, team, switch store' },
+  { name:'Sign in', path:'Email or Google → your feed' },
 ];
-const arrow = '<svg class="ico" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 7h114"/><path d="m110 2 6 5-6 5" /></svg>';
-document.getElementById('jump').innerHTML = FLOWS.map(f => `<a class="chip" href="#${f.id}">${f.name}</a>`).join('');
-document.getElementById('flows').innerHTML = FLOWS.map(f => `<section class="flow" id="${f.id}"><h2>${f.name}</h2><div class="strip">` +
+document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
+  const inner = `<span class="n">${i + 1}</span><b>${f.name}</b><span class="path">${f.path}</span><span class="tag ${f.steps ? 'done' : ''}">${f.steps ? 'Built' : 'Not built'}</span>`;
+  return f.steps ? `<a href="#${f.id}">${inner}</a>` : `<div class="item">${inner}</div>`;
+}).join('');
+
+// ---- flowchart: screens are boxes, outcomes are soft pills, dashed means not built
+const W = 150, H = 40;
+const N = {
+  start:{x:90,y:50,t:'Add your store',go:'start'}, reading:{x:90,y:130,t:'Reading the store',go:'reading'}, brand:{x:90,y:210,t:'Confirm the brand',go:'brand'},
+  goal:{x:90,y:290,t:'Pick a goal',go:'goal'}, first:{x:90,y:370,t:'First idea',go:'first'},
+  feed:{x:350,y:250,t:'Feed',go:'feed',k:'hub'},
+  liked:{x:610,y:50,t:'Liked',go:'liked'},
+  why:{x:610,y:130,t:'Why this',go:'why'}, making:{x:860,y:130,t:'Making',go:'making'}, result:{x:1110,y:130,t:'Result',go:'result'}, out:{x:1360,y:130,t:'Download or share',k:'end'},
+  next:{x:610,y:210,t:'Next idea',k:'end'},
+  skip:{x:610,y:290,t:'Fewer like this',k:'end'},
+  unlock:{x:610,y:370,t:'Unlock every idea',go:'unlock'}, sent:{x:860,y:370,t:'Request sent',k:'end'},
+  numbers:{x:610,y:450,t:'Numbers',go:'numbers'}, behind:{x:860,y:450,t:'The idea behind it',go:'feed?i=4'},
+  ask:{x:610,y:530,t:'Ask Jammie',k:'todo'}, fix:{x:350,y:130,t:'Fix the brand',k:'todo'}, bell:{x:350,y:450,t:'Updates',k:'todo'},
+};
+const E = [
+  ['start','reading','Read my store'],['reading','brand','About a minute'],['brand','goal','Looks right'],['goal','first','Continue'],['first','feed','Open my feed'],
+  ['feed','liked','Keep'],['liked','why','Make this'],['feed','why','Why'],['why','making','Make this'],['making','result','Ready'],['result','out','Download'],
+  ['feed','next','Next'],['feed','skip','Not for me'],['feed','unlock','Unlock'],['unlock','sent','Send'],['feed','numbers','Numbers'],['numbers','behind','Open the idea'],
+  ['feed','ask','Ask',1],['brand','fix','Fix it',1],['feed','bell','Bell',1],
+];
+const hw = n => (n.k === 'hub' ? 170 : W) / 2, hh = n => (n.k === 'hub' ? 52 : H) / 2;
+function edge([a, b, label, todo]){
+  const p = N[a], q = N[b]; let d, lx, ly;
+  if (Math.abs(p.x - q.x) < 4) {                       // straight down or up
+    const dir = q.y > p.y ? 1 : -1; const y1 = p.y + dir * hh(p), y2 = q.y - dir * (hh(q) + 5);
+    d = `M${p.x},${y1}L${q.x},${y2}`; lx = p.x; ly = (y1 + y2) / 2 + 4;
+  } else {                                             // out of the side, in at the side
+    const dir = q.x > p.x ? 1 : -1; const x1 = p.x + dir * hw(p), x2 = q.x - dir * (hw(q) + 5), mx = (x1 + x2) / 2;
+    d = `M${x1},${p.y}C${mx},${p.y} ${mx},${q.y} ${x2},${q.y}`; lx = mx; ly = (p.y + q.y) / 2 - 8;   // a level line carries its name above it
+    if (Math.abs(p.y - q.y) > 60) { lx = x2 - dir * 44; ly = q.y - 8; }   // on a long sweep, sit near the end
+  }
+  return `<path class="edge ${todo ? 'todo' : ''}" d="${d}" marker-end="url(#arr)"/><text class="elabel" x="${lx}" y="${ly}" text-anchor="middle">${label}</text>`;
+}
+function node(id){
+  const n = N[id], w = hw(n) * 2, h = hh(n) * 2;
+  const g = `<g class="node ${n.k || ''}"><rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="${n.k === 'end' ? h / 2 : 11}"/><text x="${n.x}" y="${n.y + 5}" text-anchor="middle">${n.t}</text></g>`;
+  return n.go ? `<a href="app.html#/${n.go}">${g}</a>` : g;
+}
+document.getElementById('flowChart').innerHTML = `<svg viewBox="0 0 1460 580" role="img" aria-label="Flowchart of every screen and action">
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="var(--fg-3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <text class="group" x="15" y="16">ONBOARDING</text><text class="group" x="535" y="16">EVERY DAY</text>
+  ${E.map(edge).join('')}${Object.keys(N).map(node).join('')}</svg>`;
+
+// ---- the screens: the real prototype, one frame per step
+const arrow = '<svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h114"/><path d="m110 1.500 6 4.500-6 4.500"/></svg>';
+document.getElementById('flows').innerHTML = FLOWS.filter(f => f.steps).map(f => `<section class="flow" id="${f.id}"><h3>${f.name}</h3><div class="strip">` +
   f.steps.map(([route, label, action]) => `<a class="shot" href="app.html#/${route}">
       <div class="frame"><iframe src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
     (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : '')).join('') + `</div></section>`).join('');
@@ -66,7 +160,7 @@ document.getElementById('flows').innerHTML = FLOWS.map(f => `<section class="flo
 function fit(){
   document.querySelectorAll('.strip').forEach(strip => {
     const n = strip.querySelectorAll('.shot').length, hops = strip.querySelectorAll('.hop').length;
-    const z = innerWidth < 760 ? .2 : Math.min(.3, (strip.clientWidth - 8 - hops * 112) / (n * 1440));
+    const z = innerWidth < 760 ? .2 : Math.max(.2, Math.min(.26, (strip.clientWidth - 8 - hops * 104) / (n * 1440)));   // long flows wrap rather than shrink
     strip.style.setProperty('--z', z.toFixed(4));
   });
 }

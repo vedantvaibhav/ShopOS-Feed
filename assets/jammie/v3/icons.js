@@ -49,3 +49,12 @@ window.jammieIcons = function (root) {
     el.querySelectorAll('.ico > *').forEach(function (s, i) { s.style.setProperty('--i', i); });
   });
 };
+
+// jam-pointer: the main action warms under the pointer, so tell it where the pointer is
+document.addEventListener('pointermove', function (e) {
+  var b = e.target.closest && e.target.closest('.b-jam,.fcard-cta,.search-go');
+  if (!b) return;
+  var r = b.getBoundingClientRect();
+  b.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+  b.style.setProperty('--my', (e.clientY - r.top) + 'px');
+});

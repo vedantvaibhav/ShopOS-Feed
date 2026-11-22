@@ -7,103 +7,116 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=3">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=4">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
-body{padding-left:76px;min-height:100vh;overflow-x:hidden}
+body{padding-left:60px;min-height:100vh;overflow-x:hidden}
 body.bare{padding-left:0}
 body.bare .rail{display:none}
 a{text-decoration:none}
 
-/* centred moments: start, reading, first idea, making */
-.center{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:40px 24px;text-align:center;overflow:hidden}
-.center > *{position:relative}
-.h1{font-size:var(--h-size);line-height:1.05}
-.lead{height:220px;width:auto;filter:drop-shadow(0 18px 14px rgba(0,0,0,.14))}
-.backdrop{position:absolute!important;inset:0;pointer-events:none}
-.backdrop img{position:absolute;width:auto;filter:blur(2.5px);opacity:.42}
-.store{display:flex;align-items:center;gap:10px;width:min(560px,100%);height:68px;padding:0 10px 0 24px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2)}
+/* onboarding and other centred moments */
+.center{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 24px 40px;text-align:center}
+.h1{font-size:var(--h-size);line-height:1.06}
+.h2{font-size:calc(var(--h-size) * .64);line-height:1.1}
+.lead{height:176px;width:auto;filter:drop-shadow(0 16px 12px rgba(0,0,0,.14))}
+.dots{position:absolute;top:26px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.dots i{width:22px;height:4px;border-radius:4px;background:var(--s3)}
+.dots i.on{background:var(--fg)}
+.store{display:flex;align-items:center;gap:10px;width:min(520px,100%);height:60px;padding:0 8px 0 20px;border:1px solid var(--line);border-radius:var(--r-pill);background:var(--card);box-shadow:var(--shadow-2)}
 .store:focus-within{border-color:var(--fg)}
-.store input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit;font-size:17px}
+.store input{flex:1;min-width:0;border:0;background:none;outline:none;color:var(--fg);font:inherit;font-size:16px}
 .store .btn{border-radius:var(--r-pill)}
 .store > [data-ico]{color:var(--fg-2)}
-.todo{padding:0;margin:0;font-size:17px}
+.todo{padding:0;margin:0;font-size:16px}
+
+.brandcard{width:min(460px,100%);text-align:left;border:1px solid var(--line-soft);border-radius:var(--r-card);background:var(--card);padding:6px 20px}
+.brandcard div{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.brandcard div:last-child{border:0}
+.brandcard small{color:var(--fg-2);font-size:14px}
+.brandcard b{font-weight:600;text-align:right}
+.swatches{display:flex;gap:6px}
+.swatches i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.pair{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+.goals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;width:min(760px,100%)}
+.goal{border:1px solid var(--line-soft);border-radius:var(--r-card);background:var(--card);padding:0 0 14px;font-weight:600;overflow:hidden;transition:box-shadow .2s,border-color .2s}
+.goal .art{aspect-ratio:1;--pad:22%;margin-bottom:12px}
+.goal .art img{filter:drop-shadow(0 10px 8px rgba(0,0,0,.14))}
+.goal:hover{border-color:var(--line)}
+.goal.on{box-shadow:inset 0 0 0 2px var(--fg);border-color:var(--fg)}
 
 /* the feed */
-.feed{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;gap:28px;padding:24px}
-.feed-col{display:flex;align-items:flex-end;gap:10px}
+.feed{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;gap:24px;padding:24px}
+.feed-col{display:flex;align-items:flex-end;gap:8px}
 .age{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--fg-2);padding:8px 0}
 .age .ico{color:var(--fg)}
-.feed-nav{position:absolute;right:36px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
-.corner{position:absolute;top:20px;right:28px;display:flex;gap:4px}
-.count{position:absolute;left:36px;bottom:28px;font-size:13px;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.feed-nav{position:absolute;right:32px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
+.corner{position:absolute;top:14px;right:22px;display:flex;align-items:center;gap:2px}
+.count{position:absolute;left:28px;bottom:24px;font-size:13px;color:var(--fg-2);font-variant-numeric:tabular-nums}
 .fcard.enter-down{animation:in-down .42s var(--ease)}
 .fcard.enter-up{animation:in-up .42s var(--ease)}
-@keyframes in-down{from{opacity:0;transform:translateY(36px)}}
-@keyframes in-up{from{opacity:0;transform:translateY(-36px)}}
+@keyframes in-down{from{opacity:0;transform:translateY(32px)}}
+@keyframes in-up{from{opacity:0;transform:translateY(-32px)}}
 
 /* why this */
-.why{width:420px;max-height:calc(100vh - 48px);overflow-y:auto;align-self:center;animation:in-side .4s var(--ease)}
-@keyframes in-side{from{opacity:0;transform:translateX(24px)}}
-.why h2{font-size:26px;line-height:1.12;margin:14px 0 22px}
-.why h4{font-size:14px;margin:22px 0 10px}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.facts .stat{padding:14px;border-radius:14px}
-.facts .stat b{font-size:24px}
+.why{position:relative;width:380px;max-height:calc(100vh - 56px);overflow-y:auto;align-self:center;animation:in-side .4s var(--ease)}
+@keyframes in-side{from{opacity:0;transform:translateX(20px)}}
+.why h2{font-size:22px;line-height:1.15;margin:12px 0 18px}
+.why h4{font-size:13px;margin:18px 0 8px;color:var(--fg-2);font-weight:600;letter-spacing:0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.facts .stat{padding:12px;border-radius:12px}
+.facts .stat b{font-size:21px}
 .facts .stat small{font-size:12px}
-.gets{display:grid;gap:2px;padding:0;margin:0}
-.gets li{list-style:none;display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft)}
+.gets{display:grid;padding:0;margin:0}
+.gets li{list-style:none;display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
 .gets li:last-child{border:0}
-.why-cta{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:24px}
-.x{position:absolute;top:16px;right:16px}
-.why{position:relative}
+.gets .ico{width:18px;height:18px}
+.why-cta{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:20px}
+.x{position:absolute;top:12px;right:12px}
 
-/* pages: result, liked, team, numbers */
-.page{max-width:1120px;margin:0 auto;padding:44px 40px 96px}
-.page-h{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
-.page-h h1{font-size:32px}
-.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.idea{color:inherit;display:block}
+/* pages: result, liked, numbers */
+.page{max-width:1080px;margin:0 auto;padding:0 36px 80px}
+.page-h{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px;margin-bottom:12px}
+.page-h h1{font-size:19px;font-weight:600;letter-spacing:0}
+.page-h .right{display:flex;align-items:center;gap:6px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.sec-t{font-size:20px;margin:26px 0 16px}
 
-.result{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
-.made{position:relative;aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;padding:22px;display:flex;flex-direction:column;justify-content:space-between;color:#222}
-.made .big{font-size:64px;font-weight:800;letter-spacing:-.04em;line-height:.95}
-.made .mid{font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.12}
+.result{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:28px;align-items:start}
+.result h2{font-size:26px;margin-bottom:18px}
+.made{position:relative;aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;padding:18px;display:flex;flex-direction:column;justify-content:space-between;color:#222}
+.made .big{font-size:54px;font-weight:800;letter-spacing:-.04em;line-height:.95}
+.made .mid{font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.15}
 .made small{font-size:12px;font-weight:600;opacity:.75}
-.made img{position:absolute;right:-8%;bottom:8%;width:58%;filter:drop-shadow(0 14px 12px rgba(0,0,0,.18))}
-.made .dl{position:absolute;right:12px;top:12px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;color:#222;display:grid;place-items:center;box-shadow:var(--shadow-1);opacity:0;transition:opacity .2s}
+.made img{position:absolute;right:-8%;bottom:8%;width:56%;filter:drop-shadow(0 12px 10px rgba(0,0,0,.18))}
+.made .dl{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:0;background:#fff;color:#222;display:grid;place-items:center;box-shadow:var(--shadow-1);opacity:0;transition:opacity .2s}
 .made:hover .dl,.made .dl:focus-visible{opacity:1}
-.made .dl .ico{width:18px;height:18px}
-.side{display:grid;gap:10px;position:sticky;top:32px}
+.made .dl .ico{width:16px;height:16px}
+.side{display:grid;gap:8px;position:sticky;top:24px}
 .side .btn{width:100%}
-.used{margin-top:10px;padding-top:16px;border-top:1px solid var(--line-soft);display:grid;gap:10px;font-size:14px;color:var(--fg-2)}
-.used div{display:flex;gap:10px;align-items:center}
-.used .ico{width:18px;height:18px}
+.used{margin-top:8px;padding-top:14px;border-top:1px solid var(--line-soft);display:grid;gap:9px;font-size:14px;color:var(--fg-2)}
+.used div{display:flex;gap:9px;align-items:center}
+.used .ico{width:16px;height:16px}
 
-.mate{color:inherit;display:block}
-.mate .art{aspect-ratio:1;border-radius:var(--r-card);background:var(--tint);--pad:18%}
-.mate .art img{filter:drop-shadow(0 10px 10px rgba(0,0,0,.12))}
-.mate b{display:block;margin-top:12px;font-weight:600}
-.mate span{color:var(--fg-2);font-size:14px}
-.mate .n{position:absolute;right:12px;top:12px;height:26px;padding:0 10px;border-radius:99px;background:#fff;color:#222;font-size:12px;font-weight:600;display:inline-flex;align-items:center;box-shadow:var(--shadow-1)}
-
-.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .stat .top{display:flex;justify-content:space-between;align-items:baseline}
-.bars{display:flex;align-items:flex-end;gap:6px;height:96px;margin:18px 0 14px}
-.bars i{flex:1;border-radius:6px 6px 2px 2px;background:var(--s3)}
+.bars{display:flex;align-items:flex-end;gap:5px;height:80px;margin:14px 0 12px}
+.bars i{flex:1;border-radius:5px 5px 2px 2px;background:var(--s3)}
 .bars i.hi{background:var(--fg)}
-.stat .foot{display:flex;justify-content:space-between;align-items:center}
+.stat .foot{display:flex;justify-content:flex-start;align-items:center;padding-top:10px;border-top:1px solid var(--line-soft);font-size:14px}
+.stat .foot a{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.stat .foot .ico{width:15px;height:15px}
 
 /* unlock */
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:grid;place-items:center;padding:24px;animation:fade .25s}
 @keyframes fade{from{opacity:0}}
-.unlock{width:min(480px,100%);position:relative;animation:in-down .4s var(--ease)}
-.unlock h2{font-size:28px;margin:0 0 20px}
-.unlock .lead{height:96px;margin:0 0 12px}
-.unlock .chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 22px}
+.unlock{width:min(440px,100%);position:relative;animation:in-down .4s var(--ease)}
+.unlock h2{font-size:24px;margin:0 0 16px}
+.unlock .lead{height:84px;margin:0 0 10px}
+.unlock .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
 
-.toasts{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:40;display:grid;gap:8px;pointer-events:none}
+.toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:40;display:grid;gap:8px;pointer-events:none}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 
 html.still *{animation-duration:0s!important;animation-delay:0s!important}
@@ -111,23 +124,22 @@ html.still ::-webkit-scrollbar{display:none}
 
 /* phone */
 @media (max-width:760px){
-  body{padding-left:0;padding-bottom:64px}
-  .rail{inset:auto 0 0 0;width:auto;height:64px;flex-direction:row;justify-content:space-around;padding:0 8px;border-right:0;border-top:1px solid var(--line-soft)}
+  body{padding-left:0;padding-bottom:58px}
+  body.bare{padding-bottom:0}
+  .rail{inset:auto 0 0 0;width:auto;height:58px;flex-direction:row;padding:0 8px;border-right:0;border-top:1px solid var(--line-soft)}
   .rail-brand,.rail-me{display:none}
   .rail-nav{flex-direction:row;margin:0;gap:0;width:100%;justify-content:space-around}
-  .feed{height:calc(100vh - 64px);padding:10px;gap:0}
+  .feed{height:calc(100vh - 58px);padding:8px;gap:0}
   .fcard{height:100%;aspect-ratio:auto;width:100%}
   .feed-col{position:relative;width:100%;height:100%}
-  .feed-col .acts{position:absolute;right:6px;bottom:210px;z-index:3}
-  .feed-col .act,.feed-col .age{color:#222}
-  .feed-col .act .ico,.feed-col .age .ico{color:#222}
+  .feed-col .acts{position:absolute;right:4px;bottom:200px;z-index:3}
   .feed-nav,.count,.corner{display:none}
   .why{position:fixed;inset:auto 0 0 0;width:auto;max-height:82vh;border-radius:var(--r-card) var(--r-card) 0 0;z-index:30}
-  .page{padding:24px 16px 96px}
-  .grid4,.grid3,.nums{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .page{padding:0 16px 80px}
+  .grid3,.nums{grid-template-columns:1fr;gap:14px}
+  .goals{grid-template-columns:repeat(2,minmax(0,1fr))}
   .result{grid-template-columns:1fr}
-  .h1{font-size:40px}
-  .backdrop{display:none}
+  .h1{font-size:36px}.h2{font-size:28px}
 }
 </style>
 </head>
@@ -136,7 +148,6 @@ html.still ::-webkit-scrollbar{display:none}
   <a class="rail-brand" href="#/feed" aria-label="jammie"><img src="assets/jammie/v3/char-dollop.png" alt=""></a>
   <div class="rail-nav">
     <a class="draw" data-nav="feed" href="#/feed" aria-label="Feed"><i data-ico="home"></i></a>
-    <a class="draw" data-nav="team" href="#/team" aria-label="Team"><i data-ico="team"></i></a>
     <a class="draw" data-nav="liked" href="#/liked" aria-label="Liked"><i data-ico="heart"></i></a>
     <a class="draw" data-nav="numbers" href="#/numbers" aria-label="Numbers"><i data-ico="chart"></i></a>
   </div>
@@ -145,11 +156,11 @@ html.still ::-webkit-scrollbar{display:none}
 <main id="app"></main>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=3"></script>
-<script src="assets/jammie/v3/data.js?v=3"></script>
+<script src="assets/jammie/v3/icons.js?v=4"></script>
+<script src="assets/jammie/v3/data.js?v=4"></script>
 <script>
 (() => {
-  const { A, CAST, by, IDEAS, av, fcard } = window.JAMMIE;
+  const { A, IDEAS, av, fcard, icard, srow } = window.JAMMIE;
   const root = document.documentElement, app = document.getElementById('app');
   const STILL = new URLSearchParams(location.search).has('still');   // the flow map shows screens at rest
   if (STILL) root.classList.add('still');
@@ -157,7 +168,7 @@ html.still ::-webkit-scrollbar{display:none}
 
   // carry over whatever was tuned on the workbench
   try {
-    const t = JSON.parse(localStorage.getItem('jammie-workbench-v3')) || {};
+    const t = JSON.parse(localStorage.getItem('jammie-workbench-v4')) || {};
     root.dataset.theme = t.theme || 'light';
     Object.entries(t).forEach(([k, v]) => { if (k.startsWith('--')) root.style.setProperty(k, v); });
     Object.entries((t.themed && t.themed[root.dataset.theme]) || {}).forEach(([k, v]) => root.style.setProperty(k, v));
@@ -165,7 +176,7 @@ html.still ::-webkit-scrollbar{display:none}
 
   let cur = 0, timers = [];
   let liked; try { liked = new Set(JSON.parse(localStorage.getItem('jammie-proto-liked'))); } catch {}
-  if (!liked || !liked.size) liked = new Set(['unboxing', 'quiet', 'widefit', 'sizes']);
+  if (!liked || !liked.size) liked = new Set(['unboxing', 'quiet', 'sizes']);
   const saveLiked = () => { try { localStorage.setItem('jammie-proto-liked', JSON.stringify([...liked])); } catch {} };
 
   function toast(text, pose = 'cheer'){
@@ -187,11 +198,7 @@ html.still ::-webkit-scrollbar{display:none}
   }
   const todo = (items, doneN) => `<ul class="todo">${items.map((t, i) =>
     `<li class="${i < doneN ? 'done' : i === doneN ? 'now' : ''}"><i>${ico('check')}</i>${t}</li>`).join('')}</ul>`;
-
-  const backdrop = () => {
-    const spots = [['star',6,14,150],['bubble',80,10,170],['arch',14,66,150],['heart',76,62,180],['play',90,40,120],['pebble',2,42,120],['cloud',62,82,130],['bolt',30,6,110]];
-    return `<div class="backdrop">${spots.map(([c, x, y, h]) => `<img src="${A}char-${c}.png" alt="" style="left:${x}%;top:${y}%;height:${h}px">`).join('')}</div>`;
-  };
+  const dots = n => `<div class="dots">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</div>`;
 
   const actsCol = d => `<div class="acts">
       <div class="age">${ico('clock')}${d.age}</div>
@@ -201,45 +208,63 @@ html.still ::-webkit-scrollbar{display:none}
       <a class="act draw" href="#/why">${ico('eye')}Why</a>
       <button class="act draw" data-do="more" aria-label="More">${ico('more')}</button>
     </div>`;
+  const topRight = () => `<button class="ico-btn draw" data-do="bell" aria-label="Updates">${ico('bell')}</button>${av(32)}`;
 
   const feedShell = (d, extra = '', o = {}) => `<section class="feed">
       <div class="feed-col">${fcard(d, { top: true, ...o })}${actsCol(d)}</div>
       ${extra}
-      <div class="corner"><a class="ico-btn draw" href="design-system.html" aria-label="Design system">${ico('settings')}</a></div>
+      <div class="corner">${topRight()}</div>
       <div class="feed-nav"><button class="btn b-round draw" data-do="prev" aria-label="Previous idea">${ico('up')}</button><button class="btn b-round draw" data-do="next" aria-label="Next idea">${ico('down')}</button></div>
       <div class="count">${cur + 1} of ${IDEAS.length}</div>
     </section>`;
+  const pageHead = (title, right = '') => `<div class="page-h"><h1>${title}</h1><div class="right">${right}${topRight()}</div></div>`;
 
-  const listing = (d, on) => `<a class="idea" href="#/feed" data-open="${d.id}">
-      <div class="idea-art" style="background:${d.tint}"><img src="${A}el-${d.el}.png" alt="">${d.badge ? `<span class="badge">${d.badge}</span>` : ''}
-        <button class="like draw ${on ? 'liked' : ''}" data-do="unlike" data-id="${d.id}" aria-label="Keep">${ico('heart')}</button></div>
-      <h3>${d.title}</h3><p>${by[d.who].name} · ${d.makes}</p></a>`;
+  const GOALS = [['chart', 'More sales'], ['megaphone', 'Better ads'], ['heart', 'Repeat buyers'], ['magnifier', 'Get found']];
 
   const SCREENS = {
-    start: { bare: true, html: () => `<section class="center">${backdrop()}
+    // ---- onboarding: five steps
+    start: { bare: true, html: () => `<section class="center">${dots(1)}
         <img class="lead" src="${A}pose-wave.png" alt="">
         <h1 class="h1">Add your store.</h1>
         <form class="store" data-go="#/reading">${ico('link')}<input placeholder="yourstore.com" aria-label="Store link" value="wearcomet.com">
           <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>
       </section>` },
 
-    reading: { bare: true, html: () => `<section class="center">
+    reading: { bare: true, html: () => `<section class="center">${dots(2)}
         <img class="lead" src="${A}pose-search.png" alt="">
-        <h1 class="h1">Reading Comet</h1>
+        <h1 class="h2">Reading Comet</h1>
         ${todo(['42 products', '285 reviews', 'Your ads', 'Three rivals'], 2)}
-      </section>`, enter: () => runTodo('#/first') },
+      </section>`, enter: () => runTodo('#/brand') },
 
-    first: { bare: true, html: () => `<section class="center">${backdrop()}
-        <h1 class="h1">Your first idea is here.</h1>
+    brand: { bare: true, html: () => `<section class="center">${dots(3)}
+        <h1 class="h2">Is this Comet?</h1>
+        <div class="brandcard">
+          <div><small>Sells</small><b>Lifestyle sneakers</b></div>
+          <div><small>For</small><b>Men and women, 18 to 30</b></div>
+          <div><small>Sounds</small><b>Playful, direct</b></div>
+          <div><small>Colours</small><span class="swatches"><i style="background:#2B50E0"></i><i style="background:#9AA4B2"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i></span></div>
+        </div>
+        <div class="pair"><a class="btn b-jam draw" href="#/goal">Looks right${ico('arrow')}</a><button class="btn b-out" data-do="fix">Fix it</button></div>
+      </section>` },
+
+    goal: { bare: true, html: () => `<section class="center">${dots(4)}
+        <h1 class="h2">What matters most right now?</h1>
+        <div class="goals">${GOALS.map(([el, name], i) => `<button class="goal ${i === 0 ? 'on' : ''}"><div class="art"><img src="${A}el-${el}.png" alt=""></div>${name}</button>`).join('')}</div>
+        <a class="btn b-jam draw" href="#/first">Continue${ico('arrow')}</a>
+      </section>` },
+
+    first: { bare: true, html: () => `<section class="center">${dots(5)}
+        <h1 class="h2">Your first idea is here.</h1>
         ${fcard(IDEAS[0], { cls: 'sm', cta: false })}
         <a class="btn b-jam draw" href="#/feed">Open my feed${ico('arrow')}</a>
       </section>` },
 
+    // ---- the product
     feed: { nav: 'feed', html: () => { const d = IDEAS[cur]; return feedShell(d, '', d.locked ? { cls: 'locked', cta: 'Unlock', href: '#/unlock' } : {}); } },
 
     why: { nav: 'feed', html: () => { const d = IDEAS[cur]; return feedShell(d, `<aside class="sheet why">
         <a class="ico-btn x draw" href="#/feed" aria-label="Close">${ico('close')}</a>
-        <div class="who">${av(d.who)}<b>${by[d.who].name}</b><span>${by[d.who].role}</span></div>
+        <div class="who">${av()}<b>Jammie</b><span>${d.kind}</span></div>
         <h2>${d.title}</h2>
         <h4>Why this</h4>
         <div class="facts">
@@ -254,19 +279,20 @@ html.still ::-webkit-scrollbar{display:none}
 
     making: { nav: 'feed', html: () => `<section class="center">
         <img class="lead" src="${A}pose-walk.png" alt="">
-        <h1 class="h1">Making 3 ads</h1>
+        <h1 class="h2">Making 3 ads</h1>
         ${todo(['Writing the headlines', 'Picking your photos', 'Laying out the ads'], 1)}
         <a class="btn b-out" href="#/feed">Keep browsing</a>
       </section>`, enter: () => runTodo('#/result') },
 
     result: { nav: 'feed', html: () => `<section class="page">
-        <div class="page-h"><h1>${IDEAS[0].title}</h1><a class="btn b-soft b-sm draw" href="#/feed">${ico('back')}Feed</a></div>
+        ${pageHead('Made for you', `<a class="btn b-soft b-sm draw" href="#/feed">${ico('back')}Feed</a>`)}
         <div class="result">
+          <div><h2>${IDEAS[0].title}</h2>
           <div class="grid3">
-            <div class="made" style="background:#FBE3DF"><div><div class="big">285</div><div class="mid">five-star reviews</div></div><small>Comet · Shop now</small><img src="${A}el-megaphone.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
-            <div class="made" style="background:#FBF0C9"><div class="mid">“The best sneakers I've owned.”</div><small>Rated 4.7 by 285 buyers</small><img src="${A}el-sparkle.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
-            <div class="made" style="background:#222;color:#fff"><div><div class="big">4.7</div><div class="mid">from people who wear them daily</div></div><small>Comet · See the reviews</small><img src="${A}el-heart.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
-          </div>
+            <div class="made" style="background:#F4F4F4"><div><div class="big">285</div><div class="mid">five-star reviews</div></div><small>Comet · Shop now</small><img src="${A}el-megaphone.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
+            <div class="made" style="background:#FFE9EC"><div class="mid">“The best sneakers I've owned.”</div><small>Rated 4.7 by 285 buyers</small><img src="${A}el-heart.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
+            <div class="made" style="background:#222;color:#fff"><div><div class="big">4.7</div><div class="mid">from people who wear them daily</div></div><small>Comet · See the reviews</small><img src="${A}el-sparkle.png" alt=""><button class="dl draw" aria-label="Download">${ico('download')}</button></div>
+          </div></div>
           <aside class="side">
             <button class="btn b-jam draw" data-do="download">${ico('download')}Download all</button>
             <button class="btn b-out draw" data-do="share">${ico('share')}Share</button>
@@ -277,24 +303,19 @@ html.still ::-webkit-scrollbar{display:none}
       </section>`, enter: () => { if (!STILL) toast('Your ads are ready'); } },
 
     liked: { nav: 'liked', html: () => { const list = IDEAS.filter(d => liked.has(d.id)); return `<section class="page">
-        <div class="page-h"><h1>Liked</h1></div>
-        ${list.length ? `<div class="grid4">${list.map(d => listing(d, true)).join('')}</div>`
-          : `<div class="center" style="min-height:60vh"><img class="lead" src="${A}pose-sleep.png" alt=""><h2>Nothing kept yet</h2><a class="btn b-out" href="#/feed">Open the feed</a></div>`}
+        ${pageHead('Liked')}
+        ${srow('Made for you', '3 ads · today', ['sparkle', 'heart', 'megaphone'], '#/result')}
+        <h2 class="sec-t">Ideas you kept</h2>
+        ${list.length ? `<div class="grid3">${list.map(d => icard(d, { liked: true })).join('')}</div>`
+          : `<div class="center" style="min-height:50vh"><img class="lead" src="${A}pose-sleep.png" alt=""><h2 class="h2">Nothing kept yet</h2><a class="btn b-out" href="#/feed">Open the feed</a></div>`}
       </section>`; } },
-
-    team: { nav: 'team', html: () => `<section class="page">
-        <div class="page-h"><h1>Team</h1></div>
-        <div class="grid4">${CAST.map(c => { const n = IDEAS.filter(d => d.who === c.id).length; return `<a class="mate" href="#/feed" data-mate="${c.id}">
-          <div class="art" style="--tint:${c.tint}"><img src="${A}char-${c.id}.png" alt="">${n ? `<span class="n">${n} ${n > 1 ? 'ideas' : 'idea'}</span>` : ''}</div>
-          <b>${c.name}</b><span>${c.role}</span></a>`; }).join('')}</div>
-      </section>` },
 
     numbers: { nav: 'numbers', html: () => { const card = (label, value, delta, dir, bars, idea) => `<div class="stat">
           <div class="top"><small>${label}</small><span class="delta ${dir}">${delta}</span></div><b>${value}</b>
           <div class="bars">${bars.map((h, i) => `<i class="${i === bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>
-          <div class="foot">${av(IDEAS[idea].who, 28)}<a class="btn b-text" href="#/feed" data-open="${IDEAS[idea].id}">${IDEAS[idea].title}</a></div></div>`;
+          <div class="foot"><a class="draw" href="#/feed" data-open="${IDEAS[idea].id}">${IDEAS[idea].title}${ico('arrow')}</a></div></div>`;
         return `<section class="page">
-        <div class="page-h"><h1>Numbers</h1><div class="seg"><button class="on">7 days</button><button>30 days</button></div></div>
+        ${pageHead('Numbers', `<div class="seg"><button class="on">7 days</button><button>30 days</button></div>`)}
         <div class="nums">
           ${card('Net sales', '₹1.4L', '▼ 28%', 'down', [82, 74, 90, 66, 58, 52, 47], 0)}
           ${card('Return on ads', '1.1×', '▼ 24%', 'down', [70, 78, 64, 60, 44, 50, 38], 4)}
@@ -329,20 +350,22 @@ html.still ::-webkit-scrollbar{display:none}
 
   function step(dir){
     cur = (cur + dir + IDEAS.length) % IDEAS.length;
-    if (location.hash !== '#/feed') { history.replaceState(null, '', '#/feed'); }
+    if (location.hash !== '#/feed') history.replaceState(null, '', '#/feed');
     render();
     const c = app.querySelector('.fcard'); if (c) c.classList.add(dir > 0 ? 'enter-down' : 'enter-up');
   }
 
   document.addEventListener('click', e => {
-    const open = e.target.closest('[data-open]');
+    const like = e.target.closest('[data-like]');
+    if (like) { e.preventDefault(); liked.delete(like.dataset.id); saveLiked(); render(); return; }
     const b = e.target.closest('[data-do]');
     if (b) {
       const d = IDEAS[cur], what = b.dataset.do;
       if (what === 'keep') { liked.has(d.id) ? liked.delete(d.id) : liked.add(d.id); saveLiked(); b.classList.toggle('liked'); if (liked.has(d.id)) toast('Saved to liked'); }
-      else if (what === 'unlike') { e.preventDefault(); liked.delete(b.dataset.id); saveLiked(); render(); return; }
       else if (what === 'share') toast('Link copied');
       else if (what === 'ask') toast('Ask is coming next', 'search');
+      else if (what === 'bell') toast('Nothing new yet', 'sleep');
+      else if (what === 'fix') toast('Editing comes next', 'search');
       else if (what === 'download') toast('Downloading 3 ads');
       else if (what === 'next') step(1);
       else if (what === 'prev') step(-1);
@@ -350,9 +373,9 @@ html.still ::-webkit-scrollbar{display:none}
       else if (what === 'sent') { toast('Sent. We will be in touch.'); location.hash = '#/feed'; }
       return;
     }
+    const open = e.target.closest('[data-open]');
     if (open) { const i = IDEAS.findIndex(d => d.id === open.dataset.open); if (i > -1) cur = i; }
-    const mate = e.target.closest('[data-mate]');
-    if (mate) { const i = IDEAS.findIndex(d => d.who === mate.dataset.mate); cur = i > -1 ? i : 0; }
+    const goal = e.target.closest('.goal'); if (goal) goal.parentElement.querySelectorAll('.goal').forEach(g => g.classList.toggle('on', g === goal));
     const chip = e.target.closest('.chip'); if (chip) chip.parentElement.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
     const sg = e.target.closest('.seg button'); if (sg) sg.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === sg));
   });
@@ -362,7 +385,7 @@ html.still ::-webkit-scrollbar{display:none}
     const onFeed = /^#\/(feed|why)(\?|$)/.test(location.hash);
     if (onFeed && (e.key === 'ArrowDown' || e.key === 'j')) { e.preventDefault(); step(1); }
     if (onFeed && (e.key === 'ArrowUp' || e.key === 'k')) { e.preventDefault(); step(-1); }
-    if (e.key === 'Escape' && /^#\/(why|unlock)$/.test(location.hash)) location.hash = '#/feed';
+    if (e.key === 'Escape' && /^#\/(why|unlock)/.test(location.hash)) location.hash = '#/feed';
   });
   addEventListener('hashchange', render);
   render();

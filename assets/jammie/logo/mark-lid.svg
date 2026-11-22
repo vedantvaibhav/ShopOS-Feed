@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- jammie mark · the lid: the mascot's floating lid with its two eyes (chosen by Param, 27 Oct). one colour, even-odd cutouts -->
+  <symbol id="lid" viewBox="0 0 64 64"><g transform="rotate(-8 32 32)"><path fill-rule="evenodd" d="M13.5 13h37a3.5 3.5 0 0 1 3.5 3.5v0a3.5 3.5 0 0 1 -3.5 3.5h-37a3.5 3.5 0 0 1 -3.5 -3.5v0a3.5 3.5 0 0 1 3.5 -3.5Z M19 22h26a13 13 0 0 1 13 13v2a13 13 0 0 1 -13 13h-26a13 13 0 0 1 -13 -13v-2a13 13 0 0 1 13 -13Z M14.5 36a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z M33.5 36a8 8 0 1 0 16 0a8 8 0 1 0 -16 0Z M20.4 37.5a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0 -7.2 0Z M39.4 37.5a3.6 3.6 0 1 0 7.2 0a3.6 3.6 0 1 0 -7.2 0Z"/></g></symbol>
+  <use href="#lid" width="64" height="64" fill="#D7192F"/>
+</svg>

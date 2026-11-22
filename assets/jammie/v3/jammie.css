@@ -160,6 +160,11 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .who b{font-weight:600}
 .who span:not(.av){color:var(--fg-2)}
 
+/* felt art carries no shadow around its shape. Objects get the faintest lift; Jammie gets a small patch of ground under its feet */
+:root{--felt:drop-shadow(0 2px 3px rgba(0,0,0,.07))}
+.ground{position:relative;isolation:isolate}
+.ground::after{content:"";position:absolute;z-index:-1;left:50%;bottom:-1.5%;width:52%;height:5%;min-height:8px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.14),transparent)}
+
 /* rail: a slim hairline column of icons, nothing else */
 .rail{position:fixed;inset:0 auto 0 0;width:60px;display:flex;flex-direction:column;align-items:center;padding:16px 0;border-right:1px solid var(--line-soft);background:var(--bg);z-index:10}
 .rail-brand img{height:30px;width:auto}
@@ -202,9 +207,9 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .fcard.plain{display:flex;flex-direction:column;height:var(--fc-h);aspect-ratio:4/5;border-radius:var(--r-card);background:var(--s2);align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center}
 .fcard.plain h3{font-size:26px;max-width:14ch}
 .fcard.plain p{color:var(--fg-2);margin:0}
-.fcard.plain img.el{height:130px;width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
+.fcard.plain img.el{height:130px;width:auto;filter:var(--felt)}
 .fcard.plain .logos{display:grid;justify-items:center;gap:16px;margin-bottom:8px}
-.fcard.plain .logos img{width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
+.fcard.plain .logos img{width:auto;filter:var(--felt)}
 .fcard.plain .logos .big{height:min(168px,20vh)}
 .fcard.plain .logos span{display:flex;gap:16px}
 .fcard.plain .logos span img{height:min(58px,7vh)}

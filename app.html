@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=10">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=11">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 body{padding-left:60px;min-height:100vh;overflow-x:hidden}
@@ -18,7 +18,7 @@ a{text-decoration:none}
 /* ---------- onboarding: one column, centred. Jammie, one thought, one control ---------- */
 .h1{font-size:calc(var(--h-size) * .8);line-height:1.08}
 .h2{font-size:calc(var(--h-size) * .58);line-height:1.12}
-.lead{height:150px;width:auto;filter:drop-shadow(0 14px 10px rgba(0,0,0,.14))}
+.lead{height:150px;width:auto}
 .dots{position:absolute;top:28px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
 .dots i{width:20px;height:4px;border-radius:4px;background:var(--s3)}
 .dots i.on{background:var(--on)}
@@ -96,7 +96,8 @@ html[data-theme="dark"] .pop.v img{display:block}
 /* three taps: every pick shows up on Jammie, or lands beside it */
 .tapstage{display:flex;align-items:center;justify-content:center;gap:10px;height:min(250px,28vh)}
 .tapstage .slot{width:132px;height:100%;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px}
-.tapstage .slot img{height:min(84px,10vh);width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.14))}
+.tapstage .slot img{height:min(84px,10vh);width:auto;filter:var(--felt)}
+.tapstage .me .ground::after{width:min(150px,38%)}
 .tapstage .slot.many img{height:min(56px,7vh)}
 .tapstage .me{height:100%;min-width:240px;margin:0 -24px;display:grid;place-items:center}
 .tapstage .me .lead{height:min(232px,26vh)}
@@ -105,8 +106,8 @@ html[data-theme="dark"] .pop.v img{display:block}
    Each one fades as it goes, from fully there to gone. Nothing clips them, so there is no edge to slide into */
 .tapstage .slot{position:relative;z-index:1}
 .tapstage .me > *{grid-area:1/1;width:100%;display:grid;place-items:center}
-.slide-in{animation:slide-in .8s cubic-bezier(.65,0,.35,1) both}
-.slide-out{animation:slide-out .8s cubic-bezier(.65,0,.35,1) both}
+.slide-in{animation:slide-in .62s cubic-bezier(.65,0,.35,1) both}
+.slide-out{animation:slide-out .62s cubic-bezier(.65,0,.35,1) both}
 @keyframes slide-in{from{opacity:0;transform:translateX(100%)}}
 @keyframes slide-out{to{opacity:0;transform:translateX(-100%)}}
 .in3d{animation:in3d .85s cubic-bezier(.2,.9,.25,1.1) both,sway3d 6s ease-in-out .85s infinite}
@@ -376,8 +377,8 @@ html.still ::-webkit-scrollbar{display:none}
 <main id="app"></main>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=10"></script>
-<script src="assets/jammie/v3/data.js?v=10"></script>
+<script src="assets/jammie/v3/icons.js?v=11"></script>
+<script src="assets/jammie/v3/data.js?v=11"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, fcard, icard, srow } = window.JAMMIE;
@@ -434,7 +435,7 @@ html.still ::-webkit-scrollbar{display:none}
   const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
   const pose = p => LOOPS.includes(p) && !calm
     ? `<div class="pop v"><video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video><img class="lead" src="${stillOf(p)}" alt=""></div>`
-    : `<div class="pop"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
+    : `<div class="pop ground"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
   // numbers tick up as Jammie reads
   function countUp(){ if (STILL) return; app.querySelectorAll('[data-count]').forEach(el => { const to = +el.dataset.count, t0 = performance.now();
     (function tick(t){ const k = Math.min(1, (t - t0) / 800), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e).toLocaleString('en-IN'); if (k < 1) requestAnimationFrame(tick); })(t0); }); }
@@ -454,8 +455,8 @@ html.still ::-webkit-scrollbar{display:none}
     const kind = ask.dataset.ask, on = [...ask.querySelectorAll('.chip.on')].map(c => c.textContent.trim()), $ = id => document.getElementById(id);
     if (kind === 'role' && on[0]) { const me = $('meSlot'), old = me.lastElementChild;                 // the one on stage leaves to the left as the new one comes in from the right
       [...me.children].forEach(el => { if (el !== old) el.remove(); });
-      if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 820); }
-      me.insertAdjacentHTML('beforeend', `<div class="look slide-in"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`); }
+      if (old) { old.classList.remove('slide-in'); old.classList.add('slide-out'); setTimeout(() => old.remove(), calm ? 0 : 640); }
+      me.insertAdjacentHTML('beforeend', `<div class="look ground slide-in"><div class="bob"><img class="lead" src="${A}look-${ROLES[on[0]]}.png" alt=""></div></div>`); }
     if (kind === 'goal' && on[0]) $('goalSlot').innerHTML = `<img class="in3d" src="${A}el-${GOALS[on[0]]}.png" alt="">`;
     if (kind === 'chan') { const slot = $('chanSlot');
       [...slot.children].forEach(el => { if (!on.includes(el.dataset.n)) el.remove(); });

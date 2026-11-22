@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=10">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=11">
 <style>
 /* this page only: tokens and shared pieces live in jammie.css */
 /* ---------- header ---------- */
@@ -52,11 +52,11 @@
 .hero p{font-size:calc(var(--body-size) * 1.12);color:var(--fg-2);max-width:36ch;margin:16px 0 24px}
 .hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
 .hero-art{display:grid;place-items:center}
-.hero-art img{height:var(--char-size);max-height:60vw;width:auto;filter:drop-shadow(0 22px 18px rgba(0,0,0,.16))}
+.hero-art img{height:var(--char-size);max-height:60vw;width:auto;filter:var(--felt)}
 
 .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .tile{aspect-ratio:1;border-radius:var(--r-card);--pad:16%}
-.tile img{filter:drop-shadow(0 10px 10px rgba(0,0,0,.1))}
+.tile img{filter:var(--felt)}
 .tile small{position:absolute;left:14px;bottom:10px;font-size:13px;color:var(--fg-2)}
 .tiles.el .tile{aspect-ratio:4/3;--pad:18%}
 .tiles.guide{grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
@@ -98,7 +98,7 @@ html[data-theme="dark"] .loop small{color:#6A6A6A}
 
 .states{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .state{border:1px solid var(--line-soft);border-radius:var(--r-card);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;background:var(--card)}
-.state img{height:110px;width:auto;filter:drop-shadow(0 10px 8px rgba(0,0,0,.1))}
+.state img{height:110px;width:auto;filter:var(--felt)}
 .state h4{font-size:17px}
 
 .sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
@@ -364,8 +364,8 @@ body.tune-open .tune-fab{right:288px}
 <button class="btn b-ink b-sm tune-fab draw" id="fab"><i data-ico="filter"></i>Tune</button>
 <div class="copied" id="copied">Tokens copied</div>
 
-<script src="assets/jammie/v3/icons.js?v=10"></script>
-<script src="assets/jammie/v3/data.js?v=10"></script>
+<script src="assets/jammie/v3/icons.js?v=11"></script>
+<script src="assets/jammie/v3/data.js?v=11"></script>
 <script>
 (() => {
   const root = document.documentElement;

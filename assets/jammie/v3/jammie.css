@@ -173,15 +173,16 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail a{position:relative}
 .rail-nav a::after{content:attr(aria-label);position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);padding:5px 9px;border-radius:8px;background:var(--fg);color:var(--bg);font-size:12px;font-weight:500;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:2}
 .rail-nav a:hover::after{opacity:1}
-.rail a{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--fg-2);text-decoration:none}
+.rail a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--fg-2);text-decoration:none}
 .rail a:hover{background:var(--s2);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
-/* the idea card: one tall picture, about as wide as a Winning Ads card. What it is and its one action sit under it, on one band */
+/* the idea card: one tall picture, about as wide as a Winning Ads card. Its one action sits on the picture; the whole band under it is for the words */
 .fcard{position:relative;flex:none;width:fit-content;max-width:100%}
 .fc-media{position:relative;height:var(--fc-h);aspect-ratio:3/4;border-radius:var(--r-card);overflow:hidden;background:#111;isolation:isolate}
 .fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0}   /* never crop the top */
-.fc-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.26) 0,transparent 15%)}
+.fc-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.26) 0,transparent 15%,transparent 80%,rgba(0,0,0,.3))}
+.fc-media .fcard-cta{position:absolute;left:14px;bottom:14px;z-index:2}
 .fcard-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:flex-end;align-items:center;gap:8px;z-index:3}
 .pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border:0}
 .pill.light{background:#fff;color:#222}
@@ -215,8 +216,11 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 
 /* the action column beside the card */
 .acts{display:flex;flex-direction:column;gap:2px}
-.act{width:52px;padding:8px 0 6px;border:0;background:none;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:500;color:var(--fg-2);text-decoration:none}
-.act:hover{background:var(--s2);color:var(--fg)}
+/* every icon in the product sits in a circle when it is hovered or picked: these, the rail, the two top right */
+.act{width:46px;padding:2px 0 4px;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11px;font-weight:500;color:var(--fg-2);text-decoration:none}
+.act > i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;transition:background .15s}
+.act:hover{color:var(--fg)}
+.act:hover > i{background:var(--s2)}
 .act .ico{color:var(--fg)}
 .act.liked .ico > *{fill:var(--jam);stroke:var(--jam)}
 .act.liked{color:var(--fg)}

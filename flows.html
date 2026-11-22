@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=12">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=14">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
@@ -126,7 +126,7 @@ a .node:hover rect{stroke:var(--fg)}
         <li>Inside the Shopify admin</li>
       </ul></div>
       <div><h3><span class="tag added">Added</span>Mine, not in the live product</h3><ul>
-        <li>One tall, narrow card at a time, sized like a Winning Ads card. Its words and Let’s jam sit under the picture, actions hang beside it.</li>
+        <li>One tall, narrow card at a time, sized like a Winning Ads card. Let’s jam sits on the picture, the words take the band under it, actions hang close beside it.</li>
         <li>Sign in is a popup: Google, or a name and an email. Live uses a full page with Google only.</li>
         <li>Onboarding is one centred column and four steps. Live also shows a first idea and a brand book.</li>
         <li>What Jammie read comes back as one card, “Hey, here it is”, then the feed.</li>
@@ -164,7 +164,7 @@ a .node:hover rect{stroke:var(--fg)}
 const FLOWS = [
   { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading your store → Three taps → Here it is → Feed',
     steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Here it is','Open my feed'],['feed?i=1','Feed']] },
-  { id:'browse', name:'Browse the feed', path:'Feed → Next or Previous → Keep, Later, Less, Share',
+  { id:'browse', name:'Browse the feed', path:'Feed → scroll, swipe or the arrow keys → Keep, Later, Less, Share',
     steps:[['feed?i=1','Feed','Next'],['feed?i=2','Next idea','Next'],['feed?i=8','Connect a tool']] },
   { id:'idea', name:'Open an idea', path:'Feed → Why → the idea sheet → sources, the plan, connect a tool',
     steps:[['feed?i=1','Feed','Why'],['idea?i=1','The idea sheet','Let’s jam'],['jam?i=1','Let’s jam']] },
@@ -250,7 +250,7 @@ const A = [
   ['Reading your store','reading','live',[['Nothing to press','Moves on by itself','live'],['The store is not a store','A side road of its own','todo'],['The read fails','A side road with Try again','todo']]],
   ['Three taps','taps','docs',[['Pick who you are','Jammie puts on that look','added'],['Pick what you want more of','Its object lands beside Jammie','added'],['Pick where you post, more than one','Each icon lands beside Jammie','added'],['Continue','Here it is','added']]],
   ['Here it is','here','added',[['Open my feed','Feed, through a coral bloom','added'],['Fix what Jammie read','Edit what was found','todo']]],
-  ['Feed','feed','live',[['Let’s jam','Let’s jam','live'],['Tap the card','The idea sheet','live'],['Why','The idea sheet','added'],['Keep','Kept, and Jammie learns','live'],['Share','Copies a link','live'],['Later','Saved for later, next idea','live'],['Less','Fewer like this, next idea','live'],['Note','A note to the team about this idea','live'],['Next and Previous, the arrow keys, scroll or swipe','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['With the team','Updates, with a row for each sent idea','live'],['Bell','Updates','live'],['“Your wrapped” story, signed in','A monthly recap','todo'],['Your picture','You','live'],['New','Start something new','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Hides that card','live'],['See the next 8, on the last card','More ideas','live'],['Save, as its own action','Live has it beside Keep','todo'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“How your feed works” and its Got it','A first-day card','todo'],['Hold New to say what’s wrong','A report to the team','todo']]],
+  ['Feed','feed','live',[['Let’s jam','Let’s jam','live'],['Tap the card','The idea sheet','live'],['Why','The idea sheet','added'],['Keep','Kept, and Jammie learns','live'],['Share','Copies a link','live'],['Later','Saved for later, next idea','live'],['Less','Fewer like this, next idea','live'],['Note','A note to the team about this idea','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['With the team','Updates, with a row for each sent idea','live'],['Bell','Updates','live'],['“Your wrapped” story, signed in','A monthly recap','todo'],['Your picture','You','live'],['New','Start something new','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Hides that card','live'],['See the next 8, on the last card','More ideas','live'],['Save, as its own action','Live has it beside Keep','todo'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“How your feed works” and its Got it','A first-day card','todo'],['Hold New to say what’s wrong','A report to the team','todo']]],
   ['The idea sheet','idea?i=1','live',[['Copy caption','Copies it','live'],['A source row','Opens the source, such as Meta Ad Library','live'],['The full plan','The plan behind the idea','todo'],['Meta Ads, Shopify or Google Analytics','Connectors','live'],['Keep','Kept','live'],['Share','Copies a link','live'],['Let’s jam','Let’s jam','live'],['Close','Feed','live']]],
   ['Let’s jam','jam?i=1','live',[['Ship as is','Sent, back in the feed with a row','live'],['Change first','A note to the team','live'],['More like this','Jammie learns it, next idea','live'],['Make it with Sloosh','See the credits','live'],['Close','Feed','live']]],
   ['A note to the team','change?i=1','live',[['Type what to change','Stays here','live'],['Hold to talk','Speaks the note','live'],['Send to the team','Sent, back in the feed with a row','live'],['Close','Let’s jam','live']]],

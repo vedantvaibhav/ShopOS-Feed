@@ -105,9 +105,9 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .icard{display:flex;flex-direction:column;border:1px solid var(--line-soft);border-radius:var(--r-card);overflow:hidden;background:var(--card);color:inherit;transition:box-shadow .2s,border-color .2s}
 .icard:hover{border-color:var(--line);box-shadow:var(--shadow-1)}
-.icard .art{aspect-ratio:16/10;--pad:13%}
-.icard .art img{filter:drop-shadow(0 12px 10px rgba(0,0,0,.14));transition:transform .5s var(--ease)}
-.icard:hover .art img{transform:translateY(-3px)}
+.icard .pic{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--s2)}
+.icard .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.icard:hover .pic img{transform:scale(1.03)}
 .icard-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .icard-meta{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--fg-2)}
 .icard h3{font-size:16.5px;font-weight:600;letter-spacing:var(--h-track);line-height:1.3}
@@ -116,7 +116,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 /* row with a small stack of pictures: bold line, quiet line, arrow */
 .srow{display:flex;align-items:center;gap:16px;padding:14px 4px;color:inherit;border-bottom:1px solid var(--line-soft)}
 .stack{position:relative;width:54px;height:54px;flex:none}
-.stack i{position:absolute;inset:0;border-radius:12px;border:2.5px solid #fff;background:var(--s2) center/72% no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.16)}
+.stack i{position:absolute;inset:0;border-radius:12px;border:2.5px solid #fff;background:var(--s2) center/cover no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.16)}
 .stack i:nth-child(1){transform:rotate(-9deg) translate(-3px,2px)}
 .stack i:nth-child(2){transform:rotate(7deg) translate(3px,1px)}
 .srow b{font-weight:var(--h-weight);font-size:17px;letter-spacing:var(--h-track)}
@@ -163,26 +163,34 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail a:hover{background:var(--s2);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
-/* the feed card: the picture is the screen */
-.fcard{position:relative;flex:none;height:min(720px,calc(100vh - 56px));aspect-ratio:9/16;border-radius:var(--r-card);overflow:hidden;background:var(--s2);isolation:isolate}
-.fcard > .art{position:absolute;inset:6% 0 36% 0;--pad:14%;background:none}
-.fcard > .art img{filter:drop-shadow(0 20px 16px rgba(0,0,0,.16))}
-.fcard-top{position:absolute;top:12px;left:0;right:0;display:flex;justify-content:center;z-index:2}
-.fcard-top .seg{background:color-mix(in srgb,var(--card) 60%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.fcard-top .seg button{height:30px;padding:0 14px}
-.fcard-foot{position:absolute;left:0;right:0;bottom:0;padding:20px;z-index:2}
-.fcard-cta{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px 0 15px;border-radius:var(--r-pill);font-weight:600;font-size:14px;text-decoration:none;border:0;margin-bottom:14px}
+/* the feed card: the picture is the screen, the words sit on it */
+.fcard{position:relative;flex:none;height:min(700px,calc(100vh - 150px));aspect-ratio:9/16;border-radius:var(--r-card);overflow:hidden;background:#111;color:#fff;isolation:isolate}
+.fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.fcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.28) 0,transparent 16%,transparent 44%,rgba(0,0,0,.86) 100%)}
+.fcard-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:2}
+.pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border:0}
+.pill.light{background:#fff;color:#222}
+.pill .ico{width:14px;height:14px}
+.fcard-foot{position:absolute;left:0;right:0;bottom:0;padding:18px;z-index:2}
+.fcard-cta{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px 0 15px;border-radius:var(--r-pill);font-weight:600;font-size:14px;text-decoration:none;border:0;margin-bottom:12px}
 .fcard-cta .ico{width:15px;height:15px}
-.fcard .who{margin-bottom:10px}
-.fcard h3{font-size:22px;line-height:1.14}
-.fcard p{margin:6px 0 0;font-size:14.5px;color:var(--fg-2)}
-.fcard-bar{height:3px;border-radius:3px;background:var(--s3);margin-top:16px;overflow:hidden}
-.fcard-bar i{display:block;height:100%;width:0;background:var(--fg);border-radius:3px;animation:fbar 8s linear infinite}
+.fcard .who{margin-bottom:8px;font-size:13px}
+.fcard .who span:not(.av){color:rgba(255,255,255,.78)}
+.fcard .av{box-shadow:none}
+.fcard h3{font-size:21px;line-height:1.16}
+.fcard p{margin:6px 0 0;font-size:14px;line-height:1.4;color:rgba(255,255,255,.8)}
+.fcard-bar{height:3px;border-radius:3px;background:rgba(255,255,255,.28);margin-top:14px;overflow:hidden}
+.fcard-bar i{display:block;height:100%;width:0;background:#fff;border-radius:3px;animation:fbar 8s linear infinite}
 @keyframes fbar{to{width:100%}}
-.fcard.locked > .art,.fcard.locked .fcard-foot > :not(.fcard-cta){filter:blur(14px);opacity:.7}
-.fcard.sm{height:auto;width:min(270px,100%)}
-.fcard.sm h3{font-size:18px}
-.fcard.sm .fcard-foot{padding:16px}
+.fcard.sm{height:auto;width:min(250px,100%)}
+.fcard.sm h3{font-size:16.5px}
+.fcard.sm .fcard-foot{padding:14px}
+/* a card with no picture: connect a tool, the end of the list, a locked block */
+.fcard.plain{background:var(--s2);color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center}
+.fcard.plain::after{display:none}
+.fcard.plain h3{font-size:22px}
+.fcard.plain p{color:var(--fg-2);margin:0}
+.fcard.plain img.el{height:120px;width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
 
 /* the action column beside the card */
 .acts{display:flex;flex-direction:column;gap:2px}
@@ -191,6 +199,17 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .act .ico{color:var(--fg)}
 .act.liked .ico > *{fill:var(--jam);stroke:var(--jam)}
 .act.liked{color:var(--fg)}
+
+/* a quiet row: a label on the left, a value or a button on the right */
+.rows{border:1px solid var(--line-soft);border-radius:var(--r-card);background:var(--card);overflow:hidden}
+.rowi{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:left}
+.rows > :last-child{border-bottom:0}
+.rowi:hover{background:var(--s2)}
+.rowi .grow{flex:1;min-width:0}
+.rowi b{display:block;font-weight:600}
+.rowi small{display:block;color:var(--fg-2);font-size:13.5px}
+.rowi > .ico,.rowi > [data-ico]{color:var(--fg-2)}
+.logo-tile{flex:none;width:36px;height:36px;border-radius:10px;background:var(--s2);display:grid;place-items:center;font-weight:700;font-size:14px}
 
 /* steps: what jammie is doing, one line each */
 .todo{display:grid;gap:12px;text-align:left}

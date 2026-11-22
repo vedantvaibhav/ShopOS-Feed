@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=4">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=5">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
@@ -16,19 +16,31 @@ body{background:var(--s2)}
 .brand img{height:28px;width:auto}
 .wrap{max-width:1560px;margin:0 auto;padding:0 32px 100px}
 .block{padding:40px 0 0;scroll-margin-top:72px}
-.block > h2{font-size:22px;margin-bottom:16px}
+.block-h{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.block-h h2{font-size:22px;margin-right:auto}
+
+.tag{height:22px;padding:0 8px;border-radius:99px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;background:var(--s2);color:var(--fg-2);white-space:nowrap}
+.tag.live{background:#E7F5EC;color:#1A7F4B}
+.tag.docs{background:#E8EEFB;color:#2B50C8}
+.tag.added{background:#FDECEE;color:#C22A3F}
+.tag.done{background:#E7F5EC;color:#1A7F4B}
+
+/* found on the live product */
+.found{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.found > div{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-card);padding:18px}
+.found h3{font-size:15.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.found ul{margin:0;padding:0;display:grid;gap:7px}
+.found li{list-style:none;font-size:14.5px;padding-left:14px;position:relative}
+.found li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--fg-3)}
 
 /* the list of every flow */
 .list{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);overflow:hidden}
-.list a,.list div.item{display:grid;grid-template-columns:28px 210px 1fr auto;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none}
+.list a,.list div.item{display:grid;grid-template-columns:28px 230px 1fr auto;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none}
 .list > :last-child{border-bottom:0}
 .list a:hover{background:var(--s2)}
 .list .n{color:var(--fg-3);font-variant-numeric:tabular-nums;font-size:14px}
 .list b{font-weight:600}
 .list .path{color:var(--fg-2);font-size:14.5px}
-.tag{height:24px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;background:var(--s2);color:var(--fg-2)}
-.tag.done{background:#E7F5EC;color:#1A7F4B}
-:root[data-theme="dark"] .tag.done{background:#15301F;color:#5BD98A}
 
 /* the flowchart */
 .chart{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);padding:8px;overflow-x:auto}
@@ -39,16 +51,28 @@ body{background:var(--s2)}
 .node.hub text{fill:var(--bg);font-size:15px}
 .node.end rect{fill:var(--s2);stroke:none}
 .node.end text{fill:var(--fg-2);font-weight:500}
-.node.todo rect{fill:none;stroke-dasharray:4 4}
-.node.todo text{fill:var(--fg-2);font-weight:500}
 a .node:hover rect{stroke:var(--fg)}
 .edge{fill:none;stroke:var(--fg-3);stroke-width:1.3}
-.edge.todo{stroke-dasharray:4 4}
 .elabel{font-size:12px;font-weight:600;fill:var(--fg-2);paint-order:stroke;stroke:var(--card);stroke-width:6px;stroke-linejoin:round}
 .group{font-size:12px;font-weight:600;fill:var(--fg-3);letter-spacing:.04em}
 
+/* every action, screen by screen */
+.checks{columns:3 380px;column-gap:16px}
+.scr{break-inside:avoid;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-card);margin-bottom:16px;overflow:hidden}
+.scr-h{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line-soft)}
+.scr-h a{font-weight:700;font-size:15.5px;color:inherit;text-decoration:none;margin-right:auto}
+.scr-h a:hover{text-decoration:underline;text-underline-offset:3px}
+.act-row{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:start;padding:8px 14px;border-bottom:1px solid var(--line-soft);font-size:14.5px;cursor:pointer}
+.scr > :last-child{border-bottom:0}
+.act-row:hover{background:var(--s2)}
+.act-row input{width:16px;height:16px;margin:2px 0 0;accent-color:var(--fg)}
+.act-row small{display:block;color:var(--fg-2);font-size:13px}
+.act-row.ok b{text-decoration:line-through;color:var(--fg-2);font-weight:500}
+.act-row b{font-weight:600}
+.scr.hide,.act-row.hide{display:none}
+
 /* the screens, flow by flow */
-.flow{padding:28px 0 0;scroll-margin-top:72px}
+.flow{padding:26px 0 0;scroll-margin-top:72px}
 .flow h3{font-size:17px;margin-bottom:14px}
 .strip{display:flex;align-items:center;flex-wrap:wrap;row-gap:18px;padding:4px 4px 12px}
 .shot{flex:none;width:calc(1440px * var(--z));text-decoration:none;color:inherit}
@@ -60,103 +84,212 @@ a .node:hover rect{stroke:var(--fg)}
 .hop span{height:26px;padding:0 10px;border-radius:99px;background:var(--card);box-shadow:var(--shadow-1);display:inline-flex;align-items:center;white-space:nowrap}
 .hop svg{width:100%;height:12px;fill:none;stroke:var(--fg-3);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 
-@media (max-width:760px){.top-in,.wrap{padding-left:16px;padding-right:16px}.strip{overflow-x:auto}.list a,.list div.item{grid-template-columns:22px 1fr auto}.list .path{display:none}}
+@media (max-width:900px){.top-in,.wrap{padding-left:16px;padding-right:16px}.strip{overflow-x:auto}.list a,.list div.item{grid-template-columns:22px 1fr auto}.list .path{display:none}.found{grid-template-columns:1fr}.top-in .b-soft{display:none}}
 </style>
 </head>
 <body>
 <header class="top"><div class="top-in">
   <a class="brand" href="design-system.html"><img src="assets/jammie/v3/char-dollop.png" alt="">jammie</a>
-  <a class="btn b-soft b-sm" href="#list">All flows</a>
+  <a class="btn b-soft b-sm" href="#found">Live check</a>
+  <a class="btn b-soft b-sm" href="#list">Flows</a>
   <a class="btn b-soft b-sm" href="#chart">Flowchart</a>
+  <a class="btn b-soft b-sm" href="#actions">Actions</a>
   <a class="btn b-soft b-sm" href="#screens">Screens</a>
   <a class="btn b-out b-sm" href="design-system.html">Design system</a>
   <a class="btn b-jam b-sm" href="app.html">Open prototype</a>
 </div></header>
 
 <main class="wrap">
-  <section class="block" id="list"><h2>All flows</h2><div class="list" id="flowList"></div></section>
-  <section class="block" id="chart"><h2>Flowchart</h2><div class="chart" id="flowChart"></div></section>
-  <section class="block" id="screens"><h2>Screens</h2><div id="flows"></div></section>
+  <section class="block" id="found">
+    <div class="block-h"><h2>What the live product has</h2><span class="tag">Checked 22 Nov on demo.jammie.ai, app.jammie.ai and staging</span></div>
+    <div class="found">
+      <div><h3><span class="tag live">Live</span>There today</h3><ul>
+        <li>Add your store, then Google sign-in before anything is read</li>
+        <li>First idea, then the brand book, then the feed</li>
+        <li>Feed of cards: picture, video or carousel, with Keep and Let’s jam</li>
+        <li>Card menu: share, save, later, less like this, give feedback</li>
+        <li>Idea sheet: caption, sources, how we’ll know, where it goes</li>
+        <li>Let’s jam: ship as is, change first, more like this, make it with Sloosh</li>
+        <li>A sent idea becomes a row at the top of the feed</li>
+        <li>Stories: today, trends, popular ads, industry news, how to</li>
+        <li>Start something new: a note to the team, typed or spoken</li>
+        <li>Command centre: five columns of numbers, with reports</li>
+        <li>What we learned, Connectors, You, and a bell</li>
+      </ul></div>
+      <div><h3><span class="tag docs">Docs only</span>Written down, not reachable</h3><ul>
+        <li>Reading, three taps, “here’s what we found”, “sit back”: behind sign-in</li>
+        <li>Onboarding’s side roads: not a store, a personal page, a failed read</li>
+        <li>Locked ideas and “unlock everything”</li>
+        <li>Liked and Your store: closed in production</li>
+        <li>Deck and Work: open only by address on the demo</li>
+        <li>Inside the Shopify admin</li>
+      </ul></div>
+      <div><h3><span class="tag added">Added</span>Mine, not in the live product</h3><ul>
+        <li>One card at a time with an action column, after WinningAds. Live is a scrolling column.</li>
+        <li>Only Jammie speaks. Live names nine teammates on cards.</li>
+        <li>An order panel for a sent idea. Live only shows the row.</li>
+        <li>A credits step for Sloosh. Live promises one; I did not open it.</li>
+        <li>The three taps’ questions are my guess.</li>
+        <li>Work in the rail. Live keeps it off the rail.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="block" id="list"><div class="block-h"><h2>All flows</h2></div><div class="list" id="flowList"></div></section>
+  <section class="block" id="chart"><div class="block-h"><h2>Flowchart</h2></div><div class="chart" id="flowChart"></div></section>
+
+  <section class="block" id="actions">
+    <div class="block-h"><h2>Every action, screen by screen</h2>
+      <span class="tag" id="tally"></span>
+      <div class="seg" id="filter"><button class="on" data-f="all">All</button><button data-f="live">Live</button><button data-f="docs">Docs only</button><button data-f="added">Added</button><button data-f="todo">Not built</button></div>
+      <button class="btn b-soft b-sm" id="resetChecks">Clear ticks</button>
+    </div>
+    <div class="checks" id="checks"></div>
+  </section>
+
+  <section class="block" id="screens"><div class="block-h"><h2>Screens</h2></div><div id="flows"></div></section>
 </main>
 
 <script>
-// ---- every flow in the product. steps = [route in the prototype, screen name, the action that leads on]
+// ---- every flow. steps = [route in the prototype, screen name, the action that leads on]
 const FLOWS = [
-  { id:'onboarding', name:'Onboarding', path:'Add your store → Reading → Confirm the brand → Pick a goal → First idea → Feed',
-    steps:[['start','Add your store','Read my store'],['reading','Reading the store','About a minute'],['brand','Confirm the brand','Looks right'],['goal','Pick a goal','Continue'],['first','First idea','Open my feed'],['feed','Feed']] },
-  { id:'browse', name:'Browse the feed', path:'Feed → Next or Previous → Keep, Share or Not for me',
-    steps:[['feed','Feed','Next'],['feed?i=1','Next idea','Keep'],['liked','Liked']] },
-  { id:'make', name:'Make an idea', path:'Feed → Why → Make this → Making → Result → Download, Share or Make more',
-    steps:[['feed','Feed','Why'],['why','Why this','Make this'],['making','Making','Ready'],['result','Result']] },
-  { id:'liked', name:'Come back to a kept idea', path:'Liked → the idea → Make this',
-    steps:[['liked','Liked','Make this'],['why?i=1','Why this','Make this'],['making','Making']] },
-  { id:'numbers', name:'Start from a number', path:'Numbers → the idea behind it → Make this',
-    steps:[['numbers','Numbers','Open the idea'],['feed?i=4','The idea behind it','Why'],['why?i=4','Why this']] },
-  { id:'unlock', name:'Unlock', path:'A locked idea → Unlock every idea → Send',
-    steps:[['feed?i=5','A locked idea','Unlock'],['unlock','Unlock every idea','Send'],['feed','Feed']] },
-  { name:'Ask Jammie about an idea', path:'Feed → Ask → a short chat → back to the idea' },
-  { name:'Fix what Jammie learned', path:'Confirm the brand → Fix it → edit → save' },
-  { name:'Updates', path:'Bell → what was made while you were away → Result' },
-  { name:'Connect your tools', path:'Your store → pick a tool → sign in → connected' },
-  { name:'Settings and stores', path:'Your store → details, team, switch store' },
-  { name:'Sign in', path:'Email or Google → your feed' },
+  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading → Three taps → What we found → Sit back → First idea → Brand book → Feed',
+    steps:[['start','Add your store','Read my store'],['signin','Sign in','Continue with Google'],['reading','Reading the store','By itself'],['taps','Three taps','Continue or Skip'],['check','What we found','Looks right'],['wait','Sit back','By itself'],['first','First idea','Open my feed'],['book','Brand book','Keep it in my feed'],['feed?i=1','Feed']] },
+  { id:'browse', name:'Browse the feed', path:'Feed → Next or Previous → Keep, Later, Less, Share',
+    steps:[['feed?i=1','Feed','Next'],['feed?i=2','Next idea','Next'],['feed?i=8','Connect a tool']] },
+  { id:'idea', name:'Open an idea', path:'Feed → Why → the idea sheet → sources, the plan, connect a tool',
+    steps:[['feed?i=1','Feed','Why'],['idea?i=1','The idea sheet','Let’s jam'],['jam?i=1','Let’s jam']] },
+  { id:'ship', name:'Let’s jam: ship as is', path:'Let’s jam → Ship as is → a row in the feed → the order → Work',
+    steps:[['jam?i=1','Let’s jam','Ship as is'],['feed?i=2','Back in the feed','Open the row'],['order?o=reel','The order','Open Work'],['work','Work']] },
+  { id:'change', name:'Let’s jam: change first', path:'Let’s jam → Change first → a note → Send to the team',
+    steps:[['jam?i=1','Let’s jam','Change first'],['change?i=1','A note to the team','Send to the team'],['feed?i=2','Back in the feed']] },
+  { id:'sloosh', name:'Let’s jam: make it with Sloosh', path:'Let’s jam → Make it with Sloosh → see the credits → Make it',
+    steps:[['jam?i=0','Let’s jam','Make it with Sloosh'],['sloosh?i=0','See the credits','Make it'],['feed?i=1','Back in the feed']] },
+  { id:'stories', name:'Stories', path:'A ring → the story → Make this → Let’s jam',
+    steps:[['feed?i=1','Feed','A ring'],['story?s=0','The story','Make this'],['jam?i=0','Let’s jam']] },
+  { id:'new', name:'Start something new', path:'New → a note, typed or spoken → Send to the team',
+    steps:[['feed?i=1','Feed','New'],['new?i=1','A note to the team','Send to the team'],['bell?i=1','Updates']] },
+  { id:'numbers', name:'Command centre', path:'Command centre → a card → its report, add costs, Park, or Let’s jam',
+    steps:[['command','Command centre','Let’s jam'],['new?i=1','A note to the team']] },
+  { id:'know', name:'What Jammie knows', path:'What we learned → the brand book, a tile, add notes or a file',
+    steps:[['learned','What we learned','Connectors'],['connectors','Connectors']] },
+  { id:'you', name:'You and unlock', path:'You → name, look and sound, help, start again, unlock everything',
+    steps:[['you','You','Unlock everything'],['unlock','Unlock everything','Send'],['feed?i=1','Feed']] },
+  { name:'Fix something', path:'What we found → Fix something → edit → save' },
+  { name:'Onboarding’s side roads', path:'Not a store, a personal page, a failed read, a closed store' },
+  { name:'Reports', path:'A number → morning brief, P&L, weekly, marketing or customers report' },
+  { name:'Inside the brand book', path:'Brand book → what Jammie knows, line by line, with sources' },
+  { name:'Deck, Liked and Your store', path:'Closed in production today' },
+  { name:'Inside the Shopify admin', path:'The same app, framed by Shopify' },
 ];
 document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
   const inner = `<span class="n">${i + 1}</span><b>${f.name}</b><span class="path">${f.path}</span><span class="tag ${f.steps ? 'done' : ''}">${f.steps ? 'Built' : 'Not built'}</span>`;
   return f.steps ? `<a href="#${f.id}">${inner}</a>` : `<div class="item">${inner}</div>`;
 }).join('');
 
-// ---- flowchart: screens are boxes, outcomes are soft pills, dashed means not built
-const W = 150, H = 40;
+// ---- flowchart: screens are boxes, outcomes are soft pills
+const W = 156, H = 40;
 const N = {
-  start:{x:90,y:50,t:'Add your store',go:'start'}, reading:{x:90,y:130,t:'Reading the store',go:'reading'}, brand:{x:90,y:210,t:'Confirm the brand',go:'brand'},
-  goal:{x:90,y:290,t:'Pick a goal',go:'goal'}, first:{x:90,y:370,t:'First idea',go:'first'},
-  feed:{x:350,y:250,t:'Feed',go:'feed',k:'hub'},
-  liked:{x:610,y:50,t:'Liked',go:'liked'},
-  why:{x:610,y:130,t:'Why this',go:'why'}, making:{x:860,y:130,t:'Making',go:'making'}, result:{x:1110,y:130,t:'Result',go:'result'}, out:{x:1360,y:130,t:'Download or share',k:'end'},
-  next:{x:610,y:210,t:'Next idea',k:'end'},
-  skip:{x:610,y:290,t:'Fewer like this',k:'end'},
-  unlock:{x:610,y:370,t:'Unlock every idea',go:'unlock'}, sent:{x:860,y:370,t:'Request sent',k:'end'},
-  numbers:{x:610,y:450,t:'Numbers',go:'numbers'}, behind:{x:860,y:450,t:'The idea behind it',go:'feed?i=4'},
-  ask:{x:610,y:530,t:'Ask Jammie',k:'todo'}, fix:{x:350,y:130,t:'Fix the brand',k:'todo'}, bell:{x:350,y:450,t:'Updates',k:'todo'},
+  start:{x:95,y:44,t:'Add your store',go:'start'}, signin:{x:95,y:110,t:'Sign in',go:'signin'}, reading:{x:95,y:176,t:'Reading the store',go:'reading'},
+  taps:{x:95,y:242,t:'Three taps',go:'taps'}, check:{x:95,y:308,t:'What we found',go:'check'}, wait:{x:95,y:374,t:'Sit back',go:'wait'},
+  first:{x:95,y:440,t:'First idea',go:'first'}, book:{x:95,y:506,t:'Brand book',go:'book'},
+  feed:{x:350,y:275,t:'Feed',go:'feed',k:'hub'},
+  story:{x:610,y:44,t:'A story',go:'story?s=0'}, idea:{x:610,y:120,t:'The idea sheet',go:'idea?i=1'},
+  jam:{x:850,y:120,t:'Let’s jam',go:'jam?i=1'}, change:{x:1085,y:120,t:'A note to the team',go:'change?i=1'}, sloosh:{x:1085,y:196,t:'See the credits',go:'sloosh?i=0'},
+  order:{x:1320,y:60,t:'The order',go:'order?o=reel'}, morelike:{x:1085,y:268,t:'More like this',k:'end'},
+  next:{x:610,y:200,t:'Next idea',k:'end'},
+  neu:{x:610,y:290,t:'Start something new',go:'new'}, sent:{x:850,y:290,t:'Sent to the team',k:'end'},
+  bell:{x:610,y:362,t:'Updates',go:'bell'}, unlock:{x:610,y:434,t:'Unlock everything',go:'unlock'}, asked:{x:850,y:434,t:'Request sent',k:'end'},
+  rail:{x:610,y:520,t:'From the rail',k:'end'},
+  command:{x:850,y:496,t:'Command centre',go:'command'}, work:{x:1085,y:496,t:'Work',go:'work'},
+  learned:{x:850,y:556,t:'What we learned',go:'learned'}, connectors:{x:1085,y:556,t:'Connectors',go:'connectors'}, you:{x:1320,y:556,t:'You',go:'you'},
 };
 const E = [
-  ['start','reading','Read my store'],['reading','brand','About a minute'],['brand','goal','Looks right'],['goal','first','Continue'],['first','feed','Open my feed'],
-  ['feed','liked','Keep'],['liked','why','Make this'],['feed','why','Why'],['why','making','Make this'],['making','result','Ready'],['result','out','Download'],
-  ['feed','next','Next'],['feed','skip','Not for me'],['feed','unlock','Unlock'],['unlock','sent','Send'],['feed','numbers','Numbers'],['numbers','behind','Open the idea'],
-  ['feed','ask','Ask',1],['brand','fix','Fix it',1],['feed','bell','Bell',1],
+  ['start','signin','Read my store'],['signin','reading','Google'],['reading','taps','By itself'],['taps','check','Continue'],['check','wait','Looks right'],['wait','first','By itself'],['first','book','Open my feed'],['book','feed','Keep it'],
+  ['feed','story','A ring'],['feed','idea','Why'],['story','jam','Make this'],['idea','jam','Let’s jam'],
+  ['jam','order','Ship as is'],['jam','change','Change first'],['jam','sloosh','Sloosh'],['jam','morelike','More like this'],['change','order','Send',1],['sloosh','order','Make it',1],
+  ['feed','next','Next'],['feed','neu','New'],['neu','sent','Send'],['feed','bell','Bell'],['feed','unlock','A locked idea'],['unlock','asked','Send'],
+  ['feed','rail','The rail'],['rail','command',''],['command','work','Open Work'],['rail','learned',''],['learned','connectors',''],['connectors','you',''],
 ];
 const hw = n => (n.k === 'hub' ? 170 : W) / 2, hh = n => (n.k === 'hub' ? 52 : H) / 2;
-function edge([a, b, label, todo]){
+function edge([a, b, label, nearStart]){
   const p = N[a], q = N[b]; let d, lx, ly;
-  if (Math.abs(p.x - q.x) < 4) {                       // straight down or up
+  if (Math.abs(p.x - q.x) < 4) {
     const dir = q.y > p.y ? 1 : -1; const y1 = p.y + dir * hh(p), y2 = q.y - dir * (hh(q) + 5);
     d = `M${p.x},${y1}L${q.x},${y2}`; lx = p.x; ly = (y1 + y2) / 2 + 4;
-  } else {                                             // out of the side, in at the side
+  } else {
     const dir = q.x > p.x ? 1 : -1; const x1 = p.x + dir * hw(p), x2 = q.x - dir * (hw(q) + 5), mx = (x1 + x2) / 2;
-    d = `M${x1},${p.y}C${mx},${p.y} ${mx},${q.y} ${x2},${q.y}`; lx = mx; ly = (p.y + q.y) / 2 - 8;   // a level line carries its name above it
-    if (Math.abs(p.y - q.y) > 60) { lx = x2 - dir * 44; ly = q.y - 8; }   // on a long sweep, sit near the end
+    d = `M${x1},${p.y}C${mx},${p.y} ${mx},${q.y} ${x2},${q.y}`; lx = mx; ly = (p.y + q.y) / 2 - 8;
+    if (Math.abs(p.y - q.y) > 50) { lx = x2 - dir * 46; ly = q.y - 8; }
+    if (nearStart) { lx = x1 + dir * 34; ly = p.y - 9; }
   }
-  return `<path class="edge ${todo ? 'todo' : ''}" d="${d}" marker-end="url(#arr)"/><text class="elabel" x="${lx}" y="${ly}" text-anchor="middle">${label}</text>`;
+  return `<path class="edge" d="${d}" marker-end="url(#arr)"/>` + (label ? `<text class="elabel" x="${lx}" y="${ly}" text-anchor="middle">${label}</text>` : '');
 }
 function node(id){
   const n = N[id], w = hw(n) * 2, h = hh(n) * 2;
   const g = `<g class="node ${n.k || ''}"><rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="${n.k === 'end' ? h / 2 : 11}"/><text x="${n.x}" y="${n.y + 5}" text-anchor="middle">${n.t}</text></g>`;
   return n.go ? `<a href="app.html#/${n.go}">${g}</a>` : g;
 }
-document.getElementById('flowChart').innerHTML = `<svg viewBox="0 0 1460 580" role="img" aria-label="Flowchart of every screen and action">
+document.getElementById('flowChart').innerHTML = `<svg viewBox="0 0 1420 590" role="img" aria-label="Flowchart of every screen and action">
   <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="var(--fg-3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-  <text class="group" x="15" y="16">ONBOARDING</text><text class="group" x="535" y="16">EVERY DAY</text>
+  <text class="group" x="17" y="14">ONBOARDING</text><text class="group" x="532" y="14">EVERY DAY</text>
   ${E.map(edge).join('')}${Object.keys(N).map(node).join('')}</svg>`;
+
+// ---- every action on every screen. [action, where it leads, source]. source: live (seen working), docs (written down only), added (mine), todo (not built here)
+const A = [
+  ['Add your store','start','live',[['Type a store link or its name','The field takes either','live'],['Read my store','Sign in','live']]],
+  ['Sign in','signin','live',[['Continue with Google','Reading the store','live'],['Use another account','Google’s own screen','todo'],['Privacy and terms links','Legal pages','todo']]],
+  ['Reading the store','reading','docs',[['Nothing to press','Moves on by itself to the three taps','docs'],['The store is not a store','A side road of its own','todo'],['The read fails','A side road with Try again','todo']]],
+  ['Three taps','taps','docs',[['Pick an answer in each row','Stays here','added'],['Continue','What we found','docs'],['Skip','What we found','docs']]],
+  ['What we found','check','docs',[['Looks right. Write my first idea','Sit back','docs'],['Fix something','Edit what was found','todo']]],
+  ['Sit back','wait','docs',[['Nothing to press','Moves on by itself to the first idea','docs']]],
+  ['First idea','first','live',[['Open my feed','Brand book','live']]],
+  ['Brand book','book','live',[['Keep it in my feed','Feed','live']]],
+  ['Feed','feed','live',[['Let’s jam','Let’s jam','live'],['Tap the card','The idea sheet','live'],['Why','The idea sheet','added'],['Keep','Kept, and Jammie learns','live'],['Share','Copies a link','live'],['Later','Saved for later, next idea','live'],['Less','Fewer like this, next idea','live'],['Note','A note to the team about this idea','live'],['Next and Previous, or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['A row under “With the team”','The order','live'],['Shuffle','A different order of ideas','live'],['Bell','Updates','live'],['Your picture','You','live'],['New','Start something new','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Hides that card','live'],['See the next 8, on the last card','More ideas','live'],['Unlock everything, on the locked card','Unlock everything','docs'],['Save, as its own action','Live has it beside Keep','todo'],['Previous and next picture in a carousel','Another frame','todo'],['“How your feed works” and its Got it','A first-day card','todo'],['Hold New to say what’s wrong','A report to the team','todo']]],
+  ['The idea sheet','idea?i=1','live',[['Copy caption','Copies it','live'],['A source row','Opens the source, such as Meta Ad Library','live'],['The full plan','The plan behind the idea','todo'],['Meta Ads, Shopify or Google Analytics','Connectors','live'],['Keep','Kept','live'],['Share','Copies a link','live'],['Let’s jam','Let’s jam','live'],['Close','Feed','live']]],
+  ['Let’s jam','jam?i=1','live',[['Ship as is','Sent, back in the feed with a row','live'],['Change first','A note to the team','live'],['More like this','Jammie learns it, next idea','live'],['Make it with Sloosh','See the credits','live'],['Close','Feed','live']]],
+  ['A note to the team','change?i=1','live',[['Type what to change','Stays here','live'],['Hold to talk','Speaks the note','live'],['Send to the team','Sent, back in the feed with a row','live'],['Close','Let’s jam','live']]],
+  ['See the credits','sloosh?i=0','added',[['Make it','Being made, back in the feed with a row','added'],['Not now','Let’s jam','added']]],
+  ['The order','order?o=reel','added',[['Take it back','Removes the order','added'],['Open Work','Work','added'],['Close','Feed','added']]],
+  ['The story','story?s=0','live',[['Pause','Holds the frame','live'],['Previous','The story before','live'],['Next','The story after','live'],['Make this','Let’s jam','live'],['Close','Feed','live']]],
+  ['Start something new','new','live',[['Type what you need','Stays here','live'],['Hold to talk','Speaks the note','live'],['Send to the team','Sent, back in the feed with a row','live'],['Or tell me what’s wrong','A report to the team','live'],['Close','Feed','live']]],
+  ['Updates','bell','live',[['A row','The order','added'],['Close','Feed','live']]],
+  ['Unlock everything','unlock','docs',[['Your name','Needed before Send','docs'],['Team size','Needed before Send','docs'],['Anything we should know','Optional','docs'],['Send','Thanks from Jammie, back in the feed','docs'],['Not now','Feed','docs']]],
+  ['Command centre','command','live',[['More, on a card','Opens the card’s depth in place','live'],['A small number','Its report: morning brief, P&L, weekly, marketing or customers','todo'],['Add delivery fees, product costs and others','A short form for that cost','todo'],['Park','Sets the card aside','live'],['Let’s jam','Start something new with the brief filled in','live'],['Open Work','Work','added'],['7 days or 30 days','Changes the period','added'],['The page’s menu','More options','todo'],['Jump to a column','Scrolls to it','todo']]],
+  ['Work','work','live',[['By stage or Library','Switches the view','live'],['By person','Groups by who has it','todo'],['A row','The order','added']]],
+  ['What we learned','learned','live',[['Add notes or a file','Adds to what Jammie knows','todo'],['The brand book','What Jammie knows, line by line','todo'],['A tile, 12 of them','That part of what Jammie knows','todo']]],
+  ['Connectors','connectors','live',[['Connect Shopify','Shopify’s own sign-in','todo'],['Connect, on six more tools','That tool’s own sign-in','todo']]],
+  ['You','you','live',[['Change your name','A small form','todo'],['Theme and Sound','Look and sound','todo'],['What Jammie learns','On or off','todo'],['Unlock everything','Unlock everything','docs'],['Start again','Add your store','live'],['Email us','Opens your email','live'],['Privacy, Terms, Data deletion','Legal pages','todo']]],
+];
+const NAMES = { live:'Live', docs:'Docs only', added:'Added', todo:'Not built' };
+const KEY = 'jammie-action-checks';
+let ticks; try { ticks = new Set(JSON.parse(localStorage.getItem(KEY)) || []); } catch { ticks = new Set(); }
+document.getElementById('checks').innerHTML = A.map(([name, route, src, acts], si) => `<div class="scr" data-src="${src}">
+  <div class="scr-h"><a href="app.html#/${route}">${name}</a><span class="tag ${src}">${NAMES[src]}</span></div>` +
+  acts.map(([a, to, s], ai) => { const id = si + '.' + ai; return `<label class="act-row ${ticks.has(id) ? 'ok' : ''}" data-s="${s}"><input type="checkbox" data-id="${id}" ${ticks.has(id) ? 'checked' : ''}><span><b>${a}</b><small>${to}</small></span><span class="tag ${s === 'todo' ? '' : s}">${NAMES[s]}</span></label>`; }).join('') + `</div>`).join('');
+const total = A.reduce((n, s) => n + s[3].length, 0);
+const tally = () => { document.getElementById('tally').textContent = `${ticks.size} of ${total} checked · ${A.length} screens`; };
+tally();
+document.getElementById('checks').addEventListener('change', e => {
+  const c = e.target.closest('input'); if (!c) return;
+  c.checked ? ticks.add(c.dataset.id) : ticks.delete(c.dataset.id); c.closest('.act-row').classList.toggle('ok', c.checked);
+  try { localStorage.setItem(KEY, JSON.stringify([...ticks])); } catch {} tally();
+});
+document.getElementById('resetChecks').addEventListener('click', () => { ticks.clear(); try { localStorage.removeItem(KEY); } catch {} document.querySelectorAll('.act-row').forEach(r => { r.classList.remove('ok'); r.querySelector('input').checked = false; }); tally(); });
+document.getElementById('filter').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const f = b.dataset.f;
+  document.querySelectorAll('#filter button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.scr').forEach(scr => { let any = 0;
+    scr.querySelectorAll('.act-row').forEach(r => { const show = f === 'all' || r.dataset.s === f; r.classList.toggle('hide', !show); if (show) any++; });
+    scr.classList.toggle('hide', !any); });
+});
 
 // ---- the screens: the real prototype, one frame per step
 const arrow = '<svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h114"/><path d="m110 1.500 6 4.500-6 4.500"/></svg>';
 document.getElementById('flows').innerHTML = FLOWS.filter(f => f.steps).map(f => `<section class="flow" id="${f.id}"><h3>${f.name}</h3><div class="strip">` +
   f.steps.map(([route, label, action]) => `<a class="shot" href="app.html#/${route}">
-      <div class="frame"><iframe src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
+      <div class="frame"><iframe loading="lazy" src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
     (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : '')).join('') + `</div></section>`).join('');
-
-// size every frame so a whole flow fits its row; on a phone the row scrolls instead
 function fit(){
   document.querySelectorAll('.strip').forEach(strip => {
     const n = strip.querySelectorAll('.shot').length, hops = strip.querySelectorAll('.hop').length;

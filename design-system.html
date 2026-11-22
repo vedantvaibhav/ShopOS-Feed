@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=4">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=5">
 <style>
 /* this page only: tokens and shared pieces live in jammie.css */
 /* ---------- header ---------- */
@@ -74,7 +74,7 @@
 .inuse{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 
 .feed-demo{display:flex;justify-content:center;align-items:flex-end;gap:8px}
-.feed-demo .fcard{height:580px}
+.feed-demo .fcard{height:600px}
 .actions{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
 .action{border:1px solid var(--line-soft);border-radius:14px;background:var(--card);padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:112px;justify-content:center;text-align:center}
 .action small{font-size:12px;color:var(--fg-2)}
@@ -356,8 +356,8 @@ body.tune-open .tune-fab{right:288px}
 <button class="btn b-ink b-sm tune-fab draw" id="fab"><i data-ico="filter"></i>Tune</button>
 <div class="copied" id="copied">Tokens copied</div>
 
-<script src="assets/jammie/v3/icons.js?v=4"></script>
-<script src="assets/jammie/v3/data.js?v=4"></script>
+<script src="assets/jammie/v3/icons.js?v=5"></script>
+<script src="assets/jammie/v3/data.js?v=5"></script>
 <script>
 (() => {
   const root = document.documentElement;
@@ -366,8 +366,8 @@ body.tune-open .tune-fab{right:288px}
   const POSES = [['wave','Wave'],['walk','Side'],['back','Back'],['cheer','Cheer'],['sleep','Asleep'],['search','Search'],['worry','Worry'],['sit','Sit']];
   const ELS = [['megaphone','Megaphone'],['clapper','Clapper'],['bag','Bag'],['heart','Heart'],['bell','Bell'],['magnifier','Magnifier'],['chart','Chart'],['sparkle','Sparkle']];
   // every action a person can take in the product, and where it leads
-  const ACTIONS = [['heart','Keep','Saves to Liked','like'],['share','Share','Copies a link'],['message','Ask','Asks Jammie'],['eye','Why','Opens the proof'],
-    ['arrow','Make this','Starts the making','cta'],['download','Download','Saves what was made'],['spark','Make more','Another round'],['down','Next','Next idea'],['up','Previous','Last idea'],['lock','Unlock','Opens every idea'],['close','Not for me','Fewer like this'],['more','More','The rest']];
+  const ACTIONS = [['arrow','Let’s jam','Sends it to the team','cta'],['heart','Keep','Jammie learns from it','like'],['share','Share','Copies a link'],['calendar','Later','Saves it for later'],['filter','Less','Fewer like this'],['eye','Why','Opens the idea sheet'],
+    ['message','Note','A note to the team'],['plus','New','Start something new'],['down','Next','Next idea'],['up','Previous','Last idea'],['lock','Unlock','Opens every idea'],['link','Copy caption','Copies the caption']];
 
   let state = load() || {};
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } }
@@ -379,17 +379,18 @@ body.tune-open .tune-fab{right:288px}
   $('elGrid').innerHTML = ELS.map(([f, n]) => tile('el-' + f, n)).join('');
   $('guideGrid').innerHTML = J.GUIDE.map(c => tile('char-' + c.id, c.shape)).join('');
   $('iconGrid').innerHTML = Object.keys(window.JAMMIE_ICONS).map(n => `<button class="icon-tile draw"><i data-ico="${n}"></i>${n}</button>`).join('');
-  $('ideaGrid').innerHTML = J.IDEAS.slice(0, 3).map(d => J.icard(d, { href: 'app.html#/why' })).join('');
-  $('rowDemo').innerHTML = J.srow('Made for you', '3 ads · today', ['sparkle', 'heart', 'megaphone'], 'app.html#/result') +
-    J.srow('View today\'s ideas', 'Comet · 6 new', ['megaphone', 'chart', 'clapper'], 'app.html#/feed');
-  $('feedDemo').innerHTML = J.fcard(J.IDEAS[0], { top: true, href: 'app.html#/why' }) + `<div class="acts">
+  $('ideaGrid').innerHTML = J.real.slice(1, 4).map(d => J.icard(d, { href: 'app.html#/idea' })).join('');
+  $('rowDemo').innerHTML = J.srow('With the team', '2 ideas · files land in your inbox', ['midnight.jpg', 'xlows.jpg', 'reviews.jpg'], 'app.html#/work') +
+    J.srow('View today\'s ideas', 'Comet · 10 new', ['sketch.jpg', 'ivory.jpg', 'reel.jpg'], 'app.html#/feed');
+  $('feedDemo').innerHTML = J.fcard(J.real[1], { href: 'app.html#/jam' }) + `<div class="acts">
       <button class="act draw" data-like><i data-ico="heart"></i>Keep</button>
       <button class="act draw"><i data-ico="share"></i>Share</button>
-      <button class="act draw"><i data-ico="message"></i>Ask</button>
+      <button class="act draw"><i data-ico="calendar"></i>Later</button>
+      <button class="act draw"><i data-ico="filter"></i>Less</button>
       <button class="act draw"><i data-ico="eye"></i>Why</button>
-      <button class="act draw" aria-label="More"><i data-ico="more"></i></button></div>`;
+      <button class="act draw"><i data-ico="message"></i>Note</button></div>`;
   $('actionGrid').innerHTML = ACTIONS.map(([ic, name, does, kind]) => `<div class="action">` +
-    (kind === 'cta' ? `<a class="fcard-cta draw" style="margin:0" href="app.html#/why">${name}<i data-ico="${ic}"></i></a>` : `<button class="act draw" ${kind ? 'data-like' : ''}><i data-ico="${ic}"></i>${name}</button>`) +
+    (kind === 'cta' ? `<a class="fcard-cta draw" style="margin:0" href="app.html#/jam">${name}<i data-ico="${ic}"></i></a>` : `<button class="act draw" ${kind ? 'data-like' : ''}><i data-ico="${ic}"></i>${name}</button>`) +
     `<small>${does}</small></div>`).join('');
   window.jammieIcons();
 

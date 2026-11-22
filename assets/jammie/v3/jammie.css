@@ -163,34 +163,41 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail a:hover{background:var(--s2);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
-/* the feed card: the picture is the screen, the words sit on it */
-.fcard{position:relative;flex:none;height:min(700px,calc(100vh - 150px));aspect-ratio:9/16;border-radius:var(--r-card);overflow:hidden;background:#111;color:#fff;isolation:isolate}
-.fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.fcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.28) 0,transparent 16%,transparent 44%,rgba(0,0,0,.86) 100%)}
+/* the idea card: the picture on one side, the idea on the other, taking the whole width */
+.fcard{position:relative;flex:1;min-width:0;max-width:1060px;height:min(680px,calc(100vh - 150px));border-radius:var(--r-card);overflow:hidden;background:var(--card);border:1px solid var(--line-soft);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);isolation:isolate}
+.fc-media{position:relative;background:#111;min-height:0;overflow:hidden}
+.fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fcard-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;z-index:2}
 .pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border:0}
 .pill.light{background:#fff;color:#222}
 .pill .ico{width:14px;height:14px}
-.fcard-foot{position:absolute;left:0;right:0;bottom:0;padding:18px;z-index:2}
-.fcard-cta{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 13px 0 15px;border-radius:var(--r-pill);font-weight:600;font-size:14px;text-decoration:none;border:0;margin-bottom:12px}
-.fcard-cta .ico{width:15px;height:15px}
-.fcard .who{margin-bottom:8px;font-size:13px}
-.fcard .who span:not(.av){color:rgba(255,255,255,.78)}
-.fcard .av{box-shadow:none}
-.fcard h3{font-size:21px;line-height:1.16}
-.fcard p{margin:6px 0 0;font-size:14px;line-height:1.4;color:rgba(255,255,255,.8)}
-.fcard-bar{height:3px;border-radius:3px;background:rgba(255,255,255,.28);margin-top:14px;overflow:hidden}
+.fcard-bar{position:absolute;left:14px;right:14px;bottom:12px;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden;z-index:2}
 .fcard-bar i{display:block;height:100%;width:0;background:#fff;border-radius:3px;animation:fbar 8s linear infinite}
 @keyframes fbar{to{width:100%}}
-.fcard.sm{height:auto;width:min(250px,100%)}
-.fcard.sm h3{font-size:16.5px}
-.fcard.sm .fcard-foot{padding:14px}
+.fc-body{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:clamp(22px,3.4vw,52px);min-width:0}
+.fc-body .who{font-size:14px}
+.fc-body h3{font-size:clamp(23px,2.5vw,36px);line-height:1.1}
+.fc-body p{margin:0;font-size:16px;line-height:1.45;color:var(--fg-2)}
+.fc-meta{display:flex;flex-wrap:wrap;gap:6px}
+.fc-meta span{height:28px;padding:0 10px;border-radius:99px;background:var(--s2);font-size:13px;font-weight:500;display:inline-flex;align-items:center}
+.fcard-cta{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 20px 0 22px;border-radius:var(--r-pill);font-weight:600;font-size:16px;text-decoration:none;border:0;margin-top:10px}
+.fcard-cta .ico{width:17px;height:17px}
+/* smaller, for the first-idea moment and the workbench */
+.fcard.mid{flex:none;width:min(760px,100%);height:min(400px,52vh)}
+.fcard.mid .fc-body{padding:28px}
+.fcard.mid h3{font-size:24px}
 /* a card with no picture: connect a tool, the end of the list, a locked block */
-.fcard.plain{background:var(--s2);color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center}
-.fcard.plain::after{display:none}
-.fcard.plain h3{font-size:22px}
+.fcard.plain{grid-template-columns:1fr;background:var(--s2);border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center}
+.fcard.plain h3{font-size:26px}
 .fcard.plain p{color:var(--fg-2);margin:0}
-.fcard.plain img.el{height:120px;width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
+.fcard.plain img.el{height:130px;width:auto;filter:drop-shadow(0 12px 10px rgba(0,0,0,.14))}
+@media (max-width:860px){
+  .fcard{grid-template-columns:1fr;grid-template-rows:minmax(0,1.2fr) auto}
+  .fc-body{padding:18px;gap:8px}
+  .fc-body h3{font-size:21px}
+  .fc-body p{font-size:14.5px}
+  .fcard-cta{height:40px;font-size:15px;margin-top:4px}
+}
 
 /* the action column beside the card */
 .acts{display:flex;flex-direction:column;gap:2px}

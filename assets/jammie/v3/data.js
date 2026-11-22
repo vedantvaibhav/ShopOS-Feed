@@ -38,14 +38,16 @@ window.JAMMIE = (() => {
     if (d.special === 'locked') return `<article class="fcard plain ${o.cls || ''}" data-idea="${d.id}">${ico('lock')}
       <h3>Jammie found 54 more ideas for Comet</h3>
       <a class="btn b-jam draw" href="${o.base || ''}#/unlock">Unlock everything${ico('arrow')}</a></article>`;
-    return `<article class="fcard ${o.cls || ''}" data-idea="${d.id}">${media(d)}
-    <div class="fcard-top"><span class="pill">${d.kicker}</span><span style="display:flex;gap:6px">
-      ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill">1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
-    <div class="fcard-foot">
-      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}
-      <div class="who">${av(26)}<b>Jammie</b><span>${d.kind} · ${d.age}</span></div>
+    return `<article class="fcard ${o.cls || ''}" data-idea="${d.id}">
+    <div class="fc-media">${media(d)}
+      <div class="fcard-top"><span class="pill">${d.kicker}</span><span style="display:flex;gap:6px">
+        ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill">1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
+      <div class="fcard-bar"><i></i></div></div>
+    <div class="fc-body">
+      <div class="who">${av(28)}<b>Jammie</b><span>${d.kind} · ${d.age}</span></div>
       <h3>${d.title}</h3><p>${d.line}</p>
-      <div class="fcard-bar"><i></i></div>
+      <div class="fc-meta"><span>${d.goes}</span></div>
+      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}
     </div></article>`; };
 
   // the idea card in a grid: picture, a quiet meta line, the title, one button

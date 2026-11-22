@@ -4,7 +4,7 @@
   --jam:#E93A4C;                 /* one clean red, no orange in it */
   --jam-2:#E0245E;               /* where the primary button drifts to, kept close on purpose */
   --on-jam:#FFFFFF;
-  --fc-h:min(780px,calc(100vh - 150px));   /* the idea picture: tall, 4 by 5, its words sit on it */
+  --fc-h:min(760px,calc(100vh - 244px));   /* the idea picture: tall and narrow, 3 by 4. Its words sit under it */
   --font:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --h-weight:600;
   --h-track:-0.005em;
@@ -177,20 +177,19 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .rail a:hover{background:var(--s2);color:var(--fg)}
 .rail a.on{color:var(--fg);background:var(--s2)}
 
-/* the idea card: one tall picture. What it is and its one action sit on the picture, at the foot */
+/* the idea card: one tall picture, about as wide as a Winning Ads card. What it is and its one action sit under it, on one band */
 .fcard{position:relative;flex:none;width:fit-content;max-width:100%}
-.fc-media{position:relative;height:var(--fc-h);aspect-ratio:4/5;border-radius:var(--r-card);overflow:hidden;background:#111;isolation:isolate}
+.fc-media{position:relative;height:var(--fc-h);aspect-ratio:3/4;border-radius:var(--r-card);overflow:hidden;background:#111;isolation:isolate}
 .fcard-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0}   /* never crop the top */
 .fc-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.26) 0,transparent 15%)}
 .fcard-top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:flex-end;align-items:center;gap:8px;z-index:3}
 .pill{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:rgba(0,0,0,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font-size:12px;font-weight:600;border:0}
 .pill.light{background:#fff;color:#222}
 .pill .ico{width:14px;height:14px}
-.fc-over{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:flex-end;gap:14px;padding:72px 16px 16px;color:#fff;background:linear-gradient(180deg,transparent,rgba(0,0,0,.52) 46%,rgba(0,0,0,.8));pointer-events:none}
-.fc-over > *{pointer-events:auto}
+.fc-body{width:0;min-width:100%;display:flex;align-items:center;gap:14px;margin-top:12px;padding:0 2px}
 .fc-text{flex:1;min-width:0;display:grid;gap:4px}
-.fc-text h3{font-size:17.5px;font-weight:600;letter-spacing:0;line-height:1.28;color:#fff}
-.fc-text p{margin:0;font-size:14px;line-height:1.4;color:rgba(255,255,255,.84);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fc-text h3{font-size:16.5px;font-weight:600;letter-spacing:0;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fc-text p{margin:0;font-size:14.5px;line-height:1.4;color:var(--fg-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .fcard-cta{flex:none;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 15px 0 17px;border-radius:var(--r-pill);font-weight:600;font-size:14.5px;text-decoration:none;border:0}
 .fcard-cta .ico{width:16px;height:16px}
 /* a carousel: its frames slide sideways inside the card */
@@ -204,7 +203,7 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.icard,a.srow{text-decoration:none}
 .fr-nav[disabled]{display:none}
 @media (hover:none){.fr-nav{display:none}}
 /* a card with no picture: connect a tool, the end of the list */
-.fcard.plain{display:flex;flex-direction:column;height:var(--fc-h);aspect-ratio:4/5;border-radius:var(--r-card);background:var(--s2);align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center}
+.fcard.plain{display:flex;flex-direction:column;height:var(--fc-h);aspect-ratio:3/4;border-radius:var(--r-card);background:var(--s2);align-items:center;justify-content:center;gap:14px;padding:28px;text-align:center}
 .fcard.plain h3{font-size:26px;max-width:14ch}
 .fcard.plain p{color:var(--fg-2);margin:0}
 .fcard.plain img.el{height:130px;width:auto;filter:var(--felt)}

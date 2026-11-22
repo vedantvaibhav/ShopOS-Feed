@@ -45,8 +45,9 @@ window.JAMMIE = (() => {
     <div class="fc-media">${media(d)}
       <div class="fcard-top"><span style="display:flex;gap:6px">
         ${d.draft ? `<span class="pill light">Initial draft</span>` : ''}${d.tag ? `<span class="pill light">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('play')}</button>` : ''}</span></div>
-      <div class="fc-over"><div class="fc-text"><h3>${d.title}</h3><p>${d.line}</p></div>
-        ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}</div></div></article>`; };
+</div>
+    <div class="fc-body"><div class="fc-text"><h3>${d.title}</h3><p>${d.line}</p></div>
+      ${o.cta === false ? '' : `<a class="fcard-cta draw" href="${o.href || '#/jam'}">${o.cta || 'Let’s jam'}${ico('arrow')}</a>`}</div></article>`; };
 
   // carousels work the same on every page: the arrows move a frame, the count follows the scroll
   document.addEventListener('click', e => { const b = e.target.closest('[data-frame]'); if (!b) return;

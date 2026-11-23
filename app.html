@@ -433,6 +433,11 @@ a.bk{display:block;text-decoration:none}
 .composer.listening .mic{background:var(--jam)}
 .composer.listening .mic .ico{color:#fff}
 .fab,#newTab{-webkit-touch-callout:none}
+/* the Demo button floats outside the product's own UI: a small dark tab, bottom left. It opens the prototype's controls */
+.demo-btn{position:fixed;left:76px;bottom:20px;z-index:6;height:32px;padding:0 14px;border-radius:var(--r-pill);display:inline-flex;align-items:center;background:var(--fg);color:var(--bg);font-size:12.5px;font-weight:600;letter-spacing:.02em;text-decoration:none;opacity:.86;transition:opacity .15s}
+.demo-btn:hover,.demo-btn.on{opacity:1}
+.demo-btn[hidden]{display:none}
+body.bare .demo-btn{left:20px}
 
 .bar-brand,.rail .tab-new,.rail .tab-you,.phone-only,.rail .tl{display:none}
 
@@ -571,6 +576,7 @@ a.bk{display:block;text-decoration:none}
   .rowi.first .btn{width:100%}
   .fields{grid-template-columns:1fr}
   .composer .mic{width:44px;height:44px}
+  .demo-btn,body.bare .demo-btn{left:0;bottom:auto;top:46%;height:auto;padding:14px 7px;border-radius:0 12px 12px 0;writing-mode:vertical-rl}   /* a tab on the left edge, clear of the tab bar and the card's words */
   .adder .input{padding:12px 14px}
   /* decks: one column a screen, with its cards' actions big enough to tap */
   /* one column a screen, exactly: no half column peeking in at the edge. The tabs above move between them */
@@ -657,6 +663,7 @@ a.bk{display:block;text-decoration:none}
   </div>
 </header>
 <a class="fab draw" href="#/new" aria-label="Ask the team for something new"><span><img src="assets/jammie/v3/char-dollop-sm.png" alt=""></span>New</a>
+<a class="demo-btn" id="demoBtn" href="#/demo" aria-label="Demo controls: not part of the product">Demo</a>
 <main id="app"></main>
 <aside id="side" aria-label="panel"></aside>
 <div id="shade"></div>
@@ -672,7 +679,7 @@ a.bk{display:block;text-decoration:none}
   const $ = id => document.getElementById(id);
   const root = document.documentElement, app = $('app'), sideEl = $('side'), modal = $('modal');
   const STILL = new URLSearchParams(location.search).has('still');   // the flow map shows screens at rest
-  if (STILL) root.classList.add('still');
+  if (STILL) { root.classList.add('still'); $('demoBtn').hidden = true; }   // the flow map's frames show the product only
 
   // light or dark: one saved choice, shared with the flow map and the design system
   const KEY = 'jammie-workbench-v5';
@@ -869,7 +876,7 @@ a.bk{display:block;text-decoration:none}
   function refilter(){ IDEAS = ALL.filter(visible); cur = 0; if (shown === 'feed' || shown === 'deck') redraw(); }
   IDEAS = ALL.filter(visible);
   if (prefs.calm) root.classList.add('still');
-  const FEED_ACTS = `<button class="ico-btn draw" data-do="shuffle" aria-label="Shuffle the cards">${ico('refresh')}</button><a class="ico-btn draw" href="#/settings" aria-label="Settings">${ico('settings')}</a>`;
+  const FEED_ACTS = `<button class="ico-btn draw" data-do="shuffle" aria-label="Shuffle the cards">${ico('refresh')}</button>`;
   let introSeen = store('jammie-proto-intro', false);
   const mini = d => `<a class="dcard idea" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt="" loading="lazy"><div class="top"><span>${d.kind}</span><em>${d.makes}</em></div><p class="t">${d.title}</p></a>`;
 
@@ -1069,10 +1076,8 @@ a.bk{display:block;text-decoration:none}
     you: { panel: () => ({ title: 'You', body: `
         <div class="sec"><div class="rows"><a class="rowi" href="#/details">${av(40)}<span class="grow"><b>${esc((me.first + ' ' + me.last).trim())}</b><small>Admin · Comet</small></span>${ico('arrow')}</a>${link('Team and access', '#/team', `${team.length + 1} ${team.length ? 'people' : 'person'}`)}</div></div>
         <div class="sec phone-only"><h4>Your store</h4><div class="rows">${link('Memory', '#/memory')}${link('Connectors', '#/connectors')}</div></div>
-        <div class="sec"><h4>Your jam</h4><div class="rows">${link('Settings', '#/settings', 'Your role, teammates, feed or deck')}${link('Your feed', '#/know?k=tune', 'What you want more of')}${link('Fact sheet', '#/know?k=facts', 'Everything I know, with where it came from')}${link('Work', '#/work', 'Your jams and what’s waiting on you')}${link('Look and sound', '#/look')}</div></div>
-        <div class="sec"><h4>The demo</h4><div class="rows">${link('Other brands', '#/stores')}${row('Start again from the first screen', '', 'restart')}</div></div>
-        <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}${row('Data deletion', '', 'legal')}</div></div>
-        <div class="sec"><h4>This prototype</h4><div class="rows">${link('Flow map', 'flows.html')}${link('Design system', 'design-system.html')}</div></div>` }) },
+        <div class="sec"><h4>Your jam</h4><div class="rows">${link('Your feed', '#/know?k=tune', 'What you want more of')}${link('Fact sheet', '#/know?k=facts', 'Everything I know, with where it came from')}${link('Work', '#/work', 'Your jams and what’s waiting on you')}${link('Look and sound', '#/look')}${row('Start again', '', 'restart')}</div></div>
+        <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}${row('Data deletion', '', 'legal')}</div></div>` }) },
     // ================= the demo's front door: a store to try without your own =================
     stores: { bare: true, page: () => `<section class="pick">${mark}
         <h1 class="h1">Pick a store.</h1>
@@ -1123,13 +1128,18 @@ a.bk{display:block;text-decoration:none}
         ['Story', 'Look and kit', 'Voice', 'Words', 'Products'].map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="bk${i}">${tab(n)}</button>`).join(''), 'narrow') },
 
     // ================= panels: settings, and the card's other actions =================
-    settings: { panel: () => ({ title: 'Settings', body: `
+    // not part of the product: the controls for trying the prototype, behind the floating Demo button
+    demo: { panel: () => ({ title: 'Demo controls', body: `
+        <p class="lead-p">Only for trying the prototype. None of this is in the product.</p>
+        <div class="sec"><h4>Start again</h4><div class="chips"><a class="chip" href="#/start">From onboarding</a><a class="chip" href="#/stores">From the demo stores</a><a class="chip" href="#/feed?intro=1&i=0">Straight to the feed</a></div></div>
+        <div class="sec"><h4>Jump to</h4><div class="chips">${[['The read', 'reading'], ['Three taps', 'taps'], ['Passport', 'here'], ['What we found', 'found'], ['First idea', 'first'], ['Work', 'work'], ['Library', 'library'], ['Brand book', 'brand']].map(([n, to]) => `<a class="chip" href="#/${to}">${n}</a>`).join('')}</div></div>
         <div class="sec"><h4>View</h4><div class="seg">${[['feed', 'Feed'], ['deck', 'Deck']].map(([k, n]) => `<button class="${(lastPage === 'deck') === (k === 'deck') ? 'on' : ''}" data-do="goto" data-id="#/${k}">${n}</button>`).join('')}</div></div>
-        <div class="sec"><div class="rows"><a class="rowi" href="#/work"><span class="grow"><b>Open work</b><small>Your jams and what’s waiting on you</small></span>${ico('arrow')}</a></div></div>
-        ${pick('roles', 'Your role', Object.keys(SEATS), 5)}
-        <div class="sec"><h4>Teammates</h4><div class="rows">${MAKERS.map(([n, line]) => `<div class="rowi"><span class="grow"><b>${n}</b><small>${line}</small></span>${sw(n, !off.has(n), 'maker')}</div>`).join('')}${fact('Jammie', 'Always on', 'Market news, your calls and any card with no owner')}</div></div>
-        ${pick('day', 'See the team grow', Object.keys(JOINS))}
-        <div class="sec"><div class="cap" id="joinNote">${JOINS[(tune.day || ['Day 1'])[0]]}</div></div>` }) },
+        <div class="sec"><h4>Connected tools</h4><div class="chips"><button class="chip" data-do="linkall">Connect all</button><button class="chip" data-do="unlinkall">Disconnect all</button></div></div>
+        ${pick('roles', 'Seat', Object.keys(SEATS), 5)}
+        <div class="sec"><h4>Teammates</h4><div class="rows">${MAKERS.map(([n, line]) => `<div class="rowi"><span class="grow"><b>${n}</b><small>${line}</small></span>${sw(n, !off.has(n), 'maker')}</div>`).join('')}</div></div>
+        ${pick('day', 'First month', Object.keys(JOINS))}
+        <div class="sec"><div class="cap" id="joinNote">${JOINS[(tune.day || ['Day 1'])[0]]}</div></div>
+        <div class="sec"><h4>This prototype</h4><div class="rows">${link('Flow map', 'flows.html')}${link('Design system', 'design-system.html')}</div></div>` }) },
     more: { under: 'feed', panel: () => ({ title: 'More', body: `
         ${opt('message', 'Give feedback', 'I’ll fix it now and remember it.', '#/feedback')}
         ${opt('team', 'Assign to a teammate', 'Hand this idea to someone.', '#/assign')}
@@ -1285,7 +1295,7 @@ a.bk{display:block;text-decoration:none}
     $('barTitle').textContent = pg.title || ''; $('barNote').textContent = pg.note || '';
     const ba = $('barActs'); if (ba.dataset.for !== pageName) { ba.dataset.for = pageName; ba.innerHTML = pg.acts || ''; window.jammieIcons(ba); }
     $('barBack').hidden = !pg.back; if (pg.back) $('barBack').setAttribute('href', pg.back);
-    [['bellBtn', 'bell'], ['youBtn', 'you'], ['youTab', 'you'], ['newTab', 'new']].forEach(([id, n]) => { $(id).classList.toggle('on', name === n); $(id).setAttribute('href', name === n ? home : '#/' + n); });
+    [['bellBtn', 'bell'], ['youBtn', 'you'], ['youTab', 'you'], ['newTab', 'new'], ['demoBtn', 'demo']].forEach(([id, n]) => { $(id).classList.toggle('on', name === n); $(id).setAttribute('href', name === n ? home : '#/' + n); });
     if (name === 'bell') { readN = orders.length; keep('jammie-proto-read', readN); }
     const unread = Math.max(0, orders.length - readN); $('bellN').hidden = !unread; $('bellN').textContent = unread;
   }
@@ -1365,6 +1375,8 @@ a.bk{display:block;text-decoration:none}
     uninvite: b => { team.splice(+b.dataset.id, 1); keep('jammie-proto-team', team); render(); },
     leave: () => toast('You’re the only admin. Add another first.', 'worry'),
     belltab: b => { bellTab = b.dataset.id; render(); },
+    linkall: () => { linked = Object.keys(TOOL); keep('jammie-proto-linked', linked); if (shown === 'connectors') redraw(); toast('All seven tools connected'); },
+    unlinkall: () => { linked = []; keep('jammie-proto-linked', linked); if (shown === 'connectors') redraw(); toast('All tools disconnected', 'sleep'); },
     markread: () => { readN = orders.length; keep('jammie-proto-read', readN); render(); toast('All read'); },
   };
 

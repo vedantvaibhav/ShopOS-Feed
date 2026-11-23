@@ -76,9 +76,10 @@ Never go below 11px (story names and action labels on a phone). Inputs are 16px 
 - Shadow: `--shadow-1` for a picked segment, `--shadow-2` for the New button, `--shadow-3` for sheets and toasts. Cards on the page carry no shadow.
 - Spacing: 8px steps. 16px gutters on a phone, 24px on desktop, 32px around a centred page column (max 1040px, 720px when narrow).
 - Shell: a 60px rail, a 64px top bar that never moves, a 440px side panel (a sheet from the foot under 860px).
-- A page’s own actions (shuffle and settings on the feed, the three dots on Command centre) sit in the top bar, before the bell. A page inside another (Library, Brand book) gets a back arrow before its title.
-- Nothing opens as a popup in the middle. What is a popup elsewhere (connecting a tool, settings, a report, one number opened up) is a side panel: `{ title, back, body, foot }`. A panel that leads from another carries `back`.
+- A page’s own actions (shuffle on the feed, the three dots on Command centre) sit in the top bar, before the bell. A page inside another (Library, Brand book) gets a back arrow before its title.
+- Nothing opens as a popup in the middle. What is a popup elsewhere (connecting a tool, a report, one number opened up) is a side panel: `{ title, back, body, foot }`. A panel that leads from another carries `back`.
 - Teammates are named in words only. Jammie is the only character drawn.
+- Controls that exist only to try the prototype (seat, teammates on or off, feed or deck, jump to a screen) never go in the product’s bars or panels. They live behind the floating Demo button.
 - Motion: one curve, `--ease` (cubic-bezier(.2,0,0,1)). Pages fade up 8px in 0.28s, panels arrive in 0.32s with all their contents at once. Nothing appears after its container has landed. Respect `prefers-reduced-motion`.
 
 ## Jammie

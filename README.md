@@ -14,7 +14,7 @@ the design system it is built from. No build step, no framework, no dependencies
 | `feed-v1.html` | The earlier ShopOS Feed prototype, kept as it was. |
 
 The three Jammie pages link to each other: the flow map and the design system from
-their headers, the prototype from its You panel.
+their headers, the prototype from its Demo button.
 
 ## The skill
 
@@ -41,7 +41,9 @@ Onboarding (store link, sign-in, the read, three taps, the passport, what we fou
 your first idea), a demo front door (pick a store, its profile), the feed and its
 deck view, Saved, Work and its library, Command centre with reports, costs and
 questions, Memory with its brand book and every tile's panel, Connectors with the
-connect flow, Updates, and your account (details, team, look and sound, settings).
+connect flow, Updates, and your account (details, team, look and sound).
+Controls that only exist to try the prototype (start again, jump to a screen, seat,
+teammates, feed or deck) sit behind the floating Demo button, bottom left.
 `flows.html` lists every flow and every action, and says which ones are simulated.
 
 ## Handy links into the prototype

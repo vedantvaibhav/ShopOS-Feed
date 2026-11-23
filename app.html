@@ -438,7 +438,8 @@ html.still ::-webkit-scrollbar{display:none}
   body.has-side .topbar{right:0;border-radius:0}
   #shade{position:fixed;inset:0;z-index:29;background:rgba(0,0,0,.36);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity var(--t) var(--ease)}
   body.has-side #shade{opacity:1;pointer-events:auto}
-  #side{top:auto;left:0;width:auto;max-height:calc(var(--vh) * .86);z-index:30;background:var(--card);border-top:1px solid var(--line-soft);border-radius:24px 24px 0 0;box-shadow:var(--shadow-3);visibility:visible;opacity:1;transform:translateY(105%);transition:transform var(--t) var(--ease)}
+  #side{top:auto;left:0;width:auto;height:calc(var(--vh) * .86);   /* one height for every sheet, so moving from one to the next never makes it jump */
+    z-index:30;background:var(--card);border-top:1px solid var(--line-soft);border-radius:24px 24px 0 0;box-shadow:var(--shadow-3);visibility:visible;opacity:1;transform:translateY(105%);transition:transform var(--t) var(--ease)}
   body.has-side #side{transform:none;transition:transform var(--t) var(--ease)}
   #side::before,.gate-card::before{content:"";flex:none;width:36px;height:5px;margin:8px auto -4px;border-radius:4px;background:var(--line)}
   /* the sign-in is a sheet from the foot too: no popups in the middle of a phone */

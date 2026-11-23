@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=24">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=25">
 <style>
 /* the docs shell only. Every token and component shown here lives in jammie.css and data.js */
 :root{--nav-w:248px;--top:64px;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
@@ -139,8 +139,8 @@ td code,li code{background:var(--card)}
 .pager a.next{text-align:right;grid-column:2}
 .pager small{display:block;font-size:12.5px;color:var(--fg-2)}
 .pager b{font-weight:600}
-.flash{position:fixed;left:50%;bottom:24px;z-index:40;transform:translate(-50%,16px);opacity:0;pointer-events:none;transition:.25s var(--ease)}
-.flash.show{transform:translate(-50%,0);opacity:1}
+.flash{position:fixed;top:calc(var(--top) + 8px);right:24px;z-index:40;transform:translateX(24px);opacity:0;pointer-events:none;transition:.25s var(--ease)}   /* the same place as the product's toasts: top right */
+.flash.show{transform:none;opacity:1}
 .shade{display:none}
 
 @media (max-width:1100px){
@@ -195,8 +195,8 @@ td code,li code{background:var(--card)}
 <div class="shade" id="shade"></div>
 <div class="toast flash" id="flash" role="status"><img src="assets/jammie/v3/pose-cheer-sm.png" alt=""><span></span></div>
 
-<script src="assets/jammie/v3/icons.js?v=24"></script>
-<script src="assets/jammie/v3/data.js?v=24"></script>
+<script src="assets/jammie/v3/icons.js?v=25"></script>
+<script src="assets/jammie/v3/data.js?v=25"></script>
 <script>
 (() => {
   const root = document.documentElement, J = window.JAMMIE, A = J.A, $ = id => document.getElementById(id);
@@ -350,7 +350,7 @@ td code,li code{background:var(--card)}
         <div class="state"><img src="${A}pose-sleep.png" alt=""><h4>Nothing new yet</h4></div>
         <div class="state"><img src="${A}pose-worry.png" alt=""><h4>That didn’t work</h4><button class="btn b-out b-sm">Try again</button></div>
         <div class="state"><div class="toast"><img src="${A}pose-cheer-sm.png" alt=""><span>Kept. It is in Saved.</span></div></div></div></div>
-      ${spec(['Piece', 'Rule'], [['Pose', '120px in a panel or page, 96px in a card'], ['Title', '19px, 600; a button only when there is something to try'], ['Toast', 'Under the top bar, centred on the page, gone after 3s, with the small cheer pose']])}` },
+      ${spec(['Piece', 'Rule'], [['Pose', '120px in a panel or page, 96px in a card'], ['Title', '19px, 600; a button only when there is something to try'], ['Toast', 'Always top right, 8px under the top bar, 24px from the edge (16px on a phone). Slides in from the right, gone after 3s, with a small Jammie pose']])}` },
 
     { g: 'Patterns', id: 'phone', t: 'Phone', lede: 'Under 860px: a top bar with the logo, stories across the width, a tab bar at the foot as Airbnb does it, and every popup a sheet from the foot. Nothing is ever cut at the edge.', body: () => `
       <div class="demo phones">${[['feed?i=1', 'Feed'], ['jam?i=1', 'A sheet'], ['command', 'Command centre']].map(([r, n]) => `<figure><iframe src="app.html?still&theme=${root.dataset.theme}#/${r}" title="${n} on a phone" loading="lazy" tabindex="-1"></iframe><figcaption>${n}</figcaption></figure>`).join('')}</div>

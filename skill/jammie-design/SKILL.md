@@ -171,3 +171,5 @@ Soft blocks with a 3px gap; the first and last take the card radius. Bold title,
 ## States
 
 Wait, empty, error and done use Jammie's pose (120px) and one title, no paragraph: Reading your store (search), Nothing new yet (sleep), That didn't work + Try again (worry), Kept. It is in Saved. as a toast with the small cheer pose.
+
+Toasts always appear in one place: top right, 8px under the top bar, 24px from the right edge (16px on a phone), stacked downward. They slide in from the right and leave after 3s. Never centre a toast or put it at the bottom.

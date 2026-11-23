@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=24">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=25">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 :root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--t2:.32s;--pp:#FBF7F0;--vh:100vh}
@@ -364,9 +364,6 @@ body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .rowi.first b{font-size:17px}
 .logo-tile{flex:none;width:36px;height:36px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-weight:700;font-size:14px}
 
-.toasts{position:fixed;left:calc(30px + 50vw);top:72px;transform:translateX(-50%);z-index:40;display:grid;justify-items:center;gap:8px;pointer-events:none;transition:left var(--t2) var(--ease)}   /* under the bar and centred on the page, clear of the card's words and its actions */
-body.has-side .toasts{left:calc(30px + 50vw - var(--side-w) / 2)}
-body.bare .toasts{left:50%}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 html.still *{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}
 html.still ::-webkit-scrollbar{display:none}
@@ -424,7 +421,6 @@ html.still ::-webkit-scrollbar{display:none}
   .learn{grid-template-columns:1fr;gap:32px}
   .shelf{position:static}
   .tiles{grid-template-columns:1fr 1fr;gap:8px}
-  .toasts,body.has-side .toasts,body.bare .toasts{left:16px;right:16px;top:64px;transform:none}
   .ico-btn,.top-right .ico-btn{width:48px;height:48px}
   .ico-btn .ico{width:24px;height:24px}
   .top-right .ico-btn,.top-right .ico-btn:hover,.top-right .ico-btn.on{background:none}   /* a bare icon in the bar, as on Instagram */
@@ -582,8 +578,8 @@ html.still ::-webkit-scrollbar{display:none}
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=24"></script>
-<script src="assets/jammie/v3/data.js?v=24"></script>
+<script src="assets/jammie/v3/icons.js?v=25"></script>
+<script src="assets/jammie/v3/data.js?v=25"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame } = window.JAMMIE;

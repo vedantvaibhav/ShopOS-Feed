@@ -131,7 +131,10 @@ a.btn,a.chip,a.act,a.ico-btn{text-decoration:none}
 .toast{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:8px 16px 8px 8px;box-shadow:var(--shadow-3);font-weight:500;font-size:14px}
 .toast.demo{animation:toast 3s var(--ease) infinite}
 .toast img{height:36px}
-@keyframes toast{0%{transform:translateY(16px);opacity:0}12%,82%{transform:none;opacity:1}100%{transform:translateY(8px);opacity:0}}
+@keyframes toast{0%{transform:translateX(24px);opacity:0}12%,82%{transform:none;opacity:1}100%{transform:translateX(24px);opacity:0}}
+/* where every toast goes, on every page and every screen size: top right, 8px under the top bar */
+.toasts{position:fixed;top:calc(var(--bar,64px) + 8px);right:24px;z-index:40;display:grid;justify-items:end;gap:8px;max-width:min(380px,calc(100vw - 32px));pointer-events:none}
+@media (max-width:860px){.toasts{right:16px}}
 
 /* ---------- product pieces ---------- */
 /* jammie's face in a circle */

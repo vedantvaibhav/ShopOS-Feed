@@ -79,7 +79,7 @@ Never go below 11px (story names and action labels on a phone). Inputs are 16px 
 - A page’s own actions (shuffle on the feed, the three dots on Command centre) sit in the top bar, before the bell. A page inside another (Library, Brand book) gets a back arrow before its title.
 - Nothing opens as a popup in the middle. What is a popup elsewhere (connecting a tool, a report, one number opened up) is a side panel: `{ title, back, body, foot }`. A panel that leads from another carries `back`.
 - Teammates are named in words only. Jammie is the only character drawn.
-- Controls that exist only to try the prototype (seat, teammates on or off, feed or deck, jump to a screen) never go in the product’s bars or panels. They live behind the floating Demo button.
+- Controls that exist only to try the prototype never go in the product’s bars or panels. The floating Demo button holds light or dark and the links to the flow map and design system, nothing else.
 - Motion: one curve, `--ease` (cubic-bezier(.2,0,0,1)). Pages fade up 8px in 0.28s, panels arrive in 0.32s. A panel's surface lands first; its title, contents and foot fade up together 0.14s later. Never stagger items one by one. Respect `prefers-reduced-motion`.
 
 ## Jammie
@@ -138,7 +138,7 @@ What are you showing?
 ```
 
 ### Feed card — `J.fcard(idea)`
-One 5:8 picture that fills the height under the stories, 24px radius. Its title and one line sit on the picture over a soft blur at the foot. A pill top left names who made it (Reel maker, Creative director); pills top right carry Start here, Initial draft, a rival tag, `1/8` and sound. Carousels slide sideways with the next frame's edge showing. The actions hang outside it on the right (`.acts`): Keep, Share, Later, Less, Why, More (feedback, assign, a note), then Jam as the one red circle, last.
+One 5:8 picture that fills the height under the stories, 24px radius. Its title and one line sit on the picture over a soft blur at the foot. A pill top left names who made it (Reel maker, Creative director); pills top right carry Start here, Initial draft, a rival tag, `1/8` and sound. Carousels slide sideways with the next frame's edge showing. The actions hang outside it on the right (`.acts`): Keep, Share, Later, Less, Why, More (feedback, assign, a note), then Jam as the one red circle, last. There is one action column for the whole feed, laid over it (`.feed-over`): it stays still while the cards scroll under it, acts on the card on screen, and hides on a plain card.
 
 ### Saved card — `J.scard(idea, { href, note })`
 The picture is the card (4:5, 20px radius), a kind pill top left, a filled heart top right that removes it. The title (two lines max) and `makes · Kept` sit under the picture, not in a box with it. Grid: 4 columns, 32px rows and 24px columns apart; 2 columns on a phone.

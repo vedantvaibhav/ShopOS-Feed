@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=27">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=28">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
@@ -123,7 +123,8 @@ a .node:hover rect{stroke:var(--fg)}
         <li>What we learned (Memory here), Connectors, You, and a bell</li>
       </ul></div>
       <div><h3><span class="tag docs">Docs only</span>Written down, not reachable</h3><ul>
-        <li>Three taps, “here’s what we found”, “sit back”: only on a store nobody has read</li>
+        <li>Three taps: only on a store nobody has read</li>
+        <li>“Here’s what we found”, “sit back” and “your first idea”: left out; the passport opens the feed</li>
         <li>Onboarding’s side roads: not a store, a personal page, a failed read</li>
         <li>Locked ideas and “unlock everything”: left out of the prototype</li>
         <li>Your store: closed in production</li>
@@ -146,7 +147,8 @@ a .node:hover rect{stroke:var(--fg)}
         <li>Light and dark, switched from You.</li>
         <li>Teammates are named in words only, on a pill on each card. Live draws nine characters; here only Jammie is drawn.</li>
         <li>A popup on live is a side panel here, and a sheet on a phone: connecting a tool, a report.</li>
-        <li>Live’s settings (role, teammates, feed or deck) are prototype controls here, behind a floating Demo button, so they are not mistaken for product UI.</li>
+        <li>Live’s settings (role, teammates, see the team grow) and its deck view (the same ideas grouped by teammate) are left out. A floating Demo button holds only light or dark and links to these pages.</li>
+        <li>All four demo stores open. Arata, Gully Labs and LEGO® India carry their profile, what Jammie read, their first ideas and the top ten cards of their live feed (pictures only; their videos are not copied). Their Command centre, reports and connector figures are Comet’s simulated ones.</li>
         <li>Work lets you push a jam to its next stage yourself, so the board can be tried. On live the team moves it.</li>
         <li>Report figures beyond the board’s own, the day-by-day numbers, and “what you keep” once costs are saved are worked out from the demo’s, not read.</li>
         <li>A credits step for Sloosh. Live promises one; I did not open it.</li>
@@ -179,12 +181,16 @@ paintLook();
 document.getElementById('themeBtn').addEventListener('click', () => { const l = { theme: look().theme === 'dark' ? 'light' : 'dark' }; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
 // ---- every flow. steps = [route in the prototype, screen name, the action that leads on]
 const FLOWS = [
-  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading → Three taps → Brand passport → Here’s what we found → Your first idea → Feed',
-    steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Brand passport','Continue'],['found','Here’s what we found','Looks right'],['writing','Sit back','By itself'],['first','Your first idea','Open my feed'],['feed?i=1','Feed']] },
-  { id:'fix', name:'Fix something', path:'Here’s what we found → Fix something → tap the line that’s off, change the rivals → Write my first idea',
-    steps:[['found','Here’s what we found','Fix something'],['fix','Fix something','Write my first idea'],['writing','Sit back']] },
-  { id:'demo', name:'Try a demo store', path:'Add your store → Or try a demo store → pick a store → its profile → See the ideas',
-    steps:[['stores','Pick a store','Comet'],['profile','Company profile','See the ideas'],['opening','Opening Comet','By itself'],['feed?intro=1&i=0','Feed, with its hello']] },
+  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading → Three taps → Brand passport → Feed',
+    steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Brand passport','Open my feed'],['feed?i=1','Feed']] },
+  { id:'demo', name:'Try a demo store', path:'Add your store → Or try a demo store → pick a store → its profile → See the ideas → that store’s feed',
+    steps:[['stores','Pick a store','Arata'],['profile?s=arata','Arata’s profile','See the ideas'],['arata:opening','Opening Arata','By itself'],['arata:feed?intro=1&i=0','Arata’s feed']] },
+  { id:'arata', name:'Arata', path:'Hair growth and scalp care · its feed, passport and memory, from the live demo',
+    steps:[['arata:feed?i=1','Feed'],['arata:feed?i=5','Product page idea'],['arata:here','Brand passport'],['arata:memory','Memory'],['arata:know?k=rivals&on=memory','Rival watch']] },
+  { id:'gully', name:'Gully Labs', path:'Handcrafted sneakers · its feed, passport and memory, from the live demo',
+    steps:[['gully:feed?i=0','Feed'],['gully:feed?i=5','A carousel'],['gully:here','Brand passport'],['gully:memory','Memory'],['gully:brand','Brand book']] },
+  { id:'lego', name:'LEGO® India', path:'Building blocks · its feed, passport and memory, from the live demo',
+    steps:[['lego:feed?i=0','Feed'],['lego:feed?i=5','Five ads'],['lego:here','Brand passport'],['lego:memory','Memory'],['lego:know?k=plans&on=memory','Every plan']] },
   { id:'browse', name:'Browse the feed', path:'Feed → scroll, swipe or the arrow keys → Keep, Later, Less, Share',
     steps:[['feed?i=1','Feed','Scroll'],['feed?i=2','A carousel','Scroll'],['feed?i=8','Connect a tool']] },
   { id:'idea', name:'Open an idea', path:'Feed → Why → why this idea → sources, the plan, connect a tool',
@@ -199,8 +205,8 @@ const FLOWS = [
     steps:[['feed?i=1','Feed','A ring'],['story?s=0','The story','Make this'],['jam?i=0','Let’s jam']] },
   { id:'cardmore', name:'More on a card', path:'More → give feedback, assign to a teammate, or a note to the team',
     steps:[['more?i=1','More','Give feedback'],['feedback?i=1','Feedback on this idea','Send'],['assign?i=1','Give it to a teammate','Invite a teammate'],['team?on=feed','Team and access']] },
-  { id:'settings', name:'Demo controls and the deck', path:'The floating Demo button → seat, teammates, first month, jump to a screen → Deck → Work',
-    steps:[['demo','Demo controls','Deck'],['deck','Deck','Open work'],['work','Work','Library'],['library','Library']] },
+  { id:'work', name:'Work', path:'Command centre → Open work → a jam moves through four stages → Library',
+    steps:[['work','Work','Library'],['library','Library']] },
   { id:'wrong', name:'Tell Jammie what’s wrong', path:'Hold New → say what’s wrong, typed or spoken → Send',
     steps:[['feed?i=1','Feed','Hold New'],['wrong','Tell Jammie what’s wrong']] },
   { id:'new', name:'Ask the team', path:'New → a note → Send → Updates',
@@ -233,7 +239,7 @@ document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
 const W = 156, H = 40;
 const N = {
   start:{x:95,y:44,t:'Add your store',go:'start'}, signin:{x:95,y:110,t:'Sign in',go:'signin'}, reading:{x:95,y:176,t:'Reading your store',go:'reading'},
-  taps:{x:95,y:242,t:'Three taps',go:'taps'}, here:{x:95,y:308,t:'Brand passport',go:'here'}, found:{x:95,y:374,t:'What we found',go:'found'}, first:{x:95,y:440,t:'Your first idea',go:'first'},
+  taps:{x:95,y:242,t:'Three taps',go:'taps'}, here:{x:95,y:308,t:'Brand passport',go:'here'},
   feed:{x:350,y:275,t:'Feed',go:'feed',k:'hub'},
   story:{x:610,y:44,t:'A story',go:'story?s=0'}, idea:{x:610,y:120,t:'Why this idea',go:'idea?i=1'},
   jam:{x:850,y:120,t:'Let’s jam',go:'jam?i=1'}, change:{x:1085,y:120,t:'Change first',go:'change?i=1'}, sloosh:{x:1085,y:196,t:'See the credits',go:'sloosh?i=0'},
@@ -246,7 +252,7 @@ const N = {
   memory:{x:850,y:586,t:'Memory',go:'memory'}, connectors:{x:850,y:636,t:'Connectors',go:'connectors'},
 };
 const E = [
-  ['start','signin','Read my store'],['signin','reading','Google or email'],['reading','taps','By itself'],['taps','here','Continue'],['here','found','Continue'],['found','first','Looks right'],['first','feed','Open my feed'],
+  ['start','signin','Read my store'],['signin','reading','Google or email'],['reading','taps','By itself'],['taps','here','Continue'],['here','feed','Open my feed'],
   ['feed','story','A ring'],['feed','idea','Why'],['story','jam','Make this',1],['idea','jam','Let’s jam'],
   ['jam','order','Ship as is'],['jam','change','Change first'],['jam','sloosh','Sloosh'],['jam','morelike','More like this'],['change','order','Send',1],['sloosh','order','Make it',1],
   ['feed','next','Scroll'],['feed','neu','New'],['neu','sent','Send'],['feed','bell','Bell'],['feed','you','You'],['you','again','Start again'],
@@ -282,13 +288,10 @@ const A = [
   ['Sign in','signin','live',[['Continue with Google','Reading your store','live'],['A name and an email, then Continue','Reading your store','added'],['Close','Add your store','added'],['Use another account','Google’s own screen','todo'],['Privacy and terms links','Legal pages','todo']]],
   ['Reading your store','reading','live',[['Nothing to press','One line changes as Jammie reads, then it moves on','added'],['The store is not a store','A side road of its own','todo'],['The read fails','A side road with Try again','todo']]],
   ['Three taps','taps','docs',[['Pick who you are','Jammie slides out and comes back in that look','added'],['Pick what you want more of','Its object lands beside Jammie','added'],['Pick where you post, more than one','Each icon lands beside Jammie','added'],['Continue','Brand passport','added']]],
-  ['Brand passport','here','added',[['Continue','Here’s what we found','added']]],
-  ['Here’s what we found','found','live',[['Looks right. Write my first idea','Sit back, then your first idea','live'],['Fix something','Fix something','live']]],
-  ['Fix something','fix','live',[['Tap a line that’s off','Marked to be read again','live'],['Remove a rival','It leaves the list','live'],['Add a rival','It joins the list','live'],['Write my first idea','Sit back, then your first idea','live']]],
-  ['Your first idea','first','live',[['Open my feed','Feed, through a coral bloom','live']]],
-  ['Pick a store','stores','live',[['Comet','Its company profile','live'],['Another store','A toast: this demo opens Comet','added'],['Paste your store','Add your store','live']]],
-  ['Company profile','profile','live',[['See the ideas','Opening Comet, then the feed','live'],['All stores','Pick a store','live'],['Paste your store','Add your store','live']]],
-  ['Feed','feed','live',[['Jam, the red action','Let’s jam','live'],['Tap the card','Why this idea','live'],['Why','Why this idea','added'],['Keep','Kept, and it is in Saved','live'],['Share','Copies a link','live'],['Later','Put aside in Saved, next idea','live'],['Less','Fewer like this, next idea','live'],['More','Give feedback, assign to a teammate, or a note to the team','live'],['Shuffle, top right','The cards change order','live'],['Demo, the floating button','Demo controls. Not part of the product','added'],['Hold New','Tell Jammie what’s wrong','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['Bell, top right','Updates, with a count when something is with the team','live'],['The round button beside it','You','live'],['New','Ask the team','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Moves on to the next idea','live'],['See the next 8, on the last card','More ideas','live'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“Your wrapped” story, signed in','A monthly recap','todo'],['Got it, on the hello card','It goes, for good','live']]],
+  ['Brand passport','here','added',[['Open my feed','Feed, through a coral bloom','added']]],
+  ['Pick a store','stores','live',[['Any of the four stores','Its company profile','live'],['Paste your store','Add your store','live']]],
+  ['Company profile','profile?s=arata','live',[['See the ideas, or a first idea','Opening that store, then its feed. Saves and jams start clean for it','live'],['All stores','Pick a store','live'],['Paste your store','Add your store','live']]],
+  ['Feed','feed','live',[['Jam, the red action','Let’s jam','live'],['Scroll the cards','The action column stays still; only the cards move under it','added'],['Tap the card','Why this idea','live'],['Why','Why this idea','added'],['Keep','Kept, and it is in Saved','live'],['Share','Copies a link','live'],['Later','Put aside in Saved, next idea','live'],['Less','Fewer like this, next idea','live'],['More','Give feedback, assign to a teammate, or a note to the team','live'],['Shuffle, top right','The cards change order','live'],['Demo, the floating button','Demo controls. Not part of the product','added'],['Hold New','Tell Jammie what’s wrong','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['Bell, top right','Updates, with a count when something is with the team','live'],['The round button beside it','You','live'],['New','Ask the team','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Moves on to the next idea','live'],['See the next 8, on the last card','More ideas','live'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“Your wrapped” story, signed in','A monthly recap','todo'],['Got it, on the hello card','It goes, for good','live']]],
   ['Why this idea','idea?i=1','live',[['Copy caption','Copies it','live'],['A source row','Opens the source, such as Meta Ad Library','todo'],['The full plan','The plan behind the idea','todo'],['Meta Ads, Shopify or Google Analytics','Connectors','live'],['Keep','Kept','live'],['Share','Copies a link','live'],['Let’s jam','Let’s jam','live'],['Close','Feed','live']]],
   ['Let’s jam','jam?i=1','live',[['Ship as is','Sent, back in the feed, counted on the bell','live'],['Change first','A note to the team','live'],['More like this','Jammie learns it, next idea','live'],['Make it with Sloosh','See the credits','live'],['Close','Feed','live']]],
   ['Change first','change?i=1','live',[['Tap a suggestion','Fills the box','added'],['Type what to change','Stays here','live'],['Send, the round button in the box','Sent, back in the feed, with a toast','live'],['Back','Let’s jam','live'],['Close','Feed','live']]],
@@ -308,8 +311,7 @@ const A = [
   ['Feedback on this idea','feedback?i=1','live',[['Send','Fixed, back in the feed','live'],['Remove this idea','It leaves the feed','live'],['Hold the mic','Fills the box with a sample of what you said','added']]],
   ['Give it to a teammate','assign?i=1','live',[['A teammate','Handed over, and it is in Work','live'],['Invite a teammate','Team and access','live']]],
   ['Tell Jammie what’s wrong','wrong','live',[['Send','A toast','live'],['Hold the mic','Fills the box with a sample','added']]],
-  ['Demo controls','demo','added',[['Start again, Jump to','That screen','added'],['Feed or Deck','Switches the view','live'],['Connect all, Disconnect all','Every tool at once','added'],['Seat','Only those roles’ cards stay in the feed','live'],['A teammate’s switch','Their cards leave or come back','live'],['First month','Says who joins on that day','live'],['Flow map, Design system','Those pages','added']]],
-  ['Deck','deck','live',[['A card','That idea, in the feed','live'],['A tab on the second row','Scrolls to that column','added']]],
+  ['Demo controls','demo','added',[['Light or dark','Changes the whole product','added'],['Flow map, Design system','Those pages','added']]],
   ['Work','work','live',[['The button on a card','Moves the jam to the next stage, then into the library','added'],['Discard','Into the library, ready to restore','live'],['By stage, By person','Regroups the columns','live'],['Library','Library','live']]],
   ['Library','library','live',[['Restore','Back in Work','live'],['Upload a picture or video','A sample file joins the references','live'],['Paste a link','It joins the references','live']]],
   ['The board','board?on=command','live',[['Reports, Costs, Add data, Ask about these numbers','Those panels','live'],['Download the board','A toast','todo']]],
@@ -351,9 +353,10 @@ document.getElementById('filter').addEventListener('click', e => {
 // ---- the screens: the real prototype, one frame per step
 const arrow = '<svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h114"/><path d="m110 1.500 6 4.500-6 4.500"/></svg>';
 document.getElementById('flows').innerHTML = FLOWS.filter(f => f.steps).map(f => `<section class="flow" id="${f.id}"><h3>${f.name}</h3><div class="strip">` +
-  f.steps.map(([route, label, action]) => `<a class="shot" href="app.html#/${route}">
-      <div class="frame"><iframe loading="lazy" src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
-    (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : '')).join('') + `</div></section>`).join('');
+  f.steps.map(([step, label, action]) => { const [shop, route] = step.includes(':') ? step.split(':') : ['', step];   // 'arata:feed' is Arata's feed
+    return `<a class="shot" href="app.html${shop ? '?store=' + shop : ''}#/${route}">
+      <div class="frame"><iframe loading="lazy" src="app.html?still${shop ? '&store=' + shop : ''}#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
+    (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : ''); }).join('') + `</div></section>`).join('');
 function fit(){
   document.querySelectorAll('.strip').forEach(strip => {
     const n = strip.querySelectorAll('.shot').length, hops = strip.querySelectorAll('.hop').length;

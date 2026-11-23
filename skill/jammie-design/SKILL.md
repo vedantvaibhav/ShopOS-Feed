@@ -80,7 +80,7 @@ Never go below 11px (story names and action labels on a phone). Inputs are 16px 
 - Nothing opens as a popup in the middle. What is a popup elsewhere (connecting a tool, a report, one number opened up) is a side panel: `{ title, back, body, foot }`. A panel that leads from another carries `back`.
 - Teammates are named in words only. Jammie is the only character drawn.
 - Controls that exist only to try the prototype (seat, teammates on or off, feed or deck, jump to a screen) never go in the product’s bars or panels. They live behind the floating Demo button.
-- Motion: one curve, `--ease` (cubic-bezier(.2,0,0,1)). Pages fade up 8px in 0.28s, panels arrive in 0.32s with all their contents at once. Nothing appears after its container has landed. Respect `prefers-reduced-motion`.
+- Motion: one curve, `--ease` (cubic-bezier(.2,0,0,1)). Pages fade up 8px in 0.28s, panels arrive in 0.32s. A panel's surface lands first; its title, contents and foot fade up together 0.14s later. Never stagger items one by one. Respect `prefers-reduced-motion`.
 
 ## Jammie
 
@@ -154,10 +154,11 @@ The picture is the card (4:5, 20px radius), a kind pill top left, a filled heart
 A round picture in a 2.5px red ring that turns grey (`.seen`) once watched, name under it. Six across the feed card's width, sized by `--st` (44–72px). Opens full screen with progress bars, taps on either side, and a 5s move to the next.
 
 ### Command centre card — `J.dcard({ label, value, delta, dir, line, bars, meter, mini, acts, need })`
+An act is `[label, what it does, id]`. Buttons carry what they open in `data-id`; never look an action up by the words on the button.
 Answers one question: `label` is "what · over how long", then the number, one line, then actions as soft pills, with at most one `b-jam` last. `bars` or `meter` take the column's `--acc`. `need: true` tints it red and says Needs you. Columns are 340px, 260–680px when dragged, 8px gaps between cards.
 
-### Memory tile — `J.ltile(big, line, isText)`
-A soft block, 96px min height: a big number (24px) or a few words (`isText`, 16px), one quiet line under it. Three across, two on a phone.
+### Memory tile — `J.ltile(big, line, what, id)`
+A soft block, 96px min height: a big number (24px), or a few words (16px) when there is no digit in it, and one quiet line under it. With `what` it is a button (`data-do`, `data-id`) and lights up on hover; without, a plain block. Three across, two on a phone.
 
 ### Rows — `.rows` > `.rowi`
 Soft blocks with a 3px gap; the first and last take the card radius. Bold title, quiet line under it, an icon on the right. Only a row you can press lights up on hover.

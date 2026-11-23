@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/jammie/v3/char-dollop-sm.png">
 <title>jammie flows</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=26">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=27">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
@@ -175,7 +176,7 @@ const LOOK = 'jammie-workbench-v5';
 const look = () => { try { return JSON.parse(localStorage.getItem(LOOK)) || {}; } catch { return {}; } };
 function paintLook(){ const t = look().theme || 'light'; document.documentElement.dataset.theme = t; document.getElementById('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
 paintLook();
-document.getElementById('themeBtn').addEventListener('click', () => { const l = look(); l.theme = l.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
+document.getElementById('themeBtn').addEventListener('click', () => { const l = { theme: look().theme === 'dark' ? 'light' : 'dark' }; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
 // ---- every flow. steps = [route in the prototype, screen name, the action that leads on]
 const FLOWS = [
   { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading → Three taps → Brand passport → Here’s what we found → Your first idea → Feed',

@@ -74,15 +74,20 @@ window.JAMMIE = (() => {
   const story = (name, img, o = {}) => `<a class="story ${o.seen ? 'seen' : ''}" href="${o.href || '#'}"><i><b style="background-image:url(${D}${img})"></b></i><span>${name}</span></a>`;
 
   // a command centre card: what it is and over how long, the number, one line, then what you can do. --acc on a parent colours it
-  const dcard = c => `<div class="dcard ${c.need ? 'need' : ''}"><div class="top"><span>${c.label.split(' · ')[0]}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : c.label.split(' · ')[1] || ''}</em></div>
-      <div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
+  // the number on a command centre card: the figure, how it moved, one line, then its meter or bars. The panel that opens one number up draws the same thing, taller
+  const dnum = (c, tall) => `<div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
       ${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}
-      ${c.bars ? `<div class="bars">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}
-      ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
-      <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}">${l}</button>`).join('')}</div></div>`;
+      ${c.bars ? `<div class="bars ${tall ? 'tall' : ''}">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}`;
+  // an act is [label, what it does, an id for it]. A small figure opens the card's own report
+  const dcard = c => { const [name, span = ''] = c.label.split(' · '), rep = ((c.acts || []).find(a => a[1] === 'report') || [])[2] || 'weekly';
+    return `<div class="dcard ${c.need ? 'need' : ''}" data-id="${name}"><div class="top"><span>${name}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : span}</em></div>
+      ${dnum(c)}
+      ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report" data-id="${rep}"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
+      <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what, id]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}"${id ? ` data-id="${id}"` : ''}>${l}</button>`).join('')}</div></div>`; };
 
-  // a memory tile
-  const ltile = (big, line, isText) => `<button class="ltile" data-do="tile"><b class="${isText ? 't' : ''}">${big}</b><small>${line}</small></button>`;
+  // a memory tile: a number, or a few words when there is no digit in it. Given something to do, it is a button
+  const ltile = (big, line, what, id) => { const inner = `<b class="${/\d/.test(big) ? '' : 't'}">${big}</b><small>${line}</small>`;
+    return what ? `<button class="ltile" data-do="${what}"${id ? ` data-id="${id}"` : ''}>${inner}</button>` : `<div class="ltile">${inner}</div>`; };
 
-  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame };
+  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, scard, story, dnum, dcard, ltile, turnFrame };
 })();

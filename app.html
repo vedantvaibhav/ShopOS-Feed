@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>jammie</title>
+<link rel="icon" href="assets/jammie/v3/char-dollop-sm.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=26">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=27">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 :root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--t2:.32s;--pp:#FBF7F0;--vh:100vh}
@@ -30,7 +31,6 @@ body.bare #app{height:auto;min-height:var(--vh)}
 .top-right .ico-btn{position:relative;width:40px;height:40px;background:var(--s2)}   /* a soft fill, not a ring */
 .top-right .ico-btn:hover{background:var(--s3)}
 .top-right .ico-btn.on{background:var(--s3)}
-.top-right em[hidden]{display:none}
 .top-right em{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--jam);color:#fff;font-style:normal;font-size:10.5px;font-weight:700;display:grid;place-items:center}
 /* a page change: the bar stays, the page under it fades up a little. The same curve and time as every other move */
 .page-in{animation:page-in .28s var(--ease) both}
@@ -70,7 +70,7 @@ body.has-side #side{visibility:visible;opacity:1;transform:none;transition:opaci
 .sec h4{font-size:15px;font-weight:600;letter-spacing:0;margin-bottom:8px}
 .sec p{margin:0;font-size:15px;line-height:1.5;color:var(--fg-2)}
 .sec .chips{display:flex;gap:8px;flex-wrap:wrap}
-.cap{display:grid;gap:8px;justify-items:start;padding:16px;border-radius:16px;background:var(--blk);font-size:15px;line-height:1.5}
+.cap{display:grid;gap:8px;justify-items:start;padding:16px;border-radius:16px;background:var(--blk,var(--s2));font-size:15px;line-height:1.5}
 .opt{display:flex;gap:16px;align-items:center;width:100%;margin-bottom:8px;padding:16px;border:0;border-radius:16px;background:var(--blk);text-align:left;color:inherit;transition:background .15s}   /* each choice is its own block */
 .opt:hover{background:var(--s3)}
 .opt > i{width:40px;height:40px;border-radius:50%;background:var(--floor);display:grid;place-items:center;flex:none}
@@ -372,7 +372,6 @@ html.still ::-webkit-scrollbar{display:none}
 @media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body,.side-h h2,.side-foot{animation:none!important}.hop{opacity:1}}
 
 /* ---------- the rest of the live product: stores, the check, settings, work, reports, memory's pages, connecting a tool, your account ---------- */
-.ico-btn[hidden],.rowi[hidden]{display:none}
 .topbar .back{margin:0 -16px 0 -8px;background:none}
 #barActs{display:flex;gap:8px}
 /* a plain page outside the app: pick a store, a store's profile */
@@ -383,13 +382,12 @@ html.still ::-webkit-scrollbar{display:none}
 .pick .tiles.wide{grid-template-columns:repeat(4,minmax(0,1fr))}
 .scard .pic.mono{display:grid;place-items:center}
 .scard .pic.mono b{font-size:96px;font-weight:700;color:var(--fg-3);letter-spacing:-.04em}
-div.ltile:hover{background:var(--s2)}
 .ltile.off{opacity:.5}
 .tiles.two{grid-template-columns:1fr 1fr}
 .tiles.found{width:min(720px,100%);text-align:left}
 .fixbox{width:min(720px,100%);display:grid;gap:12px;text-align:left}
 .fixbox h4{font-size:15px;font-weight:600;letter-spacing:0}
-.chip .ico{width:14px;height:14px}
+.fixbox .chip .ico{width:14px;height:14px}
 .adder{display:flex;gap:8px;width:100%}
 .adder .input{flex:1;min-width:0;padding:10px 14px}
 .firstidea{display:flex;align-items:center;gap:16px;width:min(440px,100%);padding:12px;border-radius:20px;background:var(--s2);text-align:left}
@@ -401,11 +399,9 @@ div.ltile:hover{background:var(--s2)}
 .coach img{flex:none;height:44px;width:auto}
 .coach span{flex:1}
 /* deck cards that hold an idea or a job, and a column with nothing in it */
-.dcard.idea,.dcard.work{text-decoration:none}
 .dcard.idea img,.dcard.work img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:12px}
-.dcard .t{margin:6px 0 0;font-size:15px;font-weight:600;line-height:1.3;color:var(--fg)}
+.dcard p.t{margin:6px 0 0;font-size:15px;font-weight:600;line-height:1.3;color:var(--fg)}
 .dcard.flat{background:var(--blk,var(--s2))}
-.page-body .cap{background:var(--s2)}
 .bars.tall{height:96px}
 .dempty{margin:0;padding:32px 16px;text-align:center;font-size:14px;color:var(--fg-2)}
 .subbar .tools{flex:none;display:flex;align-items:center;gap:8px;margin-left:16px}
@@ -418,8 +414,7 @@ div.ltile:hover{background:var(--s2)}
 .fields .wide{grid-column:1/-1}
 .addrow{display:grid;gap:8px;margin-top:16px;justify-items:start}
 .swatch{display:block;height:40px;border-radius:10px;margin-bottom:8px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.2)}
-a.bk{display:block;text-decoration:none}
-.bk-cover{display:block}
+a.bk{display:block}
 /* a question about a number, and its answer with where it came from */
 .qa{display:grid;gap:8px;margin-bottom:16px}
 .qa .q{justify-self:end;max-width:86%;margin:0;padding:10px 14px;border-radius:16px 16px 4px 16px;background:var(--s3);color:var(--fg)}
@@ -436,9 +431,8 @@ a.bk{display:block;text-decoration:none}
 .composer.listening .mic .ico{color:#fff}
 .fab,#newTab{-webkit-touch-callout:none}
 /* the Demo button floats outside the product's own UI: a small dark tab, bottom left. It opens the prototype's controls */
-.demo-btn{position:fixed;left:76px;bottom:20px;z-index:6;height:32px;padding:0 14px;border-radius:var(--r-pill);display:inline-flex;align-items:center;background:var(--fg);color:var(--bg);font-size:12.5px;font-weight:600;letter-spacing:.02em;text-decoration:none;opacity:.86;transition:opacity .15s}
+.demo-btn{position:fixed;left:76px;bottom:20px;z-index:6;height:32px;padding:0 14px;border-radius:var(--r-pill);display:inline-flex;align-items:center;background:var(--fg);color:var(--bg);font-size:12.5px;font-weight:600;letter-spacing:.02em;opacity:.86;transition:opacity .15s}
 .demo-btn:hover,.demo-btn.on{opacity:1}
-.demo-btn[hidden]{display:none}
 body.bare .demo-btn{left:20px}
 
 .bar-brand,.rail .tab-new,.rail .tab-you,.phone-only,.rail .tl{display:none}
@@ -470,19 +464,18 @@ body.bare .demo-btn{left:20px}
   .tab-you .me{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);font-size:11.5px;font-weight:700}
   .tab-you.on .me{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--jam)}   /* your profile gets a red ring once it is open */
   .fab,#youBtn{display:none}   /* New and You are in the tab bar */
-  .topbar{left:0;gap:12px;padding:0 4px 0 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .topbar{left:0;gap:12px;padding:0 4px 0 16px}
+  .topbar:not(.solid){background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
   .topbar small{display:none}
-  body[data-page="feed"] .bar-brand{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+  body[data-page="feed"] .bar-brand{display:inline-flex;align-items:center;gap:6px}
   .bar-brand img{height:30px;width:auto}
   .bar-brand b{color:var(--jam);font-weight:800;font-size:22px;letter-spacing:-.03em}
   .top-right{gap:0}
-  .subbar{padding:0 16px}
-  .subbar.fit .deck-tabs{padding:0}
-  /* a page's tabs: an icon over a short word, all of them across the width, a short line under the one you are on */
-  .subbar{height:auto;padding:0 8px}
-  .subbar .deck-tabs,.subbar.fit .deck-tabs{display:flex;gap:0;padding:0;overflow:visible}
+  /* a page's tabs: an icon over a short word, all of them across the width, a short line under the one you are on. Any tools the page has take a row of their own */
+  .subbar{height:auto;padding:0 8px;flex-wrap:wrap}
+  .subbar .deck-tabs,.subbar.fit .deck-tabs{flex:1 0 100%;gap:0;padding:0;overflow:visible}
   .deck-tabs button,.subbar .deck-tabs button.on{position:relative;flex:1;min-width:0;height:auto;min-height:48px;padding:8px 2px 10px;border-radius:0;background:none;flex-direction:column;justify-content:center;gap:4px;font-size:12px;line-height:1.2;color:var(--fg-2)}
-  .deck-tabs button.on{color:var(--fg);font-weight:600}
+  .subbar .deck-tabs button.on{color:var(--fg)}
   .deck-tabs button.on::after{content:"";position:absolute;left:22%;right:22%;bottom:0;height:2px;border-radius:2px;background:var(--fg)}
   .deck-tabs .full{display:none}
   .deck-tabs .short{display:block}
@@ -560,7 +553,6 @@ body.bare .demo-btn{left:20px}
   .feed-col .act:not(.jam):hover > i{background:rgba(0,0,0,.46)}
   .feed-col .act.jam{margin-top:4px}
   .feed-col .act.jam > i{width:52px;height:52px}
-  .feed-col .act.jam .ico{width:24px;height:24px}
   .pick{padding:80px 16px 48px}
   .pick .ideas,.pick .tiles.wide{grid-template-columns:1fr 1fr}
   .scard .pic.mono b{font-size:64px}
@@ -568,9 +560,7 @@ body.bare .demo-btn{left:20px}
   .coach{top:calc(var(--bar) + var(--st) + 48px);left:12px;right:76px;width:auto;transform:none}   /* clear of the actions on the right */
   #barActs{gap:0}
   .topbar .back{margin:0 -8px 0 -12px}
-  .subbar{flex-wrap:wrap}
   .subbar .tools{width:100%;margin:0;padding:4px 8px 8px;justify-content:space-between}
-  .subbar .deck-tabs,.subbar.fit .deck-tabs{flex:1 0 100%}
   .side-foot{flex-wrap:wrap}
   .side-foot > .btn:not(.b-text){flex:1 1 auto}   /* two buttons share the width; if they cannot, each takes a row */
   .seg.sm button{height:36px}
@@ -672,11 +662,11 @@ body.bare .demo-btn{left:20px}
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=26"></script>
-<script src="assets/jammie/v3/data.js?v=26"></script>
+<script src="assets/jammie/v3/icons.js?v=27"></script>
+<script src="assets/jammie/v3/data.js?v=27"></script>
 <script>
 (() => {
-  const { A, D, IDEAS: ALL, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame } = window.JAMMIE;
+  const { A, D, IDEAS: ALL, real, av, ico, fcard, scard, story, dnum, dcard, ltile, turnFrame } = window.JAMMIE;
   let IDEAS = ALL;   // the feed's list: every idea, less the teammates you switched off, in the order you shuffled it to
   const $ = id => document.getElementById(id);
   const root = document.documentElement, app = $('app'), sideEl = $('side'), modal = $('modal');
@@ -719,7 +709,7 @@ body.bare .demo-btn{left:20px}
   // the onboarding stage: one centred column. Jammie on top, then one thought and one control
   const onb = (n, art, body, cls = '') => `<section class="onb ${cls}">${mark}${dots(n)}<div class="onb-art">${art}</div><div class="onb-body">${body}</div></section>`;
   // four short loops (idle, wave, cheer, sit); the flow map and reduced motion get the still
-  const calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;   // also set by the Reduce motion switch
   const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
   // gy: how far down the loop Jammie's feet are. Given, a patch of ground is drawn there, behind the loop
   const pose = (p, gy) => { if (calm) return `<div class="pop ground"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
@@ -800,7 +790,7 @@ body.bare .demo-btn{left:20px}
   // an update about an idea opens that idea; a note you wrote is just your note
   const msgRow = o => { const d = idea(o.id), sub = `<small>${HOW[o.how][0]} · ${HOW[o.how][1]}</small>`;
     return o.how === 'note' ? `<div class="msg">${av(48)}<span><b>${esc(o.text || 'Your note to the team')}</b>${sub}</span><em>Now</em></div>`
-      : `<a class="msg" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt=""><span><b>${d.title}</b>${sub}</span><em>Now</em></a>`; };
+      : `<a class="msg" href="#/feed?id=${d.id}"><img src="${D}${d.img}" alt=""><span><b>${d.title}</b>${sub}</span><em>Now</em></a>`; };
   // a note to the team: what you might ask for, and the box you type in at the foot. The round button in the box sends it
   const composer = (ph, what) => `<form class="composer" data-send="${what}"><textarea rows="1" placeholder="${ph}" aria-label="Your note"></textarea><button type="button" class="ico-btn mic draw" data-mic aria-label="Hold to talk">${ico('mic')}</button><button class="btn b-jam draw" aria-label="Send">${ico('send')}</button></form>`;
   const row = (t, s, what) => `<button class="rowi" data-do="${what}"><span class="grow"><b>${t}</b>${s ? `<small>${s}</small>` : ''}</span>${ico('arrow')}</button>`;
@@ -818,6 +808,7 @@ body.bare .demo-btn{left:20px}
     'In the works': ['clock', 'Works'], 'Needs a yes': ['check', 'A yes'], 'Going out': ['send', 'Out'], 'Live': ['play', 'Live'], 'Done': ['check', 'Done'], 'Discarded': ['close', 'Discarded'], 'References': ['image', 'References'],
     'Story': ['book', 'Story'], 'Look and kit': ['image', 'Look'], 'Voice': ['message', 'Voice'], 'Words': ['star', 'Words'], 'Products': ['store', 'Products'],
     'What I know': ['book', 'I know'], 'What I see out there': ['globe', 'Out there'], 'What I’d do': ['spark', 'I’d do'], 'How you steer me': ['settings', 'You steer'] };
+  const jumpTabs = (names, prefix) => names.map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="${prefix}${i}">${tab(n)}</button>`).join('');
   const tab = name => SHORT[name] ? `${ico(SHORT[name][0])}<span class="full">${name}</span><span class="short">${SHORT[name][1]}</span>` : name;
   const deck = (cols, tools = '') => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button class="${i ? '' : 'on'}" data-do="col" data-id="${i}">${o.need ? '<i class="dot"></i>' : ''}${tab(name)}</button>`).join(''), '', tools)}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
   const page = (body, tabs = '', narrow = '') => `<section class="page">${tabs ? subbar(tabs, 'fit') : ''}<i class="edge"></i><div class="page-scroll"><div class="page-body ${narrow}">${body}</div></div></section>`;
@@ -825,30 +816,30 @@ body.bare .demo-btn{left:20px}
   const COLS = [
     ['With the team', '#7C5CFC', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open work', 'work'], ['Open Updates', 'bell']] }]],
     ['Finance', '#17A673', [
-      { label: 'Net sales · 7 days', value: '₹1.4Cr', delta: '▼ 13%', dir: 'down', line: 'What customers paid, after discounts and returns.', bars: [70, 78, 79, 80, 78, 82, 95, 67, 66, 68, 81, 73, 67, 68], day: [20, '₹', 'L', 1], mini: [['Orders', '2,179'], ['An order', '₹6,380'], ['New customers', '1,629']], acts: [['More', 'more'], ['Weekly report', 'report'], ['Add delivery fees', 'costs']] },
-      { label: 'What you keep · 7 days', value: () => costsIn ? '₹38L' : 'Not counted yet', line: () => costsIn ? 'After product costs, delivery, fees and ads.' : 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report']] },
-      { label: 'Refunds · 7 days', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', bars: [62, 70, 58, 66, 74, 61, 55], day: [43, '₹', 'k', 0], acts: [['More', 'more'], ['P&L report', 'report']] }]],
+      { label: 'Net sales · 7 days', value: '₹1.4Cr', delta: '▼ 13%', dir: 'down', line: 'What customers paid, after discounts and returns.', bars: [70, 78, 79, 80, 78, 82, 95, 67, 66, 68, 81, 73, 67, 68], day: [20, '₹', 'L', 1], mini: [['Orders', '2,179'], ['An order', '₹6,380'], ['New customers', '1,629']], acts: [['More', 'more'], ['Weekly report', 'report', 'weekly'], ['Add delivery fees', 'costs']] },
+      { label: 'What you keep · 7 days', value: () => costsIn ? '₹38L' : 'Not counted yet', line: () => costsIn ? 'After product costs, delivery, fees and ads.' : 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report', 'pnl']] },
+      { label: 'Refunds · 7 days', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', bars: [62, 70, 58, 66, 74, 61, 55], day: [43, '₹', 'k', 0], acts: [['More', 'more'], ['P&L report', 'report', 'pnl']] }]],
     ['Marketing return', '#2F6BFF', [
-      { label: 'Sales per ₹1 of ads · 7 days', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], day: [5.2, '', '×', 1], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
-      { label: 'Campaigns · 7 days', need: () => !parked, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report']] },
-      { label: 'Site funnel · 7 days', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', bars: [84, 80, 88, 76, 72, 78, 70], day: [1.4, '', '%', 1], mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
-    ['Stock & delivery', '#0FA3B1', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', meter: 17, mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report']] }]],
+      { label: 'Sales per ₹1 of ads · 7 days', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], day: [5.2, '', '×', 1], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report', 'marketing']] },
+      { label: 'Campaigns · 7 days', need: () => !parked, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report', 'marketing']] },
+      { label: 'Site funnel · 7 days', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', bars: [84, 80, 88, 76, 72, 78, 70], day: [1.4, '', '%', 1], mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report', 'customers']] }]],
+    ['Stock & delivery', '#0FA3B1', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', meter: 17, mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report', 'weekly']] }]],
     ['The stove', '#E0245E', [{ label: 'Ideas ready · today', value: '10', line: '8 more are lined up behind them.', meter: 56, acts: [['Open the feed', 'feed']] }]],
   ];
   const val = v => typeof v === 'function' ? v() : v, needs = c => c.some(x => val(x.need));
   // memory: what Jammie knows, as the same quiet cards
-  const KNOWS = [
-    ['What I know', [['229', 'Products read, from wearcomet.com'], ['Everything I know', 'Search every line, with where it came from', 1], ['Your photos and files', 'What every maker works from', 1]]],
-    ['What I see out there', [['1,171', 'Things customers said, from 13 places'], ['6', 'Rivals watched, 1,103 live ads'], ['27 Nov', 'Coming up: Black Friday']]],
-    ['What I’d do', [['Your store', 'How it’s doing, and what to do first', 1], ['68', 'Plans written for Comet'], ['17', 'Places in the shop window']]],
-    ['How you steer me', [['House rules', 'What I’ll always and never do', 1], ['Your feed', 'What you want more of', 1], ['What Jammie can do alone', 'And what always waits for you', 1]]],
+  const KNOWS = [   // [what the tile shows, its line, the panel it opens]
+    ['What I know', [['229', 'Products read, from wearcomet.com', 'products'], ['Everything I know', 'Search every line, with where it came from', 'facts'], ['Your photos and files', 'What every maker works from', 'files']]],
+    ['What I see out there', [['1,171', 'Things customers said, from 13 places', 'said'], ['6', 'Rivals watched, 1,103 live ads', 'rivals'], ['27 Nov', 'Coming up: Black Friday', 'plan']]],
+    ['What I’d do', [['Your store', 'How it’s doing, and what to do first', 'store'], ['68', 'Plans written for Comet', 'plans'], ['17', 'Places in the shop window', 'window']]],
+    ['How you steer me', [['House rules', 'What I’ll always and never do', 'rules'], ['Your feed', 'What you want more of', 'tune'], ['What Jammie can do alone', 'And what always waits for you', 'alone']]],
   ];
   const logo = (n, f) => f ? `<img class="logo" src="${A}el-${f}.png" alt="">` : `<span class="logo-tile">${n[0]}</span>`;
   // saved: everything you kept or put aside, as plain cards. The tabs only narrow it
   let savedTab = 'all';
   const savedIds = () => savedTab === 'liked' ? [...liked] : savedTab === 'later' ? [...SETS.later] : [...new Set([...liked, ...SETS.later])];
 
-  const savedCard = id => { const d = idea(id); return scard(d, { href: `#/feed?i=${IDEAS.indexOf(d)}`, note: liked.has(id) ? 'Kept' : 'For later' }); };
+  const savedCard = id => { const d = idea(id); return scard(d, { href: `#/feed?id=${d.id}`, note: liked.has(id) ? 'Kept' : 'For later' }); };
 
   // ================= the rest of the live product: stores, the check, settings, work, reports, memory's pages, connecting a tool, your account =================
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -862,7 +853,6 @@ body.bare .demo-btn{left:20px}
   let team = store('jammie-proto-team', []), linked = store('jammie-proto-linked', []), costsIn = store('jammie-proto-costs', false), parked = store('jammie-proto-parked', false);
   let done = store('jammie-proto-done', []), binned = store('jammie-proto-binned', []), qa = [], bellTab = 'updates', workBy = 'stage', cleared = false;
   const fact = (t, v = '', s = '') => `<div class="rowi"><span class="grow"><b>${t}</b>${s ? `<small>${s}</small>` : ''}</span>${v ? `<b class="v">${v}</b>` : ''}</div>`;
-  const stat = (big, line) => `<div class="ltile"><b>${big}</b><small>${line}</small></div>`;
   const pick = (key, title, opts, max = 1, sub = '') => `<div class="sec" data-pick="${key}" data-max="${max}"><h4>${title}</h4>${sub ? `<p class="sub">${sub}</p>` : ''}<div class="chips">${opts.map(o => `<button class="chip ${(tune[key] || []).includes(o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>`;
   const sw = (id, on, what = 'flag') => `<button class="switch" role="switch" aria-checked="${!!on}" data-do="${what}" data-id="${id}" aria-label="${id}"></button>`;
   const themeSeg = () => `<div class="seg">${[['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']].map(([k, n]) => `<button class="${(look.auto ? 'auto' : root.dataset.theme) === k ? 'on' : ''}" data-do="theme" data-id="${k}">${n}</button>`).join('')}</div>`;
@@ -876,19 +866,20 @@ body.bare .demo-btn{left:20px}
   const JOINS = { 'Day 1': 'Five teammates bring you cards.', 'Day 4': 'Performance joins: it turns your best ideas into ads and watches what they spend.', 'Week 1': 'Visibility joins: it checks search and AI answers.', 'Week 2': 'Customers joins: who would buy again.', 'Week 3': 'Listening joins: the good, the bad, the loud.', 'Day 30': 'Everyone is in. Nine teammates.' };
   let off = new Set(store('jammie-proto-off', []));
   const visible = d => d.special || (!off.has(d.by) && (!(tune.roles || []).length || tune.roles.some(r => !SEATS[r] || SEATS[r].includes(d.by))));
-  function refilter(){ IDEAS = ALL.filter(visible); cur = 0; if (shown === 'feed' || shown === 'deck') redraw(); }
+  function refilter(){ const next = ALL.filter(visible); if (next.length === IDEAS.length && next.every(d => IDEAS.includes(d))) return;   // the same cards: leave the feed and its films alone
+    IDEAS = next; cur = 0; if (shown === 'feed' || shown === 'deck') redraw(); }
   IDEAS = ALL.filter(visible);
-  if (prefs.calm) root.classList.add('still');
+  if (prefs.calm) { calm = true; root.classList.add('still'); }
   const FEED_ACTS = `<button class="ico-btn draw" data-do="shuffle" aria-label="Shuffle the cards">${ico('refresh')}</button>`;
   let introSeen = store('jammie-proto-intro', false);
-  const mini = d => `<a class="dcard idea" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt="" loading="lazy"><div class="top"><span>${d.kind}</span><em>${d.makes}</em></div><p class="t">${d.title}</p></a>`;
+  const mini = d => `<a class="dcard idea" href="#/feed?id=${d.id}"><img src="${D}${d.img}" alt="" loading="lazy"><div class="top"><span>${d.kind}</span><em>${d.makes}</em></div><p class="t">${d.title}</p></a>`;
 
   // ---- the demo's front door
   const STORES = [['Comet', 'Sneakers', 'Exclude newest technical drops from winter sale markdowns', 'sketch.jpg'], ['Arata', 'Hair care', 'Avoid ad fatigue and stock outs with automated alerts'],
     ['Gully Labs', 'Sneakers', 'Comet leads its ads with price, answer with yours'], ['LEGO India', 'Building blocks', 'Know which LEGO listings on Amazon are really yours']];
   const foundScreen = fix => onb(5, pose('search'), `
         <h1 class="h2">Here’s what we found.</h1>
-        <div class="tiles found">${[['227', 'Products. Best seller: X Lows CHESTNUT'], ['1,026', 'Reviews across your products'], ['58', 'Rival ads, from 6 rivals']].map(([b, l]) => fix ? `<button class="ltile" data-do="offline"><b>${b}</b><small>${l}</small></button>` : stat(b, l)).join('')}</div>
+        <div class="tiles found">${[['227', 'Products. Best seller: X Lows CHESTNUT'], ['1,026', 'Reviews across your products'], ['58', 'Rival ads, from 6 rivals']].map(([b, l]) => ltile(b, l, fix && 'offline')).join('')}</div>
         ${fix ? `<div class="fixbox"><h4>Rivals I watch</h4><div class="chips">${LISTS.rivals.map((r, i) => `<button class="chip draw" data-do="drop" data-id="rivals:${i}">${esc(r)}${ico('close')}</button>`).join('')}</div>${adder('rivals', 'Add a rival')}</div>` : ''}
         <a class="btn b-jam draw" href="#/writing">${fix ? 'Write my first idea' : 'Looks right. Write my first idea'}${ico('arrow')}</a>
         ${fix ? '' : `<a class="btn b-text" href="#/fix">Fix something</a>`}`, 'small');
@@ -911,7 +902,6 @@ body.bare .demo-btn{left:20px}
     customers: [['New customers', '1,629'], ['From returning buyers', '24%'], ['A buyer’s 90 days', '₹10,935'], ['Came back in 90 days', '24%']],
     marketing: [['Ad spend', '₹26.9L'], ['Sales per ₹1 of ads', '5.2×'], ['Meta says', '3.6×'], ['Google says', '3.5×'], ['New customer cost', '₹1,649']],
     delivery: [['Orders', '2,179'], ['Cash on delivery', '18% of orders'], ['Returned to origin', '19% of those'], ['Days of stock', '5']] };
-  const WHICH = { 'Weekly report': 'weekly', 'P&L report': 'pnl', 'Marketing report': 'marketing', 'Customers report': 'customers' };
   const ANSWERS = [[/campaign/i, '₹26.9L went across 5 campaigns in 7 days. I can’t call a winner until your costs are in.', 'Meta Ads, read 40 min ago'], [/refund/i, 'Refunds are ₹3L, down 11% on the 7 days before. Fewer orders were placed, so fewer came back.', 'Shopify, read 40 min ago'],
     [/./, 'Start with Campaigns. It is the only card that needs you, and it holds the most spend.', 'The board, today']];
 
@@ -925,10 +915,10 @@ body.bare .demo-btn{left:20px}
     'Klaviyo': { line: 'See which emails earn', group: 'Customers', why: 'Shows which emails earn, and who has gone quiet.', read: 'which emails earn', stats: [], found: [], account: 'Comet' },
     'Judge.me': { line: 'Hear what customers love and complain about', group: 'Customers', why: 'Reads every review, so ideas use your customers’ own words.', read: '1,036 reviews', stats: [['1,036', 'Reviews'], ['4.88', 'Stars on X Lows MADAGASCAR']], found: [], account: 'wearcomet.com' },
     'Slack': { f: 'slack', line: 'Jam with your team in a thread', group: 'Your team', why: 'Share ideas with your team and approve them in a thread.', read: 'posts to #growth', stats: [], found: [], account: '#growth' } };
+  const toolOf = q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify'; return [n, TOOL[n]]; };   // the tool a panel is about; Shopify when the link names none
   const toolRow = (n, right) => `<div class="rowi">${logo(n, TOOL[n].f)}<span class="grow"><b>${n}</b><small>${TOOL[n].line}</small></span>${right}</div>`;
 
   // ---- memory: what each tile opens
-  const KNOW_OF = { '229': 'products', 'Everything I know': 'facts', 'Your photos and files': 'files', '1,171': 'said', '6': 'rivals', '27 Nov': 'plan', 'Your store': 'store', '68': 'plans', '17': 'window', 'House rules': 'rules', 'Your feed': 'tune', 'What Jammie can do alone': 'alone' };
   const FACTS = [['Brand name', 'Comet', 'wearcomet.com'], ['Store platform', 'Shopify', 'wearcomet.com'], ['Shop currency', 'INR', 'Your store details'], ['Store city', 'Bangalore, Karnataka', 'Your store details'], ['Countries the store ships to', '6', 'Your store details'],
     ['Pages listed for Google', '435', 'wearcomet.com/sitemap.xml'], ['Collections', '183', 'Your collection list'], ['Apex ARGO price', '₹6,299', 'wearcomet.com/products/apex-argo'], ['Aeres AJRAKH RED price', '₹5,899', 'wearcomet.com/products/aeres-ajrakh-red'],
     ['Aeres AJRAKH BLACK price', '₹5,899', 'wearcomet.com/products/aeres-ajrakh-black'], ['Apex RED VELVET price', '₹6,299', 'wearcomet.com/products/apex-red-velvet'], ['X Lows MADAGASCAR reviews', '285, 4.88 stars', 'wearcomet.com']];
@@ -953,9 +943,9 @@ body.bare .demo-btn{left:20px}
         <div class="sec"><h4>52 could be fresher</h4><p>They rest on numbers that have moved since.</p></div>`, foot: `<button class="btn b-soft" data-do="refresh">Refresh them</button>` }),
     window: () => ({ title: 'The shop window', body: `<p class="lead-p">I read 17 places for Comet, on my own, every day.</p>
         <div class="sec"><div class="chips">${['Reddit', 'YouTube', 'Instagram', 'TikTok', 'Pinterest', 'Flipkart', 'Myntra', 'Amazon'].map(p => `<span class="chip">${p}</span>`).join('')}</div></div>
-        <div class="sec"><h4>1,525 things people said</h4><div class="tiles two">${stat('996', 'About Comet')}${stat('529', 'About your category and rivals')}</div></div>
+        <div class="sec"><h4>1,525 things people said</h4><div class="tiles two">${ltile('996', 'About Comet')}${ltile('529', 'About your category and rivals')}</div></div>
         <div class="sec"><h4>Topics</h4><div class="rows">${[['Comet sneakers', 351], ['Sneakers', 114], ['Comfort', 109], ['Product quality', 91], ['Comet X Lows', 88], ['Aesthetic appeal', 83]].map(([t, n]) => `<div class="rowi"><span class="grow"><b>${t}</b><span class="meter" style="--acc:var(--on)"><i style="width:${n / 3.51}%"></i></span></span><b class="v">${n}</b></div>`).join('')}</div></div>` }),
-    rules: () => ({ title: 'House rules', ask: 1, body: `${listed('rules', none('search', 'No rules yet.', 'Tell me what I should always or never do.'))}`, foot: `<div class="asks-for">${['Never discount below 10%', 'Always show the price', 'Never say “cheap”'].map(t => `<button class="chip" data-do="suggestin">${t}</button>`).join('')}</div>${adder('rules', 'Always…, or never…', 'Add a rule')}` }),
+    rules: () => ({ title: 'House rules', ask: 1, body: `${listed('rules', none('search', 'No rules yet.', 'Tell me what I should always or never do.'))}`, foot: `<div class="asks-for">${['Never discount below 10%', 'Always show the price', 'Never say “cheap”'].map(t => `<button class="chip" data-do="suggest">${t}</button>`).join('')}</div>${adder('rules', 'Always…, or never…', 'Add a rule')}` }),
     tune: () => ({ title: 'Your feed', body: `
         ${pick('run', 'I think you run these. Right?', ['Instagram', 'Facebook', '10+ ads'], 3)}
         <div class="sec"><h4>Topics to lift</h4>${listed('topics')}${adder('topics', 'Add a topic')}</div>
@@ -966,7 +956,7 @@ body.bare .demo-btn{left:20px}
         ${pick('push', 'The product you’re pushing', ['X Lows', 'Aeon V2', 'Aeres'])}
         <div class="sec"><h4>Your teammates</h4><div class="rows">${MAKERS.map(([n]) => `<div class="rowi"><span class="grow"><b>${n}</b></span><div class="seg sm" data-pick="mix:${n}" data-max="1">${['Less', 'As is', 'More'].map(o => `<button class="${((tune['mix:' + n] || ['As is'])[0] === o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>`).join('')}</div></div>` }),
     alone: () => ({ title: 'What Jammie can do alone', body: `<h3 class="lead-t">I prepare. You decide.</h3>
-        <div class="sec"><div class="tiles two">${stat('11', 'Ideas written this week')}${stat('0', 'Sent without you')}</div></div>
+        <div class="sec"><div class="tiles two">${ltile('11', 'Ideas written this week')}${ltile('0', 'Sent without you')}</div></div>
         <div class="sec"><h4>What always waits for you</h4><div class="rows">${fact('I never spend money on my own')}${fact('Nothing reaches your customers until a person sends it')}${fact('Anything that can’t be undone waits for a person')}</div></div>
         <div class="sec"><h4>What I do by myself</h4><div class="rows">${fact('I read your site, reviews and rivals, and keep the fact sheet up to date')}${fact('I write ideas for your feed')}</div></div>
         <div class="sec"><h4>Your teammates</h4><div class="rows">${fact('Creative director', '5 ideas', '3 with an initial draft')}${fact('Storefront', '2 ideas', '2 with an initial draft')}${fact('Reel maker', '1 idea', '1 with an initial draft')}</div></div>` }),
@@ -1032,9 +1022,9 @@ body.bare .demo-btn{left:20px}
             <button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div>
           <div>
             <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m still getting to know Comet.</span></div>
-            ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(t => ltile(...t)).join('')}</div>`).join('')}
+            ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(([big, line, k]) => ltile(big, line, 'tile', k)).join('')}</div>`).join('')}
           </div>
-        </div>`, KNOWS.map(([name], i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="know${i}">${tab(name)}</button>`).join('')) },
+        </div>`, jumpTabs(KNOWS.map(k => k[0]), 'know')) },
     connectors: { title: 'Connectors', page: q => { const has = q && q.get('with') ? q.get('with').split(',') : linked, rest = Object.keys(TOOL).filter(n => !has.includes(n)), next = rest[0], more = rest.slice(1);
       return page(`
         <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>${has.length ? `All good. I read ${has.length === 1 ? has[0] : has.length + ' of your tools'} and can see ${TOOL[has.includes('Shopify') ? 'Shopify' : has[0]].read}.` : 'I can only see your public pages. Start with Shopify.'}</span></div>
@@ -1055,10 +1045,10 @@ body.bare .demo-btn{left:20px}
         <div class="sec"><h4>Where it goes</h4><p>${d.goes}. You post it yourself.</p></div>`,
         foot: `<button class="ico-btn draw ${liked.has(d.id) ? 'liked' : ''}" data-do="keep" aria-label="Keep">${ico('heart')}</button><button class="ico-btn draw" data-do="share" aria-label="Share">${ico('share')}</button><a class="btn b-jam draw" href="#/jam">Let’s jam${ico('arrow')}</a>` }; } },
     jam: { under: 'feed', panel: () => ({ title: 'Let’s jam on this', body: `
-        <button class="opt" data-do="ship"><i>${ico('share')}</i><span><b>Ship as is</b><small>The files, the caption and a make-it-yourself kit. In your inbox too.</small></span></button>
-        <a class="opt" href="#/change"><i>${ico('message')}</i><span><b>Change first</b><small>Say what to change. The team answers within 24 hours.</small></span></a>
-        <button class="opt" data-do="morelike"><i>${ico('heart')}</i><span><b>More like this</b><small>Jammie learns it. More ideas like this one.</small></span></button>
-        <a class="opt" href="#/sloosh"><i>${ico('spark')}</i><span><b>Make it with Sloosh</b><small>A full video, made on Sloosh. You see the exact credits first.</small></span></a>` }) },
+        ${opt('share', 'Ship as is', 'The files, the caption and a make-it-yourself kit. In your inbox too.', 'ship')}
+        ${opt('message', 'Change first', 'Say what to change. The team answers within 24 hours.', '#/change')}
+        ${opt('heart', 'More like this', 'Jammie learns it. More ideas like this one.', 'morelike')}
+        ${opt('spark', 'Make it with Sloosh', 'A full video, made on Sloosh. You see the exact credits first.', '#/sloosh')}` }) },
     change: { under: 'feed', panel: () => ({ title: 'Change first', back: '#/jam', body: `
         <p class="lead-p">A person from our team takes it from here.</p>`, ask: 1, foot: ask(['A different opening line', 'Make it shorter', 'Use another photo'], 'What to change, what to keep…', 'sendchange') }) },
     note: { under: 'feed', panel: () => ({ title: 'Note to the team', body: `
@@ -1093,7 +1083,7 @@ body.bare .demo-btn{left:20px}
         <a class="btn b-jam draw" href="#/opening">See the ideas${ico('arrow')}</a>
         <div class="rows wide">${fact('Makes', 'Sneakers')}${fact('Market', 'India')}${fact('Runs on', 'Shopify')}${fact('Website', 'wearcomet.com')}</div>
         <h2 class="sec-t">What Jammie read</h2>
-        <div class="tiles wide">${stat('427', 'Pages read')}${stat('229', 'Products')}${stat('1,036', 'Reviews')}${stat('36', 'Live ads')}</div>
+        <div class="tiles wide">${ltile('427', 'Pages read')}${ltile('229', 'Products')}${ltile('1,036', 'Reviews')}${ltile('36', 'Live ads')}</div>
         <h2 class="sec-t">Jammie’s first ideas</h2>
         <div class="rows wide"><a class="rowi" href="#/opening"><span class="grow"><b>Launch a parallel Pink Friday event on wearcomet</b></span>${ico('arrow')}</a></div>
         <a class="btn b-out" href="#/start">Your store next? Paste your store</a></section>` },
@@ -1108,7 +1098,7 @@ body.bare .demo-btn{left:20px}
         <a class="btn b-jam draw" href="#/feed" data-bloom>Open my feed${ico('arrow')}</a>`, 'small'); } },
 
     // ================= the feed as a deck, and where your jams go =================
-    deck: { title: 'Deck', nav: 'feed', acts: FEED_ACTS, page: () => { const ready = IDEAS.find(d => d.badge) || IDEAS.find(d => !d.special), accs = ['#7C5CFC', '#17A673', '#2F6BFF', '#0FA3B1', '#E0245E'];
+    deck: { title: 'Deck', nav: 'feed', acts: FEED_ACTS, page: () => { const ready = IDEAS.find(d => d.badge) || IDEAS.find(d => !d.special), accs = COLS.map(col => col[1]);
       return deck([['Ready', ready ? mini(ready) : dempty('Nothing ready yet.'), { n: ready ? 1 : 0, acc: '#E0245E' }], ...MAKERS.map(([n], i) => { const mine = IDEAS.filter(d => d.by === n);
         return [n, mine.length ? mine.map(mini).join('') : dempty(off.has(n) ? 'Switched off in settings.' : 'Nothing from them yet.'), { n: mine.length, acc: accs[i % 5] }]; })]); } },
     work: { title: 'Work', page: () => { const tools = `<div class="seg sm">${[['stage', 'By stage'], ['person', 'By person']].map(([k, n]) => `<button class="${workBy === k ? 'on' : ''}" data-do="workby" data-id="${k}">${n}</button>`).join('')}</div><a class="btn b-soft b-sm" href="#/library">Library</a>`;
@@ -1116,11 +1106,11 @@ body.bare .demo-btn{left:20px}
       return deck(workBy === 'stage' ? STAGES.map(([n, acc, blank], i) => { const mine = orders.filter(o => (o.stage || 0) === i); return [n, mine.length ? mine.map(wcard).join('') : dempty(blank), { n: mine.length, acc, need: i === 1 && mine.length }]; })
         : people.map((p, i) => { const mine = orders.filter(o => (o.who || 'The team') === p); return [esc(p), mine.length ? mine.map(wcard).join('') : dempty('Nothing with them.'), { n: mine.length, acc: STAGES[i % 4][1] }]; }), tools); } },
     library: { title: 'Library', back: '#/work', page: () => page(`
-        <h2 class="sec-t" id="lib0">Done</h2>${done.length ? `<div class="rows">${done.map(o => jobRow(o)).join('')}</div>` : `<p class="dempty">Finished jams land here.</p>`}
-        <h2 class="sec-t" id="lib1">Discarded</h2>${binned.length ? `<div class="rows">${binned.map(o => jobRow(o, 'restore', 'Restore')).join('')}</div>` : `<p class="dempty">A discarded jam waits here, ready to restore.</p>`}
-        <h2 class="sec-t" id="lib2">References</h2>${listed('refs', `<p class="dempty">Every jam can pick from here.</p>`)}
+        <h2 class="sec-t" id="lib0">Done</h2>${done.length ? `<div class="rows">${done.map(o => jobRow(o)).join('')}</div>` : dempty('Finished jams land here.')}
+        <h2 class="sec-t" id="lib1">Discarded</h2>${binned.length ? `<div class="rows">${binned.map(o => jobRow(o, 'restore', 'Restore')).join('')}</div>` : dempty('A discarded jam waits here, ready to restore.')}
+        <h2 class="sec-t" id="lib2">References</h2>${listed('refs', dempty('Every jam can pick from here.'))}
         <div class="addrow"><button class="btn b-soft draw" data-do="upload" data-id="refs">${ico('plus')}Upload a picture or video</button>${adder('refs', 'Or paste a link: Instagram, YouTube, a site')}</div>`,
-        ['Done', 'Discarded', 'References'].map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="lib${i}">${tab(n)}</button>`).join(''), 'narrow') },
+        jumpTabs(['Done', 'Discarded', 'References'], 'lib'), 'narrow') },
     brand: { title: 'Brand book', back: '#/memory', acts: `<button class="ico-btn draw" data-do="share" aria-label="Share">${ico('share')}</button>`, page: () => page(`
         <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m writing the voice, story and look from wearcomet.com. The rest is already here.</span></div>
         <h2 class="sec-t" id="bk0">Story</h2><div class="cap">Comet is a homegrown lifestyle sneaker brand founded in India in 2023. Its founders returned from Chicago and Boston to build a brand focused on quality and craftsmanship.<button class="btn b-soft b-sm" data-do="edit">Edit</button></div>
@@ -1129,7 +1119,7 @@ body.bare .demo-btn{left:20px}
         <h2 class="sec-t" id="bk2">Voice</h2>${pick('voice', 'How we write for Comet', ['Like the site', 'Warmer', 'Sharper', 'Plainer'])}
         <h2 class="sec-t" id="bk3">Words</h2><div class="sec"><h4>Comet says</h4><div class="chips">${['Homegrown', 'Craftsmanship', 'Break patterns', 'Create culture'].map(w => `<span class="chip">${w}</span>`).join('')}</div></div>
         <h2 class="sec-t" id="bk4">Products</h2><div class="rows">${[['X Lows MADAGASCAR', '₹4,299'], ['X Lows TUSCAN', '₹4,299'], ['X Lows CORTADO', '₹4,299'], ['X Lows CHESTNUT', '₹4,299']].map(r => fact(...r)).join('')}</div>`,
-        ['Story', 'Look and kit', 'Voice', 'Words', 'Products'].map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="bk${i}">${tab(n)}</button>`).join(''), 'narrow') },
+        jumpTabs(['Story', 'Look and kit', 'Voice', 'Words', 'Products'], 'bk'), 'narrow') },
 
     // ================= panels: settings, and the card's other actions =================
     // not part of the product: the controls for trying the prototype, behind the floating Demo button
@@ -1172,14 +1162,13 @@ body.bare .demo-btn{left:20px}
     adddata: { panel: () => ({ title: 'Add data', back: '#/board', body: `
         ${opt('link', 'Connect a tool', 'Shopify, ads, Shiprocket, Razorpay and more. It keeps itself fresh from then on.', '#/connectors')}
         ${opt('download', 'Upload a report', 'A CSV or Excel export, for a tool we don’t connect yet.', 'uploadreport')}
-        <div class="sec"><h4>What you uploaded</h4>${listed('uploads', `<p class="dempty">A report you upload lands here, with what it gave the board.</p>`)}</div>` }) },
+        <div class="sec"><h4>What you uploaded</h4>${listed('uploads', dempty('A report you upload lands here, with what it gave the board.'))}</div>` }) },
     asknum: { panel: () => ({ title: 'Ask about these numbers', back: '#/board', body: qa.length ? qa.map(([t, a, from]) => `<div class="qa"><p class="q">${esc(t)}</p><div class="a">${av(32)}<span>${a}<small>From ${from}</small></span></div></div>`).join('')
         : `<p class="lead-p">I answer from the fact sheet’s numbers only, and say where each one came from.</p>`, ask: 1, foot: ask(['Why does Campaigns need me?', 'Why is refunds down 11%?', 'What should I look at first this week?'], 'Ask about a number…', 'asknum') }) },
     number: { panel: q => { const c = COLS.flatMap(x => x[2]).find(x => x.label.split(' · ')[0] === q.get('n')) || COLS[1][2][0], [name, span] = c.label.split(' · '), bars = c.bars || [], last = bars.slice(-7), mean = last.reduce((a, b) => a + b, 0) / (last.length || 1);
       const day = h => c.day ? `${c.day[1]}${(c.day[0] * h / mean).toFixed(c.day[3])}${c.day[2]}` : '';
       return { title: name, body: `
-        <div class="dcard flat" style="--acc:${COLS.find(x => x[2].includes(c))[1]}"><div class="big"><b class="${/\d/.test(val(c.value)) ? '' : 't'}">${val(c.value)}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${val(c.line)} ${span || ''}.</p>
-          ${bars.length ? `<div class="bars tall">${bars.map((h, i) => `<i class="${i === bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}</div>
+        <div class="dcard flat" style="--acc:${COLS.find(x => x[2].includes(c))[1]}">${dnum({ ...c, value: val(c.value), line: `${val(c.line)} ${span || ''}.` }, true)}</div>
         ${c.mini ? `<div class="sec"><div class="rows">${c.mini.map(([l, v]) => fact(l, v)).join('')}${name.startsWith('Sales per') ? fact('Meta says', '3.6×') + fact('Google says', '3.5×') : ''}</div></div>` : ''}
         ${bars.length && c.day ? `<div class="sec"><h4>A day</h4><div class="rows">${bars.map((h, i) => fact(`${22 - (bars.length - 1 - i)} Nov`, day(h))).reverse().join('')}</div></div>` : ''}`,
         foot: `<a class="btn b-soft" href="#/reports">Reports</a><a class="btn b-out" href="#/asknum">Ask about it</a>` }; } },
@@ -1190,19 +1179,19 @@ body.bare .demo-btn{left:20px}
         <div class="sec"><button class="btn b-soft draw" data-do="upload" data-id="notes">${ico('plus')}Add a file</button></div>`, foot: adder('notes', 'We never discount the Aeres line…', 'Add') }) },
 
     // ================= connecting a tool: say yes, it reads, it is in =================
-    connect: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: `Connect ${n}`, body: `
+    connect: { panel: q => { const [n, t] = toolOf(q); return { title: `Connect ${n}`, body: `
         <div class="side-empty">${t.f ? `<img class="felt" src="${A}el-${t.f}.png" alt="">` : `<span class="logo-tile big">${n[0]}</span>`}<h3>${t.why}</h3><p>A simulated ${n} account. Nothing real is connected.</p></div>`,
         foot: `<button class="btn b-out" data-do="notusing">Not using it</button><button class="btn b-jam draw" data-do="link" data-id="${n}">Connect ${n}${ico('arrow')}</button>` }; } },
     linking: { panel: q => ({ title: `Connect ${q.get('t')}`, body: `<div class="side-empty"><img src="${A}pose-search-sm.png" alt=""><p class="reading-line"><span>Reading your last 30 days</span></p></div>` }),
       enter: q => { if (STILL) return; const n = q.get('t');   // it reads for two seconds, then the tool is in
         later(() => { if (TOOL[n] && !linked.includes(n)) { linked.push(n); keep('jammie-proto-linked', linked); } shown = null; location.replace(`#/linked?t=${encodeURIComponent(n)}`); }, 2000); } },
-    linked: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: `${n} is connected`, body: `
+    linked: { panel: q => { const [n, t] = toolOf(q); return { title: `${n} is connected`, body: `
         <div class="side-empty"><img src="${A}pose-cheer-sm.png" alt=""><h3>I can see ${t.read}.</h3></div>
         ${t.stats.length ? `<div class="sec"><h4>What I read</h4><div class="rows">${t.stats.slice(0, 3).map(([v, l]) => fact(l, v)).join('')}</div></div>` : ''}`,
         foot: `<a class="btn b-out" href="#/connectors">Connect another</a><a class="btn b-jam draw" href="#/feed">See it in the feed${ico('arrow')}</a>` }; } },
-    tool: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: n, body: `
+    tool: { panel: q => { const [n, t] = toolOf(q); return { title: n, body: `
         <p class="lead-p">Connected. I can see ${t.read}. Read just now.</p>
-        ${t.stats.length ? `<div class="sec"><div class="tiles two">${t.stats.map(([v, l]) => stat(v, l)).join('')}</div></div>` : ''}
+        ${t.stats.length ? `<div class="sec"><div class="tiles two">${t.stats.map(([v, l]) => ltile(v, l)).join('')}</div></div>` : ''}
         ${t.found.length ? `<div class="sec"><h4>What I found</h4><div class="rows">${t.found.map(f => fact(f)).join('')}</div></div>` : ''}
         <div class="sec"><h4>Account</h4><div class="rows">${fact(t.account, '', 'I only read. I never change anything.')}</div></div>`,
         foot: `<button class="btn b-text" data-do="unlink" data-id="${n}">Disconnect</button><button class="btn b-soft" data-do="reread">Read again</button><a class="btn b-ink" href="#/connectors">Done</a>` }; } },
@@ -1253,23 +1242,34 @@ body.bare .demo-btn{left:20px}
   }
   // what a page needs once it is drawn: the line under the bar, the tab bar stepping away, the tab that follows the scroll
   function wirePage(){
-    const ps = app.querySelector('.page-scroll');                           // a line under the bar only once the page has scrolled under it
+    const ps = app.querySelector('.page-scroll'); let tabAt = 0;
+    const mark = i => { if (i !== tabAt) markTab(tabAt = i); };               // written only when the tab changes
     document.body.classList.remove('tabs-away');
-    if (ps) { let lastY = 0; ps.addEventListener('scroll', () => { const y = ps.scrollTop; ps.parentElement.classList.toggle('scrolled', y > 4);
-      if (Math.abs(y - lastY) > 6) { document.body.classList.toggle('tabs-away', y > lastY && y > 80); lastY = y; }
-      const secs = [...ps.querySelectorAll('.sec-t[id]')]; if (secs.length) { const top = ps.getBoundingClientRect().top; let at = 0; secs.forEach((h, i) => { if (h.getBoundingClientRect().top - top < 160) at = i; }); markTab(at); } }, { passive: true }); }
-    const dc = app.querySelector('.deck-cols');
-    if (dc) dc.addEventListener('scroll', () => { const c = dc.querySelector('.dcol'); if (c) markTab(Math.round(dc.scrollLeft / (c.offsetWidth + 16))); }, { passive: true });
+    if (ps) { let lastY = 0; const secs = [...ps.querySelectorAll('.sec-t[id]')], edge = ps.parentElement;   // the page stays as it is until it is drawn again, so its sections are found once
+      ps.addEventListener('scroll', () => { const y = ps.scrollTop; edge.classList.toggle('scrolled', y > 4);   // a line under the bar only once the page has scrolled under it
+        if (Math.abs(y - lastY) > 6) { document.body.classList.toggle('tabs-away', y > lastY && y > 80); lastY = y; }
+        if (!secs.length) return; const top = ps.getBoundingClientRect().top; let at = 0; secs.forEach((h, i) => { if (h.getBoundingClientRect().top - top < 160) at = i; }); mark(at); }, { passive: true }); }
+    const dc = app.querySelector('.deck-cols'), c0 = dc && dc.querySelector('.dcol');
+    if (c0) dc.addEventListener('scroll', () => mark(Math.round(dc.scrollLeft / (c0.offsetWidth + 16))), { passive: true });
   }
   // draw the page again where it stands, leaving any open panel alone
   function redraw(){ const pg = SCREENS[shown]; if (!pg || !pg.page) return; app.innerHTML = pg.page(new URLSearchParams()); window.jammieIcons(app); wireFeed(); wirePage(); }
+  // something on screen changed: draw the page again where it stands, every scroller kept in place, then the open panel. Nothing replays its entrance.
+  // The feed is left alone: none of these changes show on it, and drawing it again would restart its films
+  const SCROLLERS = '.page-scroll, .deck-cols, .dcol-body';
+  function changed(){
+    if (shown !== 'feed') { const at = [...app.querySelectorAll(SCROLLERS)].map(e => [e.scrollLeft, e.scrollTop]); redraw();
+      app.querySelectorAll(SCROLLERS).forEach((e, i) => { if (at[i]) { e.scrollLeft = at[i][0]; e.scrollTop = at[i][1]; e.dispatchEvent(new Event('scroll')); } }); }   // the event, so the tab above follows at once
+    render(); }
   function render(force){
     timers.forEach(clearTimeout); timers = [];
     const [raw, query] = (location.hash.replace(/^#\/?/, '') || 'start').split('?');
     const name = SCREENS[raw] ? raw : 'start', s = SCREENS[name], q = new URLSearchParams(query || '');
     const over = q.get('on'), layer = !!(s.panel || s.modal);                 // ?on=command: show this panel over that page
     const pageName = layer ? (s.under || (SCREENS[over] && SCREENS[over].page && !SCREENS[over].bare ? over : lastPage)) : name, pg = SCREENS[pageName];
-    const jump = q.get('i') !== null && IDEAS[+q.get('i')]; if (jump) cur = +q.get('i');
+    const want = q.get('id');                                                 // ?id=reviews opens that idea; ?i=3 the fourth card
+    if (want && !IDEAS.some(d => d.id === want) && ALL.some(d => d.id === want)) { IDEAS = ALL; if (shown === 'feed') shown = null; }   // its teammate is switched off: show every card, so the link still lands
+    const to = want ? IDEAS.findIndex(d => d.id === want) : q.get('i') !== null ? +q.get('i') : -1, jump = !!IDEAS[to]; if (jump) cur = to;
     if (!pg.bare) lastPage = pageName;
     document.body.classList.toggle('bare', !!pg.bare); document.body.dataset.page = pageName;
     document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === (pg.nav || pageName)));
@@ -1332,7 +1332,7 @@ body.bare .demo-btn{left:20px}
     sendnote: text => { send('note', null, text); home(); toast('Sent to the team. They answer within 24 hours.'); },
     makesloosh: () => { send('sloosh', curIdea().id); go('#/feed'); toast('On it. About 4 minutes.'); },
     morelike: () => { toast('Noted. More like this one.'); step(1); },
-    suggest: b => { const t = sideEl.querySelector('.composer textarea'); if (t) { t.value = b.textContent; t.focus(); } },
+    suggest: b => { const t = sideEl.querySelector('.composer textarea, .adder input'); if (t) { t.value = b.textContent; t.focus(); } },
     noshopify: () => { toast('No problem. Estimates stay.', 'sleep'); step(1); }, more8: () => toast('8 more are on the way'),
     feed: () => go('#/feed'), bell: () => go('#/bell'),
     col: b => { const c = $('dcol' + b.dataset.id); if (!c) return; c.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
@@ -1341,34 +1341,33 @@ body.bare .demo-btn{left:20px}
     clearall: () => { orders = []; cleared = true; keep('jammie-proto-orders', orders); readN = 0; keep('jammie-proto-read', 0); render(); },
     restart: () => go('#/start'), help: () => toast('Opens your email', 'search'),
     // ---- the rest of the live product
-    goto: b => go(b.dataset.id), work: () => go('#/work'), addnote: () => go('#/addnote'), rename: () => go('#/details'), learns: () => go('#/know?k=tune'), costs: () => go('#/costs'), jam: () => go('#/new'),
+    goto: b => go(b.dataset.id), work: () => go('#/work'), addnote: () => go('#/addnote'), costs: () => go('#/costs'),
     otherstore: () => toast('This demo opens Comet', 'search'), offline: b => { b.classList.add('off'); toast('Noted. I’ll read that again.', 'search'); },
     gotit: () => { introSeen = true; keep('jammie-proto-intro', true); const c = app.querySelector('.coach'); if (c) c.remove(); },
     shuffle: () => { const r = IDEAS.filter(d => !d.special).sort(() => Math.random() - .5); let i = 0; IDEAS = IDEAS.map(d => d.special ? d : r[i++]); cur = 0; redraw(); toast('Shuffled'); },
     maker: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); on ? off.delete(b.dataset.id) : off.add(b.dataset.id); keep('jammie-proto-off', [...off]); refilter(); },
-    flag: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); prefs[b.dataset.id] = on; keep('jammie-proto-prefs', prefs); if (b.dataset.id === 'calm') root.classList.toggle('still', STILL || on); },
-    drop: b => { const [k, i] = b.dataset.id.split(':'); LISTS[k].splice(+i, 1); keep('jammie-proto-' + k, LISTS[k]); render(true); },
-    upload: b => { const k = b.dataset.id; LISTS[k].push(['look-book.pdf', 'winter-shoot.jpg', 'past-ads.zip'][LISTS[k].length % 3]); keep('jammie-proto-' + k, LISTS[k]); render(true); toast('Added'); },
-    uploadreport: () => { LISTS.uploads.push('orders-export.csv · 2,179 rows · gave the board net sales'); keep('jammie-proto-uploads', LISTS.uploads); render(true); toast('Read. It is on the board.'); },
-    suggestin: b => { const t = sideEl.querySelector('.adder input'); if (t) { t.value = b.textContent; t.focus(); } },
+    flag: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); prefs[b.dataset.id] = on; keep('jammie-proto-prefs', prefs); if (b.dataset.id === 'calm') { calm = STILL || on || matchMedia('(prefers-reduced-motion:reduce)').matches; root.classList.toggle('still', calm); } },
+    drop: b => { const [k, i] = b.dataset.id.split(':'); LISTS[k].splice(+i, 1); keep('jammie-proto-' + k, LISTS[k]); changed(); },
+    upload: b => { const k = b.dataset.id; LISTS[k].push(['look-book.pdf', 'winter-shoot.jpg', 'past-ads.zip'][LISTS[k].length % 3]); keep('jammie-proto-' + k, LISTS[k]); changed(); toast('Added'); },
+    uploadreport: () => { LISTS.uploads.push('orders-export.csv · 2,179 rows · gave the board net sales'); keep('jammie-proto-uploads', LISTS.uploads); changed(); toast('Read. It is on the board.'); },
     removeidea: () => { const d = curIdea(); IDEAS = IDEAS.filter(x => x !== d); cur = Math.max(0, Math.min(cur, IDEAS.length - 1)); shown = null; go('#/feed'); toast('Removed. Fewer like this.', 'worry'); },
     sendfeedback: () => { go('#/feed'); toast('Fixed. I’ll remember that.'); },
     sendwrong: () => { home(); toast('Thanks. I’m on it.', 'search'); },
     handover: b => { send('ship', curIdea().id); orders[0].who = b.dataset.id; keep('jammie-proto-orders', orders); go('#/feed'); toast('Handed over. It is in Work.'); },
-    workby: b => { workBy = b.dataset.id; render(true); },
+    workby: b => { workBy = b.dataset.id; changed(); },
     moveon: b => { const o = orders.find(x => String(x.id) === b.dataset.id); if (!o) return;
       if ((o.stage || 0) >= 3) { orders = orders.filter(x => x !== o); done.unshift(o); keep('jammie-proto-done', done); toast('Done. It is in the library.'); }
       else { o.stage = (o.stage || 0) + 1; toast(['', 'Waiting on a yes', 'On its way out', 'It’s live'][o.stage]); }
-      keep('jammie-proto-orders', orders); render(true); },
-    discard: b => { const o = orders.find(x => String(x.id) === b.dataset.id); if (!o) return; orders = orders.filter(x => x !== o); binned.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); render(true); toast('Discarded. It waits in the library.', 'sleep'); },
-    restore: b => { const o = binned.find(x => String(x.id) === b.dataset.id); if (!o) return; binned = binned.filter(x => x !== o); o.stage = 0; orders.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); render(true); toast('Restored. It is back in Work.'); },
-    report: b => go('#/report?r=' + (WHICH[b.textContent.trim()] || 'weekly')),
-    more: b => go('#/number?n=' + encodeURIComponent(b.closest('.dcard').querySelector('.top span').textContent)),
-    park: () => { parked = true; keep('jammie-proto-parked', true); render(true); toast('Parked for a week', 'sleep'); },
+      keep('jammie-proto-orders', orders); changed(); },
+    discard: b => { const o = orders.find(x => String(x.id) === b.dataset.id); if (!o) return; orders = orders.filter(x => x !== o); binned.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); changed(); toast('Discarded. It waits in the library.', 'sleep'); },
+    restore: b => { const o = binned.find(x => String(x.id) === b.dataset.id); if (!o) return; binned = binned.filter(x => x !== o); o.stage = 0; orders.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); changed(); toast('Restored. It is back in Work.'); },
+    report: b => go('#/report?r=' + (b.dataset.id || 'weekly')),
+    more: b => go('#/number?n=' + encodeURIComponent(b.closest('.dcard').dataset.id)),
+    park: () => { parked = true; keep('jammie-proto-parked', true); changed(); toast('Parked for a week', 'sleep'); },
     savecosts: () => { costsIn = true; keep('jammie-proto-costs', true); shown = null; go('#/command'); toast('Saved. What you keep is counted.'); },
     asknum: text => { const [, a, from] = ANSWERS.find(([re]) => re.test(text)); qa.push([text, a, from]); render(); },
     download: () => toast('Board downloaded'), pdf: () => toast('PDF downloaded'), sheet: () => toast('Sheet downloaded'), refresh: () => toast('Reading it again', 'search'), testsound: () => toast('Played'),
-    tile: b => go('#/know?k=' + (KNOW_OF[b.querySelector('b').textContent] || 'facts')),
+    tile: b => go('#/know?k=' + b.dataset.id),
     connect: b => go('#/connect?t=' + encodeURIComponent(b.dataset.id)),
     notusing: () => { home(); toast('No problem. Estimates stay.', 'sleep'); },
     link: b => location.replace('#/linking?t=' + encodeURIComponent(b.dataset.id)),
@@ -1416,18 +1415,18 @@ body.bare .demo-btn{left:20px}
     g.addEventListener('pointermove', move); g.addEventListener('pointerup', up, { once: true }); g.addEventListener('pointercancel', up, { once: true }); });
   document.addEventListener('dblclick', e => { const g = e.target.closest && e.target.closest('.grip'), c = g && $(g.dataset.col); if (!c) return; c.style.removeProperty('--w'); delete colW[c.id]; keep('jammie-proto-cols', colW); });
   // hold New to tell Jammie what is wrong; hold the mic to talk instead of typing
-  let holdT = 0, held = false, micAt = 0;
+  let holdT = 0, held = false, micAt = 0, micOn = null;
   document.addEventListener('pointerdown', e => { const t = e.target.closest ? e.target : null; if (!t) return;
     if (t.closest('.fab, #newTab')) { held = false; holdT = setTimeout(() => { held = true; location.hash = '#/wrong'; }, 550); }
-    const m = t.closest('[data-mic]'); if (m) { micAt = Date.now(); m.closest('.composer').classList.add('listening'); } });
+    const m = t.closest('[data-mic]'); if (m) { micAt = Date.now(); micOn = m.closest('.composer'); micOn.classList.add('listening'); } });
   ['pointerup', 'pointercancel'].forEach(n => document.addEventListener(n, e => { clearTimeout(holdT);
-    const c = document.querySelector('.composer.listening'); if (!c) return; c.classList.remove('listening');
+    const c = micOn; micOn = null; if (!c) return; c.classList.remove('listening');
     if (Date.now() - micAt < 350) { toast('Hold the mic and talk', 'search'); return; }
     const t = c.querySelector('textarea'); t.value = (t.value ? t.value + ' ' : '') + (c.dataset.send === 'sendnote' ? 'Can we get a launch film for the Midnight drop by Friday?' : 'Make it shorter, and lead with the reviews.'); t.dispatchEvent(new Event('input', { bubbles: true })); t.focus(); }));
   document.addEventListener('submit', e => {
     if (e.target.matches('#costForm,#meForm,#inviteForm')) { e.preventDefault(); return; }
     const ad = e.target.closest('[data-add]'); if (ad) { e.preventDefault(); const i = ad.querySelector('input'), v = i.value.trim(); if (!v) { i.focus(); return; }
-      LISTS[ad.dataset.add].push(v); keep('jammie-proto-' + ad.dataset.add, LISTS[ad.dataset.add]); render(true); return; }
+      LISTS[ad.dataset.add].push(v); keep('jammie-proto-' + ad.dataset.add, LISTS[ad.dataset.add]); changed(); return; }
     const f = e.target.closest('[data-go]'); if (f) { e.preventDefault(); location.hash = f.dataset.go; return; }
     const c = e.target.closest('[data-send]'); if (c) { e.preventDefault(); const t = c.querySelector('textarea'), text = t.value.trim();
       if (!text) { t.focus(); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); return; }   // an empty note is not sent

@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=22">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=23">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 :root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--t2:.32s;--pp:#FBF7F0;--vh:100vh}
@@ -261,12 +261,6 @@ html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
 .feed{--col-w:calc(var(--fc-h) * .625);--st:clamp(44px,calc((var(--col-w) - 80px) / 6),72px);height:100%;display:flex;flex-direction:column}   /* six rings and five 16px gaps are exactly the card's width */
 .stories-row{flex:none;display:flex;justify-content:center;padding:12px 24px 8px}
 .stories{display:flex;justify-content:space-between;width:var(--col-w);max-width:100%}
-.story{flex:none;width:var(--st);border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;line-height:16px;color:var(--fg-2)}
-.story span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.story i{width:var(--st);height:var(--st);border-radius:50%;padding:2.5px;background:var(--jam);display:block}
-.story.seen i{background:var(--line)}
-.story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
-.story:hover{color:var(--fg)}
 .story:focus-visible,.act:focus-visible{outline:0}
 .story:focus-visible i,.act:focus-visible > i{outline:2px solid var(--on-line);outline-offset:2px}   /* the focus ring is a circle too */
 .stage{flex:1;min-height:0;width:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
@@ -316,15 +310,13 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 
 /* ---------- the command centre is a deck: columns that stand apart as their own panels, each scrolling on its own.
    Nothing here is ruled off with a line. A column is a tinted panel, a card is a lighter block on it, and the gaps do the rest ---------- */
-.deck{--colbg:var(--s2);--tile:var(--bg);--good:#12855A;height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
-:root[data-theme="dark"] .deck{--colbg:var(--card);--tile:var(--s2);--good:#4AD6A0}
+.deck{height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
 .deck-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .deck-tabs button{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:none;font-size:13.5px;color:var(--fg-2)}
 .deck-tabs button:hover{background:var(--s2);color:var(--fg)}
 .deck-tabs i{width:7px;height:7px;border-radius:50%;background:var(--jam);flex:none}   /* a red dot only where something needs you */
 .deck-cols{flex:1;min-height:0;display:flex;padding:8px 8px 24px 24px;overflow-x:auto;scrollbar-width:none}
 .deck-cols::-webkit-scrollbar{display:none}
-.dcol{flex:none;width:var(--w,340px);display:flex;flex-direction:column;border-radius:20px;background:var(--colbg);overflow:hidden}   /* roomy columns; the board scrolls sideways, as TweetDeck does */
 /* the gap between two columns is a handle: drag it to make the column on its left wider or narrower */
 .grip{flex:none;position:relative;width:16px;cursor:col-resize;touch-action:none}
 .grip::after{content:"";position:absolute;left:6px;top:50%;width:4px;height:44px;margin-top:-22px;border-radius:4px;background:var(--line);opacity:0;transition:opacity .15s,height .15s,margin .15s}
@@ -333,40 +325,6 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .dcol.flash{animation:flash 1s var(--ease)}
 @keyframes flash{from{background:var(--s3)}}
-.dcol-h{flex:none;display:flex;align-items:center;gap:8px;height:52px;padding:0 16px;font-weight:600;font-size:15px}
-.dcol-h i{flex:none;width:10px;height:10px;border-radius:3px;background:var(--acc)}   /* each column has its own colour */
-.dcol-h small.need{background:var(--jam);color:#fff}
-.dcol-h small{margin-left:auto;min-width:24px;height:24px;padding:0 8px;border-radius:12px;background:var(--tile);display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--fg-2)}
-.dcol-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:8px;padding:0 8px 8px}
-.dcol-body > *{flex:none}
-/* a card answers one question: what it is and over how long, the number, one line about it, then what you can do */
-.dcard{display:block;width:100%;padding:16px;border:0;border-radius:14px;background:var(--tile);text-align:left;color:inherit}
-.dcard.need{background:color-mix(in srgb,var(--jam) 6%,var(--tile))}
-.dcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;font-weight:600}
-.dcard .top em{flex:none;font-style:normal;font-size:12.5px;font-weight:500;color:var(--fg-2)}
-.dcard .top em.need{color:var(--jam);font-weight:600}
-.dcard .big{display:flex;align-items:center;gap:8px;margin-top:12px}
-.dcard .delta{padding:2px 8px;border-radius:var(--r-pill);background:var(--colbg);font-size:12.5px;font-weight:600;color:var(--fg-2)}
-.dcard .delta.up{color:var(--good);background:color-mix(in srgb,var(--good) 13%,var(--tile))}   /* moved the right way */
-.dcard .delta.down{color:var(--jam);background:color-mix(in srgb,var(--jam) 10%,var(--tile))}
-.dcard .big b{font-size:30px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.1}
-.dcard .big b.t{font-size:17px;font-weight:600;letter-spacing:0;line-height:1.3}
-.dcard .line{margin:4px 0 0;font-size:13.5px;line-height:1.4;color:var(--fg-2)}
-.bars{display:flex;align-items:flex-end;gap:4px;height:48px;margin:16px 0 0}
-.bars i{flex:1;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--acc) 26%,var(--tile))}
-.bars i.hi{background:var(--acc)}
-.meter{height:8px;margin-top:16px;border-radius:8px;background:color-mix(in srgb,var(--acc) 18%,var(--tile));overflow:hidden}
-.meter i{display:block;height:100%;border-radius:8px;background:var(--acc)}
-.mini{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:8px;margin-top:16px;padding:12px;border-radius:12px;background:var(--colbg)}
-.dcard.need .mini{background:var(--tile)}
-.mini button{border:0;background:none;padding:0;text-align:left;color:inherit}
-.mini small{display:block;font-size:12px;line-height:1.3;color:var(--fg-2)}
-.mini b{display:block;margin-top:2px;font-size:15px;font-weight:600}
-.dcard .foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
-.dcard .foot button{height:30px;padding:0 12px;border:0;border-radius:var(--r-pill);background:var(--colbg);font-size:13px;font-weight:500;color:inherit;transition:background .15s}
-.dcard .foot button:hover{background:var(--s3)}
-.dcard.need .foot button{background:var(--tile)}
-.dcard .foot .btn{height:30px;padding:0 14px;font-size:13px;border-radius:var(--r-pill);margin-left:auto}
 /* the second row under the top bar: a page's own tabs live here, never in the top bar. They start where the page's content starts */
 .subbar{flex:none;display:flex;align-items:center;height:48px;padding:0 24px;background:var(--bg)}
 .subbar .deck-tabs{flex:1;min-width:0}
@@ -383,18 +341,6 @@ body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .sec-t:first-child{margin-top:0}
 .hello{display:flex;align-items:center;gap:12px;margin:0 0 24px;font-size:16.5px}
 .hello img{height:52px;width:auto}
-/* saved: plain idea cards */
-.ideas{grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 24px}
-/* a saved idea: the picture is the card. Its words sit under it, not in a box with it */
-.scard{position:relative;display:flex;flex-direction:column;min-width:0}
-.scard .pic{position:relative;display:block;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--s2)}
-.scard .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.scard:hover .pic img{transform:scale(1.03)}
-.scard .pill{position:absolute;left:12px;top:12px}
-.scard h3{margin-top:12px;font-size:15.5px;font-weight:600;letter-spacing:0;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.scard h3 a{color:inherit}
-.scard h3 a:hover{text-decoration:underline;text-underline-offset:3px}
-.scard p{margin:2px 0 0;font-size:14px;color:var(--fg-2)}
 .page-empty{display:grid;justify-items:center;gap:4px;padding:80px 0;text-align:center;color:var(--fg-2)}
 /* memory: the brand book with everything written on it, standing at an angle, and what Jammie knows as tiles */
 .learn{display:grid;grid-template-columns:260px minmax(0,1fr);gap:48px;align-items:start}
@@ -410,11 +356,6 @@ body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .bk-cover b{display:block;margin-top:8px;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
 .bk-cover p{margin:12px 0 0;font-size:14px;line-height:1.4;opacity:.92;max-width:16ch}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.ltile{display:block;min-height:96px;padding:16px;border:0;border-radius:16px;background:var(--s2);text-align:left;color:inherit;transition:background .15s}
-.ltile:hover{background:var(--s3)}
-.ltile b{display:block;font-size:24px;font-weight:var(--h-weight);line-height:1.15}
-.ltile b.t{font-size:16px;font-weight:600;line-height:1.3}
-.ltile small{display:block;margin-top:4px;color:var(--fg-2);font-size:13.5px;line-height:1.4}
 /* connectors: Shopify first, then everything else in one list */
 .rowi img.logo{flex:none;width:36px;height:36px;object-fit:contain;filter:var(--felt)}
 .rowi.first{padding:20px 16px}
@@ -448,8 +389,6 @@ html.still ::-webkit-scrollbar{display:none}
   .learn{grid-template-columns:1fr;gap:32px}
   .shelf{position:static}
   .tiles{grid-template-columns:1fr 1fr;gap:8px}
-  .ideas{grid-template-columns:1fr 1fr;gap:24px 16px}
-  .scard .pic{border-radius:16px}
   .toasts,body.has-side .toasts,body.bare .toasts{left:16px;right:16px;top:72px;transform:none}
   .ico-btn{width:44px;height:44px}
   .b-sm,.chip,.seg button{height:40px}
@@ -480,7 +419,6 @@ html.still ::-webkit-scrollbar{display:none}
   .stories-row{justify-content:flex-start;margin-right:108px;padding:10px 0 6px 16px;overflow-x:auto;scrollbar-width:none}   /* the row stops before the two buttons top right, and scrolls */
   .stories-row::-webkit-scrollbar{display:none}
   .stories{width:auto;max-width:none;gap:12px;justify-content:flex-start}
-  .story{font-size:11px}
   .slide{padding:8px 16px 0}
   .feed-col,.fcard{width:100%}
   .fc-media,.fcard.plain{width:100%;height:var(--fc-h);aspect-ratio:auto}
@@ -498,7 +436,6 @@ html.still ::-webkit-scrollbar{display:none}
   .deck-cols{gap:12px;padding:8px 16px 16px;scroll-snap-type:x mandatory;scroll-padding:0 16px}
   .dcol{width:86vw;scroll-snap-align:start}
   .grip{display:none}
-  .dcard .foot button,.dcard .foot .btn{height:40px;padding:0 16px}
   /* onboarding */
   .onb{padding:64px 16px 32px;gap:16px}
   .brandmark{left:16px}
@@ -580,30 +517,23 @@ html.still ::-webkit-scrollbar{display:none}
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=22"></script>
-<script src="assets/jammie/v3/data.js?v=22"></script>
+<script src="assets/jammie/v3/icons.js?v=23"></script>
+<script src="assets/jammie/v3/data.js?v=23"></script>
 <script>
 (() => {
-  const { A, D, IDEAS, real, av, ico, fcard, turnFrame } = window.JAMMIE;
+  const { A, D, IDEAS, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame } = window.JAMMIE;
   const $ = id => document.getElementById(id);
   const root = document.documentElement, app = $('app'), sideEl = $('side'), modal = $('modal');
   const STILL = new URLSearchParams(location.search).has('still');   // the flow map shows screens at rest
   if (STILL) root.classList.add('still');
 
-  // the workbench and the prototype share one saved look: tuned tokens, and light or dark
+  // light or dark: one saved choice, shared with the flow map and the design system
   const KEY = 'jammie-workbench-v5';
-  let tune = {}; try { tune = JSON.parse(localStorage.getItem(KEY)) || {}; } catch {}
-  const face = (tune['--font'] || '').match(/^"([^"]+)"/);                    // a typeface picked on the workbench is fetched only then
-  if (face && face[1] !== 'Figtree') document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${face[1].replace(/ /g, '+')}:wght@400;500;600;700;800&display=swap">`);
+  let look = {}; try { look = JSON.parse(localStorage.getItem(KEY)) || {}; } catch {}
   const forced = new URLSearchParams(location.search).get('theme');   // ?theme=dark shows a screen dark without saving it
-  function paint(theme){
-    root.dataset.theme = theme;
-    [...root.style].filter(k => k.startsWith('--')).forEach(k => root.style.removeProperty(k));
-    Object.entries(tune).forEach(([k, v]) => { if (k.startsWith('--')) root.style.setProperty(k, v); });
-    Object.entries((tune.themed && tune.themed[theme]) || {}).forEach(([k, v]) => root.style.setProperty(k, v));
-  }
-  paint(forced || tune.theme || 'light');
-  function setTheme(theme){ tune.theme = theme; try { localStorage.setItem(KEY, JSON.stringify(tune)); } catch {} paint(theme); }
+  const paint = theme => { root.dataset.theme = theme; };
+  paint(forced || look.theme || 'light');
+  function setTheme(theme){ look = { theme }; try { localStorage.setItem(KEY, JSON.stringify(look)); } catch {} paint(theme); }
 
   // ---- state: where we are in the feed, what was kept or put aside, what went to the team
   let cur = 0, timers = [], arriving = false, shown = null, lastPage = 'feed';
@@ -693,7 +623,7 @@ html.still ::-webkit-scrollbar{display:none}
   // ---- pieces of the feed
   const STORIES = [['Today', 'reel'], ['Trends', 'midnight'], ['Top ads', 'xlows'], ['News', 'rival'], ['How to', 'sketch'], ['Reviews', 'reviews']];   // each ring plays the idea it shows
   const seen = new Set(STILL ? [4, 5] : []);
-  const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, id], i) => `<a class="story ${seen.has(i) ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${idea(id).img})"></b></i><span>${n}</span></a>`).join('')}</div></div>`;
+  const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, id], i) => story(n, idea(id).img, { href: `#/story?s=${i}`, seen: seen.has(i) })).join('')}</div></div>`;
   // the actions hang beside the card. Jam is one of them: the main one, so it is red and a little larger
   const acts = d => d.special ? '' : `<div class="acts">
       <button class="act draw ${liked.has(d.id) ? 'liked' : ''}" data-do="keep">${ico('heart')}Keep</button>
@@ -727,12 +657,6 @@ html.still ::-webkit-scrollbar{display:none}
   const deck = cols => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button data-do="col" data-id="${i}">${o.need ? '<i></i>' : ''}${name}</button>`).join(''))}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
   const page = (body, tabs = '', narrow = '') => `<section class="page">${tabs ? subbar(tabs, 'fit') : ''}<i class="edge"></i><div class="page-scroll"><div class="page-body ${narrow}">${body}</div></div></section>`;
   // command centre: five columns, one question a card (numbers are the demo's)
-  const dcard = c => `<div class="dcard ${c.need ? 'need' : ''}"><div class="top"><span>${c.label.split(' · ')[0]}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : c.label.split(' · ')[1] || ''}</em></div>
-      <div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
-      ${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}
-      ${c.bars ? `<div class="bars">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}
-      ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
-      <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}">${l}</button>`).join('')}</div></div>`;
   const COLS = [
     ['With the team', '#7C5CFC', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open Updates', 'bell']] }]],
     ['Finance', '#17A673', [
@@ -748,7 +672,6 @@ html.still ::-webkit-scrollbar{display:none}
   ];
   const val = v => typeof v === 'function' ? v() : v, needs = c => c.some(x => x.need);
   // memory: what Jammie knows, as the same quiet cards
-  const tile = (big, line, isText) => `<button class="ltile" data-do="tile"><b class="${isText ? 't' : ''}">${big}</b><small>${line}</small></button>`;
   const KNOWS = [
     ['What I know', [['229', 'Products read, from wearcomet.com'], ['Everything I know', 'Search every line, with where it came from', 1], ['Your photos and files', 'What every maker works from', 1]]],
     ['What I see out there', [['1,171', 'Things customers said, from 13 places'], ['6', 'Rivals watched, 1,103 live ads'], ['27 Nov', 'Coming up: Black Friday']]],
@@ -760,10 +683,8 @@ html.still ::-webkit-scrollbar{display:none}
   // saved: everything you kept or put aside, as plain cards. The tabs only narrow it
   let savedTab = 'all';
   const savedIds = () => savedTab === 'liked' ? [...liked] : savedTab === 'later' ? [...SETS.later] : [...new Set([...liked, ...SETS.later])];
-  const savedCard = id => { const d = idea(id), to = `#/feed?i=${IDEAS.indexOf(d)}`; return `<article class="scard">
-      <a class="pic" href="${to}" aria-label="Open this idea"><img src="${D}${d.img}" alt="" loading="lazy"><span class="pill">${d.kind}</span></a>
-      <button class="like liked draw" data-do="unsave" data-id="${id}" aria-label="Remove from Saved">${ico('heart')}</button>
-      <h3><a href="${to}">${d.title}</a></h3><p>${d.makes} · ${liked.has(id) ? 'Kept' : 'For later'}</p></article>`; };
+
+  const savedCard = id => { const d = idea(id); return scard(d, { href: `#/feed?i=${IDEAS.indexOf(d)}`, note: liked.has(id) ? 'Kept' : 'For later' }); };
 
   // ---- screens. A page fills the app. A panel opens beside whatever page is under it. A modal sits over the feed
   const SCREENS = {
@@ -825,7 +746,7 @@ html.still ::-webkit-scrollbar{display:none}
             <button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div>
           <div>
             <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m still getting to know Comet.</span></div>
-            ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(t => tile(...t)).join('')}</div>`).join('')}
+            ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(t => ltile(...t)).join('')}</div>`).join('')}
           </div>
         </div>`, KNOWS.map(([name], i) => `<button data-do="jump" data-id="know${i}">${name}</button>`).join('')) },
     connectors: { title: 'Connectors', page: () => page(`

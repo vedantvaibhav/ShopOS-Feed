@@ -64,16 +64,25 @@ window.JAMMIE = (() => {
     m.querySelector('[data-fr-count]').textContent = `${i + 1}/${n}`;
     m.querySelector('.fr-nav.prev').disabled = i === 0; m.querySelector('.fr-nav.next').disabled = i === n - 1; }, true);
 
-  // the idea card in a grid: picture, a quiet meta line, the title, one button
-  const icard = (d, o = {}) => `<article class="icard">
-    <div class="pic"><img src="${D}${d.img}" alt="" loading="lazy">${d.badge ? `<span class="badge">${d.badge}</span>` : ''}
-      <button class="like draw" data-like aria-label="Keep">${ico('heart')}</button></div>
-    <div class="icard-body"><div class="icard-meta"><span>${d.kind}</span><span>${d.makes}</span></div>
-      <h3>${d.title}</h3><a class="btn b-line b-sm" href="${o.href || '#/idea'}">Open</a></div></article>`;
+  // a saved card: the picture links to the idea, the heart takes it out, the words sit under it
+  const scard = (d, o = {}) => `<article class="scard">
+      <a class="pic" href="${o.href || '#'}" aria-label="Open this idea"><img src="${D}${d.img}" alt="" loading="lazy"><span class="pill">${d.kind}</span></a>
+      <button class="like liked draw" data-do="unsave" data-id="${d.id}" aria-label="Remove from Saved">${ico('heart')}</button>
+      <h3><a href="${o.href || '#'}">${d.title}</a></h3><p>${d.makes}${o.note ? ` · ${o.note}` : ''}</p></article>`;
 
-  // a row with a small stack of pictures: bold line, quiet line, arrow
-  const srow = (title, meta, imgs, href = '#') => `<a class="srow draw" href="${href}">
-    <span class="stack">${imgs.map(f => `<i style="background-image:url(${D}${f})"></i>`).join('')}</span>
-    <b>${title}</b><span>${meta}</span>${ico('arrow')}</a>`;
-  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, icard, srow, turnFrame };
+  // a story ring
+  const story = (name, img, o = {}) => `<a class="story ${o.seen ? 'seen' : ''}" href="${o.href || '#'}"><i><b style="background-image:url(${D}${img})"></b></i><span>${name}</span></a>`;
+
+  // a command centre card: what it is and over how long, the number, one line, then what you can do. --acc on a parent colours it
+  const dcard = c => `<div class="dcard ${c.need ? 'need' : ''}"><div class="top"><span>${c.label.split(' · ')[0]}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : c.label.split(' · ')[1] || ''}</em></div>
+      <div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
+      ${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}
+      ${c.bars ? `<div class="bars">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}
+      ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
+      <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}">${l}</button>`).join('')}</div></div>`;
+
+  // a memory tile
+  const ltile = (big, line, isText) => `<button class="ltile" data-do="tile"><b class="${isText ? 't' : ''}">${big}</b><small>${line}</small></button>`;
+
+  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame };
 })();

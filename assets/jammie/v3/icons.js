@@ -59,7 +59,7 @@ window.jammieIcons = function (root) {
 
 // jam-pointer: the main action warms under the pointer, so tell it where the pointer is
 document.addEventListener('pointermove', function (e) {
-  var b = e.target.closest && e.target.closest('.b-jam,.search-go');
+  var b = e.target.closest && e.target.closest('.b-jam');
   if (!b) return;
   var r = b.getBoundingClientRect();
   b.style.setProperty('--mx', (e.clientX - r.left) + 'px');

@@ -27,7 +27,9 @@
   --bg:#FFFFFF; --s2:#F7F7F7; --s3:#EBEBEB; --line:#DDDDDD; --line-soft:#EBEBEB;
   --fg:#222222; --fg-2:#6A6A6A; --fg-3:#B0B0B0; --card:#FFFFFF;
   --floor:#F3EFE9;   /* what a side panel sits on, behind the page: a warm, slightly brown grey */
-  --on:#555555; --on-line:#A6A6A6;   /* picked, switched on, done: a soft grey, never full black */
+  --on:#555555; --on-line:#A6A6A6;
+  --good:#12855A;    /* a number that moved the right way */
+  --colbg:var(--s2); --tile:var(--bg);   /* a column, and a card sitting on it */   /* picked, switched on, done: a soft grey, never full black */
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
@@ -35,6 +37,8 @@
   --fg:#F7F7F7; --fg-2:#A6A6A6; --fg-3:#6A6A6A; --card:#181818;
   --floor:#1C1917;
   --on:#BDBDBD; --on-line:#6A6A6A;
+  --good:#4AD6A0;
+  --colbg:var(--card); --tile:var(--s2);
   --shadow-1:0 1px 2px rgba(0,0,0,.5); --shadow-2:0 3px 12px rgba(0,0,0,.5); --shadow-3:0 8px 28px rgba(0,0,0,.6);
 }
 
@@ -50,7 +54,7 @@ h1,h2,h3,h4{margin:0;font-weight:var(--h-weight);letter-spacing:var(--h-track);t
 [contenteditable]:hover{box-shadow:0 0 0 1px var(--line)}
 [contenteditable]:focus{box-shadow:0 0 0 2px var(--on-line)}
 :focus-visible{outline:2px solid var(--on-line);outline-offset:2px}
-a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.srow{text-decoration:none}
+a.btn,a.chip,a.act,a.ico-btn{text-decoration:none}
 
 /* ---------- line icons: the line traces in on hover, nothing moves or scales ---------- */
 [data-ico]{display:inline-flex;flex:none}
@@ -83,12 +87,12 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.srow{text-decoration:none}
 .b-round:hover{box-shadow:inset 0 0 0 1px var(--on-line)}
 
 /* the main action: one red that drifts a little on its own, and warms under the pointer */
-.b-jam,.search-go{position:relative;isolation:isolate;overflow:hidden;color:var(--on-jam);
+.b-jam{position:relative;isolation:isolate;overflow:hidden;color:var(--on-jam);
   background:linear-gradient(112deg,color-mix(in srgb,var(--jam) 74%,#fff) 0%,var(--jam) 34%,var(--jam-2) 68%,color-mix(in srgb,var(--jam-2) 80%,#5B0F3A) 100%);
   background-size:170% 100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.26);animation:jam-drift 9s ease-in-out infinite alternate}
-.b-jam::before,.search-go::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
+.b-jam::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .4s var(--ease);
   background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%),var(--jam-2),transparent 72%)}
-.b-jam:hover::before,.search-go:hover::before{opacity:.85}
+.b-jam:hover::before{opacity:.85}
 @keyframes jam-drift{from{background-position:0% 0}to{background-position:100% 0}}
 
 /* chips and the segmented switch */
@@ -104,36 +108,10 @@ a.btn,a.chip,a.act,a.link-btn,a.ico-btn,a.srow{text-decoration:none}
 /* art box: a picture always fits inside its tile */
 .art{position:relative;background:var(--s2)}
 .art > img{position:absolute;inset:var(--pad,28px);width:calc(100% - var(--pad,28px) * 2);height:calc(100% - var(--pad,28px) * 2);max-width:none;object-fit:contain}
-.badge{position:absolute;left:12px;top:12px;height:26px;padding:0 10px;border-radius:var(--r-pill);background:#fff;color:#222;font-size:12px;font-weight:600;display:inline-flex;align-items:center;box-shadow:var(--shadow-1)}
 .like{position:absolute;right:8px;top:8px;width:34px;height:34px;border:0;background:none;display:grid;place-items:center;color:#fff}
 .like .ico{width:22px;height:22px;fill:rgba(0,0,0,.28);stroke-width:2}
 .like.liked .ico > *{fill:var(--jam);stroke:#fff}
 
-/* idea card: picture, a quiet meta line, the title, one button */
-.ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.icard{display:flex;flex-direction:column;border:1px solid var(--line-soft);border-radius:var(--r-card);overflow:hidden;background:var(--card);color:inherit;transition:box-shadow .2s,border-color .2s}
-.icard:hover{border-color:var(--line);box-shadow:var(--shadow-1)}
-.icard .pic{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--s2)}
-.icard .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
-.icard:hover .pic img{transform:scale(1.03)}
-.icard-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
-.icard-meta{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:var(--fg-2)}
-.icard h3{font-size:16.5px;font-weight:600;letter-spacing:var(--h-track);line-height:1.3}
-.icard .btn{align-self:flex-start;margin-top:6px}
-
-/* row with a small stack of pictures: bold line, quiet line, arrow */
-.srow{display:flex;align-items:center;gap:16px;padding:14px 4px;color:inherit;border-bottom:1px solid var(--line-soft)}
-.stack{position:relative;width:54px;height:54px;flex:none}
-.stack i{position:absolute;inset:0;border-radius:12px;border:2.5px solid var(--card);background:var(--s2) center/cover no-repeat;box-shadow:0 2px 8px rgba(0,0,0,.16)}
-.stack i:nth-child(1){transform:rotate(-9deg) translate(-3px,2px)}
-.stack i:nth-child(2){transform:rotate(7deg) translate(3px,1px)}
-.srow b{font-weight:var(--h-weight);font-size:17px;letter-spacing:var(--h-track)}
-.srow span{color:var(--fg-2);font-size:17px}
-.srow .ico{width:17px;height:17px;color:var(--fg-2)}
-
-/* controls */
-.panel{border:1px solid var(--line);border-radius:var(--r-card);padding:24px;background:var(--card)}
-.ctl{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .row + .row{margin-top:16px}
 .input{display:block;border:1px solid var(--line);border-radius:var(--r-btn);padding:7px 14px;width:100%;background:var(--card)}
@@ -243,10 +221,81 @@ button.rowi:hover,a.rowi:hover{background:var(--s3)}   /* only a row you can pre
 .rowi > [data-ico]{color:var(--fg-2)}
 
 
+/* story ring: a picture in a red ring that turns grey once seen. --st sets its size */
+.story{flex:none;width:var(--st,64px);border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;line-height:16px;color:var(--fg-2)}
+.story span{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.story i{width:var(--st,64px);height:var(--st,64px);border-radius:50%;padding:2.5px;background:var(--jam);display:block}
+.story.seen i{background:var(--line)}
+.story i b{display:block;width:100%;height:100%;border-radius:50%;border:2px solid var(--bg);background:var(--s2) center/cover}
+.story:hover{color:var(--fg)}
+
+/* saved card: the picture is the card, its words sit under it */
+.ideas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 24px}
+.scard{position:relative;display:flex;flex-direction:column;min-width:0}
+.scard .pic{position:relative;display:block;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:var(--s2)}
+.scard .pic img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.scard:hover .pic img{transform:scale(1.03)}
+.scard .pill{position:absolute;left:12px;top:12px}
+.scard h3{margin-top:12px;font-size:15.5px;font-weight:600;letter-spacing:0;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.scard h3 a{color:inherit;text-decoration:none}
+.scard h3 a:hover{text-decoration:underline;text-underline-offset:3px}
+.scard p{margin:2px 0 0;font-size:14px;color:var(--fg-2)}
+
+/* command centre: a column is a tinted panel, a card a lighter block on it. --acc colours its bars and meter */
+.dcol{flex:none;width:var(--w,340px);display:flex;flex-direction:column;border-radius:20px;background:var(--colbg);overflow:hidden}   /* roomy columns; the board scrolls sideways, as TweetDeck does */
+.dcol-h{flex:none;display:flex;align-items:center;gap:8px;height:52px;padding:0 16px;font-weight:600;font-size:15px}
+.dcol-h i{flex:none;width:10px;height:10px;border-radius:3px;background:var(--acc)}   /* each column has its own colour */
+.dcol-h small.need{background:var(--jam);color:#fff}
+.dcol-h small{margin-left:auto;min-width:24px;height:24px;padding:0 8px;border-radius:12px;background:var(--tile);display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--fg-2)}
+.dcol-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:8px;padding:0 8px 8px}
+.dcol-body > *{flex:none}
+/* a card answers one question: what it is and over how long, the number, one line about it, then what you can do */
+.dcard{display:block;width:100%;padding:16px;border:0;border-radius:14px;background:var(--tile);text-align:left;color:inherit}
+.dcard.need{background:color-mix(in srgb,var(--jam) 6%,var(--tile))}
+.dcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;font-weight:600}
+.dcard .top em{flex:none;font-style:normal;font-size:12.5px;font-weight:500;color:var(--fg-2)}
+.dcard .top em.need{color:var(--jam);font-weight:600}
+.dcard .big{display:flex;align-items:center;gap:8px;margin-top:12px}
+.dcard .delta{padding:2px 8px;border-radius:var(--r-pill);background:var(--colbg);font-size:12.5px;font-weight:600;color:var(--fg-2)}
+.dcard .delta.up{color:var(--good);background:color-mix(in srgb,var(--good) 13%,var(--tile))}   /* moved the right way */
+.dcard .delta.down{color:var(--jam);background:color-mix(in srgb,var(--jam) 10%,var(--tile))}
+.dcard .big b{font-size:30px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.1}
+.dcard .big b.t{font-size:17px;font-weight:600;letter-spacing:0;line-height:1.3}
+.dcard .line{margin:4px 0 0;font-size:13.5px;line-height:1.4;color:var(--fg-2)}
+.bars{display:flex;align-items:flex-end;gap:4px;height:48px;margin:16px 0 0}
+.bars i{flex:1;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--acc) 26%,var(--tile))}
+.bars i.hi{background:var(--acc)}
+.meter{height:8px;margin-top:16px;border-radius:8px;background:color-mix(in srgb,var(--acc) 18%,var(--tile));overflow:hidden}
+.meter i{display:block;height:100%;border-radius:8px;background:var(--acc)}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:8px;margin-top:16px;padding:12px;border-radius:12px;background:var(--colbg)}
+.dcard.need .mini{background:var(--tile)}
+.mini button{border:0;background:none;padding:0;text-align:left;color:inherit}
+.mini small{display:block;font-size:12px;line-height:1.3;color:var(--fg-2)}
+.mini b{display:block;margin-top:2px;font-size:15px;font-weight:600}
+.dcard .foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
+.dcard .foot button{height:30px;padding:0 12px;border:0;border-radius:var(--r-pill);background:var(--colbg);font-size:13px;font-weight:500;color:inherit;transition:background .15s}
+.dcard .foot button:hover{background:var(--s3)}
+.dcard.need .foot button{background:var(--tile)}
+.dcard .foot .btn{height:30px;padding:0 14px;font-size:13px;border-radius:var(--r-pill);margin-left:auto}
+
+/* memory tile: a number or a few words, and one line under it */
+.ltile{display:block;min-height:96px;padding:16px;border:0;border-radius:16px;background:var(--s2);text-align:left;color:inherit;transition:background .15s}
+.ltile:hover{background:var(--s3)}
+.ltile b{display:block;font-size:24px;font-weight:var(--h-weight);line-height:1.15}
+.ltile b.t{font-size:16px;font-weight:600;line-height:1.3}
+.ltile small{display:block;margin-top:4px;color:var(--fg-2);font-size:13.5px;line-height:1.4}
+
+@media (max-width:860px){
+  .ideas{grid-template-columns:1fr 1fr;gap:24px 16px}
+  .scard .pic{border-radius:16px}
+  .story{font-size:11px}
+  .dcard .foot button,.dcard .foot .btn{height:40px;padding:0 16px}
+}
+
 /* sheet */
 .sheet{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow-3);padding:24px}
 
 @media (prefers-reduced-motion:reduce){
   .draw .ico > *{animation:none!important;stroke-dasharray:none!important}
-  .b-jam,.search-go{animation:none}
+  .b-jam{animation:none}
 }

@@ -7,10 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=19">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=21">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
-:root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--pp:#FBF7F0;--vh:100vh}
+:root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--t2:.32s;--pp:#FBF7F0;--vh:100vh}
 @supports (height:100dvh){:root{--vh:100dvh}}   /* on a phone, the height you can see while the browser's bars show */
 :root[data-theme="dark"]{--pp:#1D1A16}
 body{padding-left:60px;height:var(--vh);overflow:hidden}
@@ -19,9 +19,9 @@ body.bare .rail,body.bare .fab,body.bare .topbar{display:none}
 a{text-decoration:none}
 
 /* ---------- the shell: one top bar that never moves, a page under it, and a panel that opens beside the page ---------- */
-#app{position:relative;height:var(--vh);background:var(--bg);transition:margin-right var(--t) var(--ease),border-radius var(--t) var(--ease),background .3s var(--ease)}
+#app{position:relative;height:var(--vh);background:var(--bg);transition:margin-right var(--t2) var(--ease),border-radius var(--t2) var(--ease),box-shadow var(--t2) var(--ease),background .3s var(--ease)}
 body.bare #app{height:auto;min-height:var(--vh)}
-.topbar{position:fixed;top:0;left:60px;right:0;z-index:8;height:var(--bar);display:flex;align-items:center;gap:24px;padding:0 24px;border-bottom:1px solid transparent;pointer-events:none;transition:right var(--t) var(--ease),border-radius var(--t) var(--ease)}
+.topbar{position:fixed;top:0;left:60px;right:0;z-index:8;height:var(--bar);display:flex;align-items:center;gap:24px;padding:0 24px;border-bottom:1px solid transparent;pointer-events:none;transition:right var(--t2) var(--ease),border-radius var(--t2) var(--ease)}
 .topbar > *{pointer-events:auto}
 .topbar.solid{background:var(--bg)}
 .topbar h1{font-size:19px;font-weight:600;letter-spacing:0;white-space:nowrap}
@@ -33,20 +33,22 @@ body.bare #app{height:auto;min-height:var(--vh)}
 .top-right em[hidden]{display:none}
 .top-right em{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--jam);color:#fff;font-style:normal;font-size:10.5px;font-weight:700;display:grid;place-items:center}
 /* a page change: the bar stays, the page under it fades up a little. The same curve and time as every other move */
-.page-in{animation:page-in var(--t) var(--ease) both}
-@keyframes page-in{from{opacity:0;transform:translateY(12px)}}
+.page-in{animation:page-in .28s var(--ease) both}
+@keyframes page-in{from{opacity:0;transform:translateY(8px)}}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}}
 @keyframes fade{from{opacity:0}}
 /* the page steps aside as a sheet with round corners, and the panel sits on the floor beside it */
 body.has-side{background:var(--floor)}
 body.has-side #app{margin-right:var(--side-w);border-radius:0 28px 28px 0;overflow:hidden;box-shadow:0 0 0 1px var(--line-soft),10px 0 34px rgba(0,0,0,.05)}
 body.has-side .topbar{right:var(--side-w);border-top-right-radius:28px}
-#side{--blk:var(--card);position:fixed;top:0;right:0;bottom:0;z-index:5;width:var(--side-w);display:flex;flex-direction:column;visibility:hidden;opacity:0;transition:opacity var(--t) var(--ease),visibility 0s var(--t)}
-body.has-side #side{visibility:visible;opacity:1;transition:opacity var(--t) .12s var(--ease)}
+#side{--blk:var(--card);position:fixed;top:0;right:0;bottom:0;z-index:5;width:var(--side-w);display:flex;flex-direction:column;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity var(--t2) var(--ease),transform var(--t2) var(--ease),visibility 0s var(--t2)}
+/* the panel and everything in it arrive together, as the page steps aside. Nothing in it waits and appears after */
+body.has-side #side{visibility:visible;opacity:1;transform:none;transition:opacity var(--t2) var(--ease),transform var(--t2) var(--ease)}
 .side-h{flex:none;display:flex;align-items:center;gap:8px;height:var(--bar);padding:0 12px 0 24px}
 .side-h h2{font-size:19px;font-weight:600;letter-spacing:0;margin-right:auto}
 .side-h .back{margin-left:-12px}
-.side-body{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 24px;display:flex;flex-direction:column;scrollbar-width:thin;animation:rise var(--t) var(--ease) both}
+.side-body{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 24px;display:flex;flex-direction:column;scrollbar-width:thin}
+#side.swap .side-body{animation:fade .25s var(--ease)}   /* only when one panel replaces another */
 .side-body > *{flex:none}
 .side-foot{flex:none;display:flex;align-items:center;gap:8px;padding:16px 24px 24px}
 .side-foot .btn{margin-left:auto}
@@ -210,36 +212,45 @@ html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
   .onb.split #chanSlot{--c1:min(112px,13vh);gap:8px}
   .onb.split .tapstage .me{--v:min(440px,52vh);--lh:min(400px,47vh);margin:0 calc((294px - var(--v)) / 2)}
 }
-/* hey, here it is: what Jammie read comes back as a passport for the brand. An open booklet lying on the table:
-   two pages that meet in a gutter, each with the pages under it showing at its outer edge, inside a red cover whose spine runs down the middle */
-.pp-wrap{--hi:rgba(255,255,255,.62);width:min(760px,100%);perspective:1600px;animation:land .9s cubic-bezier(.2,.9,.25,1.12) both}
+/* hey, here it is: what Jammie read comes back as a passport for the brand. It arrives shut, then its cover swings open
+   on the spine, as Airbnb's host passport does. The open booklet is the resting state; the animation only plays it from shut */
+.pp-wrap{--hi:rgba(255,255,255,.62);--red:linear-gradient(160deg,color-mix(in srgb,var(--jam) 86%,#fff),var(--jam) 40%,color-mix(in srgb,var(--jam-2) 82%,#3A0B22));
+  width:min(820px,100%);display:grid;grid-template-columns:1fr 1fr;perspective:1800px;animation:land .9s cubic-bezier(.2,.9,.25,1.12) both}
 :root[data-theme="dark"] .pp-wrap{--hi:rgba(255,255,255,.05)}
-.pp-cover{--sp:calc(8px + (100% - 16px) * 5 / 11);position:relative;padding:8px 8px 14px;border-radius:26px;
-  background:linear-gradient(90deg,transparent calc(var(--sp) - 16px),rgba(0,0,0,.26) calc(var(--sp) - 1px),rgba(255,255,255,.2) calc(var(--sp) + 1px),transparent calc(var(--sp) + 16px)),   /* the spine */
-    linear-gradient(160deg,color-mix(in srgb,var(--jam) 86%,#fff),var(--jam) 40%,color-mix(in srgb,var(--jam-2) 82%,#3A0B22));
-  transform:rotateX(6deg);transform-origin:50% 100%;box-shadow:0 2px 0 color-mix(in srgb,var(--jam-2) 70%,#000),0 34px 44px -22px rgba(70,20,30,.42),0 10px 18px -8px rgba(0,0,0,.2);transition:transform .6s var(--ease)}
-.pp-cover:hover{transform:rotateX(2deg)}
-.passport{position:relative;display:grid;grid-template-columns:5fr 6fr;text-align:left}
-.pp-left,.pp-right{position:relative;min-width:0;padding:24px;background-color:var(--pp)}
+.pp-book{grid-column:2;position:relative;transform-style:preserve-3d;transform:rotateX(6deg);transform-origin:50% 100%;transition:transform .6s var(--ease);animation:pp-shift 1.1s 1.05s cubic-bezier(.6,0,.2,1) backwards}
+.pp-book:hover{transform:rotateX(2deg)}
+@keyframes pp-shift{from{transform:rotateX(6deg) translateX(-50%)}}   /* shut, the booklet sits in the middle; open, its spine does */
+/* one side of the open booklet: the red cover showing round a page */
+.pp-side{position:relative;padding:8px 8px 12px 0;border-radius:4px 22px 22px 4px;background:var(--red);box-shadow:0 2px 0 color-mix(in srgb,var(--jam-2) 70%,#000),0 30px 40px -22px rgba(70,20,30,.4),0 10px 18px -8px rgba(0,0,0,.18)}
+/* the cover: its front is what you see shut, its back is the left page */
+.pp-leaf{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:0 50%;transform:rotateY(-180deg);animation:pp-open 1.1s 1.05s cubic-bezier(.6,0,.2,1) backwards}
+@keyframes pp-open{from{transform:rotateY(0)}}
+.pp-leaf > *{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pp-front{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;border-radius:4px 22px 22px 4px;background:var(--red);color:#fff;text-align:center;box-shadow:inset 10px 0 0 rgba(0,0,0,.13),inset 12px 0 0 rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.3)}
+.pp-front small{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:.9}
+.pp-front .ico{width:76px;height:76px;stroke-width:1;opacity:.92}
+.pp-front b{font-size:32px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1}
+.pp-side.l{position:absolute;transform:rotateY(180deg);padding:8px 0 12px 8px;border-radius:22px 4px 4px 22px}
+.pp-page{position:relative;height:100%;min-width:0;padding:24px;background-color:var(--pp);text-align:left}
 /* the left page lies in the shade of the fold; under its outer edge, the pages beneath it */
-.pp-left{z-index:1;border-radius:18px 2px 2px 18px;box-shadow:-1px 2px 0 color-mix(in srgb,var(--pp) 84%,#000),-2px 4px 0 var(--pp),-3px 6px 0 color-mix(in srgb,var(--pp) 80%,#000)}
-.pp-left::after{content:"";position:absolute;inset:0 0 0 auto;width:84px;border-radius:0 2px 2px 0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.04) 40%,rgba(0,0,0,.11) 78%,rgba(0,0,0,.26));pointer-events:none}
-.pp-photo{width:100%;height:100%;min-height:min(300px,34vh);object-fit:cover;border-radius:12px;box-shadow:0 0 0 4px var(--card),0 2px 8px rgba(0,0,0,.18)}
-.pp-stamp{position:absolute;right:16px;bottom:10px;height:min(104px,12vh);width:auto;transform:rotate(-10deg);filter:drop-shadow(0 8px 6px rgba(0,0,0,.22));animation:stamp .5s .9s cubic-bezier(.3,1.5,.5,1) both}
-@keyframes stamp{from{opacity:0;transform:rotate(-10deg) translateY(-26px)}}
+.pp-side.l .pp-page{border-radius:16px 2px 2px 16px;box-shadow:-1px 2px 0 color-mix(in srgb,var(--pp) 84%,#000),-2px 4px 0 var(--pp),-3px 6px 0 color-mix(in srgb,var(--pp) 80%,#000)}
+.pp-side.l .pp-page::after{content:"";position:absolute;inset:0 0 0 auto;width:84px;border-radius:0 2px 2px 0;background:linear-gradient(90deg,transparent,rgba(0,0,0,.04) 40%,rgba(0,0,0,.11) 78%,rgba(0,0,0,.26));pointer-events:none}
 /* the right page rises out of the fold: a thin dark line where the pages meet, then the paper catches the light */
-.pp-right{display:flex;flex-direction:column;gap:16px;border-radius:2px 18px 18px 2px;
+.pp-side.r .pp-page{display:flex;flex-direction:column;gap:16px;min-height:min(360px,40vh);border-radius:2px 16px 16px 2px;
   background-image:repeating-radial-gradient(circle at 62% 16%,transparent 0 14px,color-mix(in srgb,var(--fg) 4%,transparent) 14px 15px);   /* the fine rings a passport page is printed with */
   box-shadow:1px 2px 0 color-mix(in srgb,var(--pp) 84%,#000),2px 4px 0 var(--pp),3px 6px 0 color-mix(in srgb,var(--pp) 80%,#000)}
-.pp-right::before{content:"";position:absolute;inset:0 auto 0 0;width:72px;border-radius:2px 0 0 2px;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,.1) 8%,var(--hi) 24%,transparent 62%);pointer-events:none}
-.pp-right > *{position:relative}
-.pp-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
-.pp-top img{height:40px;width:auto;filter:var(--felt)}
+.pp-side.r .pp-page::before{content:"";position:absolute;inset:0 auto 0 0;width:72px;border-radius:2px 0 0 2px;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,.1) 8%,var(--hi) 24%,transparent 62%);pointer-events:none}
+.pp-side.r .pp-page > *{position:relative}
+.pp-photo{width:100%;height:100%;object-fit:cover;border-radius:12px;box-shadow:0 0 0 4px var(--card),0 2px 8px rgba(0,0,0,.18)}
+/* the stamp is ink on the page, not an object: it thumps down once the booklet is open */
+.pp-side.r .pp-page > .pp-ink{position:absolute;right:20px;top:16px;width:88px;height:88px;border-radius:50%;border:2px solid currentColor;outline:1px solid currentColor;outline-offset:3px;color:var(--jam);opacity:.74;display:grid;place-content:center;text-align:center;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;transform:rotate(-11deg);animation:stamp .4s 2.3s cubic-bezier(.3,1.5,.5,1) backwards}
+.pp-ink b{display:block;font-size:12.5px;letter-spacing:.03em}
+@keyframes stamp{from{opacity:0;transform:rotate(-11deg) scale(1.6)}}
+.pp-top{display:flex;align-items:center;min-height:40px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
 .pp-name{font-size:42px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1}
 .pp-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0}
 .pp-facts dt{font-size:11.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-2)}
 .pp-facts dd{margin:2px 0 0;font-size:16px;font-weight:600}
-.pp-mrz{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font:500 12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:var(--fg-3);white-space:nowrap;overflow:hidden}
 .swatches{display:flex;gap:6px}
 .swatches i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 22%,transparent)}
 @media (max-height:800px) and (min-width:861px){
@@ -247,8 +258,7 @@ html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
   .onb.small .onb-art{--v:112px}
   .onb.small .onb-art .lead{height:96px}
   .pp-name{font-size:34px}
-  .pp-right{gap:12px;padding:20px 24px 16px}
-  .pp-photo{min-height:0}
+  .pp-side.r .pp-page{gap:12px;padding:20px 24px 16px;min-height:0}
 }
 
 /* ---------- the feed: stories across the card's width, then one tall card a stop ---------- */
@@ -270,7 +280,7 @@ html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
 .feed-col{position:relative;min-width:0}
 .feed-col .acts{position:absolute;left:calc(100% + 12px);top:0;height:var(--fc-h);justify-content:flex-end;gap:4px}
 body.has-side .stage,body.has-modal .stage{overflow:hidden}
-.fab{position:fixed;right:24px;bottom:24px;z-index:4;height:52px;padding:0 20px 0 6px;border-radius:99px;border:0;background:var(--card);box-shadow:var(--shadow-2);display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:inherit;transition:opacity var(--t) var(--ease),box-shadow var(--t) var(--ease)}
+.fab{position:fixed;right:24px;bottom:24px;z-index:4;height:52px;padding:0 20px 0 6px;border-radius:99px;border:0;background:var(--card);box-shadow:var(--shadow-2);display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:inherit;transition:opacity var(--t2) var(--ease),box-shadow var(--t2) var(--ease)}
 .fab:hover{box-shadow:var(--shadow-3)}
 .fab span{width:40px;height:40px;border-radius:50%;background:var(--s2);display:grid;place-items:center}   /* Jammie sits in a circle */
 .fab img{height:30px;width:auto}
@@ -280,7 +290,8 @@ body.has-side .fab{opacity:0;pointer-events:none}
    Bars along the top fill as it plays, a tap on the left or right moves on, and it moves on by itself ---------- */
 .scrim{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:16px;padding:16px;background:rgba(20,20,20,.94);animation:fade var(--t) var(--ease)}
 .sv{position:relative;flex:none;height:min(calc(var(--vh) - 32px),880px);aspect-ratio:9/16;max-width:calc(100vw - 136px);border-radius:16px;overflow:hidden;isolation:isolate;background:#111;color:#fff}
-.sv-pic{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;animation:fade .3s var(--ease)}
+.sv-pic{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+.scrim.quiet{animation:none}   /* going from one story to the next, nothing fades: the picture just changes */
 /* a picture with words on it is shown whole, over a blurred copy of itself, so nothing is cut off */
 .sv.fit{background-size:cover;background-position:center}
 .sv.fit .sv-pic{object-fit:contain;backdrop-filter:blur(30px) brightness(.62);-webkit-backdrop-filter:blur(30px) brightness(.62)}
@@ -309,18 +320,26 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 
 /* ---------- the command centre is a deck: columns that stand apart as their own panels, each scrolling on its own.
    Nothing here is ruled off with a line. A column is a tinted panel, a card is a lighter block on it, and the gaps do the rest ---------- */
-.deck{--colbg:var(--s2);--tile:var(--bg);height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
-:root[data-theme="dark"] .deck{--colbg:var(--card);--tile:var(--s2)}
+.deck{--colbg:var(--s2);--tile:var(--bg);--good:#12855A;height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
+:root[data-theme="dark"] .deck{--colbg:var(--card);--tile:var(--s2);--good:#4AD6A0}
 .deck-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .deck-tabs button{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:none;font-size:13.5px;color:var(--fg-2)}
 .deck-tabs button:hover{background:var(--s2);color:var(--fg)}
 .deck-tabs i,.dcol-h i{width:7px;height:7px;border-radius:50%;background:var(--jam);flex:none}   /* a red dot only where something needs you */
-.deck-cols{flex:1;min-height:0;display:flex;gap:16px;padding:8px 24px 24px;overflow-x:auto;scrollbar-width:none}
+.deck-cols{flex:1;min-height:0;display:flex;padding:8px 8px 24px 24px;overflow-x:auto;scrollbar-width:none}
 .deck-cols::-webkit-scrollbar{display:none}
-.dcol{flex:1 0 0;min-width:248px;max-width:480px;display:flex;flex-direction:column;border-radius:20px;background:var(--colbg);overflow:hidden}   /* the columns share the width, so five of them fill a laptop */
+.dcol{flex:none;width:340px;display:flex;flex-direction:column;border-radius:20px;background:var(--colbg);overflow:hidden}   /* roomy columns; the board scrolls sideways, as TweetDeck does */
+/* the gap between two columns is a handle: drag it to make the column on its left wider or narrower */
+.grip{flex:none;position:relative;width:16px;cursor:col-resize;touch-action:none}
+.grip::after{content:"";position:absolute;left:6px;top:50%;width:4px;height:44px;margin-top:-22px;border-radius:4px;background:var(--line);opacity:0;transition:opacity .15s,height .15s,margin .15s}
+.grip:hover::after,.grip.on::after{opacity:1}
+.grip.on::after{height:72px;margin-top:-36px;background:var(--on-line)}
+body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .dcol.flash{animation:flash 1s var(--ease)}
 @keyframes flash{from{background:var(--s3)}}
 .dcol-h{flex:none;display:flex;align-items:center;gap:8px;height:52px;padding:0 16px;font-weight:600;font-size:15px}
+.dcol-h i{width:10px;height:10px;border-radius:3px;background:var(--acc)}   /* each column has its own colour */
+.dcol-h small.need{background:var(--jam);color:#fff}
 .dcol-h small{margin-left:auto;min-width:24px;height:24px;padding:0 8px;border-radius:12px;background:var(--tile);display:grid;place-items:center;font-size:12.5px;font-weight:600;color:var(--fg-2)}
 .dcol-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:8px;padding:0 8px 8px}
 .dcol-body > *{flex:none}
@@ -331,13 +350,17 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 .dcard .top em{flex:none;font-style:normal;font-size:12.5px;font-weight:500;color:var(--fg-2)}
 .dcard .top em.need{color:var(--jam);font-weight:600}
 .dcard .big{display:flex;align-items:center;gap:8px;margin-top:12px}
-.dcard .delta{padding:2px 8px;border-radius:var(--r-pill);background:var(--colbg);font-size:12.5px;font-weight:600;color:var(--fg-2)}   /* red is kept for the one card that needs you */
+.dcard .delta{padding:2px 8px;border-radius:var(--r-pill);background:var(--colbg);font-size:12.5px;font-weight:600;color:var(--fg-2)}
+.dcard .delta.up{color:var(--good);background:color-mix(in srgb,var(--good) 13%,var(--tile))}   /* moved the right way */
+.dcard .delta.down{color:var(--jam);background:color-mix(in srgb,var(--jam) 10%,var(--tile))}
 .dcard .big b{font-size:30px;font-weight:var(--h-weight);letter-spacing:var(--h-track);line-height:1.1}
 .dcard .big b.t{font-size:17px;font-weight:600;letter-spacing:0;line-height:1.3}
 .dcard .line{margin:4px 0 0;font-size:13.5px;line-height:1.4;color:var(--fg-2)}
 .bars{display:flex;align-items:flex-end;gap:4px;height:48px;margin:16px 0 0}
-.bars i{flex:1;border-radius:3px 3px 1px 1px;background:var(--s3)}
-.bars i.hi{background:var(--on)}
+.bars i{flex:1;border-radius:3px 3px 1px 1px;background:color-mix(in srgb,var(--acc) 26%,var(--tile))}
+.bars i.hi{background:var(--acc)}
+.meter{height:8px;margin-top:16px;border-radius:8px;background:color-mix(in srgb,var(--acc) 18%,var(--tile));overflow:hidden}
+.meter i{display:block;height:100%;border-radius:8px;background:var(--acc)}
 .mini{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:8px;margin-top:16px;padding:12px;border-radius:12px;background:var(--colbg)}
 .dcard.need .mini{background:var(--tile)}
 .mini button{border:0;background:none;padding:0;text-align:left;color:inherit}
@@ -354,7 +377,6 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 .subbar.fit .deck-tabs{flex:none;width:100%;max-width:1040px;margin:0 auto;padding:0 32px}
 .subbar.fit.narrow .deck-tabs{max-width:720px}
 .subbar .deck-tabs button.on{background:var(--s2);color:var(--fg);font-weight:600}
-@media (min-width:1420px){.deck .subbar{display:none}}   /* once every column is on screen there is nothing to jump to */
 /* the smaller pages (Saved, Memory, Connectors): one column in the middle, scrolling under the bar */
 .page{height:100%;display:flex;flex-direction:column;padding-top:var(--bar)}
 .page .edge{flex:none;position:relative;z-index:1;height:1px;margin-bottom:-1px;background:var(--line-soft);opacity:0;transition:opacity .2s}   /* shows only once the page has scrolled under the bar */
@@ -393,8 +415,7 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
   box-shadow:inset 12px 0 0 rgba(0,0,0,.14),inset 14px 0 0 rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.3)}   /* the band is its spine */
 .bk-cover small{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.86}
 .bk-cover b{display:block;margin-top:8px;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.bk-cover p{margin:8px 0 0;font-size:13px;line-height:1.35;opacity:.92;max-width:15ch}
-.bk-cover img{position:absolute;right:14px;bottom:16px;width:52%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.25);transform:rotate(5deg)}
+.bk-cover p{margin:12px 0 0;font-size:14px;line-height:1.4;opacity:.92;max-width:16ch}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ltile{display:block;min-height:96px;padding:16px;border:0;border-radius:16px;background:var(--s2);text-align:left;color:inherit;transition:background .15s}
 .ltile:hover{background:var(--s3)}
@@ -408,13 +429,13 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 .rowi.first b{font-size:17px}
 .logo-tile{flex:none;width:36px;height:36px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-weight:700;font-size:14px}
 
-.toasts{position:fixed;left:calc(30px + 50vw);top:72px;transform:translateX(-50%);z-index:40;display:grid;justify-items:center;gap:8px;pointer-events:none;transition:left var(--t) var(--ease)}   /* under the bar and centred on the page, clear of the card's words and its actions */
+.toasts{position:fixed;left:calc(30px + 50vw);top:72px;transform:translateX(-50%);z-index:40;display:grid;justify-items:center;gap:8px;pointer-events:none;transition:left var(--t2) var(--ease)}   /* under the bar and centred on the page, clear of the card's words and its actions */
 body.has-side .toasts{left:calc(30px + 50vw - var(--side-w) / 2)}
 body.bare .toasts{left:50%}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 html.still *{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}
 html.still ::-webkit-scrollbar{display:none}
-@media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pp-cover{transform:none}.pop,.bob,.pp-wrap,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body,.pp-stamp{animation:none!important}.hop{opacity:1}}
+@media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body{animation:none!important}.hop{opacity:1}}
 
 /* ---------- phone: one 16px gutter everywhere, everything you tap at least 40px ---------- */
 @media (max-width:860px){
@@ -483,7 +504,8 @@ html.still ::-webkit-scrollbar{display:none}
   .fab span{width:42px;height:42px}
   /* decks: one column a screen, with its cards' actions big enough to tap */
   .deck-cols{gap:12px;padding:8px 16px 16px;scroll-snap-type:x mandatory;scroll-padding:0 16px}
-  .dcol,.dcol.wide{width:86vw;scroll-snap-align:start}
+  .dcol,.dcol.wide{width:86vw!important;scroll-snap-align:start}
+  .grip{display:none}
   .dcard .foot button,.dcard .foot .btn{height:40px;padding:0 16px}
   /* onboarding */
   .onb{padding:64px 16px 32px;gap:16px}
@@ -501,21 +523,33 @@ html.still ::-webkit-scrollbar{display:none}
   .tapstage .me{--v:176px;--lh:164px;width:190px;margin:0 -30px}
   .asks .chips{display:grid;grid-template-columns:1fr 1fr}
   .asks .chip{justify-content:center}
-  .onb.small .onb-art{--v:112px}
-  .onb.small .onb-art .lead{height:96px}
-  .pp-cover{padding:6px 6px 10px;border-radius:22px;transform:rotateX(4deg);background:linear-gradient(160deg,color-mix(in srgb,var(--jam) 86%,#fff),var(--jam) 40%,color-mix(in srgb,var(--jam-2) 82%,#3A0B22))}
-  .passport{grid-template-columns:minmax(0,1fr)}
-  .pp-left{padding:16px;border-radius:16px 16px 2px 2px;box-shadow:none}   /* on a phone the booklet opens upward: the fold runs across */
-  .pp-right{border-radius:2px 2px 16px 16px}
-  .pp-left::after{inset:auto 0 0 0;width:auto;height:30px;border-radius:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.2))}
-  .pp-right::before{inset:0 0 auto 0;width:auto;height:44px;border-radius:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.08) 12%,var(--hi) 34%,transparent 80%)}
-  .pp-photo{min-height:0;height:120px}
-  .pp-stamp{height:72px;right:8px;bottom:-12px}
-  .pp-top img{display:none}
-  .pp-right{padding:16px;gap:12px}
+  /* on a phone the booklet opens upward: the cover lifts on its top edge and the picture page lands above */
+  .pp-wrap{width:min(340px,100%);grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .pp-book{grid-column:1;grid-row:2;transform:none;animation-name:pp-shift-v}
+  .pp-book:hover{transform:none}
+  @keyframes pp-shift-v{from{transform:translateY(-50%)}}
+  .pp-side{padding:0 8px 10px;border-radius:4px 4px 20px 20px}
+  .pp-leaf{transform-origin:50% 0;transform:rotateX(180deg);animation-name:pp-open-v}
+  @keyframes pp-open-v{from{transform:rotateX(0)}}
+  .pp-front{border-radius:4px 4px 20px 20px;box-shadow:inset 0 10px 0 rgba(0,0,0,.13),inset 0 12px 0 rgba(255,255,255,.14)}
+  .pp-side.l{transform:rotateX(180deg);padding:8px 8px 0;border-radius:20px 20px 4px 4px}
+  .pp-page{padding:16px}
+  .pp-side.l .pp-page{border-radius:14px 14px 2px 2px;box-shadow:none}
+  .pp-side.l .pp-page::after{inset:auto 0 0 0;width:auto;height:30px;border-radius:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.2))}
+  .pp-side.r .pp-page{gap:12px;min-height:0;border-radius:2px 2px 14px 14px}
+  .pp-side.r .pp-page::before{inset:0 0 auto 0;width:auto;height:44px;border-radius:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,.08) 12%,var(--hi) 34%,transparent 80%)}
+  .pp-side.r .pp-page > .pp-ink{right:12px;top:10px;width:72px;height:72px;font-size:7.5px}
+  .pp-ink b{font-size:10.5px}
+  .pp-top{min-height:24px}
   .pp-name{font-size:32px}
   .pp-facts{gap:8px 16px}
-  .pp-mrz{display:none}
+  .pp-facts dd{font-size:15px;line-height:1.3}
+  .onb.small{gap:12px;padding-bottom:16px}
+  .onb.small .onb-body{gap:12px}
+  .onb.small .onb-art{--v:72px}
+  .onb.small .onb-art .lead{height:62px}
+  /* the open booklet is taller than a small phone: the way on stays at the foot of the screen */
+  .onb.small .onb-body > .btn{position:sticky;bottom:calc(16px + env(safe-area-inset-bottom));z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 }
 /* a short phone: fewer actions on the picture (Less and Note are in Why), a shorter stage for the three taps */
 @media (max-width:860px) and (max-height:700px){
@@ -554,8 +588,8 @@ html.still ::-webkit-scrollbar{display:none}
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=19"></script>
-<script src="assets/jammie/v3/data.js?v=19"></script>
+<script src="assets/jammie/v3/icons.js?v=21"></script>
+<script src="assets/jammie/v3/data.js?v=21"></script>
 <script>
 (() => {
   const { A, D, IDEAS, real, av, fcard, turnFrame } = window.JAMMIE;
@@ -664,6 +698,7 @@ html.still ::-webkit-scrollbar{display:none}
   // ---- pieces of the feed
   const STORIES = [['Today', 'reel'], ['Trends', 'midnight'], ['Top ads', 'xlows'], ['News', 'rival'], ['How to', 'sketch'], ['Reviews', 'reviews']];   // each ring plays the idea it shows
   const seen = new Set(STILL ? [4, 5] : []);
+  STORIES.forEach(([, id]) => { new Image().src = D + idea(id).img; });       // loaded ahead, so the next story is there the moment you tap
   const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, id], i) => `<a class="story ${seen.has(i) ? 'seen' : ''}" href="#/story?s=${i}"><i><b style="background-image:url(${D}${idea(id).img})"></b></i><span>${n}</span></a>`).join('')}</div></div>`;
   // the actions hang beside the card. Jam is one of them: the main one, so it is red and a little larger
   const acts = d => d.special ? '' : `<div class="acts">
@@ -690,28 +725,30 @@ html.still ::-webkit-scrollbar{display:none}
   const ask = (list, ph, what) => asksFor(list) + composer(ph, what);   // the foot of a note panel: what you might ask, then the box
 
   // ---- decks: every page is a row of columns. One column is a header and a stack of cards
-  const col = (name, body, o = {}) => `<section class="dcol" id="${o.id || ''}"><header class="dcol-h">${o.need ? '<i></i>' : ''}${name}<small>${o.n}</small></header><div class="dcol-body">${body}</div></section>`;
+  let colW = STILL ? {} : store('jammie-proto-cols', {});                     // widths you dragged the columns to
+  const col = (name, body, o = {}) => `<section class="dcol" id="${o.id || ''}" style="--acc:${o.acc};${colW[o.id] ? `width:${colW[o.id]}px` : ''}"><header class="dcol-h"><i></i>${name}<small class="${o.need ? 'need' : ''}">${o.n}</small></header><div class="dcol-body">${body}</div></section><i class="grip" data-col="${o.id}" role="separator" aria-orientation="vertical" title="Drag to change the width"></i>`;
   const subbar = (tabs, fit = '') => `<div class="subbar ${fit}"><nav class="deck-tabs">${tabs}</nav></div>`;   // a page's own tabs: the second row, under the top bar
   const deck = cols => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button data-do="col" data-id="${i}">${o.need ? '<i></i>' : ''}${name}</button>`).join(''))}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
   const page = (body, tabs = '', narrow = '') => `<section class="page">${tabs ? subbar(tabs, 'fit ' + narrow) : ''}<i class="edge"></i><div class="page-scroll"><div class="page-body ${narrow}">${body}</div></div></section>`;
   // command centre: five columns, one question a card (numbers are the demo's)
   const dcard = c => `<div class="dcard ${c.need ? 'need' : ''}"><div class="top"><span>${c.label.split(' · ')[0]}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : c.label.split(' · ')[1] || ''}</em></div>
       <div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
+      ${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}
       ${c.bars ? `<div class="bars">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}
       ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
       <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}">${l}</button>`).join('')}</div></div>`;
   const COLS = [
-    ['With the team', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open Updates', 'bell']] }]],
-    ['Finance', [
+    ['With the team', '#7C5CFC', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open Updates', 'bell']] }]],
+    ['Finance', '#17A673', [
       { label: 'Net sales · 7 days', when: '40 min ago', value: '₹1.4Cr', delta: '▼ 13%', dir: 'down', line: 'What customers paid, after discounts and returns.', bars: [70, 78, 79, 80, 78, 82, 95, 67, 66, 68, 81, 73, 67, 68], mini: [['Orders', '2,179'], ['An order', '₹6,380'], ['New customers', '1,629']], acts: [['More', 'more'], ['Weekly report', 'report'], ['Add delivery fees', 'costs']] },
       { label: 'What you keep · 7 days', when: '40 min ago', value: 'Not counted yet', line: 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report']] },
-      { label: 'Refunds · 7 days', when: '40 min ago', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', acts: [['More', 'more'], ['P&L report', 'report']] }]],
-    ['Marketing return', [
+      { label: 'Refunds · 7 days', when: '40 min ago', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', bars: [62, 70, 58, 66, 74, 61, 55], acts: [['More', 'more'], ['P&L report', 'report']] }]],
+    ['Marketing return', '#2F6BFF', [
       { label: 'Sales per ₹1 of ads · 7 days', when: '40 min ago', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
       { label: 'Campaigns · 7 days', need: true, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report']] },
-      { label: 'Site funnel · 7 days', when: '40 min ago', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
-    ['Stock & delivery', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report']] }]],
-    ['The stove', [{ label: 'Ideas ready · today', value: '10', line: '8 more are lined up behind them.', acts: [['Open the feed', 'feed']] }]],
+      { label: 'Site funnel · 7 days', when: '40 min ago', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', bars: [84, 80, 88, 76, 72, 78, 70], mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
+    ['Stock & delivery', '#0FA3B1', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', meter: 17, mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report']] }]],
+    ['The stove', '#E0245E', [{ label: 'Ideas ready · today', value: '10', line: '8 more are lined up behind them.', meter: 56, acts: [['Open the feed', 'feed']] }]],
   ];
   const val = v => typeof v === 'function' ? v() : v, needs = c => c.some(x => x.need);
   // memory: what Jammie knows, as the same quiet cards
@@ -760,31 +797,35 @@ html.still ::-webkit-scrollbar{display:none}
       enter: () => showPicks(STILL ? { role: ['Founder'], goal: ['Sales'], chan: ['Instagram', 'Meta ads'] } : { ...picks }) },
     here: { bare: true, page: () => onb(4, pose('cheer'), `
         <h1 class="h2">Hey, here it is.</h1>
-        <div class="pp-wrap"><div class="pp-cover"><div class="passport">
-          <div class="pp-left"><img class="pp-photo" src="${D}ivory-angles.jpg" alt=""><img class="pp-stamp" src="${A}el-stamp.png" alt=""></div>
-          <div class="pp-right">
-            <div class="pp-top">Brand passport<img src="${A}el-passport.png" alt=""></div>
+        <div class="pp-wrap"><div class="pp-book">
+          <div class="pp-side r"><div class="pp-page">
+            <div class="pp-top">Brand passport</div>
             <b class="pp-name">Comet</b>
             <dl class="pp-facts">
               <div><dt>Makes</dt><dd>Homegrown sneakers</dd></div><div><dt>For</dt><dd>Men and women, India</dd></div>
               <div><dt>Products</dt><dd>229</dd></div><div><dt>Customers said</dt><dd>1,171 things</dd></div>
               <div><dt>Rivals watched</dt><dd>6</dd></div><div><dt>Colours</dt><dd><span class="swatches"><i style="background:#2765FA"></i><i style="background:#111"></i><i style="background:#F4F1EA"></i><i style="background:#4CAF50"></i></span></dd></div>
             </dl>
-            <div class="pp-mrz">P&lt;COMET&lt;&lt;WEARCOMET&lt;COM&lt;&lt;READ&lt;${today.toUpperCase().replace(/ /g, '&lt;')}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
-          </div></div></div></div>
+            <div class="pp-ink">Read<b>${today}</b>by Jammie</div>
+          </div></div>
+          <div class="pp-leaf">
+            <div class="pp-front"><small>Brand passport</small>${ico('globe')}<b>Comet</b></div>
+            <div class="pp-side l"><div class="pp-page"><img class="pp-photo" src="${D}ivory-angles.jpg" alt=""></div></div>
+          </div>
+        </div></div>
         <a class="btn b-jam draw" href="#/feed" data-bloom>Open my feed${ico('arrow')}</a>`, 'small') },
 
     // ================= pages =================
     feed: { page: feedPage },
-    command: { title: 'Command centre', note: 'Updated 40 min ago', page: () => deck(COLS.map(([name, cards]) => [name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line) })).join(''),
-      { need: needs(cards), n: cards.length }])) },
+    command: { title: 'Command centre', note: 'Updated 40 min ago', page: () => deck(COLS.map(([name, acc, cards]) => [name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line) })).join(''),
+      { need: needs(cards), n: cards.length, acc }])) },
     saved: { title: 'Saved', page: () => { const ids = savedIds();
       return page(ids.length ? `<div class="ideas">${ids.map(savedCard).join('')}</div>`
         : `<div class="page-empty"><img src="${A}pose-sleep.png" alt=""><h3>Nothing here yet.</h3>Keep an idea, or put one aside with Later.</div>`,
         [['all', 'All'], ['liked', 'Kept'], ['later', 'For later']].map(([k, n]) => `<button class="${savedTab === k ? 'on' : ''}" data-do="savedtab" data-id="${k}">${n}</button>`).join('')); } },
     memory: { title: 'Memory', page: () => page(`
         <div class="learn">
-          <div class="shelf"><div class="bk"><div class="bk-cover"><small>Brand memory</small><b>Comet</b><p>India’s homegrown sneaker brand for men and women</p><img src="${D}reviews.jpg" alt=""></div></div>
+          <div class="shelf"><div class="bk"><div class="bk-cover"><small>Brand memory</small><b>Comet</b><p>India’s homegrown sneaker brand for men and women</p></div></div>
             <button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div>
           <div>
             <div class="hello"><img src="${A}pose-wave.png" alt=""><span>I’m still getting to know Comet.</span></div>
@@ -840,7 +881,7 @@ html.still ::-webkit-scrollbar{display:none}
         return `<div class="scrim">
         ${prev ? `<a class="sv-nav draw" href="${prev}" aria-label="The story before">${ico('back')}</a>` : '<span class="sv-nav off"></span>'}
         <div class="sv ${d.fit ? 'fit' : ''}" ${d.fit ? `style="background-image:url(${D}${d.img})"` : ''}>
-          <img class="sv-pic" src="${D}${d.img}" alt="">
+          <img class="sv-pic" decoding="sync" src="${D}${d.img}" alt="">
           <div class="sv-bars">${STORIES.map((_, i) => `<i class="${i < s ? 'done' : i === s ? 'now' : ''}"><b></b></i>`).join('')}</div>
           <div class="sv-h"><i class="ring" style="background-image:url(${D}${d.img})"></i><b>${name}</b><small>${d.kind}</small><a class="ico-btn draw" href="#/feed" aria-label="Close">${ico('close')}</a></div>
           ${prev ? `<a class="sv-tap" href="${prev}" tabindex="-1" aria-hidden="true"></a>` : ''}<a class="sv-tap next" href="${next}" tabindex="-1" aria-hidden="true"></a>
@@ -881,10 +922,13 @@ html.still ::-webkit-scrollbar{display:none}
     arriving = false;
     // the panel and the modal
     const p = s.panel ? s.panel(q) : null, home = '#/' + pageName;
+    sideEl.classList.toggle('swap', !!p && document.body.classList.contains('has-side'));   // a panel was already open: only its inside changes
     document.body.classList.toggle('has-side', !!p); document.body.classList.toggle('has-modal', !!s.modal);
     if (p) { sideEl.innerHTML = `<header class="side-h">${p.back ? `<a class="ico-btn back draw" href="${p.back}" aria-label="Back">${ico('back')}</a>` : ''}<h2>${p.title}</h2><a class="ico-btn draw" href="${home}" aria-label="Close">${ico('close')}</a></header>
       <div class="side-body">${p.body}</div>${p.foot ? `<footer class="side-foot ${p.ask ? 'ask' : ''}">${p.foot}</footer>` : ''}`; window.jammieIcons(sideEl); }
-    modal.innerHTML = s.modal ? s.modal(q) : ''; window.jammieIcons(modal); app.inert = !!s.modal;   // what is under a popup takes no clicks or keys
+    const wasStory = !!modal.querySelector('.scrim');
+    modal.innerHTML = s.modal ? s.modal(q) : ''; window.jammieIcons(modal);
+    if (wasStory && name === 'story') modal.firstElementChild.classList.add('quiet');   // a story was already playing: the dark screen does not fade in again app.inert = !!s.modal;   // what is under a popup takes no clicks or keys
     // the top bar: same place on every page. It only changes its words
     $('topbar').classList.toggle('solid', pageName !== 'feed');
     $('barTitle').textContent = pg.title || ''; $('barNote').textContent = pg.note || '';
@@ -948,6 +992,13 @@ html.still ::-webkit-scrollbar{display:none}
       else ask.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === chip));
       tapPicked(ask); }
   });
+  // a column's width: drag the gap on its right. A double click puts it back
+  document.addEventListener('pointerdown', e => { const g = e.target.closest && e.target.closest('.grip'), c = g && $(g.dataset.col); if (!c) return; e.preventDefault();
+    const x0 = e.clientX, w0 = c.offsetWidth; g.classList.add('on'); document.body.classList.add('sizing'); g.setPointerCapture(e.pointerId);
+    const move = ev => { c.style.width = Math.max(260, Math.min(680, w0 + ev.clientX - x0)) + 'px'; };
+    const up = () => { g.classList.remove('on'); document.body.classList.remove('sizing'); g.removeEventListener('pointermove', move); colW[c.id] = c.offsetWidth; keep('jammie-proto-cols', colW); };
+    g.addEventListener('pointermove', move); g.addEventListener('pointerup', up, { once: true }); g.addEventListener('pointercancel', up, { once: true }); });
+  document.addEventListener('dblclick', e => { const g = e.target.closest && e.target.closest('.grip'), c = g && $(g.dataset.col); if (!c) return; c.style.width = ''; delete colW[c.id]; keep('jammie-proto-cols', colW); });
   document.addEventListener('submit', e => {
     const f = e.target.closest('[data-go]'); if (f) { e.preventDefault(); location.hash = f.dataset.go; return; }
     const c = e.target.closest('[data-send]'); if (c) { e.preventDefault(); const t = c.querySelector('textarea'), text = t.value.trim();

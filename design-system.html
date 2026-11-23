@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=21">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=22">
 <style>
 /* this page only: tokens and shared pieces live in jammie.css */
 /* ---------- header ---------- */
@@ -160,7 +160,7 @@ body.tune-open .tune-fab{right:288px}
 <body class="tune-open">
 
 <header class="top"><div class="top-in">
-  <a class="brand" href="#hero"><img src="assets/jammie/v3/char-dollop.png" alt=""><span contenteditable data-k="brand">jammie</span></a>
+  <a class="brand" href="#hero"><img src="assets/jammie/v3/char-dollop-sm.png" alt=""><span contenteditable data-k="brand">jammie</span></a>
   <nav class="tabs" aria-label="sections">
     <button class="tab on"><img src="assets/jammie/v3/el-sparkle.png" alt="">Ideas</button>
     <button class="tab"><img src="assets/jammie/v3/el-megaphone.png" alt="">Ads</button>
@@ -171,7 +171,7 @@ body.tune-open .tune-fab{right:288px}
     <a class="link-btn" href="flows.html">Flows</a>
     <a class="link-btn" href="app.html">Prototype</a>
     <button class="ico-btn draw" aria-label="language"><i data-ico="globe"></i></button>
-    <button class="menu-pill draw" aria-label="menu"><i data-ico="menu"></i><span class="av"><img src="assets/jammie/v3/char-dollop.png" alt=""></span></button>
+    <button class="menu-pill draw" aria-label="menu"><i data-ico="menu"></i><span class="av"><img src="assets/jammie/v3/char-dollop-sm.png" alt=""></span></button>
   </div>
 </div></header>
 
@@ -293,7 +293,7 @@ body.tune-open .tune-fab{right:288px}
       <div class="state"><img src="assets/jammie/v3/pose-search.png" alt=""><h4 contenteditable data-k="st1">Reading your store</h4></div>
       <div class="state"><img src="assets/jammie/v3/pose-sleep.png" alt=""><h4 contenteditable data-k="st2">Nothing new yet</h4></div>
       <div class="state"><img src="assets/jammie/v3/pose-worry.png" alt=""><h4 contenteditable data-k="st3">That didn't work</h4><button class="btn b-out b-sm">Try again</button></div>
-      <div class="state"><div class="toast demo"><img src="assets/jammie/v3/pose-cheer.png" alt=""><span contenteditable data-k="st4b">Kept. It is in Saved.</span></div></div>
+      <div class="state"><div class="toast demo"><img src="assets/jammie/v3/pose-cheer-sm.png" alt=""><span contenteditable data-k="st4b">Kept. It is in Saved.</span></div></div>
     </div>
   </section>
 
@@ -364,8 +364,8 @@ body.tune-open .tune-fab{right:288px}
 <button class="btn b-ink b-sm tune-fab draw" id="fab"><i data-ico="filter"></i>Tune</button>
 <div class="copied" id="copied">Tokens copied</div>
 
-<script src="assets/jammie/v3/icons.js?v=21"></script>
-<script src="assets/jammie/v3/data.js?v=21"></script>
+<script src="assets/jammie/v3/icons.js?v=22"></script>
+<script src="assets/jammie/v3/data.js?v=22"></script>
 <script>
 (() => {
   const root = document.documentElement;
@@ -392,7 +392,7 @@ body.tune-open .tune-fab{right:288px}
   $('ideaGrid').innerHTML = J.real.slice(1, 4).map(d => J.icard(d, { href: 'app.html#/idea' })).join('');
   $('rowDemo').innerHTML = J.srow('With the team', '2 ideas · files land in your inbox', ['midnight.jpg', 'xlows.jpg', 'reviews.jpg'], 'app.html#/bell') +
     J.srow('View today\'s ideas', 'Comet · 10 new', ['sketch.jpg', 'ivory.jpg', 'reel.jpg'], 'app.html#/feed');
-  $('feedDemo').innerHTML = J.fcard(J.real[1], { href: 'app.html#/jam' }) + `<div class="acts">
+  $('feedDemo').innerHTML = J.fcard(J.real[1]) + `<div class="acts">
       <button class="act draw" data-like><i data-ico="heart"></i>Keep</button>
       <button class="act draw"><i data-ico="share"></i>Share</button>
       <button class="act draw"><i data-ico="calendar"></i>Later</button>

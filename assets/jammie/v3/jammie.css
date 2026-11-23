@@ -243,14 +243,8 @@ button.rowi:hover,a.rowi:hover{background:var(--s3)}   /* only a row you can pre
 .rowi > [data-ico]{color:var(--fg-2)}
 
 
-/* steps: what jammie is doing, one line each */
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* sheet and number card */
+/* sheet */
 .sheet{background:var(--card);border-radius:var(--r-card);box-shadow:var(--shadow-3);padding:24px}
-.delta{font-size:13px;font-weight:600}
-.delta.up{color:#1A7F4B}.delta.down{color:var(--jam)}
-:root[data-theme="dark"] .delta.up{color:#5BD98A}
 
 @media (prefers-reduced-motion:reduce){
   .draw .ico > *{animation:none!important;stroke-dasharray:none!important}

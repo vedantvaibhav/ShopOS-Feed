@@ -22,23 +22,24 @@ window.JAMMIE = (() => {
     { id:'end',     special:'end' },
   ];
   const real = IDEAS.filter(d => !d.special);
-  const av = size => `<span class="av"${size ? ` style="width:${size}px;height:${size}px"` : ''}><img src="${A}char-dollop.png" alt=""></span>`;
+  const av = size => `<span class="av"${size ? ` style="width:${size}px;height:${size}px"` : ''}><img src="${A}char-dollop-sm.png" alt=""></span>`;
   const ico = n => `<i data-ico="${n}"></i>`;
+  const STILL = new URLSearchParams(location.search).has('still');   // the flow map's frames: nothing plays
   // a carousel shows its frames: its own picture first, then the store's others (the demo has one picture an idea)
   const frames = d => [d.img, ...real.filter(x => !x.fit && x.img !== d.img).map(x => x.img)].slice(0, d.n);
-  const media = d => d.video ? `<video class="fcard-media" src="${D}${d.video}" poster="${D}${d.img}" muted loop autoplay playsinline></video>`
-    : d.n ? `<div class="frames">${frames(d).map((f, i) => `<img src="${D}${f}" alt="" ${i ? 'loading="lazy"' : ''}>`).join('')}</div>
+  const media = d => d.video ? `<video class="fcard-media" src="${D}${d.video}" poster="${D}${d.img}" muted loop ${STILL ? '' : 'autoplay'} playsinline></video>`
+    : d.n ? `<div class="frames">${frames(d).map((f, i) => `<img src="${D}${f}" alt="" loading="lazy">`).join('')}</div>
       <button class="fr-nav prev draw" data-frame="-1" aria-label="Previous picture" disabled>${ico('back')}</button><button class="fr-nav next draw" data-frame="1" aria-label="Next picture">${ico('arrow')}</button>`
-    : `<img class="fcard-media" src="${D}${d.img}" alt="">`;
+    : `<img class="fcard-media" src="${D}${d.img}" alt="" loading="lazy">`;
   const LOGOS = ['meta', 'google', 'analytics', 'slack'];
 
   // the feed card
   const fcard = d => {
     if (d.special === 'connect') return `<article class="fcard plain">
-      <div class="logos"><img class="big" src="${A}el-shopify.png" alt="Shopify"><span>${LOGOS.map(n => `<img src="${A}el-${n}.png" alt="">`).join('')}</span></div>
+      <div class="logos"><img class="big" src="${A}el-shopify.png" alt="Shopify" loading="lazy"><span>${LOGOS.map(n => `<img src="${A}el-${n}.png" alt="" loading="lazy">`).join('')}</span></div>
       <h3>See this with your own numbers</h3>
       <a class="btn b-jam draw" href="#/connectors">Connect Shopify${ico('arrow')}</a><button class="btn b-text" data-do="noshopify">We don’t use Shopify</button></article>`;
-    if (d.special === 'end') return `<article class="fcard plain"><img class="el" src="${A}pose-cheer.png" alt="">
+    if (d.special === 'end') return `<article class="fcard plain"><img class="el" src="${A}pose-cheer.png" alt="" loading="lazy">
       <h3>That’s your top 10</h3>
       <button class="btn b-out" data-do="more8">See the next 8</button></article>`;
     return `<article class="fcard">
@@ -59,19 +60,20 @@ window.JAMMIE = (() => {
     turnFrame(b.closest('.fc-media').querySelector('.frames'), +b.dataset.frame); });
   document.addEventListener('scroll', e => { const fr = e.target; if (!fr.classList || !fr.classList.contains('frames')) return;
     const n = fr.children.length, i = frameAt(fr), m = fr.closest('.fc-media');
+    if (fr._i === i) return; fr._i = i;                                       // write only when the frame changes, not on every scroll event
     m.querySelector('[data-fr-count]').textContent = `${i + 1}/${n}`;
     m.querySelector('.fr-nav.prev').disabled = i === 0; m.querySelector('.fr-nav.next').disabled = i === n - 1; }, true);
 
   // the idea card in a grid: picture, a quiet meta line, the title, one button
   const icard = (d, o = {}) => `<article class="icard">
     <div class="pic"><img src="${D}${d.img}" alt="" loading="lazy">${d.badge ? `<span class="badge">${d.badge}</span>` : ''}
-      <button class="like draw ${o.liked ? 'liked' : ''}" data-like data-id="${d.id}" aria-label="Keep">${ico('heart')}</button></div>
+      <button class="like draw" data-like aria-label="Keep">${ico('heart')}</button></div>
     <div class="icard-body"><div class="icard-meta"><span>${d.kind}</span><span>${d.makes}</span></div>
-      <h3>${d.title}</h3><a class="btn b-line b-sm" href="${o.href || '#/idea'}" data-open="${d.id}">${o.cta || 'Open'}</a></div></article>`;
+      <h3>${d.title}</h3><a class="btn b-line b-sm" href="${o.href || '#/idea'}">Open</a></div></article>`;
 
   // a row with a small stack of pictures: bold line, quiet line, arrow
   const srow = (title, meta, imgs, href = '#') => `<a class="srow draw" href="${href}">
     <span class="stack">${imgs.map(f => `<i style="background-image:url(${D}${f})"></i>`).join('')}</span>
     <b>${title}</b><span>${meta}</span>${ico('arrow')}</a>`;
-  return { A, D, GUIDE, IDEAS, real, av, fcard, icard, srow, turnFrame };
+  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, icard, srow, turnFrame };
 })();

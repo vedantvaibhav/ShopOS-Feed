@@ -160,10 +160,11 @@ Soft blocks with a 3px gap; the first and last take the card radius. Bold title,
 
 ## Phone (under 860px)
 
-- Built like Instagram: a 56px top bar with the logo on the feed and the bell on the right; a 56px tab bar at the foot: Feed, Command centre, New (+), Saved, then you as a round profile. Memory and Connectors move into the You sheet.
-- The tab you are on is drawn with a bolder line; your profile gets a ring when its sheet is open.
+- A 56px top bar with the logo on the feed and the bell on the right; the six story rings under it, sized to fit the width.
+- The tab bar, as Airbnb does it: 60px, Feed, Command, New (+), Saved, You (a round profile), each a fifth of the width with an 11px word under a 24px icon. The one you are on is red (`--jam`); your profile gets a red ring. It slides away while you scroll down a page and comes back when you scroll up. Memory and Connectors live in the You sheet.
+- Nothing is cut at the edge or ends in dots on a phone. Page tabs become an icon over a short word (Team, Finance, Marketing, Stock, Stove) with a 2px line under the one you are on, and follow what you scroll to. Command centre shows exactly one column a screen. Titles and lines wrap.
 - No popups in the middle of the screen. Sign-in, panels and choices are sheets that rise from the foot, with a handle, over a shade with a 4px blur.
-- Touch targets, as YouTube sizes them: icon buttons 48px (icon 24px), buttons 48px, small buttons, chips, segments and tabs 44px, rows 56px min, story rings 64px.
+- Touch targets, as YouTube sizes them: icon buttons 48px (icon 24px), buttons 48px, small buttons, chips and segments 44px, page tabs 48px, rows 56px min, story rings 44–64px.
 - The feed picture runs edge to edge. Its actions are 48px circles on a soft dark blur with a 12px label, Jam a 52px red circle last. On a phone under 700px tall the labels go; all seven icons stay.
 - Fields use 16px text, or iOS zooms the page.
 

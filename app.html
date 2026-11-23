@@ -314,7 +314,8 @@ html.still .sv-bars .now b{animation:none;transform:scaleX(.45)}
 .deck-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .deck-tabs button{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:none;font-size:13.5px;color:var(--fg-2)}
 .deck-tabs button:hover{background:var(--s2);color:var(--fg)}
-.deck-tabs i{width:7px;height:7px;border-radius:50%;background:var(--jam);flex:none}   /* a red dot only where something needs you */
+.deck-tabs i.dot{width:7px;height:7px;border-radius:50%;background:var(--jam);flex:none}
+.deck-tabs .short,.deck-tabs [data-ico]{display:none}   /* a red dot only where something needs you */
 .deck-cols{flex:1;min-height:0;display:flex;padding:8px 8px 24px 24px;overflow-x:auto;scrollbar-width:none}
 .deck-cols::-webkit-scrollbar{display:none}
 /* the gap between two columns is a handle: drag it to make the column on its left wider or narrower */
@@ -371,29 +372,34 @@ html.still *{animation-duration:0s!important;animation-delay:0s!important;transi
 html.still ::-webkit-scrollbar{display:none}
 @media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body{animation:none!important}.hop{opacity:1}}
 
-.bar-brand,.rail .tab-new,.rail .tab-you,.phone-only{display:none}
+.bar-brand,.rail .tab-new,.rail .tab-you,.phone-only,.rail .tl{display:none}
 
 /* ---------- phone: built like Instagram. A top bar with the logo, a tab bar at the foot with your profile last,
    every popup a sheet from the foot, and everything you tap at least 44px (48px for icons, as YouTube does) ---------- */
 @media (max-width:860px){
-  :root{--bar:56px;--tab:56px}
+  :root{--bar:56px;--tab:60px}
   body{padding-left:0}
-  #app{height:calc(var(--vh) - var(--tab) - env(safe-area-inset-bottom))}
+  #app{height:var(--vh)}   /* the page runs under the tab bar, so the bar can step away while you read */
   .phone-only{display:block}
-  /* the tab bar: Feed, Command centre, New, Saved, then you. Each one is a fifth of the width, so it is easy to hit */
-  .rail{inset:auto 0 0 0;width:auto;height:calc(var(--tab) + env(safe-area-inset-bottom));flex-direction:row;align-items:stretch;padding:0 0 env(safe-area-inset-bottom);border-right:0;
+  /* the tab bar, as Airbnb does it: a word under every icon, the one you are on in red. Each is a fifth of the width, so it is easy to hit.
+     It steps away while you scroll down a page and comes back as soon as you scroll up */
+  .rail{inset:auto 0 0 0;width:auto;height:calc(var(--tab) + env(safe-area-inset-bottom));flex-direction:row;align-items:stretch;padding:0 0 env(safe-area-inset-bottom);border-right:0;transition:transform .3s var(--ease);
     background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4)}
-  .rail .rail-brand,.rail a[data-nav="memory"],.rail a[data-nav="connectors"]{display:none}   /* those two live in the You sheet */
+  .rail .rail-brand,.rail .rail-nav a[data-nav="memory"],.rail .rail-nav a[data-nav="connectors"]{display:none}   /* those two live in the You sheet */
   .rail-nav,.rail-nav.low{display:contents}
   .rail-nav a::after{display:none}
-  .rail a,.rail a:hover,.rail a.on{flex:1;width:auto;height:auto;border-radius:0;background:none;color:var(--fg)}
-  .rail a .ico{width:26px;height:26px;stroke-width:1.8}
-  .rail a.on .ico,.rail a.on.tab-new .ico{stroke-width:2.5}   /* the tab you are on is drawn bolder, as Instagram does */
+  body.tabs-away .rail{transform:translateY(100%)}
+  .rail a,.rail a:hover,.rail a.on{flex:1;width:auto;height:auto;border-radius:0;background:none;color:var(--fg-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .rail a.on,body[data-page="memory"] .rail .tab-you,body[data-page="connectors"] .rail .tab-you{color:var(--jam)}   /* Memory and Connectors sit under You */
+  .rail .tl{display:block;font-size:11px;font-weight:500;line-height:1}
+  .rail a.on .tl{font-weight:600}
+  .rail a .ico{width:24px;height:24px;stroke-width:1.8}
+  .rail a.on .ico{stroke-width:2.3}
   .rail a[data-nav="feed"]{order:1}.rail a[data-nav="command"]{order:2}.tab-new{order:3}.rail a[data-nav="saved"]{order:4}.tab-you{order:5}
-  .rail .tab-new,.rail .tab-you{display:grid}
-  .tab-new .ico{padding:1px;border:1.8px solid currentColor;border-radius:8px;stroke-width:2!important}
-  .tab-you .me{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);font-size:13px;font-weight:700}
-  .tab-you.on .me{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--fg)}   /* your profile is a ring once it is open */
+  .rail .tab-new,.rail .tab-you{display:flex}
+  .tab-new .ico{padding:1px;border:1.7px solid currentColor;border-radius:7px;stroke-width:2!important}
+  .tab-you .me{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);font-size:11.5px;font-weight:700}
+  .tab-you.on .me{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--jam)}   /* your profile gets a red ring once it is open */
   .fab,#youBtn{display:none}   /* New and You are in the tab bar */
   .topbar{left:0;gap:12px;padding:0 4px 0 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
   .topbar small{display:none}
@@ -403,9 +409,18 @@ html.still ::-webkit-scrollbar{display:none}
   .top-right{gap:0}
   .subbar{padding:0 16px}
   .subbar.fit .deck-tabs{padding:0}
-  .subbar{height:52px}
-  .deck-tabs button{height:44px;padding:0 16px;font-size:14.5px}
-  .page-body{padding:8px 16px 96px}
+  /* a page's tabs: an icon over a short word, all of them across the width, a short line under the one you are on */
+  .subbar{height:auto;padding:0 8px}
+  .subbar .deck-tabs,.subbar.fit .deck-tabs{display:flex;gap:0;padding:0;overflow:visible}
+  .deck-tabs button,.subbar .deck-tabs button.on{position:relative;flex:1;min-width:0;height:auto;min-height:48px;padding:8px 2px 10px;border-radius:0;background:none;flex-direction:column;justify-content:center;gap:4px;font-size:12px;line-height:1.2;color:var(--fg-2)}
+  .deck-tabs button.on{color:var(--fg);font-weight:600}
+  .deck-tabs button.on::after{content:"";position:absolute;left:22%;right:22%;bottom:0;height:2px;border-radius:2px;background:var(--fg)}
+  .deck-tabs .full{display:none}
+  .deck-tabs .short{display:block}
+  .deck-tabs [data-ico]{display:inline-flex}
+  .deck-tabs .ico{width:22px;height:22px}
+  .deck-tabs i.dot{position:absolute;top:8px;left:calc(50% + 8px)}
+  .page-body{padding:8px 16px calc(var(--tab) + 40px + env(safe-area-inset-bottom))}
   .learn{grid-template-columns:1fr;gap:32px}
   .shelf{position:static}
   .tiles{grid-template-columns:1fr 1fr;gap:8px}
@@ -447,21 +462,23 @@ html.still ::-webkit-scrollbar{display:none}
   .side-body{padding:8px 16px 24px}
   .side-foot{padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
   .side-empty{padding:32px 0}
+  .msg b,.msg small{white-space:normal}
   .opt > i{width:48px;height:48px;background:var(--card)}
   .opt > i .ico{width:22px;height:22px}
   .gate-card .input{padding:14px 16px}
   /* feed: the picture fills the screen, so everything on it sits on a dark backing and stays readable */
   /* the feed: logo and bell on top, the stories under them across the whole width, then the picture edge to edge */
-  .feed{--st:64px;--fc-h:calc(var(--vh) - var(--bar) - 100px - var(--tab) - env(safe-area-inset-bottom));padding-top:var(--bar)}
-  .stories-row{justify-content:flex-start;padding:8px 16px;overflow-x:auto;scrollbar-width:none}
-  .stories-row::-webkit-scrollbar{display:none}
-  .stories{width:auto;max-width:none;gap:14px;justify-content:flex-start}
-  .story{font-size:12px}
+  /* six rings always fit across the screen, never cut at the edge */
+  .feed{--st:clamp(44px,calc((100vw - 32px - 60px) / 6),64px);--fc-h:calc(var(--vh) - var(--bar) - var(--st) - 36px - var(--tab) - env(safe-area-inset-bottom));padding-top:var(--bar)}
+  .stories-row{padding:8px 16px}
+  .stories{width:100%;max-width:none;justify-content:space-between}
+  .story{font-size:11.5px}
   .slide{padding:0}
   .feed-col,.fcard{width:100%}
   .fc-media,.fcard.plain{width:100%;height:var(--fc-h);aspect-ratio:auto;border-radius:0}
   .fc-over{padding:72px 84px 20px 16px}
   .fc-over h3{font-size:17px}
+  .fc-over p,.sv-foot p,.scard h3{display:block;-webkit-line-clamp:unset;overflow:visible}   /* on a phone nothing is cut with dots: the whole line shows */
   .fcard-top{top:12px;left:12px;right:12px;justify-content:flex-start}
   .pill{height:32px;padding:0 12px;font-size:13px;background:rgba(0,0,0,.36);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
   button.pill{width:44px;height:44px;padding:0;justify-content:center}
@@ -476,8 +493,9 @@ html.still ::-webkit-scrollbar{display:none}
   .feed-col .act.jam > i{width:52px;height:52px}
   .feed-col .act.jam .ico{width:24px;height:24px}
   /* decks: one column a screen, with its cards' actions big enough to tap */
-  .deck-cols{gap:12px;padding:8px 16px 16px;scroll-snap-type:x mandatory;scroll-padding:0 16px}
-  .dcol{width:86vw;scroll-snap-align:start}
+  /* one column a screen, exactly: no half column peeking in at the edge. The tabs above move between them */
+  .deck-cols{gap:16px;padding:8px 16px calc(var(--tab) + 16px + env(safe-area-inset-bottom));scroll-snap-type:x mandatory;scroll-padding:0 16px}
+  .dcol{width:calc(100vw - 32px);scroll-snap-align:start;scroll-snap-stop:always}
   .grip{display:none}
   /* onboarding */
   .onb{padding:64px 16px 32px;gap:16px}
@@ -538,15 +556,15 @@ html.still ::-webkit-scrollbar{display:none}
 <nav class="rail" aria-label="main">
   <a class="rail-brand" href="#/feed" aria-label="jammie"><img src="assets/jammie/v3/char-dollop-sm.png" alt=""></a>
   <div class="rail-nav">
-    <a class="draw" data-nav="feed" href="#/feed" aria-label="Feed"><i data-ico="home"></i></a>
-    <a class="draw" data-nav="command" href="#/command" aria-label="Command centre"><i data-ico="chart"></i></a>
-    <a class="draw" data-nav="saved" href="#/saved" aria-label="Saved"><i data-ico="bookmark"></i></a>
-    <a class="draw tab-new" id="newTab" href="#/new" aria-label="Ask the team for something new"><i data-ico="plus"></i></a>
-    <a class="tab-you" id="youTab" href="#/you" aria-label="You"><span class="me">C</span></a>
+    <a class="draw" data-nav="feed" href="#/feed" aria-label="Feed"><i data-ico="home"></i><span class="tl">Feed</span></a>
+    <a class="draw" data-nav="command" href="#/command" aria-label="Command centre"><i data-ico="chart"></i><span class="tl">Command</span></a>
+    <a class="draw" data-nav="saved" href="#/saved" aria-label="Saved"><i data-ico="bookmark"></i><span class="tl">Saved</span></a>
+    <a class="draw tab-new" id="newTab" href="#/new" aria-label="Ask the team for something new"><i data-ico="plus"></i><span class="tl">New</span></a>
+    <a class="tab-you" id="youTab" href="#/you" aria-label="You"><span class="me">C</span><span class="tl">You</span></a>
   </div>
   <div class="rail-nav low">
-    <a class="draw" data-nav="memory" href="#/memory" aria-label="Memory"><i data-ico="book"></i></a>
-    <a class="draw" data-nav="connectors" href="#/connectors" aria-label="Connectors"><i data-ico="link"></i></a>
+    <a class="draw" data-nav="memory" href="#/memory" aria-label="Memory"><i data-ico="book"></i><span class="tl">Memory</span></a>
+    <a class="draw" data-nav="connectors" href="#/connectors" aria-label="Connectors"><i data-ico="link"></i><span class="tl">Connectors</span></a>
   </div>
 </nav>
 <header class="topbar" id="topbar">
@@ -701,7 +719,11 @@ html.still ::-webkit-scrollbar{display:none}
   let colW = store('jammie-proto-cols', {});                     // widths you dragged the columns to
   const col = (name, body, o = {}) => `<section class="dcol" id="${o.id || ''}" style="--acc:${o.acc};${colW[o.id] ? `--w:${colW[o.id]}px` : ''}"><header class="dcol-h"><i></i>${name}<small class="${o.need ? 'need' : ''}">${o.n}</small></header><div class="dcol-body">${body}</div></section><i class="grip" data-col="${o.id}" role="separator" aria-orientation="vertical" title="Drag to change the width"></i>`;
   const subbar = (tabs, fit = '') => `<div class="subbar ${fit}"><nav class="deck-tabs">${tabs}</nav></div>`;   // a page's own tabs: the second row, under the top bar
-  const deck = cols => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button data-do="col" data-id="${i}">${o.need ? '<i></i>' : ''}${name}</button>`).join(''))}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
+  // a page tab: the full name on desktop; on a phone an icon over a short word, so every tab fits across the screen
+  const SHORT = { 'With the team': ['team', 'Team'], 'Finance': ['chart', 'Finance'], 'Marketing return': ['megaphone', 'Marketing'], 'Stock & delivery': ['store', 'Stock'], 'The stove': ['spark', 'Stove'],
+    'What I know': ['book', 'I know'], 'What I see out there': ['globe', 'Out there'], 'What I’d do': ['spark', 'I’d do'], 'How you steer me': ['settings', 'You steer'] };
+  const tab = name => SHORT[name] ? `${ico(SHORT[name][0])}<span class="full">${name}</span><span class="short">${SHORT[name][1]}</span>` : name;
+  const deck = cols => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button class="${i ? '' : 'on'}" data-do="col" data-id="${i}">${o.need ? '<i class="dot"></i>' : ''}${tab(name)}</button>`).join(''))}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
   const page = (body, tabs = '', narrow = '') => `<section class="page">${tabs ? subbar(tabs, 'fit') : ''}<i class="edge"></i><div class="page-scroll"><div class="page-body ${narrow}">${body}</div></div></section>`;
   // command centre: five columns, one question a card (numbers are the demo's)
   const COLS = [
@@ -795,7 +817,7 @@ html.still ::-webkit-scrollbar{display:none}
             <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m still getting to know Comet.</span></div>
             ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(t => ltile(...t)).join('')}</div>`).join('')}
           </div>
-        </div>`, KNOWS.map(([name], i) => `<button data-do="jump" data-id="know${i}">${name}</button>`).join('')) },
+        </div>`, KNOWS.map(([name], i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="know${i}">${tab(name)}</button>`).join('')) },
     connectors: { title: 'Connectors', page: () => page(`
         <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I can only see your public pages. Start with Shopify.</span></div>
         <div class="rows"><div class="rowi first">${logo('Shopify', 'shopify')}<span class="grow"><b>Shopify</b><small>See what actually sells</small></span><button class="btn b-jam draw" data-do="connect" data-id="Shopify">Connect Shopify${ico('arrow')}</button></div></div>
@@ -884,7 +906,12 @@ html.still ::-webkit-scrollbar{display:none}
       app.scrollTop = 0; if (pg.bare) window.scrollTo(0, 0);
       if (pg.enter) pg.enter();
       const ps = app.querySelector('.page-scroll');                           // a line under the bar only once the page has scrolled under it
-      if (ps) ps.addEventListener('scroll', () => ps.parentElement.classList.toggle('scrolled', ps.scrollTop > 4), { passive: true });
+      document.body.classList.remove('tabs-away');
+      if (ps) { let lastY = 0; ps.addEventListener('scroll', () => { const y = ps.scrollTop; ps.parentElement.classList.toggle('scrolled', y > 4);
+        if (Math.abs(y - lastY) > 6) { document.body.classList.toggle('tabs-away', y > lastY && y > 80); lastY = y; }
+        const secs = [...ps.querySelectorAll('.sec-t[id]')]; if (secs.length) { const top = ps.getBoundingClientRect().top; let at = 0; secs.forEach((h, i) => { if (h.getBoundingClientRect().top - top < 160) at = i; }); markTab(at); } }, { passive: true }); }
+      const dc = app.querySelector('.deck-cols');
+      if (dc) dc.addEventListener('scroll', () => { const c = dc.querySelector('.dcol'); if (c) markTab(Math.round(dc.scrollLeft / (c.offsetWidth + 16))); }, { passive: true });
     } else if (pageName === 'feed') { const sc = app.querySelector('.stage');                 // the feed was not redrawn: bring it to the card we mean
       if (Math.round(sc.scrollTop / slideH(sc)) !== cur) sc.scrollTo({ top: cur * slideH(sc), behavior: jump || calm ? 'auto' : 'smooth' });
       markSlides(); }
@@ -906,6 +933,7 @@ html.still ::-webkit-scrollbar{display:none}
     if (name === 'bell') { readN = orders.length; keep('jammie-proto-read', readN); }
     const unread = Math.max(0, orders.length - readN); $('bellN').hidden = !unread; $('bellN').textContent = unread;
   }
+  function markTab(i){ app.querySelectorAll('.subbar .deck-tabs button').forEach((b, j) => b.classList.toggle('on', j === i)); }
   // move the feed's own scroll to a card; a second press while it is still moving counts from where it is heading
   let aim = 0, aimAt = 0;
   const onFeed = () => /^#\/feed(\?|$)/.test(location.hash);

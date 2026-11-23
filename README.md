@@ -10,7 +10,8 @@ the design system it is built from. No build step, no framework, no dependencies
 | `app.html` | The prototype. Starts at onboarding (`#/start`); `#/feed` opens the feed directly. |
 | `flows.html` | Every flow as a row of live screens, a flow chart, and a checklist of each action. |
 | `design-system.html` | Tokens, type, icons, Jammie's poses and loops, and the shared components, with live tuning. |
-| `index.html` | The earlier ShopOS Feed prototype, kept as it was. |
+| `index.html` | The front door. It sends you straight to `app.html`. |
+| `feed-v1.html` | The earlier ShopOS Feed prototype, kept as it was. |
 
 The three Jammie pages link to each other: the flow map and the design system from
 their headers, the prototype from its You panel.
@@ -23,6 +24,7 @@ Any static server works. From this folder:
 
 Then open:
 
+- http://localhost:5173/ (opens the prototype)
 - http://localhost:5173/app.html
 - http://localhost:5173/flows.html
 - http://localhost:5173/design-system.html

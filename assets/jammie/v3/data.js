@@ -8,17 +8,17 @@ window.JAMMIE = (() => {
     { id:'play', shape:'Play' }, { id:'pebble', shape:'Ball' }, { id:'cloud', shape:'Cloud' }, { id:'bolt', shape:'Bolt' },
   ];
   const IDEAS = [
-    { id:'reel',    kind:'Reel',        img:'reel.jpg', video:'reel.mp4', title:'Comet x Naru: a girl walks into a ramen bar, her sneaker orders seconds', line:'A 23-second film for Comet x Naru, from one line to seven panels.', goes:'Instagram Reel · 9:16 · 23 s', makes:'1 reel' },
-    { id:'reviews', kind:'Ad',          img:'reviews.jpg', title:'Lead with 285 reviews, not the price', line:'A ₹4,299 price needs proof of quality for new buyers.', goes:'Meta ad · 4:5', makes:'1 ad', badge:'Start here' },
-    { id:'midnight',kind:'Carousel',    img:'midnight.jpg', n:8, title:'Aeres Hukum Midnight: eight frames for one carousel', line:'The Designer Special in black and red (₹5,899), zari-stitched: spotlit stacks, a balance act.', goes:'Instagram carousel · 4:5 · 8 frames', makes:'8 frames' },
-    { id:'xlows',   kind:'Ad',          img:'xlows.jpg', n:4, fit:1, title:'Show all 1,026 X Lows reviews in one swipe ad', line:'Each pair already has 142 to 285 reviews on its page.', goes:'Meta swipe ad · 4:5 · 4 frames', makes:'4 frames' },
-    { id:'ivory',   kind:'Carousel',    img:'ivory.jpg', n:8, title:'Aeres Hukum Ivory: a festive carousel in eight frames', line:'The Designer Special in ivory and gold (₹5,899), paisley all the way down: a marigold arch.', goes:'Instagram carousel · 4:5 · 8 frames', makes:'8 frames' },
-    { id:'farak',   kind:'Carousel',    img:'farak.jpg', n:2, draft:true, title:'Bring Farak back with a joint carousel this winter', line:'The Sweater shoes are your most affordable collaboration option.', goes:'Instagram carousel · 4:5 · 2 frames', makes:'2 frames' },
-    { id:'sketch',  kind:'Carousel',    img:'sketch.jpg', n:6, title:'Sketch to shelf: Aeres Hukum, drawn before it was made', line:'A carousel that opens on the designer’s sketchbook, then the desk, then the finished pair.', goes:'Instagram carousel · 4:5 · 6 frames', makes:'6 frames' },
-    { id:'angles',  kind:'Product page',img:'ivory-angles.jpg', n:7, title:'Aeres Hukum Ivory: seven shelf-ready angles for its product page', line:'Side, pair, heel, hero three-quarter, sole and the tongue macro, all locked to the real shoe.', goes:'Product page · 7 photos', makes:'7 photos' },
+    { id:'reel', by:'Reel maker',    kind:'Reel',        img:'reel.jpg', video:'reel.mp4', title:'Comet x Naru: a girl walks into a ramen bar, her sneaker orders seconds', line:'A 23-second film for Comet x Naru, from one line to seven panels.', goes:'Instagram Reel · 9:16 · 23 s', makes:'1 reel' },
+    { id:'reviews', by:'Creative director', kind:'Ad',          img:'reviews.jpg', title:'Lead with 285 reviews, not the price', line:'A ₹4,299 price needs proof of quality for new buyers.', goes:'Meta ad · 4:5', makes:'1 ad', badge:'Start here' },
+    { id:'midnight', by:'Creative director',kind:'Carousel',    img:'midnight.jpg', n:8, title:'Aeres Hukum Midnight: eight frames for one carousel', line:'The Designer Special in black and red (₹5,899), zari-stitched: spotlit stacks, a balance act.', goes:'Instagram carousel · 4:5 · 8 frames', makes:'8 frames' },
+    { id:'xlows', by:'Creative director',   kind:'Ad',          img:'xlows.jpg', n:4, fit:1, title:'Show all 1,026 X Lows reviews in one swipe ad', line:'Each pair already has 142 to 285 reviews on its page.', goes:'Meta swipe ad · 4:5 · 4 frames', makes:'4 frames' },
+    { id:'ivory', by:'Social',   kind:'Carousel',    img:'ivory.jpg', n:8, title:'Aeres Hukum Ivory: a festive carousel in eight frames', line:'The Designer Special in ivory and gold (₹5,899), paisley all the way down: a marigold arch.', goes:'Instagram carousel · 4:5 · 8 frames', makes:'8 frames' },
+    { id:'farak', by:'Social',   kind:'Carousel',    img:'farak.jpg', n:2, draft:true, title:'Bring Farak back with a joint carousel this winter', line:'The Sweater shoes are your most affordable collaboration option.', goes:'Instagram carousel · 4:5 · 2 frames', makes:'2 frames' },
+    { id:'sketch', by:'Social',  kind:'Carousel',    img:'sketch.jpg', n:6, title:'Sketch to shelf: Aeres Hukum, drawn before it was made', line:'A carousel that opens on the designer’s sketchbook, then the desk, then the finished pair.', goes:'Instagram carousel · 4:5 · 6 frames', makes:'6 frames' },
+    { id:'angles', by:'Storefront',  kind:'Product page',img:'ivory-angles.jpg', n:7, title:'Aeres Hukum Ivory: seven shelf-ready angles for its product page', line:'Side, pair, heel, hero three-quarter, sole and the tongue macro, all locked to the real shoe.', goes:'Product page · 7 photos', makes:'7 photos' },
     { id:'connect', special:'connect' },
-    { id:'rival',   kind:'Rival watch', img:'rival.jpg', tag:'Theirs · CHNKS', title:'Launch an ad inspired by CHNKS', line:'Running six versions for eleven days shows this approach works.', goes:'Meta video ad · 9:16', makes:'1 ad' },
-    { id:'angles2', kind:'Product page',img:'midnight-angles.jpg', n:9, title:'Aeres Hukum Midnight: nine shelf-ready angles for its product page', line:'Side, pair, heel, sole, the star-panel macro and the top-down pair, all locked to the real shoe.', goes:'Product page · 9 photos', makes:'9 photos' },
+    { id:'rival', by:'Rival watch',   kind:'Rival watch', img:'rival.jpg', tag:'Theirs · CHNKS', title:'Launch an ad inspired by CHNKS', line:'Running six versions for eleven days shows this approach works.', goes:'Meta video ad · 9:16', makes:'1 ad' },
+    { id:'angles2', by:'Storefront', kind:'Product page',img:'midnight-angles.jpg', n:9, title:'Aeres Hukum Midnight: nine shelf-ready angles for its product page', line:'Side, pair, heel, sole, the star-panel macro and the top-down pair, all locked to the real shoe.', goes:'Product page · 9 photos', makes:'9 photos' },
     { id:'end',     special:'end' },
   ];
   const real = IDEAS.filter(d => !d.special);
@@ -44,8 +44,8 @@ window.JAMMIE = (() => {
       <button class="btn b-out" data-do="more8">See the next 8</button></article>`;
     return `<article class="fcard">
     <div class="fc-media ${d.fit ? 'fit' : ''}"${d.fit ? ` style="background-image:url(${D}${d.img})"` : ''}>${media(d)}
-      <div class="fcard-top"><span style="display:flex;gap:6px">
-        ${d.draft ? `<span class="pill">Initial draft</span>` : ''}${d.tag ? `<span class="pill">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('mute')}</button>` : ''}</span></div>
+      <div class="fcard-top">${d.by ? `<span class="pill">${d.by}</span>` : ''}<span style="display:flex;gap:6px;margin-left:auto">
+        ${d.badge ? `<span class="pill">${d.badge}</span>` : ''}${d.draft ? `<span class="pill">Initial draft</span>` : ''}${d.tag ? `<span class="pill">${d.tag}</span>` : ''}${d.n ? `<span class="pill" data-fr-count>1/${d.n}</span>` : ''}${d.video ? `<button class="pill" data-do="sound" aria-label="Sound on">${ico('mute')}</button>` : ''}</span></div>
 
       <div class="fc-over"><h3>${d.title}</h3><p>${d.line}</p></div></div></article>`; };
 
@@ -64,16 +64,30 @@ window.JAMMIE = (() => {
     m.querySelector('[data-fr-count]').textContent = `${i + 1}/${n}`;
     m.querySelector('.fr-nav.prev').disabled = i === 0; m.querySelector('.fr-nav.next').disabled = i === n - 1; }, true);
 
-  // the idea card in a grid: picture, a quiet meta line, the title, one button
-  const icard = (d, o = {}) => `<article class="icard">
-    <div class="pic"><img src="${D}${d.img}" alt="" loading="lazy">${d.badge ? `<span class="badge">${d.badge}</span>` : ''}
-      <button class="like draw" data-like aria-label="Keep">${ico('heart')}</button></div>
-    <div class="icard-body"><div class="icard-meta"><span>${d.kind}</span><span>${d.makes}</span></div>
-      <h3>${d.title}</h3><a class="btn b-line b-sm" href="${o.href || '#/idea'}">Open</a></div></article>`;
+  // a saved card: the picture links to the idea, the heart takes it out, the words sit under it
+  const scard = (d, o = {}) => `<article class="scard">
+      <a class="pic" href="${o.href || '#'}" aria-label="Open this idea"><img src="${D}${d.img}" alt="" loading="lazy"><span class="pill">${d.kind}</span></a>
+      <button class="like liked draw" data-do="unsave" data-id="${d.id}" aria-label="Remove from Saved">${ico('heart')}</button>
+      <h3><a href="${o.href || '#'}">${d.title}</a></h3><p>${d.makes}${o.note ? ` · ${o.note}` : ''}</p></article>`;
 
-  // a row with a small stack of pictures: bold line, quiet line, arrow
-  const srow = (title, meta, imgs, href = '#') => `<a class="srow draw" href="${href}">
-    <span class="stack">${imgs.map(f => `<i style="background-image:url(${D}${f})"></i>`).join('')}</span>
-    <b>${title}</b><span>${meta}</span>${ico('arrow')}</a>`;
-  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, icard, srow, turnFrame };
+  // a story ring
+  const story = (name, img, o = {}) => `<a class="story ${o.seen ? 'seen' : ''}" href="${o.href || '#'}"><i><b style="background-image:url(${D}${img})"></b></i><span>${name}</span></a>`;
+
+  // a command centre card: what it is and over how long, the number, one line, then what you can do. --acc on a parent colours it
+  // the number on a command centre card: the figure, how it moved, one line, then its meter or bars. The panel that opens one number up draws the same thing, taller
+  const dnum = (c, tall) => `<div class="big"><b class="${/\d/.test(c.value) ? '' : 't'}">${c.value}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${c.line}</p>
+      ${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}
+      ${c.bars ? `<div class="bars ${tall ? 'tall' : ''}">${c.bars.map((h, i) => `<i class="${i === c.bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}`;
+  // an act is [label, what it does, an id for it]. A small figure opens the card's own report
+  const dcard = c => { const [name, span = ''] = c.label.split(' · '), rep = ((c.acts || []).find(a => a[1] === 'report') || [])[2] || 'weekly';
+    return `<div class="dcard ${c.need ? 'need' : ''}" data-id="${name}"><div class="top"><span>${name}</span><em class="${c.need ? 'need' : ''}">${c.need ? 'Needs you' : span}</em></div>
+      ${dnum(c)}
+      ${c.mini ? `<div class="mini">${c.mini.map(([l, v]) => `<button data-do="report" data-id="${rep}"><small>${l}</small><b>${v}</b></button>`).join('')}</div>` : ''}
+      <div class="foot">${[...(c.acts || [])].sort((a, b) => (a[1] === 'jam') - (b[1] === 'jam')).map(([l, what, id]) => what === 'jam' ? `<a class="btn b-jam" href="#/new">${l}</a>` : `<button data-do="${what}"${id ? ` data-id="${id}"` : ''}>${l}</button>`).join('')}</div></div>`; };
+
+  // a memory tile: a number, or a few words when there is no digit in it. Given something to do, it is a button
+  const ltile = (big, line, what, id) => { const inner = `<b class="${/\d/.test(big) ? '' : 't'}">${big}</b><small>${line}</small>`;
+    return what ? `<button class="ltile" data-do="${what}"${id ? ` data-id="${id}"` : ''}>${inner}</button>` : `<div class="ltile">${inner}</div>`; };
+
+  return { A, D, GUIDE, IDEAS, real, av, ico, fcard, scard, story, dnum, dcard, ltile, turnFrame };
 })();

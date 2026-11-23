@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/jammie/v3/char-dollop-sm.png">
 <title>jammie flows</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=22">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=27">
 <style>
 body{background:var(--s2)}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
@@ -105,7 +106,7 @@ a .node:hover rect{stroke:var(--fg)}
 
 <main class="wrap">
   <section class="block" id="found">
-    <div class="block-h"><h2>What the live product has</h2><span class="tag">Checked 22 Nov on demo.jammie.ai, app.jammie.ai and staging</span></div>
+    <div class="block-h"><h2>What the live product has</h2><span class="tag">Checked 22 and 23 Nov on demo.jammie.ai, app.jammie.ai and staging</span></div>
     <div class="found">
       <div><h3><span class="tag live">Live</span>There today</h3><ul>
         <li>Add your store, then Google sign-in before anything is read</li>
@@ -126,7 +127,7 @@ a .node:hover rect{stroke:var(--fg)}
         <li>Onboarding’s side roads: not a store, a personal page, a failed read</li>
         <li>Locked ideas and “unlock everything”: left out of the prototype</li>
         <li>Your store: closed in production</li>
-        <li>Deck and Work: open only by address on the demo, left out of the prototype</li>
+        <li>“Your wrapped”, a monthly recap story: left out of the prototype</li>
         <li>Inside the Shopify admin</li>
       </ul></div>
       <div><h3><span class="tag added">Added</span>Mine, not in the live product</h3><ul>
@@ -143,7 +144,11 @@ a .node:hover rect{stroke:var(--fg)}
         <li>Each of the three taps shows: Jammie changes look, and felt icons land beside it.</li>
         <li>A note to the team has its box at the foot, with Send inside it.</li>
         <li>Light and dark, switched from You.</li>
-        <li>Only Jammie speaks. Live names nine teammates on cards.</li>
+        <li>Teammates are named in words only, on a pill on each card. Live draws nine characters; here only Jammie is drawn.</li>
+        <li>A popup on live is a side panel here, and a sheet on a phone: connecting a tool, a report.</li>
+        <li>Live’s settings (role, teammates, feed or deck) are prototype controls here, behind a floating Demo button, so they are not mistaken for product UI.</li>
+        <li>Work lets you push a jam to its next stage yourself, so the board can be tried. On live the team moves it.</li>
+        <li>Report figures beyond the board’s own, the day-by-day numbers, and “what you keep” once costs are saved are worked out from the demo’s, not read.</li>
         <li>A credits step for Sloosh. Live promises one; I did not open it.</li>
         <li>The three taps’ questions are my guess.</li>
       </ul></div>
@@ -171,11 +176,15 @@ const LOOK = 'jammie-workbench-v5';
 const look = () => { try { return JSON.parse(localStorage.getItem(LOOK)) || {}; } catch { return {}; } };
 function paintLook(){ const t = look().theme || 'light'; document.documentElement.dataset.theme = t; document.getElementById('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
 paintLook();
-document.getElementById('themeBtn').addEventListener('click', () => { const l = look(); l.theme = l.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
+document.getElementById('themeBtn').addEventListener('click', () => { const l = { theme: look().theme === 'dark' ? 'light' : 'dark' }; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
 // ---- every flow. steps = [route in the prototype, screen name, the action that leads on]
 const FLOWS = [
-  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading your store → Three taps → Brand passport → Feed',
-    steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Brand passport','Open my feed'],['feed?i=1','Feed']] },
+  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading → Three taps → Brand passport → Here’s what we found → Your first idea → Feed',
+    steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Brand passport','Continue'],['found','Here’s what we found','Looks right'],['writing','Sit back','By itself'],['first','Your first idea','Open my feed'],['feed?i=1','Feed']] },
+  { id:'fix', name:'Fix something', path:'Here’s what we found → Fix something → tap the line that’s off, change the rivals → Write my first idea',
+    steps:[['found','Here’s what we found','Fix something'],['fix','Fix something','Write my first idea'],['writing','Sit back']] },
+  { id:'demo', name:'Try a demo store', path:'Add your store → Or try a demo store → pick a store → its profile → See the ideas',
+    steps:[['stores','Pick a store','Comet'],['profile','Company profile','See the ideas'],['opening','Opening Comet','By itself'],['feed?intro=1&i=0','Feed, with its hello']] },
   { id:'browse', name:'Browse the feed', path:'Feed → scroll, swipe or the arrow keys → Keep, Later, Less, Share',
     steps:[['feed?i=1','Feed','Scroll'],['feed?i=2','A carousel','Scroll'],['feed?i=8','Connect a tool']] },
   { id:'idea', name:'Open an idea', path:'Feed → Why → why this idea → sources, the plan, connect a tool',
@@ -188,20 +197,31 @@ const FLOWS = [
     steps:[['jam?i=0','Let’s jam','Make it with Sloosh'],['sloosh?i=0','See the credits','Make it'],['feed?i=0','Back in the feed']] },
   { id:'stories', name:'Stories', path:'A ring → the story → Make this → Let’s jam',
     steps:[['feed?i=1','Feed','A ring'],['story?s=0','The story','Make this'],['jam?i=0','Let’s jam']] },
+  { id:'cardmore', name:'More on a card', path:'More → give feedback, assign to a teammate, or a note to the team',
+    steps:[['more?i=1','More','Give feedback'],['feedback?i=1','Feedback on this idea','Send'],['assign?i=1','Give it to a teammate','Invite a teammate'],['team?on=feed','Team and access']] },
+  { id:'settings', name:'Demo controls and the deck', path:'The floating Demo button → seat, teammates, first month, jump to a screen → Deck → Work',
+    steps:[['demo','Demo controls','Deck'],['deck','Deck','Open work'],['work','Work','Library'],['library','Library']] },
+  { id:'wrong', name:'Tell Jammie what’s wrong', path:'Hold New → say what’s wrong, typed or spoken → Send',
+    steps:[['feed?i=1','Feed','Hold New'],['wrong','Tell Jammie what’s wrong']] },
   { id:'new', name:'Ask the team', path:'New → a note → Send → Updates',
     steps:[['feed?i=1','Feed','New'],['new','Ask the team','Send'],['bell','Updates']] },
   { id:'saved', name:'Saved', path:'Keep or Later on a card → Saved → open it again, or remove it',
     steps:[['feed?i=2','Feed','Later'],['saved','Saved','Open'],['feed?i=1','That idea, in the feed']] },
   { id:'numbers', name:'Command centre', path:'Command centre → a card → its report, add costs, Park, or Let’s jam',
     steps:[['command','Command centre','Let’s jam'],['new?on=command','Ask the team']] },
-  { id:'know', name:'Memory and Connectors', path:'Memory → the brand book, a tile → Connectors',
-    steps:[['memory','Memory','Connectors'],['connectors','Connectors']] },
-  { id:'you', name:'You', path:'The round button top right → name, light or dark, start again, help',
-    steps:[['you','You','Start again'],['start','Add your store']] },
-  { name:'Fix something', path:'Brand passport → fix what Jammie read → save' },
+  { id:'reports', name:'Reports and costs', path:'Command centre → the three dots → Reports, Costs, Add data, Ask about these numbers',
+    steps:[['board?on=command','The board','Reports'],['reports?on=command','Reports','Weekly'],['report?r=weekly&on=command','A report','Needs your costs'],['costs?on=command','Costs']] },
+  { id:'number', name:'One number, opened up', path:'A card → More → the number a day → Ask about it',
+    steps:[['number?n=Net%20sales&on=command','Net sales','Ask about it'],['asknum?on=command','Ask about these numbers'],['adddata?on=command','Add data']] },
+  { id:'know', name:'Inside Memory', path:'Memory → the brand book, or a tile → what Jammie knows, with where it came from',
+    steps:[['memory','Memory','The book'],['brand','Brand book'],['know?k=facts&on=memory','Everything I know'],['know?k=rivals&on=memory','Rival watch'],['know?k=plans&on=memory','Every plan'],['know?k=tune&on=memory','Your feed'],['know?k=rules&on=memory','House rules']] },
+  { id:'connect', name:'Connect a tool', path:'Connectors → Connect Shopify → it reads → connected → the tool’s own numbers',
+    steps:[['connectors','Connectors','Connect Shopify'],['connect?t=Shopify&on=connectors','Connect Shopify','Connect'],['linking?t=Shopify&on=connectors','Reading','By itself'],['linked?t=Shopify&on=connectors&with=Shopify','Connected','Done'],['tool?t=Shopify&on=connectors&with=Shopify','A connected tool']] },
+  { id:'you', name:'You', path:'The round button top right → your details, team and access, look and sound, start again',
+    steps:[['you','You','Team and access'],['team','Team and access'],['details','Your details'],['look','Look and sound']] },
   { name:'Onboarding’s side roads', path:'Not a store, a personal page, a failed read, a closed store' },
-  { name:'Reports', path:'A number → morning brief, P&L, weekly, marketing or customers report' },
-  { name:'Inside the brand book', path:'Brand book → what Jammie knows, line by line, with sources' },
+  { name:'“Your wrapped” story', path:'A monthly recap in seven frames' },
+  { name:'Locked ideas', path:'“Unlock everything”, left out on purpose' },
   { name:'Inside the Shopify admin', path:'The same app, framed by Shopify' },
 ];
 document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
@@ -213,7 +233,7 @@ document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
 const W = 156, H = 40;
 const N = {
   start:{x:95,y:44,t:'Add your store',go:'start'}, signin:{x:95,y:110,t:'Sign in',go:'signin'}, reading:{x:95,y:176,t:'Reading your store',go:'reading'},
-  taps:{x:95,y:242,t:'Three taps',go:'taps'}, here:{x:95,y:308,t:'Brand passport',go:'here'},
+  taps:{x:95,y:242,t:'Three taps',go:'taps'}, here:{x:95,y:308,t:'Brand passport',go:'here'}, found:{x:95,y:374,t:'What we found',go:'found'}, first:{x:95,y:440,t:'Your first idea',go:'first'},
   feed:{x:350,y:275,t:'Feed',go:'feed',k:'hub'},
   story:{x:610,y:44,t:'A story',go:'story?s=0'}, idea:{x:610,y:120,t:'Why this idea',go:'idea?i=1'},
   jam:{x:850,y:120,t:'Let’s jam',go:'jam?i=1'}, change:{x:1085,y:120,t:'Change first',go:'change?i=1'}, sloosh:{x:1085,y:196,t:'See the credits',go:'sloosh?i=0'},
@@ -226,7 +246,7 @@ const N = {
   memory:{x:850,y:586,t:'Memory',go:'memory'}, connectors:{x:850,y:636,t:'Connectors',go:'connectors'},
 };
 const E = [
-  ['start','signin','Read my store'],['signin','reading','Google or email'],['reading','taps','By itself'],['taps','here','Continue'],['here','feed','Open my feed'],
+  ['start','signin','Read my store'],['signin','reading','Google or email'],['reading','taps','By itself'],['taps','here','Continue'],['here','found','Continue'],['found','first','Looks right'],['first','feed','Open my feed'],
   ['feed','story','A ring'],['feed','idea','Why'],['story','jam','Make this',1],['idea','jam','Let’s jam'],
   ['jam','order','Ship as is'],['jam','change','Change first'],['jam','sloosh','Sloosh'],['jam','morelike','More like this'],['change','order','Send',1],['sloosh','order','Make it',1],
   ['feed','next','Scroll'],['feed','neu','New'],['neu','sent','Send'],['feed','bell','Bell'],['feed','you','You'],['you','again','Start again'],
@@ -262,8 +282,13 @@ const A = [
   ['Sign in','signin','live',[['Continue with Google','Reading your store','live'],['A name and an email, then Continue','Reading your store','added'],['Close','Add your store','added'],['Use another account','Google’s own screen','todo'],['Privacy and terms links','Legal pages','todo']]],
   ['Reading your store','reading','live',[['Nothing to press','One line changes as Jammie reads, then it moves on','added'],['The store is not a store','A side road of its own','todo'],['The read fails','A side road with Try again','todo']]],
   ['Three taps','taps','docs',[['Pick who you are','Jammie slides out and comes back in that look','added'],['Pick what you want more of','Its object lands beside Jammie','added'],['Pick where you post, more than one','Each icon lands beside Jammie','added'],['Continue','Brand passport','added']]],
-  ['Brand passport','here','added',[['Open my feed','Feed, through a coral bloom','added'],['Fix what Jammie read','Edit what was found','todo']]],
-  ['Feed','feed','live',[['Jam, the red action','Let’s jam','live'],['Tap the card','Why this idea','live'],['Why','Why this idea','added'],['Keep','Kept, and it is in Saved','live'],['Share','Copies a link','live'],['Later','Put aside in Saved, next idea','live'],['Less','Fewer like this, next idea','live'],['Note','Note to the team, about this idea','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['Bell, top right','Updates, with a count when something is with the team','live'],['The round button beside it','You','live'],['New','Ask the team','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Moves on to the next idea','live'],['See the next 8, on the last card','More ideas','live'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“Your wrapped” story, signed in','A monthly recap','todo'],['“How your feed works” and its Got it','A first-day card','todo']]],
+  ['Brand passport','here','added',[['Continue','Here’s what we found','added']]],
+  ['Here’s what we found','found','live',[['Looks right. Write my first idea','Sit back, then your first idea','live'],['Fix something','Fix something','live']]],
+  ['Fix something','fix','live',[['Tap a line that’s off','Marked to be read again','live'],['Remove a rival','It leaves the list','live'],['Add a rival','It joins the list','live'],['Write my first idea','Sit back, then your first idea','live']]],
+  ['Your first idea','first','live',[['Open my feed','Feed, through a coral bloom','live']]],
+  ['Pick a store','stores','live',[['Comet','Its company profile','live'],['Another store','A toast: this demo opens Comet','added'],['Paste your store','Add your store','live']]],
+  ['Company profile','profile','live',[['See the ideas','Opening Comet, then the feed','live'],['All stores','Pick a store','live'],['Paste your store','Add your store','live']]],
+  ['Feed','feed','live',[['Jam, the red action','Let’s jam','live'],['Tap the card','Why this idea','live'],['Why','Why this idea','added'],['Keep','Kept, and it is in Saved','live'],['Share','Copies a link','live'],['Later','Put aside in Saved, next idea','live'],['Less','Fewer like this, next idea','live'],['More','Give feedback, assign to a teammate, or a note to the team','live'],['Shuffle, top right','The cards change order','live'],['Demo, the floating button','Demo controls. Not part of the product','added'],['Hold New','Tell Jammie what’s wrong','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['Bell, top right','Updates, with a count when something is with the team','live'],['The round button beside it','You','live'],['New','Ask the team','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Moves on to the next idea','live'],['See the next 8, on the last card','More ideas','live'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“Your wrapped” story, signed in','A monthly recap','todo'],['Got it, on the hello card','It goes, for good','live']]],
   ['Why this idea','idea?i=1','live',[['Copy caption','Copies it','live'],['A source row','Opens the source, such as Meta Ad Library','todo'],['The full plan','The plan behind the idea','todo'],['Meta Ads, Shopify or Google Analytics','Connectors','live'],['Keep','Kept','live'],['Share','Copies a link','live'],['Let’s jam','Let’s jam','live'],['Close','Feed','live']]],
   ['Let’s jam','jam?i=1','live',[['Ship as is','Sent, back in the feed, counted on the bell','live'],['Change first','A note to the team','live'],['More like this','Jammie learns it, next idea','live'],['Make it with Sloosh','See the credits','live'],['Close','Feed','live']]],
   ['Change first','change?i=1','live',[['Tap a suggestion','Fills the box','added'],['Type what to change','Stays here','live'],['Send, the round button in the box','Sent, back in the feed, with a toast','live'],['Back','Let’s jam','live'],['Close','Feed','live']]],
@@ -271,12 +296,34 @@ const A = [
   ['See the credits','sloosh?i=0','added',[['Make it','Being made, back in the feed','added'],['Not now','Let’s jam','added'],['Back','Let’s jam','added']]],
   ['The story','story?s=0','live',[['Tap the left side, or the left arrow','The story before','live'],['Tap the right side, or the right arrow','The story after','live'],['Wait five seconds','The next story, then the feed','added'],['Make this','Let’s jam','live'],['Close','Feed','live']]],
   ['Ask the team','new','live',[['Tap a suggestion','Fills the box','added'],['Type what you need','Stays here','live'],['Send, the round button in the box','Sent, with a toast','live'],['Close','The page you were on','live']]],
-  ['Updates','bell','live',[['A row about an idea','That idea, in the feed','added'],['Clear all','Back to All quiet','added'],['Close','The page you were on','live']]],
-  ['You','you','live',[['Change name','A small form','todo'],['Light or Dark','Changes the whole product','added'],['What Jammie learns','On or off','todo'],['Start again from the first screen','Add your store','live'],['Flow map, Design system','Those pages','added'],['Email us','Opens your email','live'],['Privacy, Terms','Legal pages','todo'],['Close','The page you were on','live']]],
-  ['Command centre','command','live',[['Jump to a column, from the second row','Scrolls to it','added'],['Drag the gap beside a column','Makes that column wider or narrower; a double click puts it back','added'],['More, on a card','Opens the card’s depth in place','todo'],['A small number','Its report: morning brief, P&L, weekly, marketing or customers','todo'],['Add delivery fees, product costs and others','A short form for that cost','todo'],['Park','Sets the card aside','todo'],['Let’s jam','Ask the team','live'],['Open Updates','Updates','added'],['Open the feed','Feed','added']]],
+  ['Updates','bell','live',[['To do, Updates','What needs you, and what is new','live'],['A row about an idea','That idea, in the feed','added'],['Mark all read','The count on the bell goes','live'],['Clear all','Back to All quiet','added'],['Close','The page you were on','live']]],
+  ['You','you','live',[['Your details','Your name and email','live'],['Team and access','Invite someone','live'],['Your feed, Fact sheet, Work','Those panels and pages','live'],['Auto, Light, Dark','Changes the whole product','live'],['Sound and motion','Sound, vibration, reduce motion','live'],['Start again from the first screen','Add your store','live'],['Flow map, Design system','Those pages','added'],['Email us','Opens your email','live'],['Privacy, Terms','Legal pages','todo'],['Close','The page you were on','live']]],
+  ['Command centre','command','live',[['Jump to a column, from the second row','Scrolls to it','added'],['Drag the gap beside a column','Makes that column wider or narrower; a double click puts it back','added'],['More, on a card','That number, a day at a time','live'],['The three dots, top right','Reports, Costs, Add data, Ask about these numbers','live'],['A small number, or a report button','That report','live'],['Add delivery fees, product costs and others','Costs','live'],['Park','The card stops asking for you','live'],['Open work','Work','live'],['Let’s jam','Ask the team','live'],['Open Updates','Updates','added'],['Open the feed','Feed','added']]],
   ['Saved','saved','added',[['All, Kept, For later','Narrows the cards','added'],['Tap a card','That idea, in the feed','added'],['The heart on a card','Takes it out of Saved','added']]],
-  ['Memory','memory','live',[['A tab on the second row','Scrolls to that part','added'],['Add notes or a file','Adds to what Jammie knows','todo'],['A tile, 12 of them','That part of what Jammie knows','todo']]],
-  ['Connectors','connectors','live',[['Connect Shopify','Shopify’s own sign-in','todo'],['Connect, on six more tools','That tool’s own sign-in','todo']]],
+  ['Memory','memory','live',[['A tab on the second row','Scrolls to that part','added'],['The book','Brand book','live'],['Add notes or a file','A note or a sample file joins what Jammie knows','live'],['A tile, 12 of them','That part of what Jammie knows, in a panel','live']]],
+  ['Connectors','connectors','live',[['Connect, on the next tool or any other','Connect a tool','live'],['A connected tool','Its numbers','live']]],
+  ['Connect a tool','connect?t=Shopify&on=connectors','live',[['Connect','It reads for two seconds, then it is connected. No real sign-in','live'],['Not using it','Back, with a toast','live'],['See it in the feed','Feed','live'],['Connect another','Connectors','live']]],
+  ['A connected tool','tool?t=Shopify&on=connectors&with=Shopify','live',[['Read again','A toast','live'],['Disconnect','Back to not connected','live'],['Done','Connectors','live']]],
+  ['More','more?i=1','live',[['Give feedback','Feedback on this idea','live'],['Assign to a teammate','Give it to a teammate','live'],['Note to the team','Note to the team','live']]],
+  ['Feedback on this idea','feedback?i=1','live',[['Send','Fixed, back in the feed','live'],['Remove this idea','It leaves the feed','live'],['Hold the mic','Fills the box with a sample of what you said','added']]],
+  ['Give it to a teammate','assign?i=1','live',[['A teammate','Handed over, and it is in Work','live'],['Invite a teammate','Team and access','live']]],
+  ['Tell Jammie what’s wrong','wrong','live',[['Send','A toast','live'],['Hold the mic','Fills the box with a sample','added']]],
+  ['Demo controls','demo','added',[['Start again, Jump to','That screen','added'],['Feed or Deck','Switches the view','live'],['Connect all, Disconnect all','Every tool at once','added'],['Seat','Only those roles’ cards stay in the feed','live'],['A teammate’s switch','Their cards leave or come back','live'],['First month','Says who joins on that day','live'],['Flow map, Design system','Those pages','added']]],
+  ['Deck','deck','live',[['A card','That idea, in the feed','live'],['A tab on the second row','Scrolls to that column','added']]],
+  ['Work','work','live',[['The button on a card','Moves the jam to the next stage, then into the library','added'],['Discard','Into the library, ready to restore','live'],['By stage, By person','Regroups the columns','live'],['Library','Library','live']]],
+  ['Library','library','live',[['Restore','Back in Work','live'],['Upload a picture or video','A sample file joins the references','live'],['Paste a link','It joins the references','live']]],
+  ['The board','board?on=command','live',[['Reports, Costs, Add data, Ask about these numbers','Those panels','live'],['Download the board','A toast','todo']]],
+  ['Reports','reports?on=command','live',[['A report, six of them','That report','live']]],
+  ['A report','report?r=weekly&on=command','live',[['A line that needs your costs','Costs','live'],['Email it to me','On or off, kept. Nothing is sent','live'],['Copy link, PDF, Sheet','A toast','todo']]],
+  ['Costs','costs?on=command','live',[['Save costs','“What you keep” is counted on the board','live']]],
+  ['Add data','adddata?on=command','live',[['Connect a tool','Connectors','live'],['Upload a report','A sample report lands in the list','live']]],
+  ['Ask about these numbers','asknum?on=command','live',[['Tap a question, or type one','An answer with where it came from. Three canned answers','live']]],
+  ['One number','number?n=Net%20sales&on=command','live',[['Reports','Reports','live'],['Ask about it','Ask about these numbers','live']]],
+  ['Brand book','brand','live',[['A tab on the second row','Scrolls to that part','added'],['How we write','Picks a voice','live'],['Share','Copies a link','live'],['Edit, Upload your fonts','A toast, or a sample file','todo']]],
+  ['Inside Memory','know?k=facts&on=memory','live',[['Search every line','Narrows the facts','live'],['House rules: add a rule','It joins the list','live'],['Your feed: any pick','Kept. Your role also filters the feed','live'],['Every plan: Black Friday plan','That plan','live'],['Refresh','A toast','todo']]],
+  ['Team and access','team','live',[['Send invite','They join the list. Nothing is sent','live'],['Remove','They leave the list','added'],['Leave Comet','A toast: you are the only admin','live']]],
+  ['Your details','details','live',[['Save','Your name shows in You','live']]],
+  ['Look and sound','look','live',[['Auto, Light, Dark','Changes the whole product','live'],['Sound, Vibration','On or off, kept. The prototype makes no sound','live'],['Reduce motion','Stops the motion','live']]],
 ];
 const NAMES = { live:'Live', docs:'Docs only', added:'Added', todo:'Not built' };
 const KEY = 'jammie-action-checks';

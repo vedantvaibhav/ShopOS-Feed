@@ -126,9 +126,9 @@ body.has-side #side{visibility:visible;opacity:1;transform:none;transition:opaci
 .feed.arrive .slide.at .fcard{animation:land .9s .25s cubic-bezier(.2,.9,.25,1.1) both}
 .feed.arrive .story{animation:rise .5s both}
 .feed.arrive .slide.at .acts > *{animation:rise .45s both}
-/* where Jammie stands: a soft patch of shade at its feet, drawn over the loop so it shows on any page colour */
+/* where Jammie stands: a soft patch of shade at its feet. It sits behind the loop, which is laid on with multiply, so the feet cover it and it never moves or fades */
 .stand{position:relative;display:grid;place-items:center}
-.gnd{position:absolute;z-index:1;left:50%;top:calc(var(--gy) * 100%);width:46%;height:6%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.22),rgba(0,0,0,.08) 55%,transparent);pointer-events:none;animation:fade .9s var(--ease) both}
+.gnd{position:absolute;z-index:0;left:50%;top:calc(var(--gy) * 100%);width:46%;height:6%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.22),rgba(0,0,0,.08) 55%,transparent);pointer-events:none;animation:fade .9s var(--ease) both}
 html[data-theme="dark"] .gnd{display:none}
 /* Jammie moves: a short loop on white, laid onto the page */
 .pop.v{mix-blend-mode:multiply}
@@ -708,11 +708,12 @@ body.bare .demo-btn{left:20px}
   // four short loops (idle, wave, cheer, sit); the flow map and reduced motion get the still
   let calm = STILL || matchMedia('(prefers-reduced-motion:reduce)').matches;   // also set by the Reduce motion switch
   const stillOf = p => p === 'idle' ? `${A}char-dollop.png` : `${A}pose-${p}.png`;
-  // gy: how far down the loop Jammie's feet are. Given, a patch of ground is drawn there, behind the loop
+  // Every loop stands on one patch of ground that never changes. The loops' own shadows were taken out of the videos, because they
+  // lightened and darkened as Jammie moved. gy is how far down the frame its feet are: 0.94 in all four loops
   const LOOPS = ['idle', 'wave', 'cheer', 'sit'];   // the poses that have a loop; the rest are stills
   const pose = (p, gy) => { if (calm || !LOOPS.includes(p)) return `<div class="pop ground"><div class="bob"><img class="lead" src="${stillOf(p)}" alt=""></div></div>`;
     const dark = root.dataset.theme === 'dark';   // dark draws the still, since the loops are on white: fetch only the one that will show
-    return `${gy ? `<div class="stand" style="--gy:${gy}">` : ''}<div class="pop v">${dark ? '' : `<video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video>`}<img class="lead" ${dark ? '' : 'loading="lazy"'} src="${stillOf(p)}" alt=""></div>${gy ? '<i class="gnd"></i></div>' : ''}`; };
+    return `<div class="stand" style="--gy:${gy || .94}"><i class="gnd"></i><div class="pop v">${dark ? '' : `<video class="lead" autoplay loop muted playsinline src="${A}anim/${p}.mp4"></video>`}<img class="lead" ${dark ? '' : 'loading="lazy"'} src="${stillOf(p)}" alt=""></div></div>`; };
   // a coral bloom from where you pressed, then it lifts off the next screen
   function bloom(e, next){
     if (calm) { location.hash = next; return; }
@@ -757,7 +758,7 @@ body.bare .demo-btn{left:20px}
   function showPicks(p){ Object.entries(p).forEach(([k, on]) => { const ask = app.querySelector(`[data-ask="${k}"]`); if (!ask || !on.length) return;
     ask.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', on.includes(c.textContent.trim()))); tapPicked(ask); }); }
   const gate = inner => `<div class="gate"><div class="sheet gate-card">${inner}</div></div>`;
-  const startScreen = () => onb(1, pose('wave', .905), `
+  const startScreen = () => onb(1, pose('wave'), `
         <h1 class="h1">Add your store.</h1>
         <form class="store" data-go="#/signin">${ico('link')}<input placeholder="Paste a link or type its name" aria-label="Store link" value="${S.host}">
           <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>

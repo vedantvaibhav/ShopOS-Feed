@@ -158,6 +158,15 @@ A soft block, 96px min height: a big number (24px) or a few words (`isText`, 16p
 ### Rows — `.rows` > `.rowi`
 Soft blocks with a 3px gap; the first and last take the card radius. Bold title, quiet line under it, an icon on the right. Only a row you can press lights up on hover.
 
+## Phone (under 860px)
+
+- Built like Instagram: a 56px top bar with the logo on the feed and the bell on the right; a 56px tab bar at the foot: Feed, Command centre, New (+), Saved, then you as a round profile. Memory and Connectors move into the You sheet.
+- The tab you are on is drawn with a bolder line; your profile gets a ring when its sheet is open.
+- No popups in the middle of the screen. Sign-in, panels and choices are sheets that rise from the foot, with a handle, over a shade with a 4px blur.
+- Touch targets, as YouTube sizes them: icon buttons 48px (icon 24px), buttons 48px, small buttons, chips, segments and tabs 44px, rows 56px min, story rings 64px.
+- The feed picture runs edge to edge. Its actions are 48px circles on a soft dark blur with a 12px label, Jam a 52px red circle last. On a phone under 700px tall the labels go; all seven icons stay.
+- Fields use 16px text, or iOS zooms the page.
+
 ## States
 
 Wait, empty, error and done use Jammie's pose (120px) and one title, no paragraph: Reading your store (search), Nothing new yet (sleep), That didn't work + Try again (worry), Kept. It is in Saved. as a toast with the small cheer pose.

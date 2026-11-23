@@ -289,7 +289,8 @@ button.rowi:hover,a.rowi:hover{background:var(--s3)}   /* only a row you can pre
   .ideas{grid-template-columns:1fr 1fr;gap:24px 16px}
   .scard .pic{border-radius:16px}
   .story{font-size:11px}
-  .dcard .foot button,.dcard .foot .btn{height:40px;padding:0 16px}
+  .dcard .foot button,.dcard .foot .btn{height:44px;padding:0 16px}
+  .mini button{min-height:44px}
 }
 
 /* sheet */

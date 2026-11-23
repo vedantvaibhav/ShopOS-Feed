@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=23">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=24">
 <style>
 /* the docs shell only. Every token and component shown here lives in jammie.css and data.js */
 :root{--nav-w:248px;--top:64px;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
@@ -129,6 +129,9 @@ td code,li code{background:var(--card)}
 .state > img{height:96px;width:auto}
 .state h4{font-size:15.5px}
 .cta-row{display:flex;flex-wrap:wrap;gap:8px}
+.phones{gap:24px;align-items:flex-start}
+.phones figure{margin:0;display:grid;justify-items:center;gap:10px;font-size:12.5px;color:var(--fg-2)}
+.phones iframe{width:375px;height:740px;border:0;border-radius:32px;background:var(--bg);box-shadow:var(--shadow-3);zoom:.62;pointer-events:none}   /* a real 375px page, shown smaller */
 /* bottom: the next page */
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:64px;max-width:900px}
 .pager a{display:block;padding:16px 18px;border-radius:var(--r-card);background:var(--s2);text-decoration:none}
@@ -192,8 +195,8 @@ td code,li code{background:var(--card)}
 <div class="shade" id="shade"></div>
 <div class="toast flash" id="flash" role="status"><img src="assets/jammie/v3/pose-cheer-sm.png" alt=""><span></span></div>
 
-<script src="assets/jammie/v3/icons.js?v=23"></script>
-<script src="assets/jammie/v3/data.js?v=23"></script>
+<script src="assets/jammie/v3/icons.js?v=24"></script>
+<script src="assets/jammie/v3/data.js?v=24"></script>
 <script>
 (() => {
   const root = document.documentElement, J = window.JAMMIE, A = J.A, $ = id => document.getElementById(id);
@@ -348,6 +351,13 @@ td code,li code{background:var(--card)}
         <div class="state"><img src="${A}pose-worry.png" alt=""><h4>That didn’t work</h4><button class="btn b-out b-sm">Try again</button></div>
         <div class="state"><div class="toast"><img src="${A}pose-cheer-sm.png" alt=""><span>Kept. It is in Saved.</span></div></div></div></div>
       ${spec(['Piece', 'Rule'], [['Pose', '120px in a panel or page, 96px in a card'], ['Title', '19px, 600; a button only when there is something to try'], ['Toast', 'Under the top bar, centred on the page, gone after 3s, with the small cheer pose']])}` },
+
+    { g: 'Patterns', id: 'phone', t: 'Phone', lede: 'Under 860px Jammie is built like Instagram: a top bar with the logo, a tab bar at the foot with your profile last, and every popup a sheet from the foot.', body: () => `
+      <div class="demo phones">${[['feed?i=1', 'Feed'], ['jam?i=1', 'A sheet'], ['command', 'Command centre']].map(([r, n]) => `<figure><iframe src="app.html?still&theme=${root.dataset.theme}#/${r}" title="${n} on a phone" loading="lazy" tabindex="-1"></iframe><figcaption>${n}</figcaption></figure>`).join('')}</div>
+      <h2>Touch targets</h2>
+      ${spec(['Thing', 'Size', 'Why'], [['Icon buttons', '48px, icon 24px', 'The size YouTube uses; a thumb misses anything smaller'], ['Feed actions', '48px circles, icon 24px, label 12px', 'On a soft blur, so they read on any picture'], ['Tab bar', '56px tall, a fifth of the width each, icon 26px', 'The whole cell is the target, not the icon'], ['Buttons', '48px; small ones 44px', ''], ['Chips, segments, tabs', '44px', ''], ['Rows', '56px min', ''], ['Story rings', '64px', 'As Instagram sizes them']])}
+      <h2>Rules</h2>
+      ${rules(['Tab bar order: Feed, Command centre, New, Saved, then you as a round profile. The tab you are on is drawn bolder; your profile gets a ring.', 'No popups in the middle of the screen. Sign-in, panels and choices rise from the foot as sheets with a handle, over a shade with a light blur.', 'Stories sit under the top bar across the whole width and scroll sideways.', 'The feed picture runs edge to edge. On a short phone the actions lose their labels; all seven icons stay.', 'Fields are 16px text so iOS does not zoom.'])}` },
   ];
 
   // ---------- sidebar and routing: one page at a time ----------

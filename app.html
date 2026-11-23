@@ -42,13 +42,15 @@ body.has-side{background:var(--floor)}
 body.has-side #app{margin-right:var(--side-w);border-radius:0 28px 28px 0;overflow:hidden;box-shadow:0 0 0 1px var(--line-soft),10px 0 34px rgba(0,0,0,.05)}
 body.has-side .topbar{right:var(--side-w);border-top-right-radius:28px}
 #side{--blk:var(--card);position:fixed;top:0;right:0;bottom:0;z-index:5;width:var(--side-w);display:flex;flex-direction:column;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity var(--t2) var(--ease),transform var(--t2) var(--ease),visibility 0s var(--t2)}
-/* the panel and everything in it arrive together, as the page steps aside. Nothing in it waits and appears after */
+/* the panel lands first; its title, contents and foot follow a beat later, so you see the surface before the words */
 body.has-side #side{visibility:visible;opacity:1;transform:none;transition:opacity var(--t2) var(--ease),transform var(--t2) var(--ease)}
 .side-h{flex:none;display:flex;align-items:center;gap:8px;height:var(--bar);padding:0 12px 0 24px}
 .side-h h2{font-size:19px;font-weight:600;letter-spacing:0;margin-right:auto}
 .side-h .back{margin-left:-12px}
 .side-body{flex:1;min-height:0;overflow-y:auto;padding:8px 24px 24px;display:flex;flex-direction:column;scrollbar-width:thin}
-#side.swap .side-body{animation:fade .25s var(--ease)}   /* only when one panel replaces another */
+#side:not(.swap) .side-h h2,#side:not(.swap) .side-body,#side:not(.swap) .side-foot{animation:side-in .3s var(--ease) .14s both}
+@keyframes side-in{from{opacity:0;transform:translateY(6px)}}
+#side.swap .side-body{animation:fade .25s var(--ease)}   /* when one panel replaces another, only its inside fades */
 .side-body > *{flex:none}
 .side-foot{flex:none;display:flex;align-items:center;gap:8px;padding:16px 24px 24px}
 .side-foot > .btn:last-child:not(:first-child){margin-left:auto}   /* the main action goes right when something sits before it */
@@ -367,7 +369,7 @@ body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 .toasts .toast{animation:toast 2.6s var(--ease) forwards}
 html.still *{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}
 html.still ::-webkit-scrollbar{display:none}
-@media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body{animation:none!important}.hop{opacity:1}}
+@media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body,.side-h h2,.side-foot{animation:none!important}.hop{opacity:1}}
 
 /* ---------- the rest of the live product: stores, the check, settings, work, reports, memory's pages, connecting a tool, your account ---------- */
 .ico-btn[hidden],.rowi[hidden]{display:none}
@@ -863,6 +865,7 @@ body.bare .demo-btn{left:20px}
   const stat = (big, line) => `<div class="ltile"><b>${big}</b><small>${line}</small></div>`;
   const pick = (key, title, opts, max = 1, sub = '') => `<div class="sec" data-pick="${key}" data-max="${max}"><h4>${title}</h4>${sub ? `<p class="sub">${sub}</p>` : ''}<div class="chips">${opts.map(o => `<button class="chip ${(tune[key] || []).includes(o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>`;
   const sw = (id, on, what = 'flag') => `<button class="switch" role="switch" aria-checked="${!!on}" data-do="${what}" data-id="${id}" aria-label="${id}"></button>`;
+  const themeSeg = () => `<div class="seg">${[['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']].map(([k, n]) => `<button class="${(look.auto ? 'auto' : root.dataset.theme) === k ? 'on' : ''}" data-do="theme" data-id="${k}">${n}</button>`).join('')}</div>`;
   const none = (pose, title, line = '') => `<div class="side-empty"><img src="${A}pose-${pose}-sm.png" alt=""><h3>${title}</h3>${line ? `<p>${line}</p>` : ''}</div>`;
   const opt = (icon, title, line, to) => `<${to[0] === '#' ? `a href="${to}"` : `button data-do="${to}"`} class="opt"><i>${ico(icon)}</i><span><b>${title}</b><small>${line}</small></span></${to[0] === '#' ? 'a' : 'button'}>`;
 
@@ -1076,7 +1079,8 @@ body.bare .demo-btn{left:20px}
     you: { panel: () => ({ title: 'You', body: `
         <div class="sec"><div class="rows"><a class="rowi" href="#/details">${av(40)}<span class="grow"><b>${esc((me.first + ' ' + me.last).trim())}</b><small>Admin · Comet</small></span>${ico('arrow')}</a>${link('Team and access', '#/team', `${team.length + 1} ${team.length ? 'people' : 'person'}`)}</div></div>
         <div class="sec phone-only"><h4>Your store</h4><div class="rows">${link('Memory', '#/memory')}${link('Connectors', '#/connectors')}</div></div>
-        <div class="sec"><h4>Your jam</h4><div class="rows">${link('Your feed', '#/know?k=tune', 'What you want more of')}${link('Fact sheet', '#/know?k=facts', 'Everything I know, with where it came from')}${link('Work', '#/work', 'Your jams and what’s waiting on you')}${link('Look and sound', '#/look')}${row('Start again', '', 'restart')}</div></div>
+        <div class="sec"><h4>Light or dark</h4>${themeSeg()}</div>
+        <div class="sec"><h4>Your jam</h4><div class="rows">${link('Your feed', '#/know?k=tune', 'What you want more of')}${link('Fact sheet', '#/know?k=facts', 'Everything I know, with where it came from')}${link('Work', '#/work', 'Your jams and what’s waiting on you')}${link('Sound and motion', '#/look')}${row('Start again', '', 'restart')}</div></div>
         <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}${row('Data deletion', '', 'legal')}</div></div>` }) },
     // ================= the demo's front door: a store to try without your own =================
     stores: { bare: true, page: () => `<section class="pick">${mark}
@@ -1131,6 +1135,7 @@ body.bare .demo-btn{left:20px}
     // not part of the product: the controls for trying the prototype, behind the floating Demo button
     demo: { panel: () => ({ title: 'Demo controls', body: `
         <p class="lead-p">Only for trying the prototype. None of this is in the product.</p>
+        <div class="sec"><h4>Light or dark</h4>${themeSeg()}</div>
         <div class="sec"><h4>Start again</h4><div class="chips"><a class="chip" href="#/start">From onboarding</a><a class="chip" href="#/stores">From the demo stores</a><a class="chip" href="#/feed?intro=1&i=0">Straight to the feed</a></div></div>
         <div class="sec"><h4>Jump to</h4><div class="chips">${[['The read', 'reading'], ['Three taps', 'taps'], ['Passport', 'here'], ['What we found', 'found'], ['First idea', 'first'], ['Work', 'work'], ['Library', 'library'], ['Brand book', 'brand']].map(([n, to]) => `<a class="chip" href="#/${to}">${n}</a>`).join('')}</div></div>
         <div class="sec"><h4>View</h4><div class="seg">${[['feed', 'Feed'], ['deck', 'Deck']].map(([k, n]) => `<button class="${(lastPage === 'deck') === (k === 'deck') ? 'on' : ''}" data-do="goto" data-id="#/${k}">${n}</button>`).join('')}</div></div>
@@ -1212,7 +1217,7 @@ body.bare .demo-btn{left:20px}
         <div class="sec"><h4>People · ${team.length + 1}</h4><div class="rows">${fact(esc(me.first) + ' (you)', 'Admin')}${team.map((t, i) => `<div class="rowi"><span class="grow"><b>${esc(t.email)}</b><small>${t.role} · invited</small></span><button class="ico-btn draw" data-do="uninvite" data-id="${i}" aria-label="Remove">${ico('close')}</button></div>`).join('')}</div></div>`,
         foot: `<button class="btn b-text" data-do="leave">Leave Comet</button>` }) },
     look: { panel: () => ({ title: 'Look and sound', back: '#/you', body: `
-        <div class="sec"><h4>Appearance</h4><div class="seg">${[['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']].map(([k, n]) => `<button class="${(look.auto ? 'auto' : root.dataset.theme) === k ? 'on' : ''}" data-do="theme" data-id="${k}">${n}</button>`).join('')}</div></div>
+        <div class="sec"><h4>Appearance</h4>${themeSeg()}</div>
         <div class="sec"><div class="rows"><div class="rowi"><span class="grow"><b>Sound</b><small>Jammie’s little noises</small></span>${sw('sound', prefs.sound)}</div>
           <div class="rowi"><span class="grow"><b>Volume</b></span><div class="seg sm" data-pick="volume" data-max="1">${['Soft', 'Full'].map(o => `<button class="${((tune.volume || ['Soft'])[0] === o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>
           ${row('Test the sound', '', 'testsound')}

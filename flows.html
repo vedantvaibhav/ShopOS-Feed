@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jammie flows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=22">
+<style>
+body{background:var(--s2)}
+.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--s2) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+.top-in{max-width:1560px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;gap:8px}
+.brand{display:inline-flex;align-items:center;gap:7px;color:var(--jam);font-weight:800;font-size:19px;letter-spacing:-.03em;text-decoration:none;margin-right:auto}
+.brand img{height:28px;width:auto}
+.wrap{max-width:1560px;margin:0 auto;padding:0 32px 100px}
+.block{padding:40px 0 0;scroll-margin-top:72px}
+.block-h{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.block-h h2{font-size:22px;margin-right:auto}
+
+.tag{height:22px;padding:0 8px;border-radius:99px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;background:var(--s2);color:var(--fg-2);white-space:nowrap}
+.tag.live{background:#E7F5EC;color:#1A7F4B}
+.tag.docs{background:#E8EEFB;color:#2B50C8}
+.tag.added{background:#FDECEE;color:#C22A3F}
+.tag.done{background:#E7F5EC;color:#1A7F4B}
+:root[data-theme="dark"] .tag.live,:root[data-theme="dark"] .tag.done{background:color-mix(in srgb,#1A7F4B 24%,var(--card));color:#7FD9A4}
+:root[data-theme="dark"] .tag.docs{background:color-mix(in srgb,#2B50C8 26%,var(--card));color:#A9BDF5}
+:root[data-theme="dark"] .tag.added{background:color-mix(in srgb,#C22A3F 24%,var(--card));color:#F3A3AE}
+
+/* found on the live product */
+.found{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.found > div{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-card);padding:18px}
+.found h3{font-size:15.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.found ul{margin:0;padding:0;display:grid;gap:7px}
+.found li{list-style:none;font-size:14.5px;padding-left:14px;position:relative}
+.found li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--fg-3)}
+
+/* the list of every flow */
+.list{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);overflow:hidden}
+.list a,.list div.item{display:grid;grid-template-columns:28px 230px 1fr auto;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--line-soft);color:inherit;text-decoration:none}
+.list > :last-child{border-bottom:0}
+.list a:hover{background:var(--s2)}
+.list .n{color:var(--fg-3);font-variant-numeric:tabular-nums;font-size:14px}
+.list b{font-weight:600}
+.list .path{color:var(--fg-2);font-size:14.5px}
+
+/* the flowchart */
+.chart{background:var(--card);border-radius:var(--r-card);border:1px solid var(--line-soft);padding:8px;overflow-x:auto}
+.chart svg{display:block;min-width:1180px;width:100%;height:auto;font-family:var(--font)}
+.node rect{fill:var(--card);stroke:var(--line);stroke-width:1.2}
+.node text{fill:var(--fg);font-size:14px;font-weight:600}
+.node.hub rect{fill:var(--fg);stroke:var(--fg)}
+.node.hub text{fill:var(--bg);font-size:15px}
+.node.end rect{fill:var(--s2);stroke:none}
+.node.end text{fill:var(--fg-2);font-weight:500}
+a .node:hover rect{stroke:var(--fg)}
+.edge{fill:none;stroke:var(--fg-3);stroke-width:1.3}
+.elabel{font-size:12px;font-weight:600;fill:var(--fg-2);paint-order:stroke;stroke:var(--card);stroke-width:6px;stroke-linejoin:round}
+.group{font-size:12px;font-weight:600;fill:var(--fg-3);letter-spacing:.04em}
+
+/* every action, screen by screen */
+.checks{columns:3 380px;column-gap:16px}
+.scr{break-inside:avoid;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-card);margin-bottom:16px;overflow:hidden}
+.scr-h{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line-soft)}
+.scr-h a{font-weight:700;font-size:15.5px;color:inherit;text-decoration:none;margin-right:auto}
+.scr-h a:hover{text-decoration:underline;text-underline-offset:3px}
+.act-row{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:start;padding:8px 14px;border-bottom:1px solid var(--line-soft);font-size:14.5px;cursor:pointer}
+.scr > :last-child{border-bottom:0}
+.act-row:hover{background:var(--s2)}
+.act-row input{width:16px;height:16px;margin:2px 0 0;accent-color:var(--fg)}
+.act-row small{display:block;color:var(--fg-2);font-size:13px}
+.act-row.ok b{text-decoration:line-through;color:var(--fg-2);font-weight:500}
+.act-row b{font-weight:600}
+.scr.hide,.act-row.hide{display:none}
+
+/* the screens, flow by flow */
+.flow{padding:26px 0 0;scroll-margin-top:72px}
+.flow h3{font-size:17px;margin-bottom:14px}
+.strip{display:flex;align-items:center;flex-wrap:wrap;row-gap:18px;padding:4px 4px 12px}
+.shot{flex:none;width:calc(1440px * var(--z));text-decoration:none;color:inherit}
+.frame{position:relative;width:calc(1440px * var(--z));height:calc(900px * var(--z));border-radius:12px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow-2);transition:box-shadow .2s,transform .2s var(--ease)}
+.shot:hover .frame{box-shadow:var(--shadow-3);transform:translateY(-2px)}
+.frame iframe{width:1440px;height:900px;border:0;transform:scale(var(--z));transform-origin:0 0;pointer-events:none}
+.shot b{display:block;margin-top:10px;font-weight:600;font-size:14px}
+.hop{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:104px;padding:0 8px;margin-bottom:30px;font-size:12px;font-weight:600;text-align:center}
+.hop span{height:26px;padding:0 10px;border-radius:99px;background:var(--card);box-shadow:var(--shadow-1);display:inline-flex;align-items:center;white-space:nowrap}
+.hop svg{width:100%;height:12px;fill:none;stroke:var(--fg-3);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+
+@media (max-width:900px){.top-in,.wrap{padding-left:16px;padding-right:16px}.strip{overflow-x:auto}.list a,.list div.item{grid-template-columns:22px 1fr auto}.list .path{display:none}.found{grid-template-columns:1fr}.top-in .b-line{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="design-system.html"><img src="assets/jammie/v3/char-dollop-sm.png" alt="">jammie</a>
+  <a class="btn b-line b-sm" href="#found">Live check</a>
+  <a class="btn b-line b-sm" href="#list">Flows</a>
+  <a class="btn b-line b-sm" href="#chart">Flowchart</a>
+  <a class="btn b-line b-sm" href="#actions">Actions</a>
+  <a class="btn b-line b-sm" href="#screens">Screens</a>
+  <button class="btn b-line b-sm" id="themeBtn">Dark</button>
+  <a class="btn b-out b-sm" href="design-system.html">Design system</a>
+  <a class="btn b-jam b-sm" href="app.html">Open prototype</a>
+</div></header>
+
+<main class="wrap">
+  <section class="block" id="found">
+    <div class="block-h"><h2>What the live product has</h2><span class="tag">Checked 22 Nov on demo.jammie.ai, app.jammie.ai and staging</span></div>
+    <div class="found">
+      <div><h3><span class="tag live">Live</span>There today</h3><ul>
+        <li>Add your store, then Google sign-in before anything is read</li>
+        <li>“Opening your store”, “your first ideas are in”, then a wide first-idea card</li>
+        <li>Jammie pops in and the brand book flies in, with “email it to me”</li>
+        <li>Feed of cards: picture, video or carousel, with Keep and Let’s jam</li>
+        <li>Card menu: share, save, later, less like this, give feedback</li>
+        <li>Idea sheet: caption, sources, how we’ll know, where it goes</li>
+        <li>Let’s jam: ship as is, change first, more like this, make it with Sloosh</li>
+        <li>A sent idea becomes a row at the top of the feed</li>
+        <li>Stories: today, trends, popular ads, industry news, how to</li>
+        <li>Start something new: a note to the team, typed or spoken</li>
+        <li>Command centre: five columns of numbers, with reports</li>
+        <li>What we learned (Memory here), Connectors, You, and a bell</li>
+      </ul></div>
+      <div><h3><span class="tag docs">Docs only</span>Written down, not reachable</h3><ul>
+        <li>Three taps, “here’s what we found”, “sit back”: only on a store nobody has read</li>
+        <li>Onboarding’s side roads: not a store, a personal page, a failed read</li>
+        <li>Locked ideas and “unlock everything”: left out of the prototype</li>
+        <li>Your store: closed in production</li>
+        <li>Deck and Work: open only by address on the demo, left out of the prototype</li>
+        <li>Inside the Shopify admin</li>
+      </ul></div>
+      <div><h3><span class="tag added">Added</span>Mine, not in the live product</h3><ul>
+        <li>One tall card fills the height, as on Winning Ads. Its words sit on the picture over a blur.</li>
+        <li>Jam is the red action at the foot of the action column, not a button on the card.</li>
+        <li>One top bar on every page: the bell and You sit in the same place and never move.</li>
+        <li>A panel (Why, Jam, a note, Updates, You) opens beside whatever page you are on.</li>
+        <li>The command centre is a deck of full-height columns. Saved, Memory and Connectors are one centred column.</li>
+        <li>A page’s own tabs sit on a second row under the top bar, never in it.</li>
+        <li>Saved: what you Kept and what you put aside with Later. Live keeps Liked closed.</li>
+        <li>Sign in is a popup: Google, or first name, last name and email. Live uses a full page with Google only.</li>
+        <li>A story plays full screen like an Instagram story: bars along the top, tap a side to move, and it moves on by itself.</li>
+        <li>Reading is one line that shimmers and changes. Then three taps, then a brand passport that arrives shut and opens.</li>
+        <li>Each of the three taps shows: Jammie changes look, and felt icons land beside it.</li>
+        <li>A note to the team has its box at the foot, with Send inside it.</li>
+        <li>Light and dark, switched from You.</li>
+        <li>Only Jammie speaks. Live names nine teammates on cards.</li>
+        <li>A credits step for Sloosh. Live promises one; I did not open it.</li>
+        <li>The three taps’ questions are my guess.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section class="block" id="list"><div class="block-h"><h2>All flows</h2></div><div class="list" id="flowList"></div></section>
+  <section class="block" id="chart"><div class="block-h"><h2>Flowchart</h2></div><div class="chart" id="flowChart"></div></section>
+
+  <section class="block" id="actions">
+    <div class="block-h"><h2>Every action, screen by screen</h2>
+      <span class="tag" id="tally"></span>
+      <div class="seg" id="filter"><button class="on" data-f="all">All</button><button data-f="live">Live</button><button data-f="docs">Docs only</button><button data-f="added">Added</button><button data-f="todo">Not built</button></div>
+      <button class="btn b-soft b-sm" id="resetChecks">Clear ticks</button>
+    </div>
+    <div class="checks" id="checks"></div>
+  </section>
+
+  <section class="block" id="screens"><div class="block-h"><h2>Screens</h2></div><div id="flows"></div></section>
+</main>
+
+<script>
+// ---- light or dark: the same saved choice the prototype and the design system read
+const LOOK = 'jammie-workbench-v5';
+const look = () => { try { return JSON.parse(localStorage.getItem(LOOK)) || {}; } catch { return {}; } };
+function paintLook(){ const t = look().theme || 'light'; document.documentElement.dataset.theme = t; document.getElementById('themeBtn').textContent = t === 'dark' ? 'Light' : 'Dark'; }
+paintLook();
+document.getElementById('themeBtn').addEventListener('click', () => { const l = look(); l.theme = l.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem(LOOK, JSON.stringify(l)); } catch {} paintLook(); document.querySelectorAll('iframe').forEach(f => { try { f.contentWindow.location.reload(); } catch {} }); });   // a hash link does not reload by setting src again
+// ---- every flow. steps = [route in the prototype, screen name, the action that leads on]
+const FLOWS = [
+  { id:'onboarding', name:'Onboarding', path:'Add your store → Sign in → Reading your store → Three taps → Brand passport → Feed',
+    steps:[['start','Add your store','Read my store'],['signin','Sign in','Google or email'],['reading','Reading your store','By itself'],['taps','Three taps','Continue'],['here','Brand passport','Open my feed'],['feed?i=1','Feed']] },
+  { id:'browse', name:'Browse the feed', path:'Feed → scroll, swipe or the arrow keys → Keep, Later, Less, Share',
+    steps:[['feed?i=1','Feed','Scroll'],['feed?i=2','A carousel','Scroll'],['feed?i=8','Connect a tool']] },
+  { id:'idea', name:'Open an idea', path:'Feed → Why → why this idea → sources, the plan, connect a tool',
+    steps:[['feed?i=1','Feed','Why'],['idea?i=1','Why this idea','Let’s jam'],['jam?i=1','Let’s jam']] },
+  { id:'ship', name:'Jam: ship as is', path:'Jam → Ship as is → back in the feed → Updates',
+    steps:[['jam?i=1','Let’s jam','Ship as is'],['feed?i=1','Back in the feed','Bell'],['bell','Updates']] },
+  { id:'change', name:'Jam: change first', path:'Jam → Change first → a note → Send',
+    steps:[['jam?i=1','Let’s jam','Change first'],['change?i=1','Change first','Send'],['feed?i=1','Back in the feed']] },
+  { id:'sloosh', name:'Jam: make it with Sloosh', path:'Jam → Make it with Sloosh → see the credits → Make it',
+    steps:[['jam?i=0','Let’s jam','Make it with Sloosh'],['sloosh?i=0','See the credits','Make it'],['feed?i=0','Back in the feed']] },
+  { id:'stories', name:'Stories', path:'A ring → the story → Make this → Let’s jam',
+    steps:[['feed?i=1','Feed','A ring'],['story?s=0','The story','Make this'],['jam?i=0','Let’s jam']] },
+  { id:'new', name:'Ask the team', path:'New → a note → Send → Updates',
+    steps:[['feed?i=1','Feed','New'],['new','Ask the team','Send'],['bell','Updates']] },
+  { id:'saved', name:'Saved', path:'Keep or Later on a card → Saved → open it again, or remove it',
+    steps:[['feed?i=2','Feed','Later'],['saved','Saved','Open'],['feed?i=1','That idea, in the feed']] },
+  { id:'numbers', name:'Command centre', path:'Command centre → a card → its report, add costs, Park, or Let’s jam',
+    steps:[['command','Command centre','Let’s jam'],['new?on=command','Ask the team']] },
+  { id:'know', name:'Memory and Connectors', path:'Memory → the brand book, a tile → Connectors',
+    steps:[['memory','Memory','Connectors'],['connectors','Connectors']] },
+  { id:'you', name:'You', path:'The round button top right → name, light or dark, start again, help',
+    steps:[['you','You','Start again'],['start','Add your store']] },
+  { name:'Fix something', path:'Brand passport → fix what Jammie read → save' },
+  { name:'Onboarding’s side roads', path:'Not a store, a personal page, a failed read, a closed store' },
+  { name:'Reports', path:'A number → morning brief, P&L, weekly, marketing or customers report' },
+  { name:'Inside the brand book', path:'Brand book → what Jammie knows, line by line, with sources' },
+  { name:'Inside the Shopify admin', path:'The same app, framed by Shopify' },
+];
+document.getElementById('flowList').innerHTML = FLOWS.map((f, i) => {
+  const inner = `<span class="n">${i + 1}</span><b>${f.name}</b><span class="path">${f.path}</span><span class="tag ${f.steps ? 'done' : ''}">${f.steps ? 'Built' : 'Not built'}</span>`;
+  return f.steps ? `<a href="#${f.id}">${inner}</a>` : `<div class="item">${inner}</div>`;
+}).join('');
+
+// ---- flowchart: screens are boxes, outcomes are soft pills
+const W = 156, H = 40;
+const N = {
+  start:{x:95,y:44,t:'Add your store',go:'start'}, signin:{x:95,y:110,t:'Sign in',go:'signin'}, reading:{x:95,y:176,t:'Reading your store',go:'reading'},
+  taps:{x:95,y:242,t:'Three taps',go:'taps'}, here:{x:95,y:308,t:'Brand passport',go:'here'},
+  feed:{x:350,y:275,t:'Feed',go:'feed',k:'hub'},
+  story:{x:610,y:44,t:'A story',go:'story?s=0'}, idea:{x:610,y:120,t:'Why this idea',go:'idea?i=1'},
+  jam:{x:850,y:120,t:'Let’s jam',go:'jam?i=1'}, change:{x:1085,y:120,t:'Change first',go:'change?i=1'}, sloosh:{x:1085,y:196,t:'See the credits',go:'sloosh?i=0'},
+  order:{x:1320,y:34,t:'Sent to the team',k:'end'}, morelike:{x:1085,y:268,t:'More like this',k:'end'},
+  next:{x:610,y:200,t:'Next idea',k:'end'},
+  neu:{x:610,y:290,t:'Ask the team',go:'new'}, sent:{x:850,y:290,t:'Sent to the team',k:'end'},
+  bell:{x:610,y:362,t:'Updates',go:'bell'}, you:{x:610,y:434,t:'You',go:'you'}, again:{x:850,y:434,t:'Start again',k:'end'},
+  rail:{x:610,y:561,t:'From the rail',k:'end'},
+  command:{x:850,y:486,t:'Command centre',go:'command'}, saved:{x:850,y:536,t:'Saved',go:'saved'},
+  memory:{x:850,y:586,t:'Memory',go:'memory'}, connectors:{x:850,y:636,t:'Connectors',go:'connectors'},
+};
+const E = [
+  ['start','signin','Read my store'],['signin','reading','Google or email'],['reading','taps','By itself'],['taps','here','Continue'],['here','feed','Open my feed'],
+  ['feed','story','A ring'],['feed','idea','Why'],['story','jam','Make this',1],['idea','jam','Let’s jam'],
+  ['jam','order','Ship as is'],['jam','change','Change first'],['jam','sloosh','Sloosh'],['jam','morelike','More like this'],['change','order','Send',1],['sloosh','order','Make it',1],
+  ['feed','next','Scroll'],['feed','neu','New'],['neu','sent','Send'],['feed','bell','Bell'],['feed','you','You'],['you','again','Start again'],
+  ['feed','rail','The rail'],['rail','command',''],['rail','saved',''],['rail','memory',''],['rail','connectors',''],
+];
+const hw = n => (n.k === 'hub' ? 170 : W) / 2, hh = n => (n.k === 'hub' ? 52 : H) / 2;
+function edge([a, b, label, nearStart]){
+  const p = N[a], q = N[b]; let d, lx, ly;
+  if (Math.abs(p.x - q.x) < 4) {
+    const dir = q.y > p.y ? 1 : -1; const y1 = p.y + dir * hh(p), y2 = q.y - dir * (hh(q) + 5);
+    d = `M${p.x},${y1}L${q.x},${y2}`; lx = p.x; ly = (y1 + y2) / 2 + 4;
+  } else {
+    const dir = q.x > p.x ? 1 : -1; const x1 = p.x + dir * hw(p), x2 = q.x - dir * (hw(q) + 5), mx = (x1 + x2) / 2;
+    d = `M${x1},${p.y}C${mx},${p.y} ${mx},${q.y} ${x2},${q.y}`; lx = mx; ly = (p.y + q.y) / 2 - 8;
+    if (Math.abs(p.y - q.y) > 50) { lx = x2 - dir * 46; ly = q.y - 8; }
+    if (nearStart) { lx = x1 + dir * 34; ly = p.y - 9; }
+  }
+  return `<path class="edge" d="${d}" marker-end="url(#arr)"/>` + (label ? `<text class="elabel" x="${lx}" y="${ly}" text-anchor="middle">${label}</text>` : '');
+}
+function node(id){
+  const n = N[id], w = hw(n) * 2, h = hh(n) * 2;
+  const g = `<g class="node ${n.k || ''}"><rect x="${n.x - w / 2}" y="${n.y - h / 2}" width="${w}" height="${h}" rx="${n.k === 'end' ? h / 2 : 11}"/><text x="${n.x}" y="${n.y + 5}" text-anchor="middle">${n.t}</text></g>`;
+  return n.go ? `<a href="app.html#/${n.go}">${g}</a>` : g;
+}
+document.getElementById('flowChart').innerHTML = `<svg viewBox="0 0 1420 672" role="img" aria-label="Flowchart of every screen and action">
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="var(--fg-3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <text class="group" x="17" y="14">ONBOARDING</text><text class="group" x="532" y="14">EVERY DAY</text>
+  ${E.map(edge).join('')}${Object.keys(N).map(node).join('')}</svg>`;
+
+// ---- every action on every screen. [action, where it leads, source]. source: live (seen working), docs (written down only), added (mine), todo (not built here)
+const A = [
+  ['Add your store','start','live',[['Type a store link or its name','The field takes either','live'],['Read my store','Sign in','live']]],
+  ['Sign in','signin','live',[['Continue with Google','Reading your store','live'],['A name and an email, then Continue','Reading your store','added'],['Close','Add your store','added'],['Use another account','Google’s own screen','todo'],['Privacy and terms links','Legal pages','todo']]],
+  ['Reading your store','reading','live',[['Nothing to press','One line changes as Jammie reads, then it moves on','added'],['The store is not a store','A side road of its own','todo'],['The read fails','A side road with Try again','todo']]],
+  ['Three taps','taps','docs',[['Pick who you are','Jammie slides out and comes back in that look','added'],['Pick what you want more of','Its object lands beside Jammie','added'],['Pick where you post, more than one','Each icon lands beside Jammie','added'],['Continue','Brand passport','added']]],
+  ['Brand passport','here','added',[['Open my feed','Feed, through a coral bloom','added'],['Fix what Jammie read','Edit what was found','todo']]],
+  ['Feed','feed','live',[['Jam, the red action','Let’s jam','live'],['Tap the card','Why this idea','live'],['Why','Why this idea','added'],['Keep','Kept, and it is in Saved','live'],['Share','Copies a link','live'],['Later','Put aside in Saved, next idea','live'],['Less','Fewer like this, next idea','live'],['Note','Note to the team, about this idea','live'],['Scroll, swipe or the arrow keys','Another idea','added'],['Sound on','Plays the video’s sound','live'],['A story ring','The story','live'],['Bell, top right','Updates, with a count when something is with the team','live'],['The round button beside it','You','live'],['New','Ask the team','live'],['Connect Shopify, on its card','Connectors','live'],['We don’t use Shopify','Moves on to the next idea','live'],['See the next 8, on the last card','More ideas','live'],['Previous and next picture in a carousel: arrows, a sideways scroll or the arrow keys','Another frame','added'],['“Your wrapped” story, signed in','A monthly recap','todo'],['“How your feed works” and its Got it','A first-day card','todo']]],
+  ['Why this idea','idea?i=1','live',[['Copy caption','Copies it','live'],['A source row','Opens the source, such as Meta Ad Library','todo'],['The full plan','The plan behind the idea','todo'],['Meta Ads, Shopify or Google Analytics','Connectors','live'],['Keep','Kept','live'],['Share','Copies a link','live'],['Let’s jam','Let’s jam','live'],['Close','Feed','live']]],
+  ['Let’s jam','jam?i=1','live',[['Ship as is','Sent, back in the feed, counted on the bell','live'],['Change first','A note to the team','live'],['More like this','Jammie learns it, next idea','live'],['Make it with Sloosh','See the credits','live'],['Close','Feed','live']]],
+  ['Change first','change?i=1','live',[['Tap a suggestion','Fills the box','added'],['Type what to change','Stays here','live'],['Send, the round button in the box','Sent, back in the feed, with a toast','live'],['Back','Let’s jam','live'],['Close','Feed','live']]],
+  ['Note to the team','note?i=1','live',[['Tap a suggestion','Fills the box','added'],['Type your note','Stays here','live'],['Send, the round button in the box','Sent, back in the feed, with a toast','live'],['Close','Feed','live']]],
+  ['See the credits','sloosh?i=0','added',[['Make it','Being made, back in the feed','added'],['Not now','Let’s jam','added'],['Back','Let’s jam','added']]],
+  ['The story','story?s=0','live',[['Tap the left side, or the left arrow','The story before','live'],['Tap the right side, or the right arrow','The story after','live'],['Wait five seconds','The next story, then the feed','added'],['Make this','Let’s jam','live'],['Close','Feed','live']]],
+  ['Ask the team','new','live',[['Tap a suggestion','Fills the box','added'],['Type what you need','Stays here','live'],['Send, the round button in the box','Sent, with a toast','live'],['Close','The page you were on','live']]],
+  ['Updates','bell','live',[['A row about an idea','That idea, in the feed','added'],['Clear all','Back to All quiet','added'],['Close','The page you were on','live']]],
+  ['You','you','live',[['Change name','A small form','todo'],['Light or Dark','Changes the whole product','added'],['What Jammie learns','On or off','todo'],['Start again from the first screen','Add your store','live'],['Flow map, Design system','Those pages','added'],['Email us','Opens your email','live'],['Privacy, Terms','Legal pages','todo'],['Close','The page you were on','live']]],
+  ['Command centre','command','live',[['Jump to a column, from the second row','Scrolls to it','added'],['Drag the gap beside a column','Makes that column wider or narrower; a double click puts it back','added'],['More, on a card','Opens the card’s depth in place','todo'],['A small number','Its report: morning brief, P&L, weekly, marketing or customers','todo'],['Add delivery fees, product costs and others','A short form for that cost','todo'],['Park','Sets the card aside','todo'],['Let’s jam','Ask the team','live'],['Open Updates','Updates','added'],['Open the feed','Feed','added']]],
+  ['Saved','saved','added',[['All, Kept, For later','Narrows the cards','added'],['Tap a card','That idea, in the feed','added'],['The heart on a card','Takes it out of Saved','added']]],
+  ['Memory','memory','live',[['A tab on the second row','Scrolls to that part','added'],['Add notes or a file','Adds to what Jammie knows','todo'],['A tile, 12 of them','That part of what Jammie knows','todo']]],
+  ['Connectors','connectors','live',[['Connect Shopify','Shopify’s own sign-in','todo'],['Connect, on six more tools','That tool’s own sign-in','todo']]],
+];
+const NAMES = { live:'Live', docs:'Docs only', added:'Added', todo:'Not built' };
+const KEY = 'jammie-action-checks';
+let ticks; try { ticks = new Set(JSON.parse(localStorage.getItem(KEY)) || []); } catch { ticks = new Set(); }
+document.getElementById('checks').innerHTML = A.map(([name, route, src, acts], si) => `<div class="scr" data-src="${src}">
+  <div class="scr-h"><a href="app.html#/${route}">${name}</a><span class="tag ${src}">${NAMES[src]}</span></div>` +
+  acts.map(([a, to, s], ai) => { const id = si + '.' + ai; return `<label class="act-row ${ticks.has(id) ? 'ok' : ''}" data-s="${s}"><input type="checkbox" data-id="${id}" ${ticks.has(id) ? 'checked' : ''}><span><b>${a}</b><small>${to}</small></span><span class="tag ${s === 'todo' ? '' : s}">${NAMES[s]}</span></label>`; }).join('') + `</div>`).join('');
+const total = A.reduce((n, s) => n + s[3].length, 0);
+const tally = () => { document.getElementById('tally').textContent = `${ticks.size} of ${total} checked · ${A.length} screens`; };
+tally();
+document.getElementById('checks').addEventListener('change', e => {
+  const c = e.target.closest('input'); if (!c) return;
+  c.checked ? ticks.add(c.dataset.id) : ticks.delete(c.dataset.id); c.closest('.act-row').classList.toggle('ok', c.checked);
+  try { localStorage.setItem(KEY, JSON.stringify([...ticks])); } catch {} tally();
+});
+document.getElementById('resetChecks').addEventListener('click', () => { ticks.clear(); try { localStorage.removeItem(KEY); } catch {} document.querySelectorAll('.act-row').forEach(r => { r.classList.remove('ok'); r.querySelector('input').checked = false; }); tally(); });
+document.getElementById('filter').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const f = b.dataset.f;
+  document.querySelectorAll('#filter button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.scr').forEach(scr => { let any = 0;
+    scr.querySelectorAll('.act-row').forEach(r => { const show = f === 'all' || r.dataset.s === f; r.classList.toggle('hide', !show); if (show) any++; });
+    scr.classList.toggle('hide', !any); });
+});
+
+// ---- the screens: the real prototype, one frame per step
+const arrow = '<svg viewBox="0 0 120 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6h114"/><path d="m110 1.500 6 4.500-6 4.500"/></svg>';
+document.getElementById('flows').innerHTML = FLOWS.filter(f => f.steps).map(f => `<section class="flow" id="${f.id}"><h3>${f.name}</h3><div class="strip">` +
+  f.steps.map(([route, label, action]) => `<a class="shot" href="app.html#/${route}">
+      <div class="frame"><iframe loading="lazy" src="app.html?still#/${route}" title="${label}" tabindex="-1"></iframe></div><b>${label}</b></a>` +
+    (action ? `<div class="hop"><span>${action}</span>${arrow}</div>` : '')).join('') + `</div></section>`).join('');
+function fit(){
+  document.querySelectorAll('.strip').forEach(strip => {
+    const n = strip.querySelectorAll('.shot').length, hops = strip.querySelectorAll('.hop').length;
+    const z = innerWidth < 760 ? .2 : Math.max(.2, Math.min(.26, (strip.clientWidth - 8 - hops * 104) / (n * 1440)));   // long flows wrap rather than shrink
+    strip.style.setProperty('--z', z.toFixed(4));
+  });
+}
+fit(); addEventListener('resize', fit);
+// a scaled frame can stay blank until its first repaint, so nudge each one as it finishes loading
+document.querySelectorAll('iframe').forEach(f => f.addEventListener('load', () => {
+  f.style.display = 'none'; void f.offsetHeight; f.style.display = '';
+  setTimeout(() => { f.contentWindow && f.contentWindow.dispatchEvent(new Event('resize')); }, 60);
+}));
+</script>
+</body>
+</html>

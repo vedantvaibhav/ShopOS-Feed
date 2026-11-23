@@ -37,13 +37,17 @@ Then open:
 
 ## What the prototype covers
 
-Onboarding (store link, sign-in, the read, three taps, the passport, what we found,
-your first idea), a demo front door (pick a store, its profile), the feed and its
-deck view, Saved, Work and its library, Command centre with reports, costs and
+Onboarding (store link, sign-in, the read, three taps, the passport, then the feed),
+a demo front door with all four live demo stores (Comet, Arata, Gully Labs, LEGO®
+India: pick one, see its profile, open its feed), the feed, Saved, Work and its library, Command centre with reports, costs and
 questions, Memory with its brand book and every tile's panel, Connectors with the
 connect flow, Updates, and your account (details, team, look and sound).
-Controls that only exist to try the prototype (start again, jump to a screen, seat,
-teammates, feed or deck) sit behind the floating Demo button, bottom left.
+The floating Demo button, bottom left, holds only light or dark and the links to the
+flow map and design system.
+
+The store on screen comes from `?store=comet|arata|gully|lego` in the address, else the
+one picked last. Each store's data is in `STORES` in `data.js`; its pictures are in
+`assets/jammie/v3/demo/<store>/`.
 `flows.html` lists every flow and every action, and says which ones are simulated.
 
 ## Handy links into the prototype

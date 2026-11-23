@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=25">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=26">
 <style>
 /* the docs shell only. Every token and component shown here lives in jammie.css and data.js */
 :root{--nav-w:248px;--top:64px;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
@@ -195,8 +195,8 @@ td code,li code{background:var(--card)}
 <div class="shade" id="shade"></div>
 <div class="toast flash" id="flash" role="status"><img src="assets/jammie/v3/pose-cheer-sm.png" alt=""><span></span></div>
 
-<script src="assets/jammie/v3/icons.js?v=25"></script>
-<script src="assets/jammie/v3/data.js?v=25"></script>
+<script src="assets/jammie/v3/icons.js?v=26"></script>
+<script src="assets/jammie/v3/data.js?v=26"></script>
 <script>
 (() => {
   const root = document.documentElement, J = window.JAMMIE, A = J.A, $ = id => document.getElementById(id);
@@ -216,7 +216,7 @@ td code,li code{background:var(--card)}
     { label: 'Sales per ₹1 of ads · 7 days', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], acts: [['Marketing report', 'report']] },
     { label: 'Campaigns · 7 days', need: true, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam']] },
   ];
-  const acts = () => `<div class="acts"><button class="act draw" data-like><i data-ico="heart"></i>Keep</button><button class="act draw"><i data-ico="share"></i>Share</button><button class="act draw"><i data-ico="calendar"></i>Later</button><button class="act draw"><i data-ico="filter"></i>Less</button><button class="act draw"><i data-ico="eye"></i>Why</button><button class="act draw"><i data-ico="message"></i>Note</button><a class="act jam draw" href="#"><i data-ico="jam"></i>Jam</a></div>`;
+  const acts = () => `<div class="acts"><button class="act draw" data-like><i data-ico="heart"></i>Keep</button><button class="act draw"><i data-ico="share"></i>Share</button><button class="act draw"><i data-ico="calendar"></i>Later</button><button class="act draw"><i data-ico="filter"></i>Less</button><button class="act draw"><i data-ico="eye"></i>Why</button><button class="act draw"><i data-ico="more"></i>More</button><a class="act jam draw" href="#"><i data-ico="jam"></i>Jam</a></div>`;
   const sw = ([v, n]) => `<div class="swc"><i style="background:var(${v})"></i><b>${n}</b><small data-tok="${v}">${v}</small></div>`;
 
   // ---------- the pages, in sidebar order ----------
@@ -311,7 +311,7 @@ td code,li code{background:var(--card)}
       <div class="demo page"><div class="feed-demo">${J.fcard(J.real[1])}${acts()}</div></div>
       <div class="demo page"><div class="feed-demo">${J.fcard(J.real[2])}</div><div class="feed-demo">${J.fcard(J.IDEAS.find(d => d.special === 'connect'))}</div></div>
       <h2>Anatomy</h2>
-      ${spec(['Part', 'Rule'], [['Picture', '5:8, fills the height under the stories, 24px radius, never cropped at the top'], ['Words', 'Title (18px, 600) and one line (two lines max) on the picture, over a blur'], ['Pills', 'Top right: frame count, Initial draft, a rival tag, sound'], ['Carousel', 'Frames slide sideways; the next frame’s edge shows'], ['Actions', 'Keep, Share, Later, Less, Why, Note, then Jam as the one red circle, last'], ['No picture', 'A plain card: 3D icons, one title, one button (connect a tool, end of the list)']])}
+      ${spec(['Part', 'Rule'], [['Picture', '5:8, fills the height under the stories, 24px radius, never cropped at the top'], ['Words', 'Title (18px, 600) and one line (two lines max) on the picture, over a blur'], ['Pills', 'Top left: who made it (Reel maker, Creative director). Top right: Start here, Initial draft, a rival tag, frame count, sound'], ['Carousel', 'Frames slide sideways; the next frame’s edge shows'], ['Actions', 'Keep, Share, Later, Less, Why, More (feedback, assign, a note), then Jam as the one red circle, last'], ['No picture', 'A plain card: 3D icons, one title, one button (connect a tool, end of the list)']])}
       ${code(`J.fcard(idea)   // assets/jammie/v3/data.js`)}` },
 
     { g: 'Components', id: 'saved-card', t: 'Saved card', lede: 'The picture is the card. Its words sit under it, not in a box with it.', body: () => `

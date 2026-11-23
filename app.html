@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=25">
+<link rel="stylesheet" href="assets/jammie/v3/jammie.css?v=26">
 <style>
 /* screens only: every token and shared piece comes from jammie.css */
 :root{--side-w:min(440px,100vw);--bar:64px;--t:.45s;--t2:.32s;--pp:#FBF7F0;--vh:100vh}
@@ -258,7 +258,7 @@ html[data-theme="dark"] .tapstage .me .pop.v{height:auto}
 }
 
 /* ---------- the feed: stories across the card's width, then one tall card a stop ---------- */
-.feed{--col-w:calc(var(--fc-h) * .625);--st:clamp(44px,calc((var(--col-w) - 80px) / 6),72px);height:100%;display:flex;flex-direction:column}   /* six rings and five 16px gaps are exactly the card's width */
+.feed{position:relative;--col-w:calc(var(--fc-h) * .625);--st:clamp(44px,calc((var(--col-w) - 80px) / 6),72px);height:100%;display:flex;flex-direction:column}   /* six rings and five 16px gaps are exactly the card's width */
 .stories-row{flex:none;display:flex;justify-content:center;padding:12px 24px 8px}
 .stories{display:flex;justify-content:space-between;width:var(--col-w);max-width:100%}
 .story:focus-visible,.act:focus-visible{outline:0}
@@ -368,6 +368,71 @@ body.sizing{cursor:col-resize;user-select:none;-webkit-user-select:none}
 html.still *{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}
 html.still ::-webkit-scrollbar{display:none}
 @media (prefers-reduced-motion:reduce){.reading-line span{animation:none;color:var(--fg);background:none}.pop,.bob,.pp-wrap,.pp-book,.pp-leaf,.pp-ink,.in3d,.hop,.slide-in,.slide-out,.curtain,.onb-body > *,.feed.arrive *,.page-in,.side-body{animation:none!important}.hop{opacity:1}}
+
+/* ---------- the rest of the live product: stores, the check, settings, work, reports, memory's pages, connecting a tool, your account ---------- */
+.ico-btn[hidden],.rowi[hidden]{display:none}
+.topbar .back{margin:0 -16px 0 -8px;background:none}
+#barActs{display:flex;gap:8px}
+/* a plain page outside the app: pick a store, a store's profile */
+.pick{position:relative;min-height:var(--vh);max-width:1104px;margin:0 auto;padding:104px 32px 64px;display:grid;gap:24px;align-content:start;justify-items:start}
+.pick.narrow{max-width:720px}
+.pick .ideas,.pick .wide{width:100%}
+.pick .sec-t{margin:16px 0 -8px}
+.pick .tiles.wide{grid-template-columns:repeat(4,minmax(0,1fr))}
+.scard .pic.mono{display:grid;place-items:center}
+.scard .pic.mono b{font-size:96px;font-weight:700;color:var(--fg-3);letter-spacing:-.04em}
+div.ltile:hover{background:var(--s2)}
+.ltile.off{opacity:.5}
+.tiles.two{grid-template-columns:1fr 1fr}
+.tiles.found{width:min(720px,100%);text-align:left}
+.fixbox{width:min(720px,100%);display:grid;gap:12px;text-align:left}
+.fixbox h4{font-size:15px;font-weight:600;letter-spacing:0}
+.chip .ico{width:14px;height:14px}
+.adder{display:flex;gap:8px;width:100%}
+.adder .input{flex:1;min-width:0;padding:10px 14px}
+.firstidea{display:flex;align-items:center;gap:16px;width:min(440px,100%);padding:12px;border-radius:20px;background:var(--s2);text-align:left}
+.firstidea img{flex:none;width:88px;height:110px;border-radius:12px;object-fit:cover}
+.firstidea small{display:block;font-size:13px;color:var(--fg-2)}
+.firstidea b{display:block;margin-top:4px;font-size:16.5px;font-weight:600;line-height:1.3}
+/* the feed's one-time hello: it sits over the top of the first card until you say Got it */
+.coach{position:absolute;z-index:4;left:50%;top:calc(var(--st) + 64px);transform:translateX(-50%);width:min(400px,calc(100% - 32px));display:flex;align-items:center;gap:12px;padding:12px 12px 12px 8px;border-radius:20px;background:var(--card);box-shadow:var(--shadow-3);font-size:14.5px;line-height:1.35;font-weight:500}
+.coach img{flex:none;height:44px;width:auto}
+.coach span{flex:1}
+/* deck cards that hold an idea or a job, and a column with nothing in it */
+.dcard.idea,.dcard.work{text-decoration:none}
+.dcard.idea img,.dcard.work img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin-bottom:12px}
+.dcard .t{margin:6px 0 0;font-size:15px;font-weight:600;line-height:1.3;color:var(--fg)}
+.dcard.flat{background:var(--blk,var(--s2))}
+.page-body .cap{background:var(--s2)}
+.bars.tall{height:96px}
+.dempty{margin:0;padding:32px 16px;text-align:center;font-size:14px;color:var(--fg-2)}
+.subbar .tools{flex:none;display:flex;align-items:center;gap:8px;margin-left:16px}
+.seg.sm button{height:28px;padding:0 12px;font-size:13px}
+.rowi .v{flex:none;max-width:55%;font-weight:600;text-align:right}
+.rowi .meter{display:block;margin-top:8px}
+.sec .sub{margin:-4px 0 8px;font-size:13.5px}
+.sec .rows + .adder,.sec .chips + .adder{margin-top:8px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fields .wide{grid-column:1/-1}
+.addrow{display:grid;gap:8px;margin-top:16px;justify-items:start}
+.swatch{display:block;height:40px;border-radius:10px;margin-bottom:8px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.2)}
+a.bk{display:block;text-decoration:none}
+.bk-cover{display:block}
+/* a question about a number, and its answer with where it came from */
+.qa{display:grid;gap:8px;margin-bottom:16px}
+.qa .q{justify-self:end;max-width:86%;margin:0;padding:10px 14px;border-radius:16px 16px 4px 16px;background:var(--s3);color:var(--fg)}
+.qa .a{display:flex;gap:10px;align-items:flex-start}
+.qa .a > span:last-child{padding:10px 14px;border-radius:16px 16px 16px 4px;background:var(--blk,var(--s2));font-size:15px;line-height:1.45}
+.qa .a small{display:block;margin-top:4px;font-size:12.5px;color:var(--fg-2)}
+.side-empty img.felt{height:128px;filter:var(--felt)}
+.logo-tile.big{width:96px;height:96px;margin-bottom:8px;background:var(--s2);font-size:36px}
+.side-empty .reading-line{font-size:16.5px}
+/* the mic in a note: hold it and talk */
+.composer .mic{flex:none;width:40px;height:40px;color:var(--fg-2)}
+.composer.listening{border-color:var(--jam)}
+.composer.listening .mic{background:var(--jam)}
+.composer.listening .mic .ico{color:#fff}
+.fab,#newTab{-webkit-touch-callout:none}
 
 .bar-brand,.rail .tab-new,.rail .tab-you,.phone-only,.rail .tl{display:none}
 
@@ -489,6 +554,24 @@ html.still ::-webkit-scrollbar{display:none}
   .feed-col .act.jam{margin-top:4px}
   .feed-col .act.jam > i{width:52px;height:52px}
   .feed-col .act.jam .ico{width:24px;height:24px}
+  .pick{padding:80px 16px 48px}
+  .pick .ideas,.pick .tiles.wide{grid-template-columns:1fr 1fr}
+  .scard .pic.mono b{font-size:64px}
+  .tiles.found{grid-template-columns:1fr}
+  .coach{top:calc(var(--bar) + var(--st) + 48px);left:12px;right:76px;width:auto;transform:none}   /* clear of the actions on the right */
+  #barActs{gap:0}
+  .topbar .back{margin:0 -8px 0 -12px}
+  .subbar{flex-wrap:wrap}
+  .subbar .tools{width:100%;margin:0;padding:4px 8px 8px;justify-content:space-between}
+  .subbar .deck-tabs,.subbar.fit .deck-tabs{flex:1 0 100%}
+  .side-foot{flex-wrap:wrap}
+  .side-foot > .btn:not(.b-text){flex:1 1 auto}   /* two buttons share the width; if they cannot, each takes a row */
+  .seg.sm button{height:36px}
+  .rowi.first{flex-wrap:wrap}
+  .rowi.first .btn{width:100%}
+  .fields{grid-template-columns:1fr}
+  .composer .mic{width:44px;height:44px}
+  .adder .input{padding:12px 14px}
   /* decks: one column a screen, with its cards' actions big enough to tap */
   /* one column a screen, exactly: no half column peeking in at the edge. The tabs above move between them */
   .deck-cols{gap:16px;padding:8px 16px calc(var(--tab) + 16px + env(safe-area-inset-bottom));scroll-snap-type:x mandatory;scroll-padding:0 16px}
@@ -566,8 +649,9 @@ html.still ::-webkit-scrollbar{display:none}
 </nav>
 <header class="topbar" id="topbar">
   <a class="bar-brand" href="#/feed" aria-label="jammie"><img src="assets/jammie/v3/char-dollop-sm.png" alt=""><b>jammie</b></a>
+  <a class="ico-btn back draw" id="barBack" aria-label="Back" hidden><i data-ico="back"></i></a>
   <h1 id="barTitle"></h1><small id="barNote"></small>
-  <div class="top-right">
+  <div class="top-right"><span id="barActs"></span>
     <a class="ico-btn draw" id="bellBtn" href="#/bell" aria-label="Updates"><i data-ico="bell"></i><em id="bellN" hidden></em></a>
     <a class="ico-btn draw" id="youBtn" href="#/you" aria-label="You"><i data-ico="user"></i></a>
   </div>
@@ -579,11 +663,12 @@ html.still ::-webkit-scrollbar{display:none}
 <div id="modal"></div>
 <div class="toasts" id="toasts"></div>
 
-<script src="assets/jammie/v3/icons.js?v=25"></script>
-<script src="assets/jammie/v3/data.js?v=25"></script>
+<script src="assets/jammie/v3/icons.js?v=26"></script>
+<script src="assets/jammie/v3/data.js?v=26"></script>
 <script>
 (() => {
-  const { A, D, IDEAS, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame } = window.JAMMIE;
+  const { A, D, IDEAS: ALL, real, av, ico, fcard, scard, story, dcard, ltile, turnFrame } = window.JAMMIE;
+  let IDEAS = ALL;   // the feed's list: every idea, less the teammates you switched off, in the order you shuffled it to
   const $ = id => document.getElementById(id);
   const root = document.documentElement, app = $('app'), sideEl = $('side'), modal = $('modal');
   const STILL = new URLSearchParams(location.search).has('still');   // the flow map shows screens at rest
@@ -595,12 +680,12 @@ html.still ::-webkit-scrollbar{display:none}
   const forced = new URLSearchParams(location.search).get('theme');   // ?theme=dark shows a screen dark without saving it
   const paint = theme => { root.dataset.theme = theme; };
   paint(forced || look.theme || 'light');
-  function setTheme(theme){ look = { theme }; try { localStorage.setItem(KEY, JSON.stringify(look)); } catch {} paint(theme); }
+  function setTheme(theme, auto){ look = auto ? { theme, auto } : { theme }; try { localStorage.setItem(KEY, JSON.stringify(look)); } catch {} paint(theme); }
 
   // ---- state: where we are in the feed, what was kept or put aside, what went to the team
   let cur = 0, timers = [], arriving = false, shown = null, lastPage = 'feed';
   // The flow map shows screens at rest (?still). Those read a fixed sample and never write, so looking at the map cannot change the real prototype
-  const SAMPLE = { 'jammie-proto-liked': ['reviews'], 'jammie-proto-later': ['midnight'], 'jammie-proto-orders': [{ id: 'reel', how: 'ship' }] };
+  const SAMPLE = { 'jammie-proto-intro': true, 'jammie-proto-liked': ['reviews'], 'jammie-proto-later': ['midnight'], 'jammie-proto-orders': [{ id: 'reel', how: 'ship' }] };
   const store = (k, d) => { if (STILL) return SAMPLE[k] || d; try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } };
   const keep = (k, v) => { if (STILL) return; try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
   const SETS = { liked: new Set(store('jammie-proto-liked', ['reviews'])), later: new Set(store('jammie-proto-later', [])) };
@@ -619,7 +704,7 @@ html.still ::-webkit-scrollbar{display:none}
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
 
   // ---- onboarding pieces
-  const dots = n => `<div class="dots">${[1, 2, 3, 4].map(i => `<i class="${i < n ? 'on' : i === n ? 'on now' : ''}"></i>`).join('')}</div>`;
+  const dots = n => !n ? '' : `<div class="dots">${[1, 2, 3, 4, 5, 6].map(i => `<i class="${i < n ? 'on' : i === n ? 'on now' : ''}"></i>`).join('')}</div>`;
   const chips = list => `<div class="chips">${list.map(c => `<button class="chip">${c}</button>`).join('')}</div>`;
   const mark = `<span class="brandmark"><img src="${A}char-dollop-sm.png" alt="">jammie</span>`;
   // the onboarding stage: one centred column. Jammie on top, then one thought and one control
@@ -678,12 +763,13 @@ html.still ::-webkit-scrollbar{display:none}
   const startScreen = () => onb(1, pose('wave', .905), `
         <h1 class="h1">Add your store.</h1>
         <form class="store" data-go="#/signin">${ico('link')}<input placeholder="Paste a link or type its name" aria-label="Store link" value="wearcomet.com">
-          <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>`);
+          <button class="btn b-jam draw">Read my store${ico('arrow')}</button></form>
+        <a class="btn b-text" href="#/stores">Or try a demo store</a>`);
   const G = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23 12.300c0-.800-.100-1.600-.200-2.300H12v4.500h6.200a5.300 5.300 0 0 1-2.300 3.500v2.900h3.700c2.200-2 3.400-5 3.400-8.600Z"/><path fill="#34A853" d="M12 23.500c3.100 0 5.700-1 7.600-2.800l-3.700-2.900c-1 .700-2.400 1.100-3.900 1.100-3 0-5.500-2-6.400-4.700H1.800v3A11.500 11.500 0 0 0 12 23.500Z"/><path fill="#FBBC05" d="M5.600 14.200a6.900 6.900 0 0 1 0-4.400v-3H1.800a11.500 11.500 0 0 0 0 10.400Z"/><path fill="#EA4335" d="M12 5.100c1.700 0 3.200.600 4.400 1.700l3.300-3.300A11.500 11.500 0 0 0 1.800 6.800l3.800 3c.900-2.700 3.400-4.700 6.400-4.700Z"/></svg>`;
   const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
   // ---- pieces of the feed
-  const STORIES = [['Today', 'reel'], ['Trends', 'midnight'], ['Top ads', 'xlows'], ['News', 'rival'], ['How to', 'sketch'], ['Reviews', 'reviews']];   // each ring plays the idea it shows
+  const STORIES = [['Today', 'reel'], ['Recap', 'reviews', { kind: 'Since your last visit', title: '14 new ideas since you last looked', line: 'The strongest ones first.', cta: 'See them' }], ['Trends', 'midnight'], ['Top ads', 'xlows'], ['News', 'rival'], ['How to', 'sketch']];   // each ring plays the idea it shows
   const seen = new Set(STILL ? [4, 5] : []);
   const stories = () => `<div class="stories-row"><div class="stories">${STORIES.map(([n, id], i) => story(n, idea(id).img, { href: `#/story?s=${i}`, seen: seen.has(i) })).join('')}</div></div>`;
   // the actions hang beside the card. Jam is one of them: the main one, so it is red and a little larger
@@ -693,50 +779,54 @@ html.still ::-webkit-scrollbar{display:none}
       <button class="act draw" data-do="later">${ico('calendar')}Later</button>
       <button class="act draw" data-do="less">${ico('filter')}Less</button>
       <a class="act draw" href="#/idea">${ico('eye')}Why</a>
-      <a class="act draw" href="#/note">${ico('message')}Note</a>
+      <a class="act draw" href="#/more">${ico('more')}More</a>
       <a class="act jam draw" href="#/jam">${ico('jam')}Jam</a>
     </div>`;
-  const feedPage = () => `<section class="feed ${arriving ? 'arrive' : ''}">
+  const feedPage = q => `<section class="feed ${arriving ? 'arrive' : ''}">
       ${stories()}
+      ${(q && q.get('intro')) || !introSeen ? `<div class="coach"><img src="${A}pose-wave-sm.png" alt=""><span>Each card is one idea for Comet. Keep what fits, and I learn what to bring next.</span><button class="btn b-ink b-sm" data-do="gotit">Got it</button></div>` : ''}
       <div class="stage">${IDEAS.map((x, i) => `<div class="slide ${i === cur ? 'at' : ''}" data-i="${i}"><div class="feed-col">${fcard(x)}${acts(x)}</div></div>`).join('')}</div>
     </section>`;
   const curIdea = () => IDEAS[cur].special ? real[0] : IDEAS[cur];
   // an update about an idea opens that idea; a note you wrote is just your note
   const msgRow = o => { const d = idea(o.id), sub = `<small>${HOW[o.how][0]} · ${HOW[o.how][1]}</small>`;
-    return o.how === 'note' ? `<div class="msg">${av(48)}<span><b>${o.text || 'Your note to the team'}</b>${sub}</span><em>Now</em></div>`
+    return o.how === 'note' ? `<div class="msg">${av(48)}<span><b>${esc(o.text || 'Your note to the team')}</b>${sub}</span><em>Now</em></div>`
       : `<a class="msg" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt=""><span><b>${d.title}</b>${sub}</span><em>Now</em></a>`; };
   // a note to the team: what you might ask for, and the box you type in at the foot. The round button in the box sends it
-  const composer = (ph, what) => `<form class="composer" data-send="${what}"><textarea rows="1" placeholder="${ph}" aria-label="Your note"></textarea><button class="btn b-jam draw" aria-label="Send to the team">${ico('send')}</button></form>`;
+  const composer = (ph, what) => `<form class="composer" data-send="${what}"><textarea rows="1" placeholder="${ph}" aria-label="Your note"></textarea><button type="button" class="ico-btn mic draw" data-mic aria-label="Hold to talk">${ico('mic')}</button><button class="btn b-jam draw" aria-label="Send">${ico('send')}</button></form>`;
   const row = (t, s, what) => `<button class="rowi" data-do="${what}"><span class="grow"><b>${t}</b>${s ? `<small>${s}</small>` : ''}</span>${ico('arrow')}</button>`;
-  const link = (t, href) => `<a class="rowi" href="${href}"><span class="grow"><b>${t}</b></span>${ico('arrow')}</a>`;
+  const link = (t, href, sub = '') => `<a class="rowi" href="${href}"><span class="grow"><b>${t}</b>${sub ? `<small>${sub}</small>` : ''}</span>${ico('arrow')}</a>`;
   const asksFor = list => `<div class="asks-for">${list.map(t => `<button class="chip" data-do="suggest">${t}</button>`).join('')}</div>`;
   const ask = (list, ph, what) => asksFor(list) + composer(ph, what);   // the foot of a note panel: what you might ask, then the box
 
   // ---- decks: every page is a row of columns. One column is a header and a stack of cards
   let colW = store('jammie-proto-cols', {});                     // widths you dragged the columns to
   const col = (name, body, o = {}) => `<section class="dcol" id="${o.id || ''}" style="--acc:${o.acc};${colW[o.id] ? `--w:${colW[o.id]}px` : ''}"><header class="dcol-h"><i></i>${name}<small class="${o.need ? 'need' : ''}">${o.n}</small></header><div class="dcol-body">${body}</div></section><i class="grip" data-col="${o.id}" role="separator" aria-orientation="vertical" title="Drag to change the width"></i>`;
-  const subbar = (tabs, fit = '') => `<div class="subbar ${fit}"><nav class="deck-tabs">${tabs}</nav></div>`;   // a page's own tabs: the second row, under the top bar
+  const subbar = (tabs, fit = '', tools = '') => `<div class="subbar ${fit}"><nav class="deck-tabs">${tabs}</nav>${tools ? `<div class="tools">${tools}</div>` : ''}</div>`;   // a page's own tabs: the second row, under the top bar
   // a page tab: the full name on desktop; on a phone an icon over a short word, so every tab fits across the screen
   const SHORT = { 'With the team': ['team', 'Team'], 'Finance': ['chart', 'Finance'], 'Marketing return': ['megaphone', 'Marketing'], 'Stock & delivery': ['store', 'Stock'], 'The stove': ['spark', 'Stove'],
+    'Ready': ['check', 'Ready'], 'Creative director': ['megaphone', 'Creative'], 'Reel maker': ['film', 'Reels'], 'Rival watch': ['eye', 'Rivals'], 'Social': ['message', 'Social'], 'Storefront': ['store', 'Store'],
+    'In the works': ['clock', 'Works'], 'Needs a yes': ['check', 'A yes'], 'Going out': ['send', 'Out'], 'Live': ['play', 'Live'], 'Done': ['check', 'Done'], 'Discarded': ['close', 'Discarded'], 'References': ['image', 'References'],
+    'Story': ['book', 'Story'], 'Look and kit': ['image', 'Look'], 'Voice': ['message', 'Voice'], 'Words': ['star', 'Words'], 'Products': ['store', 'Products'],
     'What I know': ['book', 'I know'], 'What I see out there': ['globe', 'Out there'], 'What I’d do': ['spark', 'I’d do'], 'How you steer me': ['settings', 'You steer'] };
   const tab = name => SHORT[name] ? `${ico(SHORT[name][0])}<span class="full">${name}</span><span class="short">${SHORT[name][1]}</span>` : name;
-  const deck = cols => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button class="${i ? '' : 'on'}" data-do="col" data-id="${i}">${o.need ? '<i class="dot"></i>' : ''}${tab(name)}</button>`).join(''))}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
+  const deck = (cols, tools = '') => `<section class="deck">${subbar(cols.map(([name, , o = {}], i) => `<button class="${i ? '' : 'on'}" data-do="col" data-id="${i}">${o.need ? '<i class="dot"></i>' : ''}${tab(name)}</button>`).join(''), '', tools)}<div class="deck-cols">${cols.map(([name, body, o = {}], i) => col(name, body, { ...o, id: 'dcol' + i })).join('')}</div></section>`;
   const page = (body, tabs = '', narrow = '') => `<section class="page">${tabs ? subbar(tabs, 'fit') : ''}<i class="edge"></i><div class="page-scroll"><div class="page-body ${narrow}">${body}</div></div></section>`;
   // command centre: five columns, one question a card (numbers are the demo's)
   const COLS = [
-    ['With the team', '#7C5CFC', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open Updates', 'bell']] }]],
+    ['With the team', '#7C5CFC', [{ label: 'In the works · now', value: () => String(orders.length), line: () => orders.length ? 'Each one is in Updates.' : 'Nothing cooking. Start a jam from any card.', acts: [['Open work', 'work'], ['Open Updates', 'bell']] }]],
     ['Finance', '#17A673', [
-      { label: 'Net sales · 7 days', value: '₹1.4Cr', delta: '▼ 13%', dir: 'down', line: 'What customers paid, after discounts and returns.', bars: [70, 78, 79, 80, 78, 82, 95, 67, 66, 68, 81, 73, 67, 68], mini: [['Orders', '2,179'], ['An order', '₹6,380'], ['New customers', '1,629']], acts: [['More', 'more'], ['Weekly report', 'report'], ['Add delivery fees', 'costs']] },
-      { label: 'What you keep · 7 days', value: 'Not counted yet', line: 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report']] },
-      { label: 'Refunds · 7 days', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', bars: [62, 70, 58, 66, 74, 61, 55], acts: [['More', 'more'], ['P&L report', 'report']] }]],
+      { label: 'Net sales · 7 days', value: '₹1.4Cr', delta: '▼ 13%', dir: 'down', line: 'What customers paid, after discounts and returns.', bars: [70, 78, 79, 80, 78, 82, 95, 67, 66, 68, 81, 73, 67, 68], day: [20, '₹', 'L', 1], mini: [['Orders', '2,179'], ['An order', '₹6,380'], ['New customers', '1,629']], acts: [['More', 'more'], ['Weekly report', 'report'], ['Add delivery fees', 'costs']] },
+      { label: 'What you keep · 7 days', value: () => costsIn ? '₹38L' : 'Not counted yet', line: () => costsIn ? 'After product costs, delivery, fees and ads.' : 'It counts once your costs are in.', acts: [['Add product costs', 'costs'], ['P&L report', 'report']] },
+      { label: 'Refunds · 7 days', value: '₹3L', delta: '▼ 11%', dir: 'up', line: 'Refunded on orders placed in these days, so far.', bars: [62, 70, 58, 66, 74, 61, 55], day: [43, '₹', 'k', 0], acts: [['More', 'more'], ['P&L report', 'report']] }]],
     ['Marketing return', '#2F6BFF', [
-      { label: 'Sales per ₹1 of ads · 7 days', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
-      { label: 'Campaigns · 7 days', need: true, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report']] },
-      { label: 'Site funnel · 7 days', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', bars: [84, 80, 88, 76, 72, 78, 70], mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
+      { label: 'Sales per ₹1 of ads · 7 days', value: '5.2×', delta: '▼ 13%', dir: 'down', line: 'Sales for every ₹1 of ads.', bars: [79, 74, 76, 90, 83, 77, 78], day: [5.2, '', '×', 1], mini: [['New customer cost', '₹1,649'], ['New customers', '1,629'], ['Ad spend', '₹26.9L']], acts: [['More', 'more'], ['Marketing report', 'report']] },
+      { label: 'Campaigns · 7 days', need: () => !parked, value: '₹26.9L', line: 'Spent across 5 campaigns. Set your costs to get a call on each.', acts: [['Park', 'park'], ['Let’s jam', 'jam'], ['Marketing report', 'report']] },
+      { label: 'Site funnel · 7 days', value: '1.4%', delta: '▼ 11%', dir: 'down', line: 'Of visits bought.', bars: [84, 80, 88, 76, 72, 78, 70], day: [1.4, '', '%', 1], mini: [['Visits', '1,59,844'], ['To cart', '9%'], ['To checkout', '2.9%']], acts: [['More', 'more'], ['Customers report', 'report']] }]],
     ['Stock & delivery', '#0FA3B1', [{ label: 'Days of cover · now', value: '5', line: 'Products run out within a week.', meter: 17, mini: [['Cover overall', '2.1 days'], ['Out of stock', '1'], ['Stock value', '₹19.3L']], acts: [['More', 'more'], ['Weekly report', 'report']] }]],
     ['The stove', '#E0245E', [{ label: 'Ideas ready · today', value: '10', line: '8 more are lined up behind them.', meter: 56, acts: [['Open the feed', 'feed']] }]],
   ];
-  const val = v => typeof v === 'function' ? v() : v, needs = c => c.some(x => x.need);
+  const val = v => typeof v === 'function' ? v() : v, needs = c => c.some(x => val(x.need));
   // memory: what Jammie knows, as the same quiet cards
   const KNOWS = [
     ['What I know', [['229', 'Products read, from wearcomet.com'], ['Everything I know', 'Search every line, with where it came from', 1], ['Your photos and files', 'What every maker works from', 1]]],
@@ -744,13 +834,133 @@ html.still ::-webkit-scrollbar{display:none}
     ['What I’d do', [['Your store', 'How it’s doing, and what to do first', 1], ['68', 'Plans written for Comet'], ['17', 'Places in the shop window']]],
     ['How you steer me', [['House rules', 'What I’ll always and never do', 1], ['Your feed', 'What you want more of', 1], ['What Jammie can do alone', 'And what always waits for you', 1]]],
   ];
-  const TOOLS = [['Google Analytics', 'See where shoppers drop off', 'analytics'], ['Meta Ads', 'See which ads actually sell', 'meta'], ['Google Ads', 'See which searches bring buyers', 'google'], ['Klaviyo', 'See which emails earn'], ['Judge.me', 'Hear what customers love and complain about'], ['Slack', 'Jam with your team in a thread', 'slack']];
   const logo = (n, f) => f ? `<img class="logo" src="${A}el-${f}.png" alt="">` : `<span class="logo-tile">${n[0]}</span>`;
   // saved: everything you kept or put aside, as plain cards. The tabs only narrow it
   let savedTab = 'all';
   const savedIds = () => savedTab === 'liked' ? [...liked] : savedTab === 'later' ? [...SETS.later] : [...new Set([...liked, ...SETS.later])];
 
   const savedCard = id => { const d = idea(id); return scard(d, { href: `#/feed?i=${IDEAS.indexOf(d)}`, note: liked.has(id) ? 'Kept' : 'For later' }); };
+
+  // ================= the rest of the live product: stores, the check, settings, work, reports, memory's pages, connecting a tool, your account =================
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // ---- small lists you add to and take from
+  const LISTS = { rivals: ['CHNKS', 'Ludic', 'Gully Labs', '7-10', 'Thaely'], rules: [], notes: [], refs: [], topics: [], uploads: [] };
+  Object.keys(LISTS).forEach(k => { LISTS[k] = store('jammie-proto-' + k, LISTS[k]); });
+  const adder = (kind, ph, btn = 'Add') => `<form class="adder" data-add="${kind}"><label class="input"><input placeholder="${ph}" aria-label="${ph}"></label><button class="btn b-ink">${btn}</button></form>`;
+  const listed = (kind, none = '') => LISTS[kind].length ? `<div class="rows">${LISTS[kind].map((t, i) => `<div class="rowi"><span class="grow"><b>${esc(t)}</b></span><button class="ico-btn draw" data-do="drop" data-id="${kind}:${i}" aria-label="Remove">${ico('close')}</button></div>`).join('')}</div>` : none;
+  // ---- what you chose: picks (chips), switches, who is on the team, who you are, which tools are connected
+  const tune = store('jammie-proto-tune', {}), prefs = store('jammie-proto-prefs', { sound: true, vibration: true }), me = store('jammie-proto-me', { first: 'You', last: '', email: '' });
+  let team = store('jammie-proto-team', []), linked = store('jammie-proto-linked', []), costsIn = store('jammie-proto-costs', false), parked = store('jammie-proto-parked', false);
+  let done = store('jammie-proto-done', []), binned = store('jammie-proto-binned', []), qa = [], bellTab = 'updates', workBy = 'stage', cleared = false;
+  const fact = (t, v = '', s = '') => `<div class="rowi"><span class="grow"><b>${t}</b>${s ? `<small>${s}</small>` : ''}</span>${v ? `<b class="v">${v}</b>` : ''}</div>`;
+  const stat = (big, line) => `<div class="ltile"><b>${big}</b><small>${line}</small></div>`;
+  const pick = (key, title, opts, max = 1, sub = '') => `<div class="sec" data-pick="${key}" data-max="${max}"><h4>${title}</h4>${sub ? `<p class="sub">${sub}</p>` : ''}<div class="chips">${opts.map(o => `<button class="chip ${(tune[key] || []).includes(o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>`;
+  const sw = (id, on, what = 'flag') => `<button class="switch" role="switch" aria-checked="${!!on}" data-do="${what}" data-id="${id}" aria-label="${id}"></button>`;
+  const none = (pose, title, line = '') => `<div class="side-empty"><img src="${A}pose-${pose}-sm.png" alt=""><h3>${title}</h3>${line ? `<p>${line}</p>` : ''}</div>`;
+  const opt = (icon, title, line, to) => `<${to[0] === '#' ? `a href="${to}"` : `button data-do="${to}"`} class="opt"><i>${ico(icon)}</i><span><b>${title}</b><small>${line}</small></span></${to[0] === '#' ? 'a' : 'button'}>`;
+
+  // ---- who brings you cards. Switching one off, or picking a role, takes its cards out of the feed
+  const MAKERS = [['Creative director', 'What’s ready to run? Ads, fresh from the jar.'], ['Reel maker', 'What should we film? What’s working, made ours.'], ['Rival watch', 'What are they up to? Ads, prices, launches.'],
+    ['Social', 'What do we post this week? Trends, dates, your comments.'], ['Storefront', 'What’s stopping the sale? Stock, pages, phones.']];
+  const SEATS = { 'Founder / CEO': null, 'Growth / performance': ['Creative director', 'Rival watch'], 'Brand / creative': ['Creative director', 'Reel maker', 'Social'], 'E-commerce / storefront': ['Storefront'], 'Retention / CRM': ['Social'] };
+  const JOINS = { 'Day 1': 'Five teammates bring you cards.', 'Day 4': 'Performance joins: it turns your best ideas into ads and watches what they spend.', 'Week 1': 'Visibility joins: it checks search and AI answers.', 'Week 2': 'Customers joins: who would buy again.', 'Week 3': 'Listening joins: the good, the bad, the loud.', 'Day 30': 'Everyone is in. Nine teammates.' };
+  let off = new Set(store('jammie-proto-off', []));
+  const visible = d => d.special || (!off.has(d.by) && (!(tune.roles || []).length || tune.roles.some(r => !SEATS[r] || SEATS[r].includes(d.by))));
+  function refilter(){ IDEAS = ALL.filter(visible); cur = 0; if (shown === 'feed' || shown === 'deck') redraw(); }
+  IDEAS = ALL.filter(visible);
+  if (prefs.calm) root.classList.add('still');
+  const FEED_ACTS = `<button class="ico-btn draw" data-do="shuffle" aria-label="Shuffle the cards">${ico('refresh')}</button><a class="ico-btn draw" href="#/settings" aria-label="Settings">${ico('settings')}</a>`;
+  let introSeen = store('jammie-proto-intro', false);
+  const mini = d => `<a class="dcard idea" href="#/feed?i=${IDEAS.indexOf(d)}"><img src="${D}${d.img}" alt="" loading="lazy"><div class="top"><span>${d.kind}</span><em>${d.makes}</em></div><p class="t">${d.title}</p></a>`;
+
+  // ---- the demo's front door
+  const STORES = [['Comet', 'Sneakers', 'Exclude newest technical drops from winter sale markdowns', 'sketch.jpg'], ['Arata', 'Hair care', 'Avoid ad fatigue and stock outs with automated alerts'],
+    ['Gully Labs', 'Sneakers', 'Comet leads its ads with price, answer with yours'], ['LEGO India', 'Building blocks', 'Know which LEGO listings on Amazon are really yours']];
+  const foundScreen = fix => onb(5, pose('search'), `
+        <h1 class="h2">Here’s what we found.</h1>
+        <div class="tiles found">${[['227', 'Products. Best seller: X Lows CHESTNUT'], ['1,026', 'Reviews across your products'], ['58', 'Rival ads, from 6 rivals']].map(([b, l]) => fix ? `<button class="ltile" data-do="offline"><b>${b}</b><small>${l}</small></button>` : stat(b, l)).join('')}</div>
+        ${fix ? `<div class="fixbox"><h4>Rivals I watch</h4><div class="chips">${LISTS.rivals.map((r, i) => `<button class="chip draw" data-do="drop" data-id="rivals:${i}">${esc(r)}${ico('close')}</button>`).join('')}</div>${adder('rivals', 'Add a rival')}</div>` : ''}
+        <a class="btn b-jam draw" href="#/writing">${fix ? 'Write my first idea' : 'Looks right. Write my first idea'}${ico('arrow')}</a>
+        ${fix ? '' : `<a class="btn b-text" href="#/fix">Fix something</a>`}`, 'small');
+
+  // ---- work: what went to the team moves through four stages, then into the library
+  const STAGES = [['In the works', '#7C5CFC', 'Nothing cooking. Start a jam.', 'Ready for a yes'], ['Needs a yes', '#E0245E', 'Nobody is waiting on a yes.', 'Yes, send it'], ['Going out', '#2F6BFF', 'Nothing on its way out.', 'It’s live'], ['Live', '#17A673', 'Your first win lands here.', 'Done']];
+  const jobTitle = o => o.how === 'note' ? esc(o.text || 'Your note to the team') : idea(o.id).title;
+  const wcard = o => `<div class="dcard work">${o.how === 'note' ? '' : `<img src="${D}${idea(o.id).img}" alt="" loading="lazy">`}<div class="top"><span>${HOW[o.how][0]}</span><em>${esc(o.who || 'The team')}</em></div><p class="t">${jobTitle(o)}</p>
+      <div class="foot"><button data-do="moveon" data-id="${o.id}">${STAGES[o.stage || 0][3]}</button><button data-do="discard" data-id="${o.id}">Discard</button></div></div>`;
+  const dempty = t => `<p class="dempty">${t}</p>`;
+  const jobRow = (o, what, label) => `<div class="rowi"><span class="grow"><b>${jobTitle(o)}</b><small>${HOW[o.how][0]}</small></span>${what ? `<button class="btn b-line b-sm" data-do="${what}" data-id="${o.id}">${label}</button>` : ''}</div>`;
+
+  // ---- command centre: reports, and one number opened up
+  const REPORTS = { brief: ['Morning brief', 'Daily', 'Yesterday, before your coffee', 'tomorrow at 7:30'], weekly: ['Weekly', 'Weekly', 'Last week, Monday to Sunday', 'Mondays at 8:00'], pnl: ['Monthly P&L', 'Monthly', 'Last month, what you kept', 'on the 1st at 9:00'],
+    customers: ['Customers & cohorts', 'Monthly', 'Who came, who came back', 'on the 1st at 9:30'], marketing: ['Marketing & creative', 'Weekly', 'What the ad money did', 'Mondays at 8:30'], delivery: ['Delivery & cash', 'Weekly', 'What reached people, what came back', 'Mondays at 9:00'] };
+  // a line with no value waits on your costs
+  const REPORT_LINES = { brief: [['Net sales', '₹20L'], ['Orders', '311'], ['An order', '₹6,380'], ['Ad spend', '₹3.8L'], ['Sales per ₹1 of ads', '5.2×']],
+    weekly: [['Net sales', '₹1.4Cr'], ['Kept after ads'], ['Sales per ₹1 of ads', '5.2×'], ['New customer cost', '₹1,649'], ['Came back in 90 days', '24%'], ['Days of stock', '5']],
+    pnl: [['Net sales', '₹6.0Cr'], ['Gross margin'], ['Kept after delivery and fees'], ['Kept after ads'], ['Profit after fixed costs'], ['Refunds', '₹12.9L']],
+    customers: [['New customers', '1,629'], ['From returning buyers', '24%'], ['A buyer’s 90 days', '₹10,935'], ['Came back in 90 days', '24%']],
+    marketing: [['Ad spend', '₹26.9L'], ['Sales per ₹1 of ads', '5.2×'], ['Meta says', '3.6×'], ['Google says', '3.5×'], ['New customer cost', '₹1,649']],
+    delivery: [['Orders', '2,179'], ['Cash on delivery', '18% of orders'], ['Returned to origin', '19% of those'], ['Days of stock', '5']] };
+  const WHICH = { 'Weekly report': 'weekly', 'P&L report': 'pnl', 'Marketing report': 'marketing', 'Customers report': 'customers' };
+  const ANSWERS = [[/campaign/i, '₹26.9L went across 5 campaigns in 7 days. I can’t call a winner until your costs are in.', 'Meta Ads, read 40 min ago'], [/refund/i, 'Refunds are ₹3L, down 11% on the 7 days before. Fewer orders were placed, so fewer came back.', 'Shopify, read 40 min ago'],
+    [/./, 'Start with Campaigns. It is the only card that needs you, and it holds the most spend.', 'The board, today']];
+
+  // ---- connectors: each tool, what connecting it gives you, and what Jammie reads once it is in
+  const TOOL = {
+    'Shopify': { f: 'shopify', line: 'See what actually sells', group: 'Your store and site', why: 'Puts Comet’s numbers on your ideas.', read: '11,000 orders', stats: [['11,000', 'Orders, last 30 days'], ['₹6,350', 'Average order'], ['1.6%', 'Conversion'], ['24%', 'Back for a second order in 90 days']],
+      found: ['Cards read your 11,000 orders a month and the 9,130 checkouts left', 'Second orders: 24% in 90 days, with a flow to lift it', 'Cash on delivery: 18% of orders, 19% returned'], account: 'wearcomet.com' },
+    'Meta Ads': { f: 'meta', line: 'See which ads actually sell', group: 'Ads', why: 'Shows which ads bring buyers, not just clicks.', read: '₹90.0L of ads', stats: [['₹90.0L', 'Ad spend, last 30 days'], ['3.6×', 'What Meta says it returned'], ['36', 'Live ads'], ['5', 'Campaigns']], found: ['Five campaigns share the spend', 'Your longest ad has run 24 days'], account: 'Comet ad account' },
+    'Google Analytics': { f: 'analytics', line: 'See where shoppers drop off', group: 'Your store and site', why: 'Shows where shoppers leave before they buy.', read: '687,500 visits', stats: [['687,500', 'Visits, last 30 days'], ['9%', 'To cart'], ['2.9%', 'To checkout'], ['1.6%', 'Bought']], found: ['Most shoppers leave between cart and checkout'], account: 'wearcomet.com' },
+    'Google Ads': { f: 'google', line: 'See which searches bring buyers', group: 'Ads', why: 'Shows which searches bring buyers.', read: '₹25.0L of search ads', stats: [['₹25.0L', 'Search ads, last 30 days'], ['3.5×', 'What Google says it returned']], found: [], account: 'Comet ads' },
+    'Klaviyo': { line: 'See which emails earn', group: 'Customers', why: 'Shows which emails earn, and who has gone quiet.', read: 'which emails earn', stats: [], found: [], account: 'Comet' },
+    'Judge.me': { line: 'Hear what customers love and complain about', group: 'Customers', why: 'Reads every review, so ideas use your customers’ own words.', read: '1,036 reviews', stats: [['1,036', 'Reviews'], ['4.88', 'Stars on X Lows MADAGASCAR']], found: [], account: 'wearcomet.com' },
+    'Slack': { f: 'slack', line: 'Jam with your team in a thread', group: 'Your team', why: 'Share ideas with your team and approve them in a thread.', read: 'posts to #growth', stats: [], found: [], account: '#growth' } };
+  const toolRow = (n, right) => `<div class="rowi">${logo(n, TOOL[n].f)}<span class="grow"><b>${n}</b><small>${TOOL[n].line}</small></span>${right}</div>`;
+
+  // ---- memory: what each tile opens
+  const KNOW_OF = { '229': 'products', 'Everything I know': 'facts', 'Your photos and files': 'files', '1,171': 'said', '6': 'rivals', '27 Nov': 'plan', 'Your store': 'store', '68': 'plans', '17': 'window', 'House rules': 'rules', 'Your feed': 'tune', 'What Jammie can do alone': 'alone' };
+  const FACTS = [['Brand name', 'Comet', 'wearcomet.com'], ['Store platform', 'Shopify', 'wearcomet.com'], ['Shop currency', 'INR', 'Your store details'], ['Store city', 'Bangalore, Karnataka', 'Your store details'], ['Countries the store ships to', '6', 'Your store details'],
+    ['Pages listed for Google', '435', 'wearcomet.com/sitemap.xml'], ['Collections', '183', 'Your collection list'], ['Apex ARGO price', '₹6,299', 'wearcomet.com/products/apex-argo'], ['Aeres AJRAKH RED price', '₹5,899', 'wearcomet.com/products/aeres-ajrakh-red'],
+    ['Aeres AJRAKH BLACK price', '₹5,899', 'wearcomet.com/products/aeres-ajrakh-black'], ['Apex RED VELVET price', '₹6,299', 'wearcomet.com/products/apex-red-velvet'], ['X Lows MADAGASCAR reviews', '285, 4.88 stars', 'wearcomet.com']];
+  const KNOW = {
+    products: () => ({ title: 'Products', body: `<p class="lead-p">225 read, 14 things made for them. Ordered by the store’s own best sellers.</p><div class="sec"><div class="rows">${[['X Lows CHESTNUT', '₹4,299'], ['X Lows CORTADO', '₹4,299'], ['X Lows MADAGASCAR', '₹4,299', 1], ['X Lows SNOW', '₹4,299'], ['X Lows TIRAMISU', '₹4,299'], ['Aeon V2 ECLIPSE', '₹4,499'], ['Aeres NUBRA', '₹5,499', 1], ['Apex ARGO', '₹6,299', 1], ['Aeres AJRAKH RED', '₹5,899']].map(([n, p, d]) => fact(n, p, d ? 'First draft made' : '')).join('')}</div></div>` }),
+    facts: () => ({ title: 'Everything I know', body: `<p class="lead-p">299 facts about Comet. Each with where it came from.</p><div class="sec"><label class="input"><input placeholder="Search every line" aria-label="Search every line" data-filter="#factRows"></label></div>
+        <div class="sec"><div class="rows" id="factRows">${FACTS.map(([t, v, from]) => fact(t, v, `${from} · read 19 Nov`)).join('')}</div></div>` }),
+    files: () => ({ title: 'Your photos and files', body: `<p class="lead-p">What every maker works from.</p><div class="sec">${listed('refs', none('sleep', 'Nothing here yet.'))}</div>`, foot: `<button class="btn b-soft draw" data-do="upload" data-id="refs">${ico('plus')}Add photos or files</button>` }),
+    said: () => ({ title: 'What people say', body: `<p class="lead-p">1,171 things, from 13 places. Top topic: Comet sneakers, 343 times.</p>
+        <div class="sec"><div class="rows">${[['“Is Comet Sneakers worth purchasing? If anyone has experience, please let me know.”', 'merazur01 · Reddit · 11 Nov'], ['“Roots in Kutch, steps in the city.”', 'Himanshii G. · Instagram comments · 9 Nov'], ['“Aeres Black Ajrakh Retail” ★★★★★', 'Azhar · Site reviews · 5 Nov']].map(([t, s]) => fact(t, '', s)).join('')}</div></div>
+        <div class="sec"><h4>Couldn’t read this time</h4><p>Instagram posts that tag you, and reviews on Nykaa, Flipkart and Myntra.</p></div>` }),
+    rivals: () => ({ title: 'Rival watch', body: `<h3 class="lead-t">Ludic’s buyers keep raising “fit or size”.</h3><p class="lead-p">Show how Comet handles it.</p>
+        <div class="sec"><div class="rows">${fact('Comet', '36 live ads', 'You')}${[['Ludic', '56 live ads', 'Main rival · holding steady'], ['Thaely', '56 live ads', 'One to watch · holding steady'], ['Gully Labs', '', 'One to watch · holding steady'], ['CHNKS', '', 'One to watch · holding steady'], ['Neeman’s', '70 live ads', 'Out of your league'], ['7-10', '0 live ads', 'One to watch']].map(r => fact(...r)).join('')}</div></div>`, foot: `<a class="btn b-jam draw" href="#/new">Let’s jam${ico('arrow')}</a>` }),
+    plan: () => ({ title: 'Black Friday plan', back: '#/know?k=plans', body: `<h3 class="lead-t">How Comet unleashes five review-backed X Lows for Black Friday</h3><p class="lead-p">2 steps, 4 things I need from Comet.</p>
+        <div class="sec"><h4>What I found</h4><p>1,026 reviews across five X Lows models can carry the sale without steep storewide discounts.</p></div>
+        <div class="sec"><h4>Steps</h4><div class="rows">${fact('Put the five most reviewed X Lows up front', '', 'Homepage and ads, 24 to 30 Nov')}${fact('Answer price doubts with craft', '', 'A film per pair, from the workshop')}</div></div>
+        <div class="sec"><h4>This could be fresher</h4><p>X Lows CHESTNUT is now at 186 reviews (it was 180).</p></div>`, foot: `<button class="btn b-soft" data-do="refresh">Refresh it</button><a class="btn b-jam draw" href="#/new">Let’s jam${ico('arrow')}</a>` }),
+    store: () => ({ title: 'Your store', body: `<h3 class="lead-t">I’d start here. AI tools name Adidas more than Comet.</h3>
+        <div class="sec"><div class="rows">${[['AI tools name Adidas more than Comet', '43 of 132', 'From asking 4 AI tools · 22 Nov'], ['Of what people say about product quality is unhappy', '63%', '57 of 91 mentions · 18 Nov'], ['Rivals are on Amazon and Comet isn’t', '2', 'From Amazon · 20 Nov'], ['Ludic’s ad has been live. It must be working', '73 days', 'From the ad library · 19 Nov'], ['Plans could be fresher', '53', '']].map(r => fact(...r)).join('')}</div></div>` }),
+    plans: () => ({ title: 'Every plan', body: `<p class="lead-p">68 plans for Comet, and 6 new lately. Every card in your feed comes from one of them.</p>
+        <div class="sec"><h4>New lately</h4><div class="rows"><a class="rowi" href="#/know?k=plan"><span class="grow"><b>Black Friday plan</b><small>Calendar · 27 Nov</small></span>${ico('arrow')}</a>${[['Deploy post-delivery review flows on WhatsApp', 'Automation · week of 18 Nov'], ['Begin a weekly community question sweep', 'Automation · 5 open questions heard'], ['Establish a weekly Meta creative refresh', 'Automation · 50 live Meta ads'], ['Address pricing objections with craftsmanship videos', 'Listening · 23 replies call Comet overpriced']].map(([t, s]) => fact(t, '', s)).join('')}</div></div>
+        <div class="sec"><h4>52 could be fresher</h4><p>They rest on numbers that have moved since.</p></div>`, foot: `<button class="btn b-soft" data-do="refresh">Refresh them</button>` }),
+    window: () => ({ title: 'The shop window', body: `<p class="lead-p">I read 17 places for Comet, on my own, every day.</p>
+        <div class="sec"><div class="chips">${['Reddit', 'YouTube', 'Instagram', 'TikTok', 'Pinterest', 'Flipkart', 'Myntra', 'Amazon'].map(p => `<span class="chip">${p}</span>`).join('')}</div></div>
+        <div class="sec"><h4>1,525 things people said</h4><div class="tiles two">${stat('996', 'About Comet')}${stat('529', 'About your category and rivals')}</div></div>
+        <div class="sec"><h4>Topics</h4><div class="rows">${[['Comet sneakers', 351], ['Sneakers', 114], ['Comfort', 109], ['Product quality', 91], ['Comet X Lows', 88], ['Aesthetic appeal', 83]].map(([t, n]) => `<div class="rowi"><span class="grow"><b>${t}</b><span class="meter" style="--acc:var(--on)"><i style="width:${n / 3.51}%"></i></span></span><b class="v">${n}</b></div>`).join('')}</div></div>` }),
+    rules: () => ({ title: 'House rules', ask: 1, body: `${listed('rules', none('search', 'No rules yet.', 'Tell me what I should always or never do.'))}`, foot: `<div class="asks-for">${['Never discount below 10%', 'Always show the price', 'Never say “cheap”'].map(t => `<button class="chip" data-do="suggestin">${t}</button>`).join('')}</div>${adder('rules', 'Always…, or never…', 'Add a rule')}` }),
+    tune: () => ({ title: 'Your feed', body: `
+        ${pick('run', 'I think you run these. Right?', ['Instagram', 'Facebook', '10+ ads'], 3)}
+        <div class="sec"><h4>Topics to lift</h4>${listed('topics')}${adder('topics', 'Add a topic')}</div>
+        ${pick('roles', 'What you handle', Object.keys(SEATS), 5)}
+        ${pick('first', 'What comes first', ['Decisions to approve', 'Ideas to make', 'What works and what doesn’t', 'Watch the rivals', 'Buyers coming back'], 2, 'Pick up to two.')}
+        ${pick('buyers', 'Who buys most', ['Mostly women', 'Mostly men', 'Everyone', 'People buying gifts'])}
+        ${pick('number', 'The one number you watch', ['Orders', 'Revenue', 'New buyers', 'Repeat rate', 'Return on ads'])}
+        ${pick('push', 'The product you’re pushing', ['X Lows', 'Aeon V2', 'Aeres'])}
+        <div class="sec"><h4>Your teammates</h4><div class="rows">${MAKERS.map(([n]) => `<div class="rowi"><span class="grow"><b>${n}</b></span><div class="seg sm" data-pick="mix:${n}" data-max="1">${['Less', 'As is', 'More'].map(o => `<button class="${((tune['mix:' + n] || ['As is'])[0] === o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>`).join('')}</div></div>` }),
+    alone: () => ({ title: 'What Jammie can do alone', body: `<h3 class="lead-t">I prepare. You decide.</h3>
+        <div class="sec"><div class="tiles two">${stat('11', 'Ideas written this week')}${stat('0', 'Sent without you')}</div></div>
+        <div class="sec"><h4>What always waits for you</h4><div class="rows">${fact('I never spend money on my own')}${fact('Nothing reaches your customers until a person sends it')}${fact('Anything that can’t be undone waits for a person')}</div></div>
+        <div class="sec"><h4>What I do by myself</h4><div class="rows">${fact('I read your site, reviews and rivals, and keep the fact sheet up to date')}${fact('I write ideas for your feed')}</div></div>
+        <div class="sec"><h4>Your teammates</h4><div class="rows">${fact('Creative director', '5 ideas', '3 with an initial draft')}${fact('Storefront', '2 ideas', '2 with an initial draft')}${fact('Reel maker', '1 idea', '1 with an initial draft')}</div></div>` }),
+  };
 
   // ---- screens. A page fills the app. A panel opens beside whatever page is under it. A modal sits over the feed
   const SCREENS = {
@@ -796,11 +1006,11 @@ html.still ::-webkit-scrollbar{display:none}
             <div class="pp-side l"><div class="pp-page"><img class="pp-photo" src="${D}ivory-angles.jpg" alt=""></div></div>
           </div>
         </div></div>
-        <a class="btn b-jam draw" href="#/feed" data-bloom>Open my feed${ico('arrow')}</a>`, 'small') },
+        <a class="btn b-jam draw" href="#/found">Continue${ico('arrow')}</a>`, 'small') },
 
     // ================= pages =================
-    feed: { page: feedPage },
-    command: { title: 'Command centre', note: 'Updated 40 min ago', page: () => deck(COLS.map(([name, acc, cards]) => [name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line) })).join(''),
+    feed: { page: feedPage, acts: FEED_ACTS },
+    command: { title: 'Command centre', note: 'Updated 40 min ago', acts: `<a class="ico-btn draw" href="#/board" aria-label="Reports, costs and more">${ico('more')}</a>`, page: () => deck(COLS.map(([name, acc, cards]) => [name, cards.map(c => dcard({ ...c, value: val(c.value), line: val(c.line), need: val(c.need) })).join(''),
       { need: needs(cards), n: cards.length, acc }])) },
     saved: { title: 'Saved', page: () => { const ids = savedIds();
       return page(ids.length ? `<div class="ideas">${ids.map(savedCard).join('')}</div>`
@@ -808,18 +1018,19 @@ html.still ::-webkit-scrollbar{display:none}
         [['all', 'All'], ['liked', 'Kept'], ['later', 'For later']].map(([k, n]) => `<button class="${savedTab === k ? 'on' : ''}" data-do="savedtab" data-id="${k}">${n}</button>`).join('')); } },
     memory: { title: 'Memory', page: () => page(`
         <div class="learn">
-          <div class="shelf"><div class="bk"><div class="bk-cover"><small>Brand memory</small><b>Comet</b><p>India’s homegrown sneaker brand for men and women</p></div></div>
+          <div class="shelf"><a class="bk" href="#/brand" aria-label="Open the brand book"><span class="bk-cover"><small>Brand memory</small><b>Comet</b><p>India’s homegrown sneaker brand for men and women</p></span></a>
             <button class="btn b-soft b-sm draw" data-do="addnote">${ico('plus')}Add notes or a file</button></div>
           <div>
             <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m still getting to know Comet.</span></div>
             ${KNOWS.map(([name, tiles], i) => `<h2 class="sec-t" id="know${i}">${name}</h2><div class="tiles">${tiles.map(t => ltile(...t)).join('')}</div>`).join('')}
           </div>
         </div>`, KNOWS.map(([name], i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="know${i}">${tab(name)}</button>`).join('')) },
-    connectors: { title: 'Connectors', page: () => page(`
-        <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I can only see your public pages. Start with Shopify.</span></div>
-        <div class="rows"><div class="rowi first">${logo('Shopify', 'shopify')}<span class="grow"><b>Shopify</b><small>See what actually sells</small></span><button class="btn b-jam draw" data-do="connect" data-id="Shopify">Connect Shopify${ico('arrow')}</button></div></div>
-        <h2 class="sec-t">All tools</h2>
-        <div class="rows">${TOOLS.map(([n, line, f]) => `<div class="rowi">${logo(n, f)}<span class="grow"><b>${n}</b><small>${line}</small></span><button class="btn b-line b-sm" data-do="connect" data-id="${n}">Connect</button></div>`).join('')}</div>`, '', 'narrow') },
+    connectors: { title: 'Connectors', page: q => { const has = q && q.get('with') ? q.get('with').split(',') : linked, rest = Object.keys(TOOL).filter(n => !has.includes(n)), next = rest[0], more = rest.slice(1);
+      return page(`
+        <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>${has.length ? `All good. I read ${has.length === 1 ? has[0] : has.length + ' of your tools'} and can see ${TOOL[has.includes('Shopify') ? 'Shopify' : has[0]].read}.` : 'I can only see your public pages. Start with Shopify.'}</span></div>
+        ${next ? `<h2 class="sec-t">Next up</h2><div class="rows"><div class="rowi first">${logo(next, TOOL[next].f)}<span class="grow"><b>${next}</b><small>${TOOL[next].line}</small></span><button class="btn b-jam draw" data-do="connect" data-id="${next}">Connect ${next}${ico('arrow')}</button></div></div>` : ''}
+        ${has.length ? `<h2 class="sec-t">Connected</h2><div class="rows">${has.map(n => `<a class="rowi" href="#/tool?t=${encodeURIComponent(n)}">${logo(n, TOOL[n].f)}<span class="grow"><b>${n}</b><small>${TOOL[n].read} · read just now</small></span>${ico('arrow')}</a>`).join('')}</div>` : ''}
+        ${[...new Set(more.map(n => TOOL[n].group))].map(g => `<h2 class="sec-t">${g}</h2><div class="rows">${more.filter(n => TOOL[n].group === g).map(n => toolRow(n, `<button class="btn b-line b-sm" data-do="connect" data-id="${n}">Connect</button>`)).join('')}</div>`).join('')}`, '', 'narrow'); } },
 
     // ================= panels over the feed: they are about the card on screen =================
     idea: { under: 'feed', panel: () => { const d = curIdea(); return { title: 'Why this idea', body: `
@@ -848,18 +1059,157 @@ html.still ::-webkit-scrollbar{display:none}
         foot: `<a class="btn b-out" href="#/jam">Not now</a><button class="btn b-jam draw" data-do="makesloosh">Make it${ico('arrow')}</button>` }) },
     // ================= panels over any page =================
     new: { panel: () => ({ title: 'Ask the team', body: `
-        <p class="lead-p">A person from our team takes it from here. Ask for anything, big or small.</p>`, ask: 1, foot: ask(['A launch film', 'A reply to a thread', 'A new product page'], 'Tell us what you need…', 'sendnote') }) },
-    bell: { panel: () => ({ title: 'Updates', foot: orders.length ? `<button class="btn b-text" data-do="clearall">Clear all</button>` : '', body: orders.length ? orders.map(msgRow).join('')
-        : `<div class="side-empty"><img src="${A}pose-sleep-sm.png" alt=""><h3>All quiet.</h3><p>Nothing new since you looked.</p></div>` }) },
+        <p class="lead-p">A person from our team takes it from here. Ask for anything, big or small.</p>
+        <div class="sec"><div class="rows">${link('Or tell Jammie what’s wrong', '#/wrong')}</div></div>`, ask: 1, foot: ask(['A launch film', 'A reply to a thread', 'A new product page'], 'Tell us what you need…', 'sendnote') }) },
+    bell: { panel: () => { const todo = [...(parked ? [] : [['Campaigns needs you', '₹26.9L across 5 campaigns', '#/command']]), ...orders.filter(o => o.stage === 1).map(o => [jobTitle(o), 'Needs a yes', '#/work'])];
+      const ups = (cleared ? '' : `<a class="msg" href="#/feed">${av(48)}<span><b>14 new ideas since you last looked</b><small>The strongest ones first</small></span><em>Now</em></a>`) + orders.map(msgRow).join('');
+      return { title: 'Updates', body: `<div class="sec"><div class="seg">${[['todo', `To do · ${todo.length}`], ['updates', 'Updates']].map(([k, n]) => `<button class="${bellTab === k ? 'on' : ''}" data-do="belltab" data-id="${k}">${n}</button>`).join('')}</div></div>
+        ${bellTab === 'todo' ? (todo.length ? `<div class="rows">${todo.map(([t, sub, to]) => link(t, to, sub)).join('')}</div>` : none('sleep', 'All quiet.', 'Nothing needs you.')) : (ups || none('sleep', 'All quiet.', 'Nothing new since you looked.'))}`,
+        foot: `<button class="btn b-text" data-do="markread">Mark all read</button><button class="btn b-text" data-do="clearall">Clear all</button>` }; } },
     you: { panel: () => ({ title: 'You', body: `
-        <div class="sec"><div class="rows"><div class="rowi">${av(40)}<span class="grow"><b>You</b><small>Admin · Comet</small></span><button class="btn b-line b-sm" data-do="rename">Change name</button></div></div></div>
+        <div class="sec"><div class="rows"><a class="rowi" href="#/details">${av(40)}<span class="grow"><b>${esc((me.first + ' ' + me.last).trim())}</b><small>Admin · Comet</small></span>${ico('arrow')}</a>${link('Team and access', '#/team', `${team.length + 1} ${team.length ? 'people' : 'person'}`)}</div></div>
         <div class="sec phone-only"><h4>Your store</h4><div class="rows">${link('Memory', '#/memory')}${link('Connectors', '#/connectors')}</div></div>
-        <div class="sec"><h4>Look</h4><div class="seg">${['light', 'dark'].map(t => `<button class="${root.dataset.theme === t ? 'on' : ''}" data-do="theme" data-id="${t}">${t === 'light' ? 'Light' : 'Dark'}</button>`).join('')}</div></div>
-        <div class="sec"><h4>Your jam</h4><div class="rows">${row('What Jammie learns', 'Learning from you', 'learns')}${row('Start again from the first screen', '', 'restart')}</div></div>
-        <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}</div></div>
+        <div class="sec"><h4>Your jam</h4><div class="rows">${link('Settings', '#/settings', 'Your role, teammates, feed or deck')}${link('Your feed', '#/know?k=tune', 'What you want more of')}${link('Fact sheet', '#/know?k=facts', 'Everything I know, with where it came from')}${link('Work', '#/work', 'Your jams and what’s waiting on you')}${link('Look and sound', '#/look')}</div></div>
+        <div class="sec"><h4>The demo</h4><div class="rows">${link('Other brands', '#/stores')}${row('Start again from the first screen', '', 'restart')}</div></div>
+        <div class="sec"><h4>Help</h4><div class="rows">${row('Email us', 'toast@jammie.ai', 'help')}${row('Privacy', '', 'legal')}${row('Terms', '', 'legal')}${row('Data deletion', '', 'legal')}</div></div>
         <div class="sec"><h4>This prototype</h4><div class="rows">${link('Flow map', 'flows.html')}${link('Design system', 'design-system.html')}</div></div>` }) },
+    // ================= the demo's front door: a store to try without your own =================
+    stores: { bare: true, page: () => `<section class="pick">${mark}
+        <h1 class="h1">Pick a store.</h1>
+        <div class="ideas">${STORES.map(([n, cat, first, img]) => `<article class="scard"><a class="pic ${img ? '' : 'mono'}" href="${img ? '#/profile' : '#/stores'}" ${img ? '' : 'data-do="otherstore"'} aria-label="${n}">${img ? `<img src="${D}${img}" alt="">` : `<b>${n[0]}</b>`}<span class="pill">${cat}</span></a><h3>${n}</h3><p>${first}</p></article>`).join('')}</div>
+        <a class="btn b-text" href="#/start">Got your own? Paste your store</a></section>` },
+    profile: { bare: true, page: () => `<section class="pick narrow">${mark}
+        <a class="btn b-soft b-sm draw" href="#/stores">${ico('back')}All stores</a>
+        <h1 class="h1">Comet.</h1>
+        <a class="btn b-jam draw" href="#/opening">See the ideas${ico('arrow')}</a>
+        <div class="rows wide">${fact('Makes', 'Sneakers')}${fact('Market', 'India')}${fact('Runs on', 'Shopify')}${fact('Website', 'wearcomet.com')}</div>
+        <h2 class="sec-t">What Jammie read</h2>
+        <div class="tiles wide">${stat('427', 'Pages read')}${stat('229', 'Products')}${stat('1,036', 'Reviews')}${stat('36', 'Live ads')}</div>
+        <h2 class="sec-t">Jammie’s first ideas</h2>
+        <div class="rows wide"><a class="rowi" href="#/opening"><span class="grow"><b>Launch a parallel Pink Friday event on wearcomet</b></span>${ico('arrow')}</a></div>
+        <a class="btn b-out" href="#/start">Your store next? Paste your store</a></section>` },
+    opening: { bare: true, page: () => onb(0, pose('search'), `<h1 class="h2">Opening Comet.</h1>`), enter: () => { if (!STILL) later(() => { arriving = true; location.replace('#/feed'); }, 1800); } },
+    // ================= onboarding, after the passport: check what was read, then the first idea =================
+    found: { bare: true, page: () => foundScreen(false) },
+    fix: { bare: true, page: () => foundScreen(true) },
+    writing: { bare: true, page: () => onb(5, pose('sit'), `<h1 class="h2">Sit back. We’ve got this.</h1><p class="reading-line"><span>Writing your first idea</span></p>`), enter: () => { if (!STILL) later(() => location.replace('#/first'), 2600); } },
+    first: { bare: true, page: () => { const d = idea('reviews'); return onb(6, pose('cheer'), `
+        <h1 class="h2">Your first idea is here.</h1>
+        <div class="firstidea"><img src="${D}${d.img}" alt=""><span><small>${d.by} · made for you</small><b>${d.title}</b></span></div>
+        <a class="btn b-jam draw" href="#/feed" data-bloom>Open my feed${ico('arrow')}</a>`, 'small'); } },
+
+    // ================= the feed as a deck, and where your jams go =================
+    deck: { title: 'Deck', nav: 'feed', acts: FEED_ACTS, page: () => { const ready = IDEAS.find(d => d.badge) || IDEAS.find(d => !d.special), accs = ['#7C5CFC', '#17A673', '#2F6BFF', '#0FA3B1', '#E0245E'];
+      return deck([['Ready', ready ? mini(ready) : dempty('Nothing ready yet.'), { n: ready ? 1 : 0, acc: '#E0245E' }], ...MAKERS.map(([n], i) => { const mine = IDEAS.filter(d => d.by === n);
+        return [n, mine.length ? mine.map(mini).join('') : dempty(off.has(n) ? 'Switched off in settings.' : 'Nothing from them yet.'), { n: mine.length, acc: accs[i % 5] }]; })]); } },
+    work: { title: 'Work', page: () => { const tools = `<div class="seg sm">${[['stage', 'By stage'], ['person', 'By person']].map(([k, n]) => `<button class="${workBy === k ? 'on' : ''}" data-do="workby" data-id="${k}">${n}</button>`).join('')}</div><a class="btn b-soft b-sm" href="#/library">Library</a>`;
+      const people = ['The team', ...team.map(t => t.email)];
+      return deck(workBy === 'stage' ? STAGES.map(([n, acc, blank], i) => { const mine = orders.filter(o => (o.stage || 0) === i); return [n, mine.length ? mine.map(wcard).join('') : dempty(blank), { n: mine.length, acc, need: i === 1 && mine.length }]; })
+        : people.map((p, i) => { const mine = orders.filter(o => (o.who || 'The team') === p); return [esc(p), mine.length ? mine.map(wcard).join('') : dempty('Nothing with them.'), { n: mine.length, acc: STAGES[i % 4][1] }]; }), tools); } },
+    library: { title: 'Library', back: '#/work', page: () => page(`
+        <h2 class="sec-t" id="lib0">Done</h2>${done.length ? `<div class="rows">${done.map(o => jobRow(o)).join('')}</div>` : `<p class="dempty">Finished jams land here.</p>`}
+        <h2 class="sec-t" id="lib1">Discarded</h2>${binned.length ? `<div class="rows">${binned.map(o => jobRow(o, 'restore', 'Restore')).join('')}</div>` : `<p class="dempty">A discarded jam waits here, ready to restore.</p>`}
+        <h2 class="sec-t" id="lib2">References</h2>${listed('refs', `<p class="dempty">Every jam can pick from here.</p>`)}
+        <div class="addrow"><button class="btn b-soft draw" data-do="upload" data-id="refs">${ico('plus')}Upload a picture or video</button>${adder('refs', 'Or paste a link: Instagram, YouTube, a site')}</div>`,
+        ['Done', 'Discarded', 'References'].map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="lib${i}">${tab(n)}</button>`).join(''), 'narrow') },
+    brand: { title: 'Brand book', back: '#/memory', acts: `<button class="ico-btn draw" data-do="share" aria-label="Share">${ico('share')}</button>`, page: () => page(`
+        <div class="hello"><img src="${A}pose-wave-sm.png" alt=""><span>I’m writing the voice, story and look from wearcomet.com. The rest is already here.</span></div>
+        <h2 class="sec-t" id="bk0">Story</h2><div class="cap">Comet is a homegrown lifestyle sneaker brand founded in India in 2023. Its founders returned from Chicago and Boston to build a brand focused on quality and craftsmanship.<button class="btn b-soft b-sm" data-do="edit">Edit</button></div>
+        <h2 class="sec-t" id="bk1">Look and kit</h2><div class="tiles">${[['#2765FA', 'Accent'], ['#111111', 'Ink'], ['#F4F1EA', 'Paper']].map(([c, n]) => `<div class="ltile"><i class="swatch" style="background:${c}"></i><small>${n} · ${c}</small></div>`).join('')}</div>
+        <div class="rows" style="margin-top:16px">${fact('Headings', 'Assistant')}${fact('Body text', 'Montserrat')}<button class="rowi" data-do="upload" data-id="refs"><span class="grow"><b>Upload your fonts</b><small>TTF, OTF or WOFF</small></span>${ico('plus')}</button></div>
+        <h2 class="sec-t" id="bk2">Voice</h2>${pick('voice', 'How we write for Comet', ['Like the site', 'Warmer', 'Sharper', 'Plainer'])}
+        <h2 class="sec-t" id="bk3">Words</h2><div class="sec"><h4>Comet says</h4><div class="chips">${['Homegrown', 'Craftsmanship', 'Break patterns', 'Create culture'].map(w => `<span class="chip">${w}</span>`).join('')}</div></div>
+        <h2 class="sec-t" id="bk4">Products</h2><div class="rows">${[['X Lows MADAGASCAR', '₹4,299'], ['X Lows TUSCAN', '₹4,299'], ['X Lows CORTADO', '₹4,299'], ['X Lows CHESTNUT', '₹4,299']].map(r => fact(...r)).join('')}</div>`,
+        ['Story', 'Look and kit', 'Voice', 'Words', 'Products'].map((n, i) => `<button class="${i ? '' : 'on'}" data-do="jump" data-id="bk${i}">${tab(n)}</button>`).join(''), 'narrow') },
+
+    // ================= panels: settings, and the card's other actions =================
+    settings: { panel: () => ({ title: 'Settings', body: `
+        <div class="sec"><h4>View</h4><div class="seg">${[['feed', 'Feed'], ['deck', 'Deck']].map(([k, n]) => `<button class="${(lastPage === 'deck') === (k === 'deck') ? 'on' : ''}" data-do="goto" data-id="#/${k}">${n}</button>`).join('')}</div></div>
+        <div class="sec"><div class="rows"><a class="rowi" href="#/work"><span class="grow"><b>Open work</b><small>Your jams and what’s waiting on you</small></span>${ico('arrow')}</a></div></div>
+        ${pick('roles', 'Your role', Object.keys(SEATS), 5)}
+        <div class="sec"><h4>Teammates</h4><div class="rows">${MAKERS.map(([n, line]) => `<div class="rowi"><span class="grow"><b>${n}</b><small>${line}</small></span>${sw(n, !off.has(n), 'maker')}</div>`).join('')}${fact('Jammie', 'Always on', 'Market news, your calls and any card with no owner')}</div></div>
+        ${pick('day', 'See the team grow', Object.keys(JOINS))}
+        <div class="sec"><div class="cap" id="joinNote">${JOINS[(tune.day || ['Day 1'])[0]]}</div></div>` }) },
+    more: { under: 'feed', panel: () => ({ title: 'More', body: `
+        ${opt('message', 'Give feedback', 'I’ll fix it now and remember it.', '#/feedback')}
+        ${opt('team', 'Assign to a teammate', 'Hand this idea to someone.', '#/assign')}
+        ${opt('send', 'Note to the team', 'A person from our team reads it.', '#/note')}` }) },
+    feedback: { under: 'feed', panel: () => ({ title: 'Feedback on this idea', back: '#/more', body: `
+        <p class="lead-p">I’ll fix it now and remember it.</p>
+        <div class="sec"><div class="rows">${row('Remove this idea', 'It leaves your feed', 'removeidea')}</div></div>`, ask: 1, foot: ask(['Wrong product', 'Too salesy', 'Not our voice'], 'What’s off about it…', 'sendfeedback') }) },
+    assign: { under: 'feed', panel: () => ({ title: 'Give it to a teammate', back: '#/more', body: team.length ? `<div class="rows">${team.map(t => `<button class="rowi" data-do="handover" data-id="${esc(t.email)}"><span class="grow"><b>${esc(t.email)}</b><small>${t.role}</small></span>${ico('arrow')}</button>`).join('')}</div>`
+        : none('search', 'No teammates here yet.', 'Invite one and I’ll hand it over.'), foot: `<a class="btn b-out" href="#/team">Invite a teammate</a>` }) },
+    wrong: { panel: () => ({ title: 'Tell Jammie what’s wrong', body: `<p class="lead-p">Something off on this screen? I’ll fix it and remember it.</p>`, ask: 1, foot: ask(['A number looks wrong', 'This isn’t our brand', 'Something broke'], 'What’s wrong…', 'sendwrong') }) },
+
+    // ================= command centre: the board's menu, reports, costs, one number opened up =================
+    board: { panel: () => ({ title: 'The board', body: `<div class="rows">${link('Reports', '#/reports')}${link('Costs', '#/costs')}${link('Add data', '#/adddata')}${link('Ask about these numbers', '#/asknum')}${row('Download the board', '', 'download')}</div>` }) },
+    reports: { panel: () => ({ title: 'Reports', back: '#/board', body: `<p class="lead-p">I make these on time and keep each one as it was.</p>
+        <div class="sec"><div class="rows">${Object.entries(REPORTS).map(([k, [n, every, what]]) => `<a class="rowi" href="#/report?r=${k}"><span class="grow"><b>${n}</b><small>${every} · ${what}</small></span>${ico('arrow')}</a>`).join('')}</div></div>` }) },
+    report: { panel: q => { const k = REPORTS[q.get('r')] ? q.get('r') : 'weekly', [n, every, what, lands] = REPORTS[k]; return { title: n, back: '#/reports', body: `
+        <p class="lead-p">${what}. The next one lands ${lands}.</p>
+        <div class="sec"><div class="rows">${REPORT_LINES[k].map(([t, v]) => v ? fact(t, v) : costsIn ? fact(t, 'Counted') : `<a class="rowi" href="#/costs"><span class="grow"><b>${t}</b><small>Needs your costs</small></span>${ico('plus')}</a>`).join('')}</div></div>
+        <div class="sec"><div class="rows"><div class="rowi"><span class="grow"><b>Email it to me</b><small>${every}</small></span>${sw('mail:' + k, prefs['mail:' + k])}</div></div></div>
+        <div class="sec"><p>Made 23 Nov and kept as it was.</p></div>`,
+        foot: `<button class="btn b-soft b-sm" data-do="share">Copy link</button><button class="btn b-soft b-sm" data-do="pdf">PDF</button><button class="btn b-soft b-sm" data-do="sheet">Sheet</button>` }; } },
+    costs: { panel: () => ({ title: 'Costs', body: `<p class="lead-p">What things cost you. I work out what you keep on every card from these.</p>
+        <form id="costForm">${[['Products, each pair', ['X Lows', 'Aeon V2', 'Aeres', 'Apex']], ['Per order', ['Delivery and COD fees', 'Returns to origin', 'Payment fees', 'Packing']], ['Fixed, a month', ['Rent and salaries', 'Tools']]].map(([h, items]) => `<div class="sec"><h4>${h}</h4><div class="fields">${items.map(n => `<label class="input"><small>${n}</small><input inputmode="decimal" placeholder="₹" aria-label="${n}" value="${costsIn ? '₹ ••••' : ''}"></label>`).join('')}</div></div>`).join('')}</form>`,
+        foot: `<button class="btn b-jam draw" data-do="savecosts">Save costs${ico('arrow')}</button>` }) },
+    adddata: { panel: () => ({ title: 'Add data', back: '#/board', body: `
+        ${opt('link', 'Connect a tool', 'Shopify, ads, Shiprocket, Razorpay and more. It keeps itself fresh from then on.', '#/connectors')}
+        ${opt('download', 'Upload a report', 'A CSV or Excel export, for a tool we don’t connect yet.', 'uploadreport')}
+        <div class="sec"><h4>What you uploaded</h4>${listed('uploads', `<p class="dempty">A report you upload lands here, with what it gave the board.</p>`)}</div>` }) },
+    asknum: { panel: () => ({ title: 'Ask about these numbers', back: '#/board', body: qa.length ? qa.map(([t, a, from]) => `<div class="qa"><p class="q">${esc(t)}</p><div class="a">${av(32)}<span>${a}<small>From ${from}</small></span></div></div>`).join('')
+        : `<p class="lead-p">I answer from the fact sheet’s numbers only, and say where each one came from.</p>`, ask: 1, foot: ask(['Why does Campaigns need me?', 'Why is refunds down 11%?', 'What should I look at first this week?'], 'Ask about a number…', 'asknum') }) },
+    number: { panel: q => { const c = COLS.flatMap(x => x[2]).find(x => x.label.split(' · ')[0] === q.get('n')) || COLS[1][2][0], [name, span] = c.label.split(' · '), bars = c.bars || [], last = bars.slice(-7), mean = last.reduce((a, b) => a + b, 0) / (last.length || 1);
+      const day = h => c.day ? `${c.day[1]}${(c.day[0] * h / mean).toFixed(c.day[3])}${c.day[2]}` : '';
+      return { title: name, body: `
+        <div class="dcard flat" style="--acc:${COLS.find(x => x[2].includes(c))[1]}"><div class="big"><b class="${/\d/.test(val(c.value)) ? '' : 't'}">${val(c.value)}</b>${c.delta ? `<span class="delta ${c.dir}">${c.delta}</span>` : ''}</div><p class="line">${val(c.line)} ${span || ''}.</p>
+          ${bars.length ? `<div class="bars tall">${bars.map((h, i) => `<i class="${i === bars.length - 1 ? 'hi' : ''}" style="height:${h}%"></i>`).join('')}</div>` : ''}${c.meter ? `<div class="meter"><i style="width:${c.meter}%"></i></div>` : ''}</div>
+        ${c.mini ? `<div class="sec"><div class="rows">${c.mini.map(([l, v]) => fact(l, v)).join('')}${name.startsWith('Sales per') ? fact('Meta says', '3.6×') + fact('Google says', '3.5×') : ''}</div></div>` : ''}
+        ${bars.length && c.day ? `<div class="sec"><h4>A day</h4><div class="rows">${bars.map((h, i) => fact(`${22 - (bars.length - 1 - i)} Nov`, day(h))).reverse().join('')}</div></div>` : ''}`,
+        foot: `<a class="btn b-soft" href="#/reports">Reports</a><a class="btn b-out" href="#/asknum">Ask about it</a>` }; } },
+
+    // ================= memory: what each tile opens, and adding to it =================
+    know: { panel: q => (KNOW[q.get('k')] || KNOW.facts)(q) },
+    addnote: { panel: () => ({ title: 'Add notes or a file', ask: 1, body: `<p class="lead-p">Tell me something about Comet I couldn’t have read.</p><div class="sec">${listed('notes')}</div>
+        <div class="sec"><button class="btn b-soft draw" data-do="upload" data-id="notes">${ico('plus')}Add a file</button></div>`, foot: adder('notes', 'We never discount the Aeres line…', 'Add') }) },
+
+    // ================= connecting a tool: say yes, it reads, it is in =================
+    connect: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: `Connect ${n}`, body: `
+        <div class="side-empty">${t.f ? `<img class="felt" src="${A}el-${t.f}.png" alt="">` : `<span class="logo-tile big">${n[0]}</span>`}<h3>${t.why}</h3><p>A simulated ${n} account. Nothing real is connected.</p></div>`,
+        foot: `<button class="btn b-out" data-do="notusing">Not using it</button><button class="btn b-jam draw" data-do="link" data-id="${n}">Connect ${n}${ico('arrow')}</button>` }; } },
+    linking: { panel: q => ({ title: `Connect ${q.get('t')}`, body: `<div class="side-empty"><img src="${A}pose-search-sm.png" alt=""><p class="reading-line"><span>Reading your last 30 days</span></p></div>` }),
+      enter: q => { if (STILL) return; const n = q.get('t');   // it reads for two seconds, then the tool is in
+        later(() => { if (TOOL[n] && !linked.includes(n)) { linked.push(n); keep('jammie-proto-linked', linked); } shown = null; location.replace(`#/linked?t=${encodeURIComponent(n)}`); }, 2000); } },
+    linked: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: `${n} is connected`, body: `
+        <div class="side-empty"><img src="${A}pose-cheer-sm.png" alt=""><h3>I can see ${t.read}.</h3></div>
+        ${t.stats.length ? `<div class="sec"><h4>What I read</h4><div class="rows">${t.stats.slice(0, 3).map(([v, l]) => fact(l, v)).join('')}</div></div>` : ''}`,
+        foot: `<a class="btn b-out" href="#/connectors">Connect another</a><a class="btn b-jam draw" href="#/feed">See it in the feed${ico('arrow')}</a>` }; } },
+    tool: { panel: q => { const n = TOOL[q.get('t')] ? q.get('t') : 'Shopify', t = TOOL[n]; return { title: n, body: `
+        <p class="lead-p">Connected. I can see ${t.read}. Read just now.</p>
+        ${t.stats.length ? `<div class="sec"><div class="tiles two">${t.stats.map(([v, l]) => stat(v, l)).join('')}</div></div>` : ''}
+        ${t.found.length ? `<div class="sec"><h4>What I found</h4><div class="rows">${t.found.map(f => fact(f)).join('')}</div></div>` : ''}
+        <div class="sec"><h4>Account</h4><div class="rows">${fact(t.account, '', 'I only read. I never change anything.')}</div></div>`,
+        foot: `<button class="btn b-text" data-do="unlink" data-id="${n}">Disconnect</button><button class="btn b-soft" data-do="reread">Read again</button><a class="btn b-ink" href="#/connectors">Done</a>` }; } },
+
+    // ================= your account =================
+    details: { panel: () => ({ title: 'Your details', back: '#/you', body: `<form id="meForm" class="fields"><label class="input"><small>First name</small><input value="${esc(me.first)}" aria-label="First name" autocomplete="given-name"></label><label class="input"><small>Last name</small><input value="${esc(me.last)}" aria-label="Last name" autocomplete="family-name"></label>
+        <label class="input wide"><small>Email</small><input type="email" value="${esc(me.email)}" placeholder="you@yourstore.com" aria-label="Email" autocomplete="email"></label></form>`, foot: `<button class="btn b-ink" data-do="saveme">Save</button>` }) },
+    team: { panel: () => ({ title: 'Team and access', back: '#/you', body: `<p class="lead-p">Everyone sees only the ideas for what they handle.</p>
+        <div class="sec"><h4>Invite by email</h4><form id="inviteForm"><label class="input"><input type="email" placeholder="name@wearcomet.com" aria-label="Email to invite"></label></form></div>
+        ${pick('invite', 'What they handle', Object.keys(SEATS))}
+        <div class="sec"><button class="btn b-ink" data-do="invite">Send invite</button></div>
+        <div class="sec"><h4>People · ${team.length + 1}</h4><div class="rows">${fact(esc(me.first) + ' (you)', 'Admin')}${team.map((t, i) => `<div class="rowi"><span class="grow"><b>${esc(t.email)}</b><small>${t.role} · invited</small></span><button class="ico-btn draw" data-do="uninvite" data-id="${i}" aria-label="Remove">${ico('close')}</button></div>`).join('')}</div></div>`,
+        foot: `<button class="btn b-text" data-do="leave">Leave Comet</button>` }) },
+    look: { panel: () => ({ title: 'Look and sound', back: '#/you', body: `
+        <div class="sec"><h4>Appearance</h4><div class="seg">${[['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark']].map(([k, n]) => `<button class="${(look.auto ? 'auto' : root.dataset.theme) === k ? 'on' : ''}" data-do="theme" data-id="${k}">${n}</button>`).join('')}</div></div>
+        <div class="sec"><div class="rows"><div class="rowi"><span class="grow"><b>Sound</b><small>Jammie’s little noises</small></span>${sw('sound', prefs.sound)}</div>
+          <div class="rowi"><span class="grow"><b>Volume</b></span><div class="seg sm" data-pick="volume" data-max="1">${['Soft', 'Full'].map(o => `<button class="${((tune.volume || ['Soft'])[0] === o) ? 'on' : ''}">${o}</button>`).join('')}</div></div>
+          ${row('Test the sound', '', 'testsound')}
+          <div class="rowi"><span class="grow"><b>Vibration</b><small>A tap on send and connect, on phones</small></span>${sw('vibration', prefs.vibration)}</div>
+          <div class="rowi"><span class="grow"><b>Reduce motion</b><small>Things fade instead of flying</small></span>${sw('calm', prefs.calm)}</div></div></div>` }) },
     // ================= a story, over the feed =================
-    story: { under: 'feed', modal: q => { const n = STORIES.length, s = Math.min(n - 1, Math.max(0, +(q.get('s') || 0))), [name, id] = STORIES[s], d = idea(id); seen.add(s);
+    story: { under: 'feed', modal: q => { const n = STORIES.length, s = Math.min(n - 1, Math.max(0, +(q.get('s') || 0))), [name, id, o = {}] = STORIES[s], d = { ...idea(id), ...o }; seen.add(s);
         app.querySelectorAll('.stories .story').forEach((el, i) => el.classList.toggle('seen', seen.has(i)));
         const prev = s ? `#/story?s=${s - 1}` : '', next = s < n - 1 ? `#/story?s=${s + 1}` : '#/feed';
         if (!calm) later(() => location.replace(next), 5000);                 // it plays for five seconds, then the next one. After the last, back to the feed
@@ -870,7 +1220,7 @@ html.still ::-webkit-scrollbar{display:none}
           <div class="sv-bars">${STORIES.map((_, i) => `<i class="${i < s ? 'done' : i === s ? 'now' : ''}"><b></b></i>`).join('')}</div>
           <div class="sv-h"><i class="ring" style="background-image:url(${D}${d.img})"></i><b>${name}</b><small>${d.kind}</small><a class="ico-btn draw" href="#/feed" aria-label="Close">${ico('close')}</a></div>
           ${prev ? `<a class="sv-tap" href="${prev}" tabindex="-1" aria-hidden="true"></a>` : ''}<a class="sv-tap next" href="${next}" tabindex="-1" aria-hidden="true"></a>
-          <div class="sv-foot"><h2>${d.title}</h2><p>${d.line}</p><a class="btn b-jam draw" href="#/jam" data-open="${d.id}">Make this${ico('arrow')}</a></div>
+          <div class="sv-foot"><h2>${d.title}</h2><p>${d.line}</p>${o.cta ? `<a class="btn b-jam draw" href="#/feed">${o.cta}${ico('arrow')}</a>` : `<a class="btn b-jam draw" href="#/jam" data-open="${d.id}">Make this${ico('arrow')}</a>`}</div>
         </div>
         <a class="sv-nav draw" href="${next}" aria-label="${s < n - 1 ? 'The next story' : 'Back to the feed'}">${ico('arrow')}</a></div>`; } },
   };
@@ -886,6 +1236,18 @@ html.still ::-webkit-scrollbar{display:none}
     sc.addEventListener('scroll', () => { const i = Math.round(sc.scrollTop / slideH(sc)); if (IDEAS[i] && i !== cur) { cur = i; markSlides(); } }, { passive: true });
     sc.parentElement.addEventListener('wheel', onWheel, { passive: false });   // on the feed itself, so no other page's scrolling waits on it
   }
+  // what a page needs once it is drawn: the line under the bar, the tab bar stepping away, the tab that follows the scroll
+  function wirePage(){
+    const ps = app.querySelector('.page-scroll');                           // a line under the bar only once the page has scrolled under it
+    document.body.classList.remove('tabs-away');
+    if (ps) { let lastY = 0; ps.addEventListener('scroll', () => { const y = ps.scrollTop; ps.parentElement.classList.toggle('scrolled', y > 4);
+      if (Math.abs(y - lastY) > 6) { document.body.classList.toggle('tabs-away', y > lastY && y > 80); lastY = y; }
+      const secs = [...ps.querySelectorAll('.sec-t[id]')]; if (secs.length) { const top = ps.getBoundingClientRect().top; let at = 0; secs.forEach((h, i) => { if (h.getBoundingClientRect().top - top < 160) at = i; }); markTab(at); } }, { passive: true }); }
+    const dc = app.querySelector('.deck-cols');
+    if (dc) dc.addEventListener('scroll', () => { const c = dc.querySelector('.dcol'); if (c) markTab(Math.round(dc.scrollLeft / (c.offsetWidth + 16))); }, { passive: true });
+  }
+  // draw the page again where it stands, leaving any open panel alone
+  function redraw(){ const pg = SCREENS[shown]; if (!pg || !pg.page) return; app.innerHTML = pg.page(new URLSearchParams()); window.jammieIcons(app); wireFeed(); wirePage(); }
   function render(force){
     timers.forEach(clearTimeout); timers = [];
     const [raw, query] = (location.hash.replace(/^#\/?/, '') || 'start').split('?');
@@ -895,20 +1257,14 @@ html.still ::-webkit-scrollbar{display:none}
     const jump = q.get('i') !== null && IDEAS[+q.get('i')]; if (jump) cur = +q.get('i');
     if (!pg.bare) lastPage = pageName;
     document.body.classList.toggle('bare', !!pg.bare); document.body.dataset.page = pageName;
-    document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === pageName));
+    document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === (pg.nav || pageName)));
     if (force || shown !== pageName) {
       app.innerHTML = pg.page(q); shown = pageName;
       window.jammieIcons(app); wireFeed();
       if (!pg.bare && !STILL) app.firstElementChild.classList.add('page-in');
       app.scrollTop = 0; if (pg.bare) window.scrollTo(0, 0);
       if (pg.enter) pg.enter();
-      const ps = app.querySelector('.page-scroll');                           // a line under the bar only once the page has scrolled under it
-      document.body.classList.remove('tabs-away');
-      if (ps) { let lastY = 0; ps.addEventListener('scroll', () => { const y = ps.scrollTop; ps.parentElement.classList.toggle('scrolled', y > 4);
-        if (Math.abs(y - lastY) > 6) { document.body.classList.toggle('tabs-away', y > lastY && y > 80); lastY = y; }
-        const secs = [...ps.querySelectorAll('.sec-t[id]')]; if (secs.length) { const top = ps.getBoundingClientRect().top; let at = 0; secs.forEach((h, i) => { if (h.getBoundingClientRect().top - top < 160) at = i; }); markTab(at); } }, { passive: true }); }
-      const dc = app.querySelector('.deck-cols');
-      if (dc) dc.addEventListener('scroll', () => { const c = dc.querySelector('.dcol'); if (c) markTab(Math.round(dc.scrollLeft / (c.offsetWidth + 16))); }, { passive: true });
+      wirePage();
     } else if (pageName === 'feed') { const sc = app.querySelector('.stage');                 // the feed was not redrawn: bring it to the card we mean
       if (Math.round(sc.scrollTop / slideH(sc)) !== cur) sc.scrollTo({ top: cur * slideH(sc), behavior: jump || calm ? 'auto' : 'smooth' });
       markSlides(); }
@@ -919,6 +1275,7 @@ html.still ::-webkit-scrollbar{display:none}
     document.body.classList.toggle('has-side', !!p); document.body.classList.toggle('has-modal', !!s.modal);
     if (p) { sideEl.innerHTML = `<header class="side-h">${p.back ? `<a class="ico-btn back draw" href="${p.back}" aria-label="Back">${ico('back')}</a>` : ''}<h2>${p.title}</h2><a class="ico-btn draw" href="${home}" aria-label="Close">${ico('close')}</a></header>
       <div class="side-body">${p.body}</div>${p.foot ? `<footer class="side-foot ${p.ask ? 'ask' : ''}">${p.foot}</footer>` : ''}`; window.jammieIcons(sideEl); }
+    if (p && s.enter) s.enter(q);
     const wasStory = !!modal.querySelector('.scrim');
     modal.innerHTML = s.modal ? s.modal(q) : ''; window.jammieIcons(modal);
     if (wasStory && name === 'story') modal.firstElementChild.classList.add('quiet');   // a story was already playing: the dark screen does not fade in again
@@ -926,6 +1283,8 @@ html.still ::-webkit-scrollbar{display:none}
     // the top bar: same place on every page. It only changes its words
     $('topbar').classList.toggle('solid', pageName !== 'feed');
     $('barTitle').textContent = pg.title || ''; $('barNote').textContent = pg.note || '';
+    const ba = $('barActs'); if (ba.dataset.for !== pageName) { ba.dataset.for = pageName; ba.innerHTML = pg.acts || ''; window.jammieIcons(ba); }
+    $('barBack').hidden = !pg.back; if (pg.back) $('barBack').setAttribute('href', pg.back);
     [['bellBtn', 'bell'], ['youBtn', 'you'], ['youTab', 'you'], ['newTab', 'new']].forEach(([id, n]) => { $(id).classList.toggle('on', name === n); $(id).setAttribute('href', name === n ? home : '#/' + n); });
     if (name === 'bell') { readN = orders.length; keep('jammie-proto-read', readN); }
     const unread = Math.max(0, orders.length - readN); $('bellN').hidden = !unread; $('bellN').textContent = unread;
@@ -960,15 +1319,57 @@ html.still ::-webkit-scrollbar{display:none}
     morelike: () => { toast('Noted. More like this one.'); step(1); },
     suggest: b => { const t = sideEl.querySelector('.composer textarea'); if (t) { t.value = b.textContent; t.focus(); } },
     noshopify: () => { toast('No problem. Estimates stay.', 'sleep'); step(1); }, more8: () => toast('8 more are on the way'),
-    connect: b => toast(`${b.dataset.id} opens its own sign-in`, 'search'), feed: () => go('#/feed'), bell: () => go('#/bell'),
+    feed: () => go('#/feed'), bell: () => go('#/bell'),
     col: b => { const c = $('dcol' + b.dataset.id); if (!c) return; c.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
       c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); },   // the column you jumped to lights up for a moment
-    theme: b => { setTheme(b.dataset.id); b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); },   // only the switch changes: the panel is not redrawn
-    clearall: () => { orders = []; keep('jammie-proto-orders', orders); readN = 0; keep('jammie-proto-read', 0); render(); },
+    theme: b => { setTheme(b.dataset.id === 'auto' ? (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light') : b.dataset.id, b.dataset.id === 'auto'); b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); },   // only the switch changes: the panel is not redrawn
+    clearall: () => { orders = []; cleared = true; keep('jammie-proto-orders', orders); readN = 0; keep('jammie-proto-read', 0); render(); },
     restart: () => go('#/start'), help: () => toast('Opens your email', 'search'),
+    // ---- the rest of the live product
+    goto: b => go(b.dataset.id), work: () => go('#/work'), addnote: () => go('#/addnote'), rename: () => go('#/details'), learns: () => go('#/know?k=tune'), costs: () => go('#/costs'), jam: () => go('#/new'),
+    otherstore: () => toast('This demo opens Comet', 'search'), offline: b => { b.classList.add('off'); toast('Noted. I’ll read that again.', 'search'); },
+    gotit: () => { introSeen = true; keep('jammie-proto-intro', true); const c = app.querySelector('.coach'); if (c) c.remove(); },
+    shuffle: () => { const r = IDEAS.filter(d => !d.special).sort(() => Math.random() - .5); let i = 0; IDEAS = IDEAS.map(d => d.special ? d : r[i++]); cur = 0; redraw(); toast('Shuffled'); },
+    maker: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); on ? off.delete(b.dataset.id) : off.add(b.dataset.id); keep('jammie-proto-off', [...off]); refilter(); },
+    flag: b => { const on = b.getAttribute('aria-checked') !== 'true'; b.setAttribute('aria-checked', on); prefs[b.dataset.id] = on; keep('jammie-proto-prefs', prefs); if (b.dataset.id === 'calm') root.classList.toggle('still', STILL || on); },
+    drop: b => { const [k, i] = b.dataset.id.split(':'); LISTS[k].splice(+i, 1); keep('jammie-proto-' + k, LISTS[k]); render(true); },
+    upload: b => { const k = b.dataset.id; LISTS[k].push(['look-book.pdf', 'winter-shoot.jpg', 'past-ads.zip'][LISTS[k].length % 3]); keep('jammie-proto-' + k, LISTS[k]); render(true); toast('Added'); },
+    uploadreport: () => { LISTS.uploads.push('orders-export.csv · 2,179 rows · gave the board net sales'); keep('jammie-proto-uploads', LISTS.uploads); render(true); toast('Read. It is on the board.'); },
+    suggestin: b => { const t = sideEl.querySelector('.adder input'); if (t) { t.value = b.textContent; t.focus(); } },
+    removeidea: () => { const d = curIdea(); IDEAS = IDEAS.filter(x => x !== d); cur = Math.max(0, Math.min(cur, IDEAS.length - 1)); shown = null; go('#/feed'); toast('Removed. Fewer like this.', 'worry'); },
+    sendfeedback: () => { go('#/feed'); toast('Fixed. I’ll remember that.'); },
+    sendwrong: () => { home(); toast('Thanks. I’m on it.', 'search'); },
+    handover: b => { send('ship', curIdea().id); orders[0].who = b.dataset.id; keep('jammie-proto-orders', orders); go('#/feed'); toast('Handed over. It is in Work.'); },
+    workby: b => { workBy = b.dataset.id; render(true); },
+    moveon: b => { const o = orders.find(x => String(x.id) === b.dataset.id); if (!o) return;
+      if ((o.stage || 0) >= 3) { orders = orders.filter(x => x !== o); done.unshift(o); keep('jammie-proto-done', done); toast('Done. It is in the library.'); }
+      else { o.stage = (o.stage || 0) + 1; toast(['', 'Waiting on a yes', 'On its way out', 'It’s live'][o.stage]); }
+      keep('jammie-proto-orders', orders); render(true); },
+    discard: b => { const o = orders.find(x => String(x.id) === b.dataset.id); if (!o) return; orders = orders.filter(x => x !== o); binned.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); render(true); toast('Discarded. It waits in the library.', 'sleep'); },
+    restore: b => { const o = binned.find(x => String(x.id) === b.dataset.id); if (!o) return; binned = binned.filter(x => x !== o); o.stage = 0; orders.unshift(o); keep('jammie-proto-orders', orders); keep('jammie-proto-binned', binned); render(true); toast('Restored. It is back in Work.'); },
+    report: b => go('#/report?r=' + (WHICH[b.textContent.trim()] || 'weekly')),
+    more: b => go('#/number?n=' + encodeURIComponent(b.closest('.dcard').querySelector('.top span').textContent)),
+    park: () => { parked = true; keep('jammie-proto-parked', true); render(true); toast('Parked for a week', 'sleep'); },
+    savecosts: () => { costsIn = true; keep('jammie-proto-costs', true); shown = null; go('#/command'); toast('Saved. What you keep is counted.'); },
+    asknum: text => { const [, a, from] = ANSWERS.find(([re]) => re.test(text)); qa.push([text, a, from]); render(); },
+    download: () => toast('Board downloaded'), pdf: () => toast('PDF downloaded'), sheet: () => toast('Sheet downloaded'), refresh: () => toast('Reading it again', 'search'), testsound: () => toast('Played'),
+    tile: b => go('#/know?k=' + (KNOW_OF[b.querySelector('b').textContent] || 'facts')),
+    connect: b => go('#/connect?t=' + encodeURIComponent(b.dataset.id)),
+    notusing: () => { home(); toast('No problem. Estimates stay.', 'sleep'); },
+    link: b => location.replace('#/linking?t=' + encodeURIComponent(b.dataset.id)),
+    unlink: b => { linked = linked.filter(x => x !== b.dataset.id); keep('jammie-proto-linked', linked); shown = null; go('#/connectors'); toast('Disconnected', 'sleep'); },
+    reread: () => toast('Read just now', 'search'),
+    saveme: () => { const [f, l, m] = [...sideEl.querySelectorAll('#meForm input')].map(i => i.value.trim()); me.first = f || 'You'; me.last = l; me.email = m; keep('jammie-proto-me', me); go('#/you'); toast('Saved'); },
+    invite: () => { const i = sideEl.querySelector('#inviteForm input'), v = i.value.trim(); if (!/^\S+@\S+\.\S+$/.test(v)) { i.focus(); toast('Add their email first', 'worry'); return; }
+      team.push({ email: v, role: (tune.invite || ['Founder / CEO'])[0] }); keep('jammie-proto-team', team); render(); toast('Invited. Nothing is sent from the prototype.'); },
+    uninvite: b => { team.splice(+b.dataset.id, 1); keep('jammie-proto-team', team); render(); },
+    leave: () => toast('You’re the only admin. Add another first.', 'worry'),
+    belltab: b => { bellTab = b.dataset.id; render(); },
+    markread: () => { readN = orders.length; keep('jammie-proto-read', readN); render(); toast('All read'); },
   };
 
   document.addEventListener('click', e => {
+    if (held && e.target.closest('.fab, #newTab')) { e.preventDefault(); held = false; return; }   // New was held, not tapped
     if (e.target.id === 'shade') { location.hash = '#/' + lastPage; return; }   // on a phone, a tap outside the sheet closes it
     if (e.target.matches('.gate,.scrim')) { location.hash = e.target.matches('.gate') ? '#/start' : '#/feed'; return; }   // a tap outside a popup closes it
     const bl = e.target.closest('[data-bloom]'); if (bl) { e.preventDefault(); bloom(e, bl.getAttribute('href')); return; }
@@ -979,6 +1380,11 @@ html.still ::-webkit-scrollbar{display:none}
     if (b) { (DO[b.dataset.do] || (() => toast('This opens in the full build', 'search')))(b); return; }   // an action with no entry in DO is not built yet
     const card = e.target.closest('.feed-col .fcard:not(.plain)');           // the card itself opens the idea
     if (card && !e.target.closest('a,button')) { location.hash = '#/idea'; return; }
+    const pk = e.target.closest('[data-pick]'), po = pk && e.target.closest('.chip, .seg button');   // a pick: one, or up to a few, kept as you choose
+    if (po) { const key = pk.dataset.pick, max = +pk.dataset.max || 1, v = po.textContent.trim(); let now = tune[key] || [];
+      if (max === 1) now = [v]; else if (now.includes(v)) now = now.filter(x => x !== v); else if (now.length < max) now = [...now, v]; else { toast(`Pick up to ${max}`, 'worry'); return; }
+      tune[key] = now; keep('jammie-proto-tune', tune); document.querySelectorAll(`[data-pick="${key}"]`).forEach(g => g.querySelectorAll('.chip, .seg button').forEach(c => c.classList.toggle('on', now.includes(c.textContent.trim()))));
+      if (key === 'roles') refilter(); if (key === 'day' && $('joinNote')) $('joinNote').textContent = JOINS[v]; return; }
     const chip = e.target.closest('.chip');
     if (chip && chip.tagName === 'BUTTON') { const ask = chip.closest('[data-ask]'); if (!ask) return;
       if (ask.dataset.ask === 'chan') chip.classList.toggle('on');           // you can post in more than one place
@@ -992,13 +1398,27 @@ html.still ::-webkit-scrollbar{display:none}
     const up = () => { g.classList.remove('on'); document.body.classList.remove('sizing'); g.removeEventListener('pointermove', move); colW[c.id] = c.offsetWidth; keep('jammie-proto-cols', colW); };
     g.addEventListener('pointermove', move); g.addEventListener('pointerup', up, { once: true }); g.addEventListener('pointercancel', up, { once: true }); });
   document.addEventListener('dblclick', e => { const g = e.target.closest && e.target.closest('.grip'), c = g && $(g.dataset.col); if (!c) return; c.style.removeProperty('--w'); delete colW[c.id]; keep('jammie-proto-cols', colW); });
+  // hold New to tell Jammie what is wrong; hold the mic to talk instead of typing
+  let holdT = 0, held = false, micAt = 0;
+  document.addEventListener('pointerdown', e => { const t = e.target.closest ? e.target : null; if (!t) return;
+    if (t.closest('.fab, #newTab')) { held = false; holdT = setTimeout(() => { held = true; location.hash = '#/wrong'; }, 550); }
+    const m = t.closest('[data-mic]'); if (m) { micAt = Date.now(); m.closest('.composer').classList.add('listening'); } });
+  ['pointerup', 'pointercancel'].forEach(n => document.addEventListener(n, e => { clearTimeout(holdT);
+    const c = document.querySelector('.composer.listening'); if (!c) return; c.classList.remove('listening');
+    if (Date.now() - micAt < 350) { toast('Hold the mic and talk', 'search'); return; }
+    const t = c.querySelector('textarea'); t.value = (t.value ? t.value + ' ' : '') + (c.dataset.send === 'sendnote' ? 'Can we get a launch film for the Midnight drop by Friday?' : 'Make it shorter, and lead with the reviews.'); t.dispatchEvent(new Event('input', { bubbles: true })); t.focus(); }));
   document.addEventListener('submit', e => {
+    if (e.target.matches('#costForm,#meForm,#inviteForm')) { e.preventDefault(); return; }
+    const ad = e.target.closest('[data-add]'); if (ad) { e.preventDefault(); const i = ad.querySelector('input'), v = i.value.trim(); if (!v) { i.focus(); return; }
+      LISTS[ad.dataset.add].push(v); keep('jammie-proto-' + ad.dataset.add, LISTS[ad.dataset.add]); render(true); return; }
     const f = e.target.closest('[data-go]'); if (f) { e.preventDefault(); location.hash = f.dataset.go; return; }
     const c = e.target.closest('[data-send]'); if (c) { e.preventDefault(); const t = c.querySelector('textarea'), text = t.value.trim();
       if (!text) { t.focus(); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); return; }   // an empty note is not sent
       DO[c.dataset.send](text); }
   });
-  document.addEventListener('input', e => { const t = e.target; if (t.matches && t.matches('.composer textarea')) { t.style.height = 'auto'; t.style.height = Math.min(168, t.scrollHeight) + 'px'; } });
+  document.addEventListener('input', e => { const t = e.target;
+    if (t.dataset && t.dataset.filter) { const v = t.value.toLowerCase(); document.querySelectorAll(t.dataset.filter + ' > *').forEach(r => { r.hidden = !r.textContent.toLowerCase().includes(v); }); }
+    if (t.matches && t.matches('.composer textarea')) { t.style.height = 'auto'; t.style.height = Math.min(168, t.scrollHeight) + 'px'; } });
   document.addEventListener('keydown', e => {
     const typing = e.target.matches && e.target.matches('input,textarea');
     if (typing && e.key === 'Enter' && !e.shiftKey && e.target.closest('.composer')) { e.preventDefault(); e.target.closest('form').requestSubmit(); return; }

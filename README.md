@@ -35,6 +35,15 @@ Then open:
 - http://localhost:5173/flows.html
 - http://localhost:5173/design-system.html
 
+## What the prototype covers
+
+Onboarding (store link, sign-in, the read, three taps, the passport, what we found,
+your first idea), a demo front door (pick a store, its profile), the feed and its
+deck view, Saved, Work and its library, Command centre with reports, costs and
+questions, Memory with its brand book and every tile's panel, Connectors with the
+connect flow, Updates, and your account (details, team, look and sound, settings).
+`flows.html` lists every flow and every action, and says which ones are simulated.
+
 ## Handy links into the prototype
 
 - `app.html?theme=dark#/feed` shows a screen dark without saving the choice.
